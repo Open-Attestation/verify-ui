@@ -1,5 +1,5 @@
 import React from "react";
 
-export const HomePage = (props: any) => {
+export const HomePage: React.FunctionComponent = () => {
   return <h1>home page</h1>;
 };

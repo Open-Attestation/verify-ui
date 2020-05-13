@@ -1,0 +1,25 @@
+version: 2.1
+jobs:
+  build:
+    docker:
+      - image: "circleci/node:latest-browsers"
+    steps:
+      - checkout
+      - run:
+          name: install
+          command: npm ci
+      - run:
+          name: commitlint
+          command: npx --no-install commitlint-circle
+      - run:
+          name: lint
+          command: npm run lint
+      - run:
+          name: test
+          command: npm run test
+      - run:
+          name: build
+          command: npm run build
+      - run:
+          name: integration
+          command: npm run integration:headless

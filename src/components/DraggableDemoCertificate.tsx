@@ -10,6 +10,7 @@ export const DraggableDemoCertificate: React.FunctionComponent = () => (
           style={{ cursor: "grabbing" }}
           src="/static/images/dropzone/cert.png"
           width="100%"
+          alt="demo cert icon"
         />
       </a>
     </div>

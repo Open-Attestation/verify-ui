@@ -6,7 +6,7 @@ describe("home page", () => {
   it("renders learn react link", () => {
     expect.assertions(1);
     const { getByText } = render(<HomePage />);
-    const text = getByText("home page");
+    const text = getByText("Home page");
     expect(text).toBeInTheDocument();
   });
 });

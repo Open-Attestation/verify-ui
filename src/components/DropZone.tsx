@@ -2,7 +2,7 @@ import React from "react";
 import Dropzone from "react-dropzone";
 import styles from "./dropzone.module.css";
 
-export function DropZone() {
+export const DropZone: React.FunctionComponent = () => {
   return (
     <Dropzone onDrop={(acceptedFile) => alert(`The file ${acceptedFile[0].name} will be processed`)}>
       {({ getRootProps, getInputProps }) => (
@@ -13,4 +13,4 @@ export function DropZone() {
       )}
     </Dropzone>
   );
-}
+};

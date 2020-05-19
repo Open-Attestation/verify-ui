@@ -52,7 +52,7 @@
     "typescript": "~3.7.2"
   },
   "scripts": {
-    "build": "NODE_ENV=production npm-run-all -p build:*",
+    "build": "NODE_ENV=production npm-run-all -s build:css build:js",
     "build:css": "postcss src/tailwind.css -o src/index.css",
     "build:js": "react-scripts build",
     "commit": "git-cz",

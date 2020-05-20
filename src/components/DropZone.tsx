@@ -13,6 +13,8 @@ const onFileDrop = (files: File[]): void => {
       if (reader.result && typeof reader.result === "string") {
         JSON.parse(reader.result);
         alert(`The file ${files[0].name} will be processed`);
+      } else {
+        alert(`The file uploaded is not a valid TradeTrust file`);
       }
     } catch (e) {
       alert(`The file uploaded is not a valid TradeTrust file, error: ${e.message}`);

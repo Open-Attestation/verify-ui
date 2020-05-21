@@ -1,6 +1,6 @@
 import { render } from "@testing-library/react";
 import React from "react";
-import { HomePage } from "../pages/home";
+import { HomePage } from "../pages/HomePage";
 
 describe("home page", () => {
   it("renders learn react link", () => {

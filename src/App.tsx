@@ -1,8 +1,13 @@
 import React from "react";
-import { HomePage } from "./pages/home";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { routes } from "./routes";
 
 export const App: React.FunctionComponent = () => (
-  <div>
-    <HomePage />
-  </div>
+  <Router>
+    <Switch>
+      {routes.map((route, id) => (
+        <Route key={id} {...route} />
+      ))}
+    </Switch>
+  </Router>
 );

@@ -5,9 +5,16 @@
   "dependencies": {
     "@emotion/core": "^10.0.28",
     "@emotion/styled": "^10.0.27",
+    "@govtechsg/decentralized-renderer-react-components": "^2.2.1",
+    "@govtechsg/open-attestation": "^3.7.0",
+    "@types/react-router": "^5.1.7",
+    "@types/react-router-dom": "^5.1.5",
+    "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-dropzone": "^11.0.1"
+    "react-dropzone": "^11.0.1",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^8.3.5",

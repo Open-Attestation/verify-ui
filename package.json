@@ -3,13 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@craco/craco": "^5.6.4",
     "@emotion/core": "^10.0.28",
     "@emotion/styled": "^10.0.27",
     "@govtechsg/decentralized-renderer-react-components": "^2.2.1",
     "@govtechsg/open-attestation": "^3.7.0",
-    "lodash": "^4.17.15",
+    "customize-cra": "^0.9.1",
     "react": "^16.13.1",
+    "react-app-rewired": "^2.1.6",
     "react-dom": "^16.13.1",
     "react-dropzone": "^11.0.1"
   },

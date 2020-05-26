@@ -19,7 +19,8 @@ jobs:
           command: npm run test
       - run:
           name: build
-          command: npm run build
+          # Critical dependency issue with react-pdf - https://github.com/wojtekmaj/react-pdf/issues/280
+          command: CI=false npm run build
       - run:
           name: integration
           command: npm run integration:headless

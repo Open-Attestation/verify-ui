@@ -17,7 +17,6 @@ export const DropZone: React.FunctionComponent<DropZoneProps> = ({ setRawDocumen
       try {
         if (reader.result && typeof reader.result === "string") {
           const json = JSON.parse(reader.result);
-          alert(`The file ${files[0].name} will be processed`);
           setRawDocument(json);
         } else {
           alert(`The file uploaded is not a valid Open Attesation file`);

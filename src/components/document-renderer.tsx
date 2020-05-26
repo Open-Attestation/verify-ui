@@ -10,13 +10,6 @@ export const DocumentRenderer: React.FunctionComponent<DocumentRendererProps> = 
   rawDocument,
 }: DocumentRendererProps) => {
   const document = getData(rawDocument);
-  const [templates, setTemplates] = useState([]);
-  console.log(templates);
-  const [selectedTemplate, setSelectedTemplate] = useState("");
-  const updateTemplates = useCallback((templates) => {
-    setTemplates(templates);
-    setSelectedTemplate(templates[0].id);
-  }, []);
 
   const [toFrame, setToFrame] = useState<HostActionsHandler>();
   const [height, setHeight] = useState();
@@ -25,17 +18,11 @@ export const DocumentRenderer: React.FunctionComponent<DocumentRendererProps> = 
     setToFrame(() => toFrame);
   }, []);
 
-  const fromFrame = useCallback(
-    (action: FrameActions): void => {
-      if (action.type === "UPDATE_HEIGHT") {
-        setHeight(action.payload);
-      }
-      if (action.type === "UPDATE_TEMPLATES") {
-        updateTemplates(action.payload);
-      }
-    },
-    [updateTemplates]
-  );
+  const fromFrame = useCallback((action: FrameActions): void => {
+    if (action.type === "UPDATE_HEIGHT") {
+      setHeight(action.payload);
+    }
+  }, []);
 
   useEffect(() => {
     if (toFrame) {
@@ -47,15 +34,6 @@ export const DocumentRenderer: React.FunctionComponent<DocumentRendererProps> = 
       });
     }
   }, [document, toFrame]);
-  useEffect(() => {
-    if (toFrame && selectedTemplate) {
-      console.log("select template", selectedTemplate);
-      toFrame({
-        type: "SELECT_TEMPLATE",
-        payload: selectedTemplate,
-      });
-    }
-  }, [selectedTemplate, toFrame]);
 
   return (
     <FrameConnector

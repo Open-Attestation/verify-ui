@@ -70,7 +70,7 @@
     "storybook": "start-storybook -p 9009 -s public",
     "storybook:build": "npm run build:css && build-storybook -s public",
     "test": "react-scripts test",
-    "postinstall": "cp node_modules/pdfjs-dist/build/pdf.worker.min.js src/pdf.worker.min.js"
+    "postinstall": "cp node_modules/pdfjs-dist/build/pdf.worker.min.js build/pdf.worker.min.js"
   },
   "config": {
     "commitizen": {

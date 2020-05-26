@@ -8,7 +8,6 @@
     "@govtechsg/decentralized-renderer-react-components": "^2.2.1",
     "@govtechsg/open-attestation": "^3.7.0",
     "react": "^16.13.1",
-    "react-app-rewired": "^2.1.6",
     "react-dom": "^16.13.1",
     "react-dropzone": "^11.0.1"
   },
@@ -57,20 +56,20 @@
   "scripts": {
     "build": "NODE_ENV=production npm-run-all -s build:css build:js",
     "build:css": "postcss src/tailwind.css -o src/index.css",
-    "build:js": "react-app-rewired build",
+    "build:js": "react-scripts build",
     "commit": "git-cz",
     "commit:retry": "npm run commit -- --retry",
-    "eject": "react-app-rewired eject",
+    "eject": "react-scripts eject",
     "integration": "testcafe chrome integration/**/*.spec.ts --ts-config-path ./tsconfig.testcafe.json --app \"BROWSER=none npm run start\"",
     "integration:headless": "testcafe chrome:headless integration/**/*.spec.ts --ts-config-path ./tsconfig.testcafe.json --app \"npm run start\" --app-init-delay 4000",
     "lint": "eslint . --ext .ts,.tsx --max-warnings 0",
     "lint:fix": "npm run lint -- --fix",
     "start": "npm-run-all -p start:*",
     "start:css": "postcss src/tailwind.css -o src/index.css --watch",
-    "start:js": "sleep 2 && react-app-rewired start",
+    "start:js": "sleep 2 && react-scripts start",
     "storybook": "start-storybook -p 9009 -s public",
     "storybook:build": "npm run build:css && build-storybook -s public",
-    "test": "react-app-rewired test"
+    "test": "react-scripts test"
   },
   "config": {
     "commitizen": {

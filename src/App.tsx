@@ -1,8 +1,4 @@
 import React from "react";
-import { HomePage } from "./pages/home";
+import { HomePage } from "./pages/HomePage";
 
-export const App: React.FunctionComponent = () => (
-  <div>
-    <HomePage />
-  </div>
-);
+export const App: React.FunctionComponent = () => <HomePage />;

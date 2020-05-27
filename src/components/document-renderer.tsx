@@ -10,9 +10,9 @@ export const DocumentRenderer: React.FunctionComponent<DocumentRendererProps> = 
   rawDocument,
 }: DocumentRendererProps) => {
   const document = getData(rawDocument);
-
   const [toFrame, setToFrame] = useState<HostActionsHandler>();
   const [height, setHeight] = useState();
+
   const onConnected = useCallback((toFrame: HostActionsHandler) => {
     // wrap into a function otherwise toFrame function will be executed
     setToFrame(() => toFrame);

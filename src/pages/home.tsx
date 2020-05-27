@@ -8,7 +8,7 @@ export const HomePage: React.FunctionComponent = () => {
 
   return (
     <div className="bg-gray-100">
-      <DropZone setRawDocument={(doc) => setRawDocument(doc)} />
+      {rawDocument ? null : <DropZone setRawDocument={(doc) => setRawDocument(doc)} />}
       {rawDocument ? <DocumentRenderer rawDocument={rawDocument} /> : null}
     </div>
   );

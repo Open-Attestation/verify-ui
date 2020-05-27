@@ -10,7 +10,7 @@ export const DocumentRenderer: React.FunctionComponent<DocumentRendererProps> = 
   rawDocument,
 }: DocumentRendererProps) => {
   const document = getData(rawDocument);
-  const [toFrame, setToFrame] = useState<HostActionsHandler>();
+  const [toFrame, setToFrame] = useState<HostActionsHandler | null>();
   const [height, setHeight] = useState();
 
   const onConnected = useCallback((toFrame: HostActionsHandler) => {
@@ -23,6 +23,10 @@ export const DocumentRenderer: React.FunctionComponent<DocumentRendererProps> = 
       setHeight(action.payload);
     }
   }, []);
+
+  useEffect(() => {
+    setToFrame(null);
+  }, [document]);
 
   useEffect(() => {
     if (toFrame) {
@@ -41,6 +45,7 @@ export const DocumentRenderer: React.FunctionComponent<DocumentRendererProps> = 
       source={document.$template.url}
       onConnected={onConnected}
       dispatch={fromFrame}
+      key={document.id}
     />
   );
 };

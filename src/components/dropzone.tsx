@@ -34,7 +34,7 @@ export const DropZone: React.FunctionComponent<DropZoneProps> = ({ setRawDocumen
       {({ getRootProps, getInputProps }) => (
         <div
           {...getRootProps()}
-          className="h-screen w-screen text-center border-dashed border-gray-500 border-4 bg-gray-200 flex flex-col justify-center"
+          className="h-64 w-screen text-center border-dashed border-gray-500 border-4 bg-gray-200 flex flex-col justify-center"
         >
           <input {...getInputProps()} />
           <p className="text-gray-700">Drag and drop your tradetrust file</p>

@@ -1,4 +1,3 @@
-import { verify, isValid } from "@govtechsg/oa-verify";
 import { WrappedDocument } from "@govtechsg/open-attestation";
 
 import React from "react";
@@ -25,8 +24,6 @@ export const DropZone: React.FunctionComponent<DropZoneProps> = ({
           setDocumentStatus(undefined);
           const json = JSON.parse(reader.result);
           setRawDocument(json);
-          const fragments = await verify(json, { network: "homestead" });
-          setDocumentStatus(isValid(fragments));
         } else {
           alert(`The file uploaded is not a valid Open Attesation file`);
         }

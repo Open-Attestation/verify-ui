@@ -1,4 +1,5 @@
 import { WrappedDocument } from "@govtechsg/open-attestation";
+
 import React from "react";
 import Dropzone from "react-dropzone";
 
@@ -10,7 +11,7 @@ export const DropZone: React.FunctionComponent<DropZoneProps> = ({ setRawDocumen
     const reader = new FileReader();
 
     reader.onerror = () => {
-      alert(`The file uploaded is not a valid Open Attesation file, error: ${reader.error}`);
+      alert(`The file uploaded is not a valid Open Attestation file, error: ${reader.error}`);
     };
 
     reader.onload = () => {
@@ -19,10 +20,10 @@ export const DropZone: React.FunctionComponent<DropZoneProps> = ({ setRawDocumen
           const json = JSON.parse(reader.result);
           setRawDocument(json);
         } else {
-          alert(`The file uploaded is not a valid Open Attesation file`);
+          alert(`The file uploaded is not a valid Open Attestation file`);
         }
       } catch (e) {
-        alert(`The file uploaded is not a valid Open Attesation file, error: ${e.message}`);
+        alert(`The file uploaded is not a valid Open Attestation file, error: ${e.message}`);
       }
     };
 

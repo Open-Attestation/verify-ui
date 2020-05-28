@@ -1,11 +1,17 @@
+import { verify, isValid } from "@govtechsg/oa-verify";
 import { WrappedDocument } from "@govtechsg/open-attestation";
+
 import React from "react";
 import Dropzone from "react-dropzone";
 
 interface DropZoneProps {
   setRawDocument: (doc: WrappedDocument) => void;
+  setDocumentStatus: (bool: boolean | undefined) => void;
 }
-export const DropZone: React.FunctionComponent<DropZoneProps> = ({ setRawDocument }: DropZoneProps) => {
+export const DropZone: React.FunctionComponent<DropZoneProps> = ({
+  setRawDocument,
+  setDocumentStatus,
+}: DropZoneProps) => {
   const onFileDrop = (files: File[]): void => {
     const reader = new FileReader();
 
@@ -13,11 +19,14 @@ export const DropZone: React.FunctionComponent<DropZoneProps> = ({ setRawDocumen
       alert(`The file uploaded is not a valid Open Attesation file, error: ${reader.error}`);
     };
 
-    reader.onload = () => {
+    reader.onload = async () => {
       try {
         if (reader.result && typeof reader.result === "string") {
+          setDocumentStatus(undefined);
           const json = JSON.parse(reader.result);
           setRawDocument(json);
+          const fragments = await verify(json, { network: "homestead" });
+          setDocumentStatus(isValid(fragments));
         } else {
           alert(`The file uploaded is not a valid Open Attesation file`);
         }

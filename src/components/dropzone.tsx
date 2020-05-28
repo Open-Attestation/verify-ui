@@ -5,30 +5,25 @@ import Dropzone from "react-dropzone";
 
 interface DropZoneProps {
   setRawDocument: (doc: WrappedDocument) => void;
-  setDocumentStatus: (bool: boolean | undefined) => void;
 }
-export const DropZone: React.FunctionComponent<DropZoneProps> = ({
-  setRawDocument,
-  setDocumentStatus,
-}: DropZoneProps) => {
+export const DropZone: React.FunctionComponent<DropZoneProps> = ({ setRawDocument }: DropZoneProps) => {
   const onFileDrop = (files: File[]): void => {
     const reader = new FileReader();
 
     reader.onerror = () => {
-      alert(`The file uploaded is not a valid Open Attesation file, error: ${reader.error}`);
+      alert(`The file uploaded is not a valid Open Attestation file, error: ${reader.error}`);
     };
 
     reader.onload = async () => {
       try {
         if (reader.result && typeof reader.result === "string") {
-          setDocumentStatus(undefined);
           const json = JSON.parse(reader.result);
           setRawDocument(json);
         } else {
-          alert(`The file uploaded is not a valid Open Attesation file`);
+          alert(`The file uploaded is not a valid Open Attestation file`);
         }
       } catch (e) {
-        alert(`The file uploaded is not a valid Open Attesation file, error: ${e.message}`);
+        alert(`The file uploaded is not a valid Open Attestation file, error: ${e.message}`);
       }
     };
 

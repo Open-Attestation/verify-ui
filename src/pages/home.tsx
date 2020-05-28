@@ -18,8 +18,10 @@ export const HomePage: React.FunctionComponent = () => {
 
   useEffect(() => {
     const setStatusAsync = async (): Promise<void> => {
+      setDocumentStatus(Status.PENDING);
+
       if (rawDocument) {
-        isValid(await verify(rawDocument, { network: "homestead" }))
+        isValid(await verify(rawDocument, { network: "ropsten" }))
           ? setDocumentStatus(Status.RESOLVED)
           : setDocumentStatus(Status.REJECTED);
       }

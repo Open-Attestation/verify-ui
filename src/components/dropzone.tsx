@@ -14,7 +14,7 @@ export const DropZone: React.FunctionComponent<DropZoneProps> = ({ setRawDocumen
       alert(`The file uploaded is not a valid Open Attestation file, error: ${reader.error}`);
     };
 
-    reader.onload = async () => {
+    reader.onload = () => {
       try {
         if (reader.result && typeof reader.result === "string") {
           const json = JSON.parse(reader.result);

@@ -56,7 +56,7 @@ export const DocumentRenderer: React.FunctionComponent<DocumentRendererProps> = 
 
   useEffect(() => {
     if (toFrame && selectedTemplate) {
-      // TODO: how can i get this to run?
+      // TODO: how can i get this to run? selected template is updated on new tab click but toFrame is null so it does not run.
       toFrame({
         type: "SELECT_TEMPLATE",
         payload: selectedTemplate,

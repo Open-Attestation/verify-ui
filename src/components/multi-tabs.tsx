@@ -27,7 +27,7 @@ export const MultiTabs: React.FunctionComponent<MultiTabsProps> = ({
                 aria-selected="true"
               >
                 {label}
-              </a>
+              </button>
             </li>
           ))
         : null}

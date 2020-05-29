@@ -1,6 +1,6 @@
 import { FrameActions, FrameConnector, HostActionsHandler } from "@govtechsg/decentralized-renderer-react-components";
 import { getData, WrappedDocument } from "@govtechsg/open-attestation";
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect, useMemo } from "react";
 import { MultiTabs } from "./multi-tabs";
 
 interface DocumentRendererProps {
@@ -10,7 +10,8 @@ interface DocumentRendererProps {
 export const DocumentRenderer: React.FunctionComponent<DocumentRendererProps> = ({
   rawDocument,
 }: DocumentRendererProps) => {
-  const document = getData(rawDocument);
+  const document = useMemo(() => getData(rawDocument), [rawDocument]);
+
   const [templates, setTemplates] = useState([]);
   const [selectedTemplate, setSelectedTemplate] = useState("");
 
@@ -41,7 +42,7 @@ export const DocumentRenderer: React.FunctionComponent<DocumentRendererProps> = 
   // let's set the frame action to null every time a new document is passed down, the actions will be set once the connection established
   useEffect(() => {
     setToFrame(null);
-  }, [document]);
+  }, [rawDocument]);
 
   useEffect(() => {
     if (toFrame) {

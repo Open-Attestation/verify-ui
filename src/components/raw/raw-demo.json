@@ -1,0 +1,76 @@
+{
+  "id": "53b75bbe",
+  "name": "Govtech Demo Certificate",
+  "description": "Govtech Demo Certificate",
+  "issuedOn": "2019-05-29T00:00:00+08:00",
+  "admissionDate": "2017-08-01T00:00:00+08:00",
+  "graduationDate": "2022-08-01T00:00:00+08:00",
+  "$template": {
+    "name": "GOVTECH_DEMO",
+    "type": "EMBEDDED_RENDERER",
+    "url": "https://demo-renderer.opencerts.io"
+  },
+  "issuers": [
+    {
+      "name": "Govtech",
+      "url": "https://tech.gov.sg",
+      "documentStore": "0x8Fc57204c35fb9317D91285eF52D6b892EC08cD3",
+      "identityProof": {
+        "type": "DNS-TXT",
+        "location": "example.openattestation.com"
+      }
+    }
+  ],
+  "recipient": {
+    "name": "Your Name",
+    "nric": "SXXXXXXXY",
+    "course": "Govtech Demo"
+  },
+  "transcript": [
+    {
+      "name": "Introduction to Programming",
+      "grade": "A+",
+      "courseCredit": "3",
+      "courseCode": "CS 1110",
+      "examinationDate": "2017-12-01T00:00:00+08:00",
+      "semester": "1"
+    },
+    {
+      "name": "Object Oriented Programming in Java",
+      "grade": "A+",
+      "courseCredit": "4",
+      "courseCode": "CS 2110",
+      "examinationDate": "2017-12-01T00:00:00+08:00",
+      "semester": "1"
+    },
+    {
+      "name": "Microeconomics",
+      "grade": "A+",
+      "courseCredit": "4",
+      "courseCode": "ECON 3030",
+      "examinationDate": "2018-05-01T00:00:00+08:00",
+      "semester": "2"
+    },
+    {
+      "name": "Macroeconomics",
+      "grade": "A",
+      "courseCredit": "4",
+      "courseCode": "ECON 3040",
+      "examinationDate": "2018-05-01T00:00:00+08:00",
+      "semester": "2"
+    },
+    {
+      "name": "Econometrics",
+      "grade": "A-",
+      "courseCredit": "4",
+      "courseCode": "ECON 3120",
+      "examinationDate": "2018-05-01T00:00:00+08:00",
+      "semester": "2"
+    }
+  ],
+  "additionalData": {
+    "merit": "Y",
+    "studentId": "123456",
+    "transcriptId": "001"
+  }
+}

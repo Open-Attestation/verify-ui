@@ -2,11 +2,11 @@ import { WrappedDocument } from "@govtechsg/open-attestation";
 import React from "react";
 import ROPSTEN_DEMO from "./ropsten-demo.json";
 
-interface DemoDocProps {
-  setRawDocument: (doc: WrappedDocument) => void;
+interface DemoDocumentProps {
+  setRawDocument: (document: WrappedDocument) => void;
 }
 
-export const DemoDoc: React.FunctionComponent<DemoDocProps> = ({ setRawDocument }: DemoDocProps) => {
+export const DemoDocument: React.FunctionComponent<DemoDocumentProps> = ({ setRawDocument }: DemoDocumentProps) => {
   const onClick = (): void => {
     const json = JSON.parse(JSON.stringify(ROPSTEN_DEMO));
     setRawDocument(json);

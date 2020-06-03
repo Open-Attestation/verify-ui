@@ -46,7 +46,7 @@ export const DocumentRenderer: React.FunctionComponent<DocumentRendererProps> = 
   }, [document]);
 
   useEffect(() => {
-    // check if there was a document rendered previously, so that toFrame will be reset to null.
+    // check if there was a different document rendered previously, so that toFrame will be reset to null.
     if (loadedDocumentId && loadedDocumentId !== document.id) {
       setToFrame(null);
     } else if (toFrame) {

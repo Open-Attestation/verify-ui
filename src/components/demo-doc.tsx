@@ -1,6 +1,6 @@
 import { WrappedDocument } from "@govtechsg/open-attestation";
 import React from "react";
-import ROPSTEN_DEMO from "./wrapped/wrapped-demo.json";
+import ROPSTEN_DEMO from "./demo-ropsten.json";
 
 interface DemoDocProps {
   setRawDocument: (doc: WrappedDocument) => void;

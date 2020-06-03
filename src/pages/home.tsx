@@ -45,7 +45,9 @@ export const HomePage: React.FunctionComponent = () => {
           <p className="text-red-600 font-medium">Verifiable Credential is invalid</p>
         </div>
       ) : null}
-      {documentStatus === Status.RESOLVED ? <DocumentRenderer rawDocument={rawDocument as WrappedDocument} /> : null}
+      {documentStatus === Status.RESOLVED && rawDocument ? (
+        <DocumentRenderer rawDocument={rawDocument as WrappedDocument} key={rawDocument.data.id as string} />
+      ) : null}
     </div>
   );
 };

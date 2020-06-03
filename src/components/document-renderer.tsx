@@ -11,16 +11,16 @@ export const DocumentRenderer: React.FunctionComponent<DocumentRendererProps> = 
   rawDocument,
 }: DocumentRendererProps) => {
   const document = useMemo(() => getData(rawDocument), [rawDocument]);
-
   const [templates, setTemplates] = useState<{ id: string; label: string }[]>([]);
   const [selectedTemplate, setSelectedTemplate] = useState("");
+  const [loadedDocumentId, setLoadedDocumentId] = useState<string>();
 
   const updateTemplates = useCallback((templates) => {
     setTemplates(templates);
     setSelectedTemplate(templates[0].id);
   }, []);
 
-  const [toFrame, setToFrame] = useState<HostActionsHandler | null>();
+  const [toFrame, setToFrame] = useState<HostActionsHandler | null>(null);
   const [height, setHeight] = useState(0);
   const onConnected = useCallback((toFrame: HostActionsHandler) => {
     // wrap into a function otherwise toFrame function will be executed
@@ -42,10 +42,14 @@ export const DocumentRenderer: React.FunctionComponent<DocumentRendererProps> = 
   // let's set the frame action to null every time a new document is passed down, the actions will be set once the connection established
   useEffect(() => {
     setToFrame(null);
-  }, [rawDocument]);
+    setLoadedDocumentId(document.id);
+  }, [document]);
 
   useEffect(() => {
-    if (toFrame) {
+    // check if there was a document rendered previously, so that toFrame will be reset to null.
+    if (loadedDocumentId && loadedDocumentId !== document.id) {
+      setToFrame(null);
+    } else if (toFrame) {
       toFrame({
         type: "RENDER_DOCUMENT",
         payload: {
@@ -53,11 +57,10 @@ export const DocumentRenderer: React.FunctionComponent<DocumentRendererProps> = 
         },
       });
     }
-  }, [document, toFrame]);
+  }, [document, toFrame, loadedDocumentId]);
 
   useEffect(() => {
     if (toFrame && selectedTemplate) {
-      // TODO: how can i get this to run? selected template is updated on new tab click but toFrame is null so it does not run.
       toFrame({
         type: "SELECT_TEMPLATE",
         payload: selectedTemplate,

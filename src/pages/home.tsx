@@ -33,8 +33,8 @@ export const HomePage: React.FunctionComponent = () => {
   return (
     <div className="bg-gray-100">
       <div className="flex">
-        <DemoDocument setRawDocument={(document) => setRawDocument(document)} />
-        <DropZone setRawDocument={(document) => setRawDocument(document)} />
+        <DemoDocument onDocumentLoaded={(document) => setRawDocument(document)} />
+        <DropZone onDocumentDropped={(document) => setRawDocument(document)} />
       </div>
       {documentStatus === Status.RESOLVED ? (
         <div className="w-full text-center py-3 bg-green-200">

@@ -4,9 +4,9 @@ import React from "react";
 import Dropzone from "react-dropzone";
 
 interface DropZoneProps {
-  setRawDocument: (document: WrappedDocument) => void;
+  onDocumentDropped: (document: WrappedDocument) => void;
 }
-export const DropZone: React.FunctionComponent<DropZoneProps> = ({ setRawDocument }: DropZoneProps) => {
+export const DropZone: React.FunctionComponent<DropZoneProps> = ({ onDocumentDropped }: DropZoneProps) => {
   const onFileDrop = (files: File[]): void => {
     const reader = new FileReader();
 
@@ -17,8 +17,7 @@ export const DropZone: React.FunctionComponent<DropZoneProps> = ({ setRawDocumen
     reader.onload = () => {
       try {
         if (reader.result && typeof reader.result === "string") {
-          const json = JSON.parse(reader.result);
-          setRawDocument(json);
+          onDocumentDropped(JSON.parse(reader.result));
         } else {
           alert(`The file uploaded is not a valid Open Attestation file`);
         }

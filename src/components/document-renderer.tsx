@@ -11,7 +11,6 @@ export const DocumentRenderer: React.FunctionComponent<DocumentRendererProps> = 
   rawDocument,
 }: DocumentRendererProps) => {
   const document = useMemo(() => getData(rawDocument), [rawDocument]);
-
   const [templates, setTemplates] = useState<{ id: string; label: string }[]>([]);
   const [selectedTemplate, setSelectedTemplate] = useState("");
 
@@ -20,7 +19,7 @@ export const DocumentRenderer: React.FunctionComponent<DocumentRendererProps> = 
     setSelectedTemplate(templates[0].id);
   }, []);
 
-  const [toFrame, setToFrame] = useState<HostActionsHandler | null>();
+  const [toFrame, setToFrame] = useState<HostActionsHandler>();
   const [height, setHeight] = useState(0);
   const onConnected = useCallback((toFrame: HostActionsHandler) => {
     // wrap into a function otherwise toFrame function will be executed
@@ -39,11 +38,6 @@ export const DocumentRenderer: React.FunctionComponent<DocumentRendererProps> = 
     [updateTemplates]
   );
 
-  // let's set the frame action to null every time a new document is passed down, the actions will be set once the connection established
-  useEffect(() => {
-    setToFrame(null);
-  }, [rawDocument]);
-
   useEffect(() => {
     if (toFrame) {
       toFrame({
@@ -57,7 +51,6 @@ export const DocumentRenderer: React.FunctionComponent<DocumentRendererProps> = 
 
   useEffect(() => {
     if (toFrame && selectedTemplate) {
-      // TODO: how can i get this to run? selected template is updated on new tab click but toFrame is null so it does not run.
       toFrame({
         type: "SELECT_TEMPLATE",
         payload: selectedTemplate,
@@ -79,7 +72,6 @@ export const DocumentRenderer: React.FunctionComponent<DocumentRendererProps> = 
         source={document.$template.url}
         onConnected={onConnected}
         dispatch={fromFrame}
-        key={document.id} // we will reset the connection every time the id change (react will mount a new component)
       />
     </>
   );

@@ -62,7 +62,7 @@
     "commit:retry": "npm run commit -- --retry",
     "eject": "react-scripts eject",
     "integration": "testcafe chrome integration/**/*.spec.ts --ts-config-path ./tsconfig.testcafe.json --app \"BROWSER=none npm run start\"",
-    "integration:headless": "testcafe chrome:headless integration/**/*.spec.ts --ts-config-path ./tsconfig.testcafe.json --app \"npm run start\" --app-init-delay 10000",
+    "integration:headless": "testcafe chrome:headless integration/**/*.spec.ts --ts-config-path ./tsconfig.testcafe.json --app \"npm run start\" --app-init-delay 15000",
     "lint": "eslint . --ext .ts,.tsx --max-warnings 0",
     "lint:fix": "npm run lint -- --fix",
     "start": "npm-run-all -p start:*",

@@ -16,19 +16,20 @@ enum Status {
 export const HomePage: React.FunctionComponent = () => {
   const [rawDocument, setRawDocument] = useState<WrappedDocument>();
   const [documentStatus, setDocumentStatus] = useState<Status>(Status.IDLE);
+  const NETWORK_NAME = process.env.REACT_APP_NETWORK_NAME || "ropsten";
 
   useEffect(() => {
     const setStatusAsync = async (): Promise<void> => {
       setDocumentStatus(Status.PENDING);
 
       if (rawDocument) {
-        isValid(await verify(rawDocument, { network: "ropsten" }))
+        isValid(await verify(rawDocument, { network: NETWORK_NAME }))
           ? setDocumentStatus(Status.RESOLVED)
           : setDocumentStatus(Status.REJECTED);
       }
     };
     setStatusAsync();
-  }, [rawDocument]);
+  }, [rawDocument, NETWORK_NAME]);
 
   return (
     <div className="bg-gray-100">

@@ -34,7 +34,7 @@ export const DropZone: React.FunctionComponent<DropZoneProps> = ({ onDocumentDro
       {({ getRootProps, getInputProps }) => (
         <div
           {...getRootProps()}
-          className="h-64 w-screen text-center border-dashed border-gray-500 border-4 bg-gray-200 flex flex-col justify-center"
+          className="h-64 w-full text-center border-dashed border-gray-500 border-4 bg-gray-200 flex flex-col justify-center"
         >
           <input {...getInputProps()} />
           <p className="text-gray-700">Drag and Drop your verifiable credentials</p>

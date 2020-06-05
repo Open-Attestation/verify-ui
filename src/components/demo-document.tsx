@@ -12,7 +12,7 @@ export const DemoDocument: React.FunctionComponent<DemoDocumentProps> = ({ onDoc
   };
 
   return (
-    <button className="w-64 p-16 border-gray-500 border-solid border-4 text-gray-700" onClick={onClick}>
+    <button className="w-72 h-64 p-12 border-gray-500 border-solid border-4 text-gray-700" onClick={onClick}>
       Click here to test with a demo certificate
     </button>
   );

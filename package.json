@@ -10,7 +10,8 @@
     "@govtechsg/open-attestation": "^3.9.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-dropzone": "^11.0.2"
+    "react-dropzone": "^11.0.2",
+    "react-router-dom": "^5.2.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^9.1.1",
@@ -32,6 +33,7 @@
     "@types/node": "^14.0.23",
     "@types/react": "^16.9.43",
     "@types/react-dom": "^16.9.8",
+    "@types/react-router-dom": "^5.1.5",
     "@typescript-eslint/eslint-plugin": "^3.6.1",
     "@typescript-eslint/parser": "^3.6.1",
     "commitizen": "^4.1.2",

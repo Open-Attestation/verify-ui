@@ -1,16 +1,21 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { HomePage } from "./pages/home";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { HomePage } from "./components/home/home-page";
+import { Footer } from "./components/shared/footer";
+import { Header } from "./components/shared/header";
+import { VerifyPage } from "./pages/verify";
 
 export const App: React.FunctionComponent = () => (
   <Router>
+    <Header />
     <Switch>
       <Route path="/verify">
-        <HomePage />
+        <VerifyPage />
       </Route>
       <Route path="/">
-        <div>Hello world</div>
+        <HomePage />
       </Route>
     </Switch>
+    <Footer />
   </Router>
 );

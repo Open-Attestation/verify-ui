@@ -3,3 +3,14 @@
 @tailwind components;
 
 @tailwind utilities;
+
+:root {
+  --primary: #4e73b6;
+  --accent-2: #75c9c8;
+}
+
+body {
+  font-family: Roboto;
+  font-style: normal;
+  color: #4f4f4f;
+}

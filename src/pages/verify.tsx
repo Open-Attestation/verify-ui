@@ -13,7 +13,7 @@ enum Status {
   REJECTED,
 }
 
-export const HomePage: React.FunctionComponent = () => {
+export const VerifyPage: React.FunctionComponent = () => {
   const [rawDocument, setRawDocument] = useState<WrappedDocument>();
   const [documentStatus, setDocumentStatus] = useState<Status>(Status.IDLE);
   const NETWORK_NAME = process.env.REACT_APP_NETWORK_NAME || "ropsten";

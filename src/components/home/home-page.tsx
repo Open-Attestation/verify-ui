@@ -1,6 +1,8 @@
 import styled from "@emotion/styled";
 import React from "react";
 import { Link } from "react-router-dom";
+import { ButtonPrimaryLink } from "../shared/button";
+import { NavigationBar } from "../shared/navigation-bar";
 import howCanHelpImage from "./images/how-can-help.svg";
 import howItWorksImage from "./images/how-it-works.svg";
 import mainImage from "./images/main.svg";
@@ -27,45 +29,6 @@ const Section = styled.section`
 
 const SectionImage = styled.img`
   max-width: 579px;
-`;
-
-const Logo = styled.div`
-  color: #434144;
-  font-family: Libre Franklin;
-  font-weight: 600;
-  font-size: 36px;
-  line-height: 44px;
-`;
-
-const FaqLink = styled.div`
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 19px;
-  color: #434144;
-`;
-
-const ButtonLinkOutlined = styled.div`
-  padding: 10px 20px;
-  margin: 0px 10px;
-  border: 2px solid var(--primary);
-  box-sizing: border-box;
-  border-radius: 15px;
-  font-weight: 500;
-  font-size: 18px;
-  line-height: 21px;
-  color: var(--primary);
-`;
-
-const ButtonLink = styled.div`
-  display: inline-block;
-  padding: 10px 20px;
-  background: var(--primary);
-  border-radius: 15px;
-  font-weight: 500;
-  font-size: 18px;
-  line-height: 21px;
-  color: #ffffff;
-  margin-top: 5px;
 `;
 
 const MainSectionTitle = styled.div`
@@ -132,24 +95,16 @@ export const HomePage: React.FunctionComponent = () => {
   return (
     <Root>
       <Section>
-        <div className="flex justify-between pt-4">
-          <Logo>Verify</Logo>
-          <div className="flex items-center">
-            <FaqLink>FAQ</FaqLink>
-            <ButtonLinkOutlined className="">
-              <Link to="/verify">Verify</Link>
-            </ButtonLinkOutlined>
-          </div>
-        </div>
+        <NavigationBar />
         <div className="flex items-center justify-center flex-grow">
           <div className="w-1/2">
             <MainSectionTitle>An easy way to check and verify your certificates</MainSectionTitle>
             <SubSectionTitle>
               We help you to verify the certificates you have of anyone from any government agencies. All in one place.
             </SubSectionTitle>
-            <ButtonLink>
+            <ButtonPrimaryLink>
               <Link to="/verify">Verify</Link>
-            </ButtonLink>
+            </ButtonPrimaryLink>
           </div>
           <div className="w-1/2">
             <SectionImage src={mainImage} />
@@ -179,9 +134,9 @@ export const HomePage: React.FunctionComponent = () => {
                 </div>
               </div>
             </Progress>
-            <ButtonLink>
+            <ButtonPrimaryLink>
               <Link to="/verify">Verify</Link>
-            </ButtonLink>
+            </ButtonPrimaryLink>
           </div>
         </div>
       </Section>
@@ -201,9 +156,9 @@ export const HomePage: React.FunctionComponent = () => {
               <p>We'll check if the contents match and if the certificate comes from a recognised government body.</p>
               <p>This way, you'll know if the certificate is valid when you try to view it.</p>
             </SubSectionTitle>
-            <ButtonLink>
+            <ButtonPrimaryLink>
               <Link to="/verify">Verify</Link>
-            </ButtonLink>
+            </ButtonPrimaryLink>
           </div>
           <div className="w-1/2">
             <SectionImage src={howItWorksImage} />

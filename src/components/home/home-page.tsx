@@ -102,9 +102,9 @@ export const HomePage: React.FunctionComponent = () => {
             <SubSectionTitle>
               We help you to verify the certificates you have of anyone from any government agencies. All in one place.
             </SubSectionTitle>
-            <ButtonPrimaryLink>
-              <Link to="/verify">Verify</Link>
-            </ButtonPrimaryLink>
+            <Link to="/verify">
+              <ButtonPrimaryLink>Verify</ButtonPrimaryLink>
+            </Link>
           </div>
           <div className="w-1/2">
             <SectionImage src={mainImage} />
@@ -134,9 +134,9 @@ export const HomePage: React.FunctionComponent = () => {
                 </div>
               </div>
             </Progress>
-            <ButtonPrimaryLink>
-              <Link to="/verify">Verify</Link>
-            </ButtonPrimaryLink>
+            <Link to="/verify">
+              <ButtonPrimaryLink>Verify</ButtonPrimaryLink>
+            </Link>
           </div>
         </div>
       </Section>
@@ -156,9 +156,9 @@ export const HomePage: React.FunctionComponent = () => {
               <p>We'll check if the contents match and if the certificate comes from a recognised government body.</p>
               <p>This way, you'll know if the certificate is valid when you try to view it.</p>
             </SubSectionTitle>
-            <ButtonPrimaryLink>
-              <Link to="/verify">Verify</Link>
-            </ButtonPrimaryLink>
+            <Link to="/verify">
+              <ButtonPrimaryLink>Verify</ButtonPrimaryLink>
+            </Link>
           </div>
           <div className="w-1/2">
             <SectionImage src={howItWorksImage} />

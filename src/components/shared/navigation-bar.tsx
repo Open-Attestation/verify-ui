@@ -17,7 +17,6 @@ const FaqLink = styled.div`
 
 const ButtonLinkOutlined = styled.div`
   padding: 10px 20px;
-  margin: 0px 10px;
   border: 2px solid var(--primary);
   box-sizing: border-box;
   border-radius: 15px;
@@ -33,10 +32,10 @@ export const NavigationBar: React.FunctionComponent = () => (
       <Link to="/">Verify</Link>
     </Logo>
     <div className="flex items-center">
-      <FaqLink>FAQ</FaqLink>
-      <ButtonLinkOutlined>
-        <Link to="/verify">Verify</Link>
-      </ButtonLinkOutlined>
+      <FaqLink className="mr-8">FAQ</FaqLink>
+      <Link to="/verify">
+        <ButtonLinkOutlined>Verify</ButtonLinkOutlined>
+      </Link>
     </div>
   </nav>
 );

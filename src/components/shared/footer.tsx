@@ -3,8 +3,6 @@ import React from "react";
 import govtechLogo from "./images/logo_govtech_hort.gif";
 
 const BroughtToYou = styled.div`
-  font-size: 16px;
-  line-height: 19px;
   color: #6f6d71;
 `;
 const Copyright = styled.div`

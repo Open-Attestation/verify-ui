@@ -4,7 +4,6 @@ import React, { useState, useEffect } from "react";
 
 import { DemoDocument } from "../components/demo-document";
 import { DocumentRenderer } from "../components/document-renderer";
-import { DropZone } from "../components/dropzone";
 
 enum Status {
   IDLE,
@@ -35,7 +34,6 @@ export const VerifyPage: React.FunctionComponent = () => {
     <div className="bg-gray-100">
       <div className="flex">
         <DemoDocument onDocumentLoaded={(document) => setRawDocument(document)} />
-        <DropZone onDocumentDropped={(document) => setRawDocument(document)} />
       </div>
       {documentStatus === Status.RESOLVED ? (
         <div className="w-full text-center py-3 bg-green-200">

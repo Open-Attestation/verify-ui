@@ -32,7 +32,9 @@ export const NavigationBar: React.FunctionComponent = () => (
       <Link to="/">Verify</Link>
     </Logo>
     <div className="flex items-center">
-      <FaqLink className="mr-8">FAQ</FaqLink>
+      <Link to="/faq">
+        <FaqLink className="mr-8">FAQ</FaqLink>
+      </Link>
       <Link to="/verify">
         <ButtonLinkOutlined>Verify</ButtonLinkOutlined>
       </Link>

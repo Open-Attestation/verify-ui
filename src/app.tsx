@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { FaqPage } from "./components/faq/faq-page";
 import { HomePage } from "./components/home/home-page";
 import { Footer } from "./components/shared/footer";
 import { Header } from "./components/shared/header";
@@ -11,6 +12,9 @@ export const App: React.FunctionComponent = () => (
     <Switch>
       <Route path="/verify">
         <VerifyPage />
+      </Route>
+      <Route path="/faq">
+        <FaqPage />
       </Route>
       <Route path="/">
         <HomePage />

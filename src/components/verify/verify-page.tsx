@@ -3,6 +3,7 @@ import { isValid, verify } from "@govtechsg/oa-verify";
 import { getData, v2, WrappedDocument } from "@govtechsg/open-attestation";
 import React, { useEffect, useState } from "react";
 import { CheckCircle, Loader } from "../shared/icons";
+import { Section, Separator, Title } from "../shared/layout";
 import { NavigationBar } from "../shared/navigation-bar";
 import { DocumentRenderer } from "./document-renderer";
 import { DropZone } from "./dropzone";
@@ -15,29 +16,6 @@ enum Status {
   RESOLVED,
   REJECTED,
 }
-
-const Section = styled.section`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  & > * {
-    max-width: 1280px;
-    width: 1280px;
-  }
-  background: #faf9fb;
-`;
-const Separator = styled.hr`
-  border: 1px solid #eeecf1;
-  margin: 10px 0;
-`;
-
-const Title = styled.div`
-  font-family: Manjari;
-  font-weight: bold;
-  font-size: 42px;
-  line-height: 49px;
-  color: #5b5e62;
-`;
 const SubTitle = styled.div`
   text-align: center;
   color: #434144;

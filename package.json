@@ -17,7 +17,6 @@
     "@commitlint/cli": "^9.1.1",
     "@commitlint/config-conventional": "^9.1.1",
     "@commitlint/prompt": "^9.1.1",
-    "@fullhuman/postcss-purgecss": "^2.3.0",
     "@ls-age/commitlint-circle": "^1.0.0",
     "@storybook/addon-actions": "^5.3.19",
     "@storybook/addon-info": "^5.3.19",

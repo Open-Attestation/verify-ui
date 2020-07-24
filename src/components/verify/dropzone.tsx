@@ -12,6 +12,11 @@ const Container = styled.div`
   border-radius: 20px;
   width: 592px;
   height: 520px;
+  &.hover {
+    background: #f0f0f0;
+    border-color: var(--primary);
+    box-shadow: 0 0 10px 1px var(--accent-2);
+  }
 `;
 
 const DragAndDrop = styled.div`
@@ -49,8 +54,8 @@ export const DropZone: React.FunctionComponent<DropZoneProps> = ({ onDocumentDro
 
   return (
     <Dropzone onDrop={onFileDrop}>
-      {({ getRootProps, getInputProps }) => (
-        <Container {...getRootProps()} className="flex flex-col items-center">
+      {({ getRootProps, getInputProps, isDragAccept }) => (
+        <Container {...getRootProps()} className={`flex flex-col items-center ${isDragAccept ? "hover" : ""}`}>
           <input {...getInputProps()} />
           <img src={documentImage} className="mt-12 mr-6" alt="" />
           <DragAndDrop className="mt-6">Drag and drop file here</DragAndDrop>

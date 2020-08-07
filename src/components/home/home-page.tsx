@@ -16,18 +16,19 @@ const Root = styled.div`
   }
 `;
 
+const BgBeige = styled.div`
+  background-color: #fffdfa;
+`;
+
 const Section = styled.section`
   display: flex;
-  flex-direction: column;
   align-items: center;
-  height: 700px;
-  & > * {
-    max-width: 1280px;
-    width: 1280px;
-  }
+  justify-content: center;
+  min-height: 600px;
 `;
 
 const SectionImage = styled.img`
+  width: 100%;
   max-width: 579px;
 `;
 
@@ -94,74 +95,83 @@ const Progress = styled.div`
 export const HomePage: React.FunctionComponent = () => {
   return (
     <Root>
-      <Section>
+      <BgBeige>
         <NavigationBar />
-        <div className="flex items-center justify-center flex-grow">
-          <div className="w-1/2">
-            <MainSectionTitle>An easy way to check and verify your certificates</MainSectionTitle>
-            <SubSectionTitle>
-              We help you to verify the certificates you have of anyone from any government agencies. All in one place.
-            </SubSectionTitle>
-            <Link to="/verify">
-              <ButtonPrimaryLink>Verify</ButtonPrimaryLink>
-            </Link>
-          </div>
-          <div className="w-1/2">
-            <SectionImage src={mainImage} />
+      </BgBeige>
+      <Section>
+        <div className="container py-12 px-4">
+          <div className="flex flex-wrap items-center">
+            <div className="w-full md:w-1/2 md:px-4">
+              <MainSectionTitle>An easy way to check and verify your certificates</MainSectionTitle>
+              <SubSectionTitle>
+                We help you to verify the certificates you have of anyone from any government agencies. All in one
+                place.
+              </SubSectionTitle>
+              <Link to="/verify">
+                <ButtonPrimaryLink>Verify</ButtonPrimaryLink>
+              </Link>
+            </div>
+            <div className="w-3/4 mx-auto md:w-1/2 py-6">
+              <SectionImage src={mainImage} />
+            </div>
           </div>
         </div>
       </Section>
       <Section>
-        <div className="flex items-center justify-center flex-grow">
-          <div className="w-1/2">
-            <SectionImage src={howCanHelpImage} />
-          </div>
-          <div className="w-1/2">
-            <MainSectionTitle>How we can help</MainSectionTitle>
-            <Progress>
-              <div className="flex">
-                <div className="progress-step">
-                  <div className="step-title">View</div>
-                  <div>Easy way to view your certificate</div>
+        <div className="container py-12 px-4">
+          <div className="flex flex-wrap items-center">
+            <div className="w-full md:w-1/2 md:px-4 md:order-2">
+              <MainSectionTitle>How we can help</MainSectionTitle>
+              <Progress>
+                <div className="flex">
+                  <div className="progress-step">
+                    <div className="step-title">View</div>
+                    <div>Easy way to view your certificate</div>
+                  </div>
+                  <div className="progress-step">
+                    <div className="step-title">Check</div>
+                    <div>Make sure it has not been tampered with</div>
+                  </div>
+                  <div className="progress-step">
+                    <div className="step-title">Verify</div>
+                    <div>Find out if it is from a recognised institution</div>
+                  </div>
                 </div>
-                <div className="progress-step">
-                  <div className="step-title">Check</div>
-                  <div>Make sure it has not been tampered with</div>
-                </div>
-                <div className="progress-step">
-                  <div className="step-title">Verify</div>
-                  <div>Find out if it is from a recognised institution</div>
-                </div>
-              </div>
-            </Progress>
-            <Link to="/verify">
-              <ButtonPrimaryLink>Verify</ButtonPrimaryLink>
-            </Link>
+              </Progress>
+              <Link to="/verify">
+                <ButtonPrimaryLink>Verify</ButtonPrimaryLink>
+              </Link>
+            </div>
+            <div className="w-3/4 mx-auto md:w-1/2 py-6 md:order-1">
+              <SectionImage src={howCanHelpImage} />
+            </div>
           </div>
         </div>
       </Section>
       <Section>
-        <div className="flex items-center justify-center flex-grow">
-          <div className="w-1/2">
-            <MainSectionTitle>How we can help</MainSectionTitle>
-            <SubSectionTitle>
-              <p>
-                When an official certificate is issued by the government, a unique digital code is tagged to it. This
-                code, together with condensed information from the certificate, is stored on the blockchain.
-              </p>
-              <p>
-                When you open the certificate on this site, its contents will be compared with what was stored on the
-                blockchain.
-              </p>
-              <p>We'll check if the contents match and if the certificate comes from a recognised government body.</p>
-              <p>This way, you'll know if the certificate is valid when you try to view it.</p>
-            </SubSectionTitle>
-            <Link to="/verify">
-              <ButtonPrimaryLink>Verify</ButtonPrimaryLink>
-            </Link>
-          </div>
-          <div className="w-1/2">
-            <SectionImage src={howItWorksImage} />
+        <div className="container py-12 px-4">
+          <div className="flex flex-wrap items-center">
+            <div className="w-full md:w-1/2 md:px-4">
+              <MainSectionTitle>How we can help</MainSectionTitle>
+              <SubSectionTitle>
+                <p>
+                  When an official certificate is issued by the government, a unique digital code is tagged to it. This
+                  code, together with condensed information from the certificate, is stored on the blockchain.
+                </p>
+                <p>
+                  When you open the certificate on this site, its contents will be compared with what was stored on the
+                  blockchain.
+                </p>
+                <p>We'll check if the contents match and if the certificate comes from a recognised government body.</p>
+                <p>This way, you'll know if the certificate is valid when you try to view it.</p>
+              </SubSectionTitle>
+              <Link to="/verify">
+                <ButtonPrimaryLink>Verify</ButtonPrimaryLink>
+              </Link>
+            </div>
+            <div className="w-3/4 mx-auto md:w-1/2 py-6">
+              <SectionImage src={howItWorksImage} />
+            </div>
           </div>
         </div>
       </Section>

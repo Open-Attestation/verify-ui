@@ -4,16 +4,14 @@ export const Section = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;
-  & > * {
-    max-width: 1280px;
-    width: 1280px;
-  }
   background: #faf9fb;
 `;
 
 export const Separator = styled.hr`
   border: 1px solid #eeecf1;
-  margin: 10px 0 20px;
+  width: 100%;
+  max-width: 1280px;
+  margin: 20px 0;
 `;
 
 export const Title = styled.div`

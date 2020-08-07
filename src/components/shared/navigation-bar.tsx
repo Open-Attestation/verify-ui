@@ -27,17 +27,23 @@ const ButtonLinkOutlined = styled.div`
 `;
 
 export const NavigationBar: React.FunctionComponent = () => (
-  <nav className="flex justify-between pt-4">
-    <Logo>
-      <Link to="/">Verify</Link>
-    </Logo>
-    <div className="flex items-center">
-      <Link to="/faq">
-        <FaqLink className="mr-8">FAQ</FaqLink>
-      </Link>
-      <Link to="/verify">
-        <ButtonLinkOutlined>Verify</ButtonLinkOutlined>
-      </Link>
+  <nav className="container mx-auto pt-4 px-4">
+    <div className="flex flex-wrap">
+      <div className="w-auto mr-auto">
+        <Logo>
+          <Link to="/">Verify</Link>
+        </Logo>
+      </div>
+      <div className="w-auto">
+        <div className="flex items-center">
+          <Link to="/faq">
+            <FaqLink className="mr-8">FAQ</FaqLink>
+          </Link>
+          <Link to="/verify">
+            <ButtonLinkOutlined>Verify</ButtonLinkOutlined>
+          </Link>
+        </div>
+      </div>
     </div>
   </nav>
 );

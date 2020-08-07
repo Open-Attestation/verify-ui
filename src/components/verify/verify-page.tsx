@@ -116,44 +116,58 @@ export const VerifyPage: React.FunctionComponent = () => {
         <>
           <Title className="text-center">Verify Documents</Title>
           <SubTitle>Drop a government issued certificate</SubTitle>
-          <DropzoneContainer className="flex justify-center">
-            <DropZone
-              onDocumentDropped={(document) => {
-                setRawDocument(document);
-              }}
-            />
-          </DropzoneContainer>
+          <div className="container px-4">
+            <div className="flex flex-wrap">
+              <DropzoneContainer className="w-full lg:w-1/2 lg:mx-auto">
+                <DropZone
+                  onDocumentDropped={(document) => {
+                    setRawDocument(document);
+                  }}
+                />
+              </DropzoneContainer>
+            </div>
+          </div>
         </>
       )}
       {verificationStatus !== Status.IDLE && (
-        <>
-          <Title>
-            Issued by <Issuer>{issuer}</Issuer>
-          </Title>
-          <div className="mb-8 flex items-center">
-            <CheckStatus
-              status={issuingStatus}
-              loadingMessage="Checking if document was issued"
-              successMessage="Document has been issued"
-              errorMessage="Document has not been issued"
-              className="mr-16"
-            />
-            <CheckStatus
-              status={revokingStatus}
-              loadingMessage="Checking if document was revoked"
-              successMessage="Document has not been revoked"
-              errorMessage="Document has been revoked"
-              className="mr-16"
-            />
-            <CheckStatus
-              status={issuerStatus}
-              loadingMessage="Checking issuer identity"
-              successMessage="Document’s issuer has been identified"
-              errorMessage="Document’s issuer has not been identified"
-            />
+        <div className="container px-4">
+          <div className="flex flex-wrap mb-4">
+            <div className="w-full">
+              <Title>
+                Issued by <Issuer>{issuer}</Issuer>
+              </Title>
+            </div>
+          </div>
+          <div className="flex flex-wrap mb-8">
+            <div className="w-full lg:w-auto">
+              <CheckStatus
+                status={issuingStatus}
+                loadingMessage="Checking if document was issued"
+                successMessage="Document has been issued"
+                errorMessage="Document has not been issued"
+                className="mr-16"
+              />
+            </div>
+            <div className="w-full lg:w-auto">
+              <CheckStatus
+                status={revokingStatus}
+                loadingMessage="Checking if document was revoked"
+                successMessage="Document has not been revoked"
+                errorMessage="Document has been revoked"
+                className="mr-16"
+              />
+            </div>
+            <div className="w-full lg:w-auto">
+              <CheckStatus
+                status={issuerStatus}
+                loadingMessage="Checking issuer identity"
+                successMessage="Document’s issuer has been identified"
+                errorMessage="Document’s issuer has not been identified"
+              />
+            </div>
           </div>
           {verificationStatus === Status.RESOLVED && rawDocument && <DocumentRenderer rawDocument={rawDocument} />}
-        </>
+        </div>
       )}
     </Section>
   );

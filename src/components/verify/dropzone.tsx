@@ -10,8 +10,8 @@ const Container = styled.div`
   border: 2px dashed #dddddd;
   box-sizing: border-box;
   border-radius: 20px;
-  width: 592px;
-  height: 520px;
+  width: 100%;
+  min-height: 520px;
   &.hover {
     background: #f0f0f0;
     border-color: var(--primary);

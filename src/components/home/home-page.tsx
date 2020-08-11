@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 import React from "react";
 import { Link } from "react-router-dom";
 import { ButtonPrimaryLink } from "../shared/button";
+import { flexCenterColumn } from "../shared/mixin";
 import { NavigationBar } from "../shared/navigation-bar";
 import howCanHelpImage from "./images/how-can-help.svg";
 import howItWorksImage from "./images/how-it-works.svg";
@@ -16,14 +17,8 @@ const Root = styled.div`
   }
 `;
 
-const BgBeige = styled.div`
-  background-color: #fffdfa;
-`;
-
 const Section = styled.section`
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  ${flexCenterColumn()};
   min-height: 600px;
 `;
 
@@ -95,10 +90,8 @@ const Progress = styled.div`
 export const HomePage: React.FunctionComponent = () => {
   return (
     <Root>
-      <BgBeige>
-        <NavigationBar />
-      </BgBeige>
       <Section>
+        <NavigationBar />
         <div className="container py-12 px-4">
           <div className="flex flex-wrap items-center">
             <div className="w-full md:w-1/2 md:px-4">

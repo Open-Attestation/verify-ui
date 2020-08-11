@@ -1,9 +1,8 @@
 import styled from "@emotion/styled";
+import { flexCenterColumn } from "./mixin";
 
 export const Section = styled.section`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  ${flexCenterColumn()};
   background: #faf9fb;
 `;
 

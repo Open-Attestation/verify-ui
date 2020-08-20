@@ -19,13 +19,6 @@ const Container = styled.div`
   }
 `;
 
-const DragAndDrop = styled.div`
-  font-weight: bold;
-  font-size: 18px;
-  line-height: 21px;
-  color: #4f4f4f;
-`;
-
 interface DropZoneProps {
   onDocumentDropped: (document: WrappedDocument) => void;
 }
@@ -58,11 +51,9 @@ export const DropZone: React.FunctionComponent<DropZoneProps> = ({ onDocumentDro
         <Container {...getRootProps()} className={`flex flex-col items-center ${isDragAccept ? "hover" : ""}`}>
           <input {...getInputProps()} />
           <img src={documentImage} className="mt-12 mr-6" alt="" />
-          <DragAndDrop className="mt-6">Drag and drop file here</DragAndDrop>
-          <div className="mt-6">or</div>
-          <div className="mt-6">
-            <ButtonPrimary>Select File</ButtonPrimary>
-          </div>
+          <h5 className="mt-6">Drag and drop file here</h5>
+          <p className="mt-6">or</p>
+          <ButtonPrimary className="mt-6">Select File</ButtonPrimary>
         </Container>
       )}
     </Dropzone>

@@ -27,25 +27,10 @@ const SectionImage = styled.img`
   max-width: 579px;
 `;
 
-const MainSectionTitle = styled.div`
-  font-family: Manjari;
-  font-weight: 100;
-  font-size: 54px;
-  line-height: 58px;
-`;
-
-const SubSectionTitle = styled.div`
-  font-size: 18px;
-  line-height: 21px;
-  color: #7a7a7a;
-  margin: 20px 0;
-`;
-
 const Progress = styled.div`
   .progress-step {
     position: relative;
     width: 100%;
-    margin-bottom: 10px;
 
     &:last-child:after {
       display: none;
@@ -65,7 +50,7 @@ const Progress = styled.div`
       color: var(--accent-2);
       background: #fff;
       border: 4px solid var(--accent-2);
-      margin-bottom: 10px;
+      margin-bottom: 20px;
     }
 
     &:after {
@@ -78,13 +63,6 @@ const Progress = styled.div`
       width: 100%;
     }
   }
-
-  .step-title {
-    font-weight: bold;
-    font-size: 20px;
-    line-height: 23px;
-    color: #7a7a7a;
-  }
 `;
 
 export const HomePage: React.FunctionComponent = () => {
@@ -95,11 +73,11 @@ export const HomePage: React.FunctionComponent = () => {
         <div className="container py-12 px-4">
           <div className="flex flex-wrap items-center">
             <div className="w-full md:w-1/2 md:px-4">
-              <MainSectionTitle>An easy way to check and verify your certificates</MainSectionTitle>
-              <SubSectionTitle>
+              <h1>An easy way to check and verify your certificates</h1>
+              <p className="my-5">
                 We help you to verify the certificates you have of anyone from any government agencies. All in one
                 place.
-              </SubSectionTitle>
+              </p>
               <Link to="/verify">
                 <ButtonPrimaryLink>Verify</ButtonPrimaryLink>
               </Link>
@@ -114,20 +92,20 @@ export const HomePage: React.FunctionComponent = () => {
         <div className="container py-12 px-4">
           <div className="flex flex-wrap items-center">
             <div className="w-full md:w-1/2 md:px-4 md:order-2">
-              <MainSectionTitle>How we can help</MainSectionTitle>
-              <Progress>
+              <h1>How we can help</h1>
+              <Progress className="mb-2">
                 <div className="flex">
                   <div className="progress-step">
-                    <div className="step-title">View</div>
-                    <div>Easy way to view your certificate</div>
+                    <h5 className="mb-1">View</h5>
+                    <p>Easy way to view your certificate</p>
                   </div>
                   <div className="progress-step">
-                    <div className="step-title">Check</div>
-                    <div>Make sure it has not been tampered with</div>
+                    <h5 className="mb-1">Check</h5>
+                    <p>Make sure it has not been tampered with</p>
                   </div>
                   <div className="progress-step">
-                    <div className="step-title">Verify</div>
-                    <div>Find out if it is from a recognised institution</div>
+                    <h5 className="mb-1">Verify</h5>
+                    <p>Find out if it is from a recognised institution</p>
                   </div>
                 </div>
               </Progress>
@@ -145,19 +123,17 @@ export const HomePage: React.FunctionComponent = () => {
         <div className="container py-12 px-4">
           <div className="flex flex-wrap items-center">
             <div className="w-full md:w-1/2 md:px-4">
-              <MainSectionTitle>How we can help</MainSectionTitle>
-              <SubSectionTitle>
-                <p>
-                  When an official certificate is issued by the government, a unique digital code is tagged to it. This
-                  code, together with condensed information from the certificate, is stored on the blockchain.
-                </p>
-                <p>
-                  When you open the certificate on this site, its contents will be compared with what was stored on the
-                  blockchain.
-                </p>
-                <p>We'll check if the contents match and if the certificate comes from a recognised government body.</p>
-                <p>This way, you'll know if the certificate is valid when you try to view it.</p>
-              </SubSectionTitle>
+              <h1>How we can help</h1>
+              <p>
+                When an official certificate is issued by the government, a unique digital code is tagged to it. This
+                code, together with condensed information from the certificate, is stored on the blockchain.
+              </p>
+              <p>
+                When you open the certificate on this site, its contents will be compared with what was stored on the
+                blockchain.
+              </p>
+              <p>We'll check if the contents match and if the certificate comes from a recognised government body.</p>
+              <p>This way, you'll know if the certificate is valid when you try to view it.</p>
               <Link to="/verify">
                 <ButtonPrimaryLink>Verify</ButtonPrimaryLink>
               </Link>

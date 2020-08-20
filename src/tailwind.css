@@ -7,14 +7,77 @@
 :root {
   --primary: #4e73b6;
   --accent-2: #75c9c8;
+  --text-primary: #4f4f4f;
+}
+
+.font-manjari-regular {
+  font-family: "Manjari", sans-serif;
+  font-weight: 400;
+}
+
+.font-manjari-bold {
+  font-family: "Manjari", sans-serif;
+  font-weight: 700;
+}
+
+.font-roboto-regular {
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+}
+
+.font-roboto-bold {
+  font-family: "Roboto", sans-serif;
+  font-weight: 700;
 }
 
 body {
-  font-family: Roboto;
-  font-style: normal;
-  color: #4f4f4f;
+  @apply font-roboto-regular;
+  color: var(--text-primary);
+}
+
+h1 {
+  @apply font-manjari-regular;
+  @apply mb-4;
+  font-size: 52px;
+  line-height: 56px;
+}
+
+h2 {
+  @apply font-manjari-bold;
+  font-size: 40px;
+  line-height: 44px;
+}
+
+h3 {
+  @apply font-manjari-bold;
+  font-size: 32px;
+}
+
+h4 {
+  @apply font-manjari-bold;
+  font-size: 24px;
+}
+
+h5 {
+  @apply font-roboto-bold;
+  font-size: 20px;
+}
+
+h6 {
+  @apply font-roboto-bold;
   font-size: 16px;
-  line-height: 19px;
+}
+
+p {
+  @apply font-roboto-regular;
+  @apply mb-4;
+  font-size: 16px;
+  line-height: 20px;
+}
+
+p.small {
+  font-size: 13px;
+  line-height: 15px;
 }
 
 @keyframes rotation {

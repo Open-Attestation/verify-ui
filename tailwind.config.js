@@ -1,6 +1,15 @@
 module.exports = {
   theme: {
-    extend: {},
+    textColor: theme => ({
+      ...theme("colors"),
+    }),
+    extend: {
+      colors: {
+        primary: {
+          default: "#4e73b6",
+        }
+      }
+    },
   },
   variants: {},
   plugins: [],

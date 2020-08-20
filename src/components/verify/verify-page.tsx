@@ -3,7 +3,7 @@ import { isValid, verify } from "@govtechsg/oa-verify";
 import { getData, v2, WrappedDocument } from "@govtechsg/open-attestation";
 import React, { useEffect, useState } from "react";
 import { CheckCircle, Loader } from "../shared/icons";
-import { Section, Separator, Title } from "../shared/layout";
+import { Section, Separator } from "../shared/layout";
 import { NavigationBar } from "../shared/navigation-bar";
 import { DocumentRenderer } from "./document-renderer";
 import { DropZone } from "./dropzone";
@@ -16,10 +16,6 @@ enum Status {
   RESOLVED,
   REJECTED,
 }
-const SubTitle = styled.div`
-  text-align: center;
-  color: #434144;
-`;
 
 const DropzoneContainer = styled.div`
   margin-top: 20px;
@@ -114,8 +110,8 @@ export const VerifyPage: React.FunctionComponent = () => {
       <Separator />
       {verificationStatus === Status.IDLE && (
         <>
-          <Title className="text-center">Verify Documents</Title>
-          <SubTitle>Drop a government issued certificate</SubTitle>
+          <h2 className="text-center my-2">Verify Documents</h2>
+          <p className="text-center">Drop a government issued certificate</p>
           <div className="container px-4">
             <div className="flex flex-wrap">
               <DropzoneContainer className="w-full lg:w-1/2 lg:mx-auto">
@@ -133,9 +129,9 @@ export const VerifyPage: React.FunctionComponent = () => {
         <div className="container px-4">
           <div className="flex flex-wrap mb-4">
             <div className="w-full">
-              <Title>
+              <h2>
                 Issued by <Issuer>{issuer}</Issuer>
-              </Title>
+              </h2>
             </div>
           </div>
           <div className="flex flex-wrap mb-8">

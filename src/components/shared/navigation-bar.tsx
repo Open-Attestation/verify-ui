@@ -4,10 +4,9 @@ import { Link } from "react-router-dom";
 
 const Logo = styled.div`
   color: #434144;
-  font-family: Libre Franklin;
+  font-family: "Libre Franklin", sans-serif;
   font-weight: 600;
   font-size: 36px;
-  line-height: 44px;
 `;
 
 const FaqLink = styled.div`
@@ -28,7 +27,7 @@ const ButtonLinkOutlined = styled.div`
 
 export const NavigationBar: React.FunctionComponent = () => (
   <nav className="container mx-auto pt-4 px-4">
-    <div className="flex flex-wrap">
+    <div className="flex flex-wrap items-center">
       <div className="w-auto mr-auto">
         <Logo>
           <Link to="/">Verify</Link>

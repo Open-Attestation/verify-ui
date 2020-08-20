@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import React, { useState } from "react";
 import arrowDownCircle from "../shared/images/arrow-down-circle.svg";
-import { Section, Separator, Title } from "../shared/layout";
+import { Section, Separator } from "../shared/layout";
 import { NavigationBar } from "../shared/navigation-bar";
 import mainFaqImage from "./images/main-faq.svg";
 
@@ -24,12 +24,6 @@ const FaqTitleContainer = styled.div`
   height: 56px;
   background: #ffffff;
   border-color: #eeecf1;
-`;
-const FaqTitle = styled.span`
-  font-weight: 500;
-  font-size: 18px;
-  line-height: 21px;
-  color: #434144;
 `;
 
 const transitionDuration = "0.3s";
@@ -67,10 +61,12 @@ const FaqElement: React.FunctionComponent<{ question: string; answer: string }> 
         className={`flex justify-between items-center px-8 cursor-pointer ${open ? "border-b" : ""}`}
         onClick={() => setOpen(!open)}
       >
-        <FaqTitle>{question}</FaqTitle>
+        <h5>{question}</h5>
         <ArrowImage src={arrowDownCircle} alt="Press to toggle answer" className={open ? "rotation90" : "rotation0"} />
       </FaqTitleContainer>
-      <FaqAnswer className={open ? "open" : "close"}>{answer}</FaqAnswer>
+      <FaqAnswer className={open ? "open" : "close"}>
+        <p>{answer}</p>
+      </FaqAnswer>
     </div>
   );
 };
@@ -82,7 +78,7 @@ export const FaqPage: React.FunctionComponent = () => (
     <div className="container px-4">
       <div className="flex flex-wrap">
         <div className="w-auto">
-          <Title>Questions? Look here.</Title>
+          <h2>Questions? Look here.</h2>
         </div>
       </div>
     </div>

@@ -23,6 +23,7 @@ const DropzoneContainer = styled.div`
 `;
 const Issuer = styled.span`
   color: var(--primary);
+  word-break: break-word;
 `;
 
 const wait = (time: number): Promise<void> => new Promise((resolve) => setTimeout(resolve, time));

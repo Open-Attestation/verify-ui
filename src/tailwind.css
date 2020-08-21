@@ -5,9 +5,15 @@
 @tailwind utilities;
 
 :root {
-  --primary: #4e73b6;
-  --accent-2: #75c9c8;
-  --text-primary: #4f4f4f;
+  --primary: theme('colors.primary.default');
+  --grey: theme('colors.grey.default');
+  --grey-light: theme('colors.grey.light');
+  --grey-lighter: theme('colors.grey.lighter');
+  --teal: theme('colors.teal.default');
+  --yellow: theme('colors.yellow.default');
+  --yellow-light: theme('colors.yellow.light');
+  --purple: theme('colors.purple.default');
+  --purple-light: theme('colors.purple.light');
 }
 
 .font-manjari-regular {
@@ -32,7 +38,7 @@
 
 body {
   @apply font-roboto-regular;
-  color: var(--text-primary);
+  color: var(--grey);
 }
 
 h1 {
@@ -78,6 +84,15 @@ p {
 p.small {
   font-size: 13px;
   line-height: 15px;
+}
+
+ol,
+ul {
+  padding-left: 20px;
+}
+
+ol li::marker {
+  font-size: 16px;
 }
 
 @keyframes rotation {

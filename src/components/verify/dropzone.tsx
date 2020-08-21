@@ -6,8 +6,7 @@ import { ButtonPrimary } from "../shared/button";
 import documentImage from "./images/document.svg";
 
 const Container = styled.div`
-  background: #ffffff;
-  border: 2px dashed #dddddd;
+  border: 2px dashed var(--grey-light);
   box-sizing: border-box;
   border-radius: 20px;
   width: 100%;
@@ -15,7 +14,7 @@ const Container = styled.div`
   &.hover {
     background: #f0f0f0;
     border-color: var(--primary);
-    box-shadow: 0 0 10px 1px var(--accent-2);
+    box-shadow: 0 0 10px 1px var(--teal);
   }
 `;
 
@@ -48,7 +47,7 @@ export const DropZone: React.FunctionComponent<DropZoneProps> = ({ onDocumentDro
   return (
     <Dropzone onDrop={onFileDrop}>
       {({ getRootProps, getInputProps, isDragAccept }) => (
-        <Container {...getRootProps()} className={`flex flex-col items-center ${isDragAccept ? "hover" : ""}`}>
+        <Container {...getRootProps()} className={`flex flex-col items-center bg-white ${isDragAccept ? "hover" : ""}`}>
           <input {...getInputProps()} />
           <img src={documentImage} className="mt-12 mr-6" alt="" />
           <h5 className="mt-6">Drag and drop file here</h5>

@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import React from "react";
+import { Link } from "react-router-dom";
 import govtechLogo from "./images/logo_govtech_hort.gif";
 
 const GovtechImage = styled.img`
@@ -12,8 +13,11 @@ export const Footer: React.FunctionComponent = () => (
     <GovtechImage className="mb-4" src={govtechLogo} alt="govtech logo" />
     <p className="small">©2020 Government of Singapore | Last updated 23rd May 2020</p>
     <p className="small">
+      <Link to="/terms" className="text-primary mx-3">
+        Terms of use
+      </Link>
       <a
-        className="text-primary"
+        className="text-primary mx-3"
         href="https://www.tech.gov.sg/report_vulnerability"
         target="_blank"
         rel="noopener noreferrer"

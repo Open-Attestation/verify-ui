@@ -30,6 +30,21 @@
   font-weight: 700;
 }
 
+@font-face {
+  font-family: 'sgds-icons';
+  src:
+    url('./components/shared/fonts/sgds/sgds-icons.ttf') format('truetype'),
+    url('./components/shared/fonts/sgds/sgds-icons.woff') format('woff'),
+    url('./components/shared/fonts/sgds/sgds-icons.svg?#sgds-icons') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+html {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+}
+
 body {
   @apply font-roboto-regular;
   color: var(--text-primary);

@@ -2,28 +2,28 @@
   "version": "https://schema.openattestation.com/2.0/schema.json",
   "data": {
     "$template": {
-      "name": "a173561f-4edb-486d-a458-5222b032af50:string:main",
-      "type": "fd668f79-a27e-4613-b207-637cdbe65ee4:string:EMBEDDED_RENDERER",
-      "url": "eea04637-15f6-42be-90ea-f64836b8ffc8:string:https://tutorial-renderer.openattestation.com"
+      "name": "41f8ccf1-1e6d-4a02-8bde-72c85f9d2760:string:main",
+      "type": "93e78f6b-3544-487b-9fc8-a7edf43fda1f:string:EMBEDDED_RENDERER",
+      "url": "a46b0f89-74a8-4964-a9a4-dd4d5c5ecc84:string:https://tutorial-renderer.openattestation.com"
     },
     "recipient": {
-      "name": "83884406-6e67-4c9a-90ee-2ebcac4f575a:string:John Doe"
+      "name": "612648c9-acf8-4974-9ea9-d185f19815a7:string:John Doe"
     },
     "issuers": [
       {
-        "name": "1fc5f1c7-60d5-4a79-b1e5-54b719147fa8:string:Demo Issuer",
-        "documentStore": "40f8b202-0087-47eb-ac3a-06eea8fea07b:string:0xF78a7713591517288A950874658728910b1c98dA",
+        "name": "972729e4-45bb-479e-9404-0da80d91e5b5:string:Demo Issuer",
+        "documentStore": "df02ebf0-e14f-45fc-bbc8-f46d1879686b:string:0x8Fc57204c35fb9317D91285eF52D6b892EC08cD3",
         "identityProof": {
-          "type": "3358d888-1993-443c-a41a-755ae7f7b08f:string:DNS-TXT",
-          "location": "79217644-c2ab-4911-9eba-c24bc7d1796a:string:brew.tk"
+          "type": "aa50af99-5da1-4e41-a5c1-d690e491bb54:string:DNS-TXT",
+          "location": "3165c65b-76cb-47e0-a828-6c1275d8b270:string:example.openattestation.com"
         }
       }
     ]
   },
   "signature": {
     "type": "SHA3MerkleProof",
-    "targetHash": "ea50d4a2b950b4051701af40e43ba326575989e4bb40a6620461f227289546b3",
+    "targetHash": "affe749e2edf89a7e0d88b38804f8941f4fe2fb8191a38aacf77262dd8f00230",
     "proof": [],
-    "merkleRoot": "ea50d4a2b950b4051701af40e43ba326575989e4bb40a6620461f227289546b3"
+    "merkleRoot": "affe749e2edf89a7e0d88b38804f8941f4fe2fb8191a38aacf77262dd8f00230"
   }
 }

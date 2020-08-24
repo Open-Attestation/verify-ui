@@ -7,6 +7,6 @@ const StatusCheck = Selector("[data-testid='status-check']");
 
 test("Status check should reflect error correctly", async () => {
   await uploadDocument("./certificate-unissued-ropsten.json");
-  await validateIssuer("brew.tk");
+  await validateIssuer("example.openattestation.com");
   await t.expect(StatusCheck.withText("Document has not been issued").exists).ok();
 });

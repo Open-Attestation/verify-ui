@@ -2,30 +2,28 @@
   "version": "https://schema.openattestation.com/2.0/schema.json",
   "data": {
     "$template": {
-      "name": "74047950-ea66-4ae8-a0c7-3306f9e7fa36:string:main",
-      "type": "1e7a43d1-0589-4233-b134-baf6c0b64cff:string:EMBEDDED_RENDERER",
-      "url": "cb553684-4fdc-4777-885b-93ea2ef46d76:string:https://tutorial-renderer.openattestation.com"
+      "name": "090f9e13-a809-480c-a433-7ccfc08eb7ad:string:main",
+      "type": "f2974df0-b5f7-4b05-a489-59c00ed785ac:string:EMBEDDED_RENDERER",
+      "url": "a18f7f1a-fb58-48ce-8cc0-18c1b757b0f1:string:https://tutorial-renderer.openattestation.com"
     },
     "recipient": {
-      "name": "e89bef03-231a-4ee0-8a2d-4788dc7551b2:string:Mary Jane"
+      "name": "ab55a844-13c7-44f5-93f0-17eee68d3b0f:string:John Doe"
     },
     "issuers": [
       {
-        "name": "808de2c0-eac5-492a-b730-b52f47e6969d:string:Demo Issuer",
-        "documentStore": "ad0a67d5-871c-40fe-9f92-13cd66cc042f:string:0xF78a7713591517288A950874658728910b1c98dA",
+        "name": "0b4d9691-cdfd-4c9f-9d82-a17eac0c9f66:string:Demo Issuer",
+        "documentStore": "a0f87a90-57dd-425a-ad1e-b061b2a7b169:string:0x8Fc57204c35fb9317D91285eF52D6b892EC08cD3",
         "identityProof": {
-          "type": "cdc5e2a2-b189-4316-b533-1254d95954e7:string:DNS-TXT",
-          "location": "6c6bbd60-6170-422d-a7ca-b10d0bd06e85:string:brew.tk"
+          "type": "b3323140-3906-458a-81d4-6e111910069f:string:DNS-TXT",
+          "location": "bc95b94e-dfdb-4c40-8a54-ddf4582f902f:string:example.openattestation.com"
         }
       }
     ]
   },
   "signature": {
     "type": "SHA3MerkleProof",
-    "targetHash": "19f3a02aec06c9330ffbabeffbe2b90b6741aa3c7aa158d43610ed484b96f9b3",
-    "proof": [
-      "b53c0e6ad6d2be95fa0dedc542ddcbd18f3c4eab6851ee4ba963b16f4d242515"
-    ],
-    "merkleRoot": "bebcbb79e4edcc581d028c6341a842453e71e5db37893b21dc38b77de30b3d8b"
+    "targetHash": "f93142f94758b97fc45ae8226f20cc4af02f2208878dc56ebcdb9815e311745c",
+    "proof": [],
+    "merkleRoot": "f93142f94758b97fc45ae8226f20cc4af02f2208878dc56ebcdb9815e311745c"
   }
 }

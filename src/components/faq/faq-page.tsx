@@ -14,21 +14,12 @@ const Container = styled.div`
   }
 `;
 
-const FaqContainer = styled.div`
-  & > * {
-    margin: 10px 0;
-  }
-`;
-
 const FaqTitleContainer = styled.div`
   height: 56px;
-  background: #ffffff;
-  border-color: #eeecf1;
 `;
 
 const transitionDuration = "0.3s";
 const FaqAnswer = styled.div`
-  background: #ffffff;
   padding: 10px 2rem;
   overflow: hidden;
   transition: max-height ${transitionDuration} ease-out;
@@ -58,13 +49,13 @@ const FaqElement: React.FunctionComponent<{ question: string; answer: string }> 
   return (
     <div>
       <FaqTitleContainer
-        className={`flex justify-between items-center px-8 cursor-pointer ${open ? "border-b" : ""}`}
+        className={`flex justify-between items-center px-6 cursor-pointer bg-white ${open ? "" : ""}`}
         onClick={() => setOpen(!open)}
       >
         <h5>{question}</h5>
         <ArrowImage src={arrowDownCircle} alt="Press to toggle answer" className={open ? "rotation90" : "rotation0"} />
       </FaqTitleContainer>
-      <FaqAnswer className={open ? "open" : "close"}>
+      <FaqAnswer className={`bg-white mb-2 ${open ? "open" : "close"}`}>
         <p>{answer}</p>
       </FaqAnswer>
     </div>
@@ -75,7 +66,7 @@ export const FaqPage: React.FunctionComponent = () => (
   <Section>
     <NavigationBar />
     <Separator />
-    <div className="container px-4">
+    <div className="container px-4 py-3">
       <div className="flex flex-wrap">
         <div className="w-auto">
           <h2>Questions? Look here.</h2>
@@ -85,7 +76,7 @@ export const FaqPage: React.FunctionComponent = () => (
     <Container className="mb-8">
       <div className="container px-4">
         <div className="flex flex-wrap">
-          <FaqContainer className="w-full md:w-2/3">
+          <div className="w-full md:w-2/3">
             <FaqElement
               question="Who developed Verify.gov?"
               answer="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
@@ -118,7 +109,7 @@ export const FaqPage: React.FunctionComponent = () => (
               question="What is OpenCerts?"
               answer="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
             />
-          </FaqContainer>
+          </div>
         </div>
       </div>
     </Container>

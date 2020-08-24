@@ -10,10 +10,10 @@ import mainImage from "./images/main.svg";
 
 const Root = styled.div`
   section:nth-of-type(odd) {
-    background-color: #fffdfa;
+    background-color: var(--yellow-light);
   }
   section:nth-of-type(even) {
-    background-color: #faf9fb;
+    background-color: var(--purple-light);
   }
 `;
 
@@ -47,9 +47,9 @@ const Progress = styled.div`
       width: 30px;
       height: 30px;
       border-radius: 100%;
-      color: var(--accent-2);
+      color: var(--teal);
       background: #fff;
-      border: 4px solid var(--accent-2);
+      border: 4px solid var(--teal);
       margin-bottom: 20px;
     }
 
@@ -59,7 +59,7 @@ const Progress = styled.div`
       top: 8px;
       left: 28px;
       height: 15px;
-      background: var(--accent-2);
+      background: var(--teal);
       width: 100%;
     }
   }

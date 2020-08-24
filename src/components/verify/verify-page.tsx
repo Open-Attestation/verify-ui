@@ -10,7 +10,7 @@ import { DropZone } from "./dropzone";
 
 const NETWORK_NAME = process.env.REACT_APP_NETWORK_NAME || "ropsten";
 
-enum Status {
+export enum Status {
   IDLE,
   PENDING,
   RESOLVED,
@@ -110,7 +110,7 @@ export const VerifyPage: React.FunctionComponent = () => {
 
   return (
     <Section>
-      <NavigationBar />
+      <NavigationBar setVerificationStatus={setVerificationStatus} />
       <Separator />
       {verificationStatus === Status.IDLE && (
         <>

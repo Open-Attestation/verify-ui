@@ -9,7 +9,7 @@ const GovtechImage = styled.img`
 
 export const Footer: React.FunctionComponent = () => (
   <footer className="flex flex-col items-center m-5">
-    <h6>Verify.gov is brought to you by Government Technology Agency:</h6>
+    <h6>Verify.gov.sg is brought to you by Government Technology Agency:</h6>
     <GovtechImage className="mb-4" src={govtechLogo} alt="govtech logo" />
     <p className="small">©2020 Government of Singapore | Last updated 23rd May 2020</p>
     <p className="small">

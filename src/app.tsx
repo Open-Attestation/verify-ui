@@ -12,20 +12,22 @@ export const App: React.FunctionComponent = () => (
   <Router>
     <ScrollToTop />
     <Header />
-    <Switch>
-      <Route path="/terms">
-        <TermsPage />
-      </Route>
-      <Route path="/verify">
-        <VerifyPage />
-      </Route>
-      <Route path="/faq">
-        <FaqPage />
-      </Route>
-      <Route path="/">
-        <HomePage />
-      </Route>
-    </Switch>
+    <main className="main">
+      <Switch>
+        <Route path="/terms">
+          <TermsPage />
+        </Route>
+        <Route path="/verify">
+          <VerifyPage />
+        </Route>
+        <Route path="/faq">
+          <FaqPage />
+        </Route>
+        <Route path="/">
+          <HomePage />
+        </Route>
+      </Switch>
+    </main>
     <Footer />
   </Router>
 );

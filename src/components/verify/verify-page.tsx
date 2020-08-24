@@ -36,7 +36,7 @@ const CheckStatus: React.FunctionComponent<{
   className?: string;
 }> = ({ status, loadingMessage, successMessage, errorMessage, className = "" }) => {
   return (
-    <span className={`inline-flex ${className} items-center`}>
+    <span className={`inline-flex ${className} items-center`} data-testid="status-check">
       {status === Status.PENDING && (
         <>
           <Loader className="mr-1" /> {loadingMessage}

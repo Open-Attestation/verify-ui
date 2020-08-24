@@ -30,7 +30,7 @@ export const NavigationBar: React.FunctionComponent = () => (
     <div className="flex flex-wrap items-center">
       <div className="w-auto mr-auto">
         <Logo>
-          <Link to="/">Verify</Link>
+          <Link to="/">verify.gov.sg</Link>
         </Logo>
       </div>
       <div className="w-auto">

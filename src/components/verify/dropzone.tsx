@@ -3,7 +3,6 @@ import { WrappedDocument } from "@govtechsg/open-attestation";
 import React, { useState } from "react";
 import Dropzone from "react-dropzone";
 import { XCircle } from "react-feather";
-import { ButtonPrimary } from "../shared/button";
 import documentImage from "./images/document.svg";
 
 const Container = styled.div`
@@ -78,7 +77,7 @@ export const DropZone: React.FunctionComponent<DropZoneProps> = ({ onDocumentDro
           <img src={documentImage} className="mt-12 mr-6" alt="" />
           <h5 className="mt-6">Drag and drop file here</h5>
           <p className="mt-6">or</p>
-          <ButtonPrimary className="mt-6">Select File</ButtonPrimary>
+          <button className="btn-solid-primary mt-6">Select File</button>
         </Container>
       )}
     </Dropzone>

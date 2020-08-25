@@ -3,26 +3,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const Logo = styled.div`
-  color: #434144;
+  color: var(--grey);
   font-family: "Libre Franklin", sans-serif;
   font-weight: 600;
   font-size: 36px;
-`;
-
-const FaqLink = styled.div`
-  font-weight: 500;
-  color: #434144;
-`;
-
-const ButtonLinkOutlined = styled.div`
-  padding: 10px 20px;
-  border: 2px solid var(--primary);
-  box-sizing: border-box;
-  border-radius: 15px;
-  font-weight: 500;
-  font-size: 18px;
-  line-height: 21px;
-  color: var(--primary);
 `;
 
 export const NavigationBar: React.FunctionComponent = () => (
@@ -35,11 +19,11 @@ export const NavigationBar: React.FunctionComponent = () => (
       </div>
       <div className="w-auto">
         <div className="flex items-center">
-          <Link to="/faq">
-            <FaqLink className="mr-8">FAQ</FaqLink>
+          <Link to="/faq" className="text-grey font-bold mr-8">
+            FAQ
           </Link>
           <Link to="/verify">
-            <ButtonLinkOutlined>Verify</ButtonLinkOutlined>
+            <button className="btn-outline-primary">Verify</button>
           </Link>
         </div>
       </div>

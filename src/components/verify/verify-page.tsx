@@ -109,7 +109,7 @@ export const VerifyPage: React.FunctionComponent = () => {
 
   return (
     <Section>
-      <NavigationBar setVerificationStatus={setVerificationStatus} />
+      <NavigationBar onVerifyLinkClicked={() => setVerificationStatus(Status.IDLE)} />
       <Separator />
       {verificationStatus === Status.IDLE && (
         <>

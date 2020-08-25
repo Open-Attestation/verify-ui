@@ -1,7 +1,6 @@
 import styled from "@emotion/styled";
 import React from "react";
 import { Link } from "react-router-dom";
-import { Status } from "./../../types";
 
 const Logo = styled.div`
   color: var(--grey);
@@ -11,11 +10,11 @@ const Logo = styled.div`
 `;
 
 interface NavigationBarProps {
-  setVerificationStatus?: (number: Status) => void;
+  onVerifyLinkClicked?: () => void;
 }
 
 export const NavigationBar: React.FunctionComponent<NavigationBarProps> = ({
-  setVerificationStatus,
+  onVerifyLinkClicked,
 }: NavigationBarProps) => {
   return (
     <nav className="container mx-auto pt-4 px-4">
@@ -30,14 +29,7 @@ export const NavigationBar: React.FunctionComponent<NavigationBarProps> = ({
             <Link to="/faq" className="text-grey font-bold mr-8">
               FAQ
             </Link>
-            <Link
-              to="/verify"
-              onClick={() => {
-                if (setVerificationStatus) {
-                  setVerificationStatus(Status.IDLE);
-                }
-              }}
-            >
+            <Link to="/verify" onClick={onVerifyLinkClicked}>
               <button className="btn-outline-primary">Verify</button>
             </Link>
           </div>

@@ -10,22 +10,6 @@ const Logo = styled.div`
   font-size: 36px;
 `;
 
-const FaqLink = styled.div`
-  font-weight: 500;
-  color: #434144;
-`;
-
-const ButtonLinkOutlined = styled.div`
-  padding: 10px 20px;
-  border: 2px solid var(--primary);
-  box-sizing: border-box;
-  border-radius: 15px;
-  font-weight: 500;
-  font-size: 18px;
-  line-height: 21px;
-  color: var(--primary);
-`;
-
 interface NavigationBarProps {
   setVerificationStatus?: (number: Status) => void;
 }
@@ -43,8 +27,8 @@ export const NavigationBar: React.FunctionComponent<NavigationBarProps> = ({
         </div>
         <div className="w-auto">
           <div className="flex items-center">
-            <Link to="/faq">
-              <FaqLink className="mr-8">FAQ</FaqLink>
+            <Link to="/faq" className="text-grey font-bold mr-8">
+              FAQ
             </Link>
             <Link
               to="/verify"
@@ -54,7 +38,7 @@ export const NavigationBar: React.FunctionComponent<NavigationBarProps> = ({
                 }
               }}
             >
-              <ButtonLinkOutlined>Verify</ButtonLinkOutlined>
+              <button className="btn-outline-primary">Verify</button>
             </Link>
           </div>
         </div>

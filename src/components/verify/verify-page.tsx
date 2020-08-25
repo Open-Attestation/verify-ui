@@ -63,7 +63,7 @@ export const VerifyPage: React.FunctionComponent = () => {
     // to unset previous verifying statuses (if any) when verifying another document
     setIssuerStatus(Status.PENDING);
     setIssuingStatus(Status.PENDING);
-    setRevokingStatus(Status.PENDING);
+    setTamperedStatus(Status.PENDING);
 
     const setStatusAsync = async (): Promise<void> => {
       if (rawDocument) {

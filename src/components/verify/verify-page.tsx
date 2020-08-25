@@ -63,7 +63,7 @@ export const VerifyPage: React.FunctionComponent = () => {
   const [verificationStatus, setVerificationStatus] = useState<Status>(Status.IDLE);
   const [issuerStatus, setIssuerStatus] = useState(Status.PENDING);
   const [issuingStatus, setIssuingStatus] = useState(Status.PENDING);
-  const [revokingStatus, setRevokingStatus] = useState(Status.PENDING);
+  const [tamperedStatus, setTamperedStatus] = useState(Status.PENDING);
 
   useEffect(() => {
     const setStatusAsync = async (): Promise<void> => {
@@ -74,21 +74,18 @@ export const VerifyPage: React.FunctionComponent = () => {
         const verificationFragment = await verify(rawDocument, {
           network: NETWORK_NAME,
           promisesCallback: (promises) => {
-            const DOCUMENT_STORE_ISSUED_VERIFIER_INDEX = 2;
-            const TOKEN_REISTRY_MINTED_VERIFIER_INDEX = 3;
-            const DOCUMENT_STORE_REVOKED_VERIFIER_INDEX = 4;
-            const DNS_TXT_VERIFIER_INDEX = 5;
+            const HASH_STATUS_INDEX = 0;
+            const TOKEN_REGISTRY_STATUS_INDEX = 2;
+            const DOCUMENT_STORE_STATUS_INDEX = 3;
+            const DNS_TXT_VERIFIER_INDEX = 4;
             const WAIT = 1000;
 
-            Promise.all([promises[DNS_TXT_VERIFIER_INDEX], wait(WAIT)]).then(([fragment]) => {
-              setIssuerStatus(isValid([fragment], ["ISSUER_IDENTITY"]) ? Status.RESOLVED : Status.REJECTED);
-            });
-            Promise.all([promises[DOCUMENT_STORE_REVOKED_VERIFIER_INDEX], wait(WAIT)]).then(([fragment]) => {
-              setRevokingStatus(isValid([fragment], ["DOCUMENT_STATUS"]) ? Status.RESOLVED : Status.REJECTED);
+            Promise.all([promises[HASH_STATUS_INDEX], wait(WAIT)]).then(([fragment]) => {
+              setTamperedStatus(isValid([fragment], ["DOCUMENT_INTEGRITY"]) ? Status.RESOLVED : Status.REJECTED);
             });
             Promise.all([
-              promises[DOCUMENT_STORE_ISSUED_VERIFIER_INDEX],
-              promises[TOKEN_REISTRY_MINTED_VERIFIER_INDEX],
+              promises[DOCUMENT_STORE_STATUS_INDEX],
+              promises[TOKEN_REGISTRY_STATUS_INDEX],
               wait(WAIT),
             ]).then(([documentStoreFragment, tokenRegistryFragment]) => {
               setIssuingStatus(
@@ -96,6 +93,9 @@ export const VerifyPage: React.FunctionComponent = () => {
                   ? Status.RESOLVED
                   : Status.REJECTED
               );
+            });
+            Promise.all([promises[DNS_TXT_VERIFIER_INDEX], wait(WAIT)]).then(([fragment]) => {
+              setIssuerStatus(isValid([fragment], ["ISSUER_IDENTITY"]) ? Status.RESOLVED : Status.REJECTED);
             });
           },
         });
@@ -147,10 +147,10 @@ export const VerifyPage: React.FunctionComponent = () => {
             </div>
             <div className="w-full lg:w-auto">
               <CheckStatus
-                status={revokingStatus}
-                loadingMessage="Checking if document was revoked"
-                successMessage="Document has not been revoked"
-                errorMessage="Document has been revoked"
+                status={tamperedStatus}
+                loadingMessage="Checking if document has been tampered"
+                successMessage="Document has not been tampered"
+                errorMessage="Document has been tampered"
                 className="mr-16"
               />
             </div>

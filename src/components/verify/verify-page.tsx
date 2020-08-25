@@ -5,17 +5,11 @@ import React, { useEffect, useState } from "react";
 import { CheckCircle, Loader } from "../shared/icons";
 import { Section, Separator } from "../shared/layout";
 import { NavigationBar } from "../shared/navigation-bar";
+import { Status } from "./../../types";
 import { DocumentRenderer } from "./document-renderer";
 import { DropZone } from "./dropzone";
 
 const NETWORK_NAME = process.env.REACT_APP_NETWORK_NAME || "ropsten";
-
-export enum Status {
-  IDLE,
-  PENDING,
-  RESOLVED,
-  REJECTED,
-}
 
 const DropzoneContainer = styled.div`
   margin-top: 20px;

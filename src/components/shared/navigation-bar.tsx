@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import React from "react";
 import { Link } from "react-router-dom";
-import { Status } from "./../verify/verify-page";
+import { Status } from "./../../types";
 
 const Logo = styled.div`
   color: var(--grey);
@@ -27,7 +27,7 @@ const ButtonLinkOutlined = styled.div`
 `;
 
 interface NavigationBarProps {
-  setVerificationStatus?: (status: number) => void;
+  setVerificationStatus?: (number: Status) => void;
 }
 
 export const NavigationBar: React.FunctionComponent<NavigationBarProps> = ({

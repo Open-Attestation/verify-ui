@@ -60,7 +60,8 @@ export const VerifyPage: React.FunctionComponent = () => {
   const [tamperedStatus, setTamperedStatus] = useState(Status.PENDING);
 
   useEffect(() => {
-    // to unset previous verifying statuses (if any) when verifying another document
+    // to unset previous verifying statuses (if any), issuer's name when verifying another document
+    setIssuer("");
     setIssuerStatus(Status.PENDING);
     setIssuingStatus(Status.PENDING);
     setTamperedStatus(Status.PENDING);

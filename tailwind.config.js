@@ -3,10 +3,14 @@ module.exports = {
     textColor: theme => ({
       ...theme("colors"),
     }),
+    backgroundColor: theme => ({
+      ...theme("colors"),
+    }),
     extend: {
       colors: {
         primary: {
           default: "#4e73b6",
+          dark: "#365182",
         },
         grey: {
           lighter: "#eeecf1",
@@ -27,7 +31,9 @@ module.exports = {
       }
     },
   },
-  variants: {},
+  variants: {
+    backgroundColor: ["responsive", "hover", "focus", "active"]
+  },
   plugins: [],
   purge: ["./src/**/*.tsx"],
 };

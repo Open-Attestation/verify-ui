@@ -1,7 +1,6 @@
 import styled from "@emotion/styled";
 import React from "react";
 import { Link } from "react-router-dom";
-import { ButtonPrimaryLink } from "../shared/button";
 import { flexCenterColumn } from "../shared/mixin";
 import { NavigationBar } from "../shared/navigation-bar";
 import howCanHelpImage from "./images/how-can-help.svg";
@@ -79,7 +78,7 @@ export const HomePage: React.FunctionComponent = () => {
                 place.
               </p>
               <Link to="/verify">
-                <ButtonPrimaryLink>Verify</ButtonPrimaryLink>
+                <button className="btn-solid-primary">Verify</button>
               </Link>
             </div>
             <div className="w-3/4 mx-auto md:w-1/2 py-6">
@@ -110,7 +109,7 @@ export const HomePage: React.FunctionComponent = () => {
                 </div>
               </Progress>
               <Link to="/verify">
-                <ButtonPrimaryLink>Verify</ButtonPrimaryLink>
+                <button className="btn-solid-primary">Verify</button>
               </Link>
             </div>
             <div className="w-3/4 mx-auto md:w-1/2 py-6 md:order-1">
@@ -135,7 +134,7 @@ export const HomePage: React.FunctionComponent = () => {
               <p>We'll check if the contents match and if the certificate comes from a recognised government body.</p>
               <p>This way, you'll know if the certificate is valid when you try to view it.</p>
               <Link to="/verify">
-                <ButtonPrimaryLink>Verify</ButtonPrimaryLink>
+                <button className="btn-solid-primary">Verify</button>
               </Link>
             </div>
             <div className="w-3/4 mx-auto md:w-1/2 py-6">

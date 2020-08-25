@@ -2,20 +2,8 @@
 
 @tailwind components;
 
-@tailwind utilities;
-
-:root {
-  --primary: theme('colors.primary.default');
-  --grey: theme('colors.grey.default');
-  --grey-light: theme('colors.grey.light');
-  --grey-lighter: theme('colors.grey.lighter');
-  --teal: theme('colors.teal.default');
-  --yellow: theme('colors.yellow.default');
-  --yellow-light: theme('colors.yellow.light');
-  --purple: theme('colors.purple.default');
-  --purple-light: theme('colors.purple.light');
-}
-
+/* https://tailwindcss.com/docs/extracting-components */
+/* START - Add custom component classes before your utilities */
 .font-manjari-regular {
   font-family: "Manjari", sans-serif;
   font-weight: 400;
@@ -36,9 +24,65 @@
   font-weight: 700;
 }
 
-body {
-  @apply font-roboto-regular;
-  color: var(--grey);
+.font-base {
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.btn {
+  @apply font-roboto-bold;
+  @apply px-5;
+  @apply py-3;
+  border-radius: 15px;
+}
+
+.btn-outline {
+  transition: border-color 0.2s ease-out, background-color 0.2s ease-out, color 0.2s ease-out;
+  @apply btn;
+  @apply border-solid;
+  @apply border-2;
+}
+
+.btn-outline-primary {
+  @apply btn-outline;
+  @apply border-primary;
+  @apply text-primary;
+}
+
+.btn-outline-primary:hover {
+  @apply bg-primary;
+  @apply text-white;
+}
+
+.btn-outline-primary:focus {
+  @apply outline-none;
+}
+
+.btn-outline-primary:active {
+  @apply bg-primary-dark;
+}
+
+.btn-solid {
+  transition: background-color 0.2s ease-out, color 0.2s ease-out;
+  @apply btn;
+}
+
+.btn-solid-primary {
+  @apply btn-solid;
+  @apply bg-primary;
+  @apply text-white;
+}
+
+.btn-solid-primary:hover {
+  @apply bg-primary-dark;
+}
+
+.btn-solid-primary:focus {
+  @apply outline-none;
+}
+
+.btn-solid-primary:active {
+  @apply shadow-outline;
 }
 
 #root {
@@ -49,6 +93,26 @@ body {
 
 #root > .main {
   flex: 1;
+}
+/* END - Add custom component classes before your utilities */
+
+@tailwind utilities;
+
+:root {
+  --primary: theme('colors.primary.default');
+  --grey: theme('colors.grey.default');
+  --grey-light: theme('colors.grey.light');
+  --grey-lighter: theme('colors.grey.lighter');
+  --teal: theme('colors.teal.default');
+  --yellow: theme('colors.yellow.default');
+  --yellow-light: theme('colors.yellow.light');
+  --purple: theme('colors.purple.default');
+  --purple-light: theme('colors.purple.light');
+}
+
+body {
+  @apply font-roboto-regular;
+  color: var(--grey);
 }
 
 h1 {
@@ -84,16 +148,27 @@ h6 {
   font-size: 16px;
 }
 
+button,
+p {
+  @apply font-base;
+}
+
 p {
   @apply font-roboto-regular;
   @apply mb-4;
-  font-size: 16px;
-  line-height: 20px;
 }
 
 p.small {
   font-size: 13px;
   line-height: 15px;
+}
+
+a {
+  transition: color 0.2s ease-out;
+}
+
+a:hover {
+  @apply text-primary;
 }
 
 ol,

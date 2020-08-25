@@ -70,7 +70,6 @@ export const VerifyPage: React.FunctionComponent = () => {
       if (rawDocument) {
         setVerificationStatus(Status.PENDING);
         const document: v2.OpenAttestationDocument = getData(rawDocument);
-        setIssuer(document.issuers.map((issuer) => issuer.identityProof?.location).join(","));
         const verificationFragment = await verify(rawDocument, {
           network: NETWORK_NAME,
           promisesCallback: (promises) => {
@@ -93,6 +92,10 @@ export const VerifyPage: React.FunctionComponent = () => {
                   ? Status.RESOLVED
                   : Status.REJECTED
               );
+
+              if (isValid([documentStoreFragment, tokenRegistryFragment], ["DOCUMENT_STATUS"])) {
+                setIssuer(document.issuers.map((issuer) => issuer.identityProof?.location).join(","));
+              }
             });
             Promise.all([promises[DNS_TXT_VERIFIER_INDEX], wait(WAIT)]).then(([fragment]) => {
               setIssuerStatus(isValid([fragment], ["ISSUER_IDENTITY"]) ? Status.RESOLVED : Status.REJECTED);
@@ -128,13 +131,15 @@ export const VerifyPage: React.FunctionComponent = () => {
       )}
       {verificationStatus !== Status.IDLE && (
         <div className="container px-4">
-          <div className="flex flex-wrap mb-4">
-            <div className="w-full">
-              <h2>
-                Issued by <Issuer>{issuer}</Issuer>
-              </h2>
+          {issuer && (
+            <div className="flex flex-wrap mb-4">
+              <div className="w-full">
+                <h2>
+                  Issued by <Issuer>{issuer}</Issuer>
+                </h2>
+              </div>
             </div>
-          </div>
+          )}
           <div className="flex flex-wrap mb-8">
             <div className="w-full lg:w-auto">
               <CheckStatus

@@ -1,7 +1,7 @@
 import { FrameActions, FrameConnector, HostActionsHandler } from "@govtechsg/decentralized-renderer-react-components";
 import { getData, WrappedDocument } from "@govtechsg/open-attestation";
 import React, { useState, useCallback, useEffect, useMemo } from "react";
-// import { Tabs } from "./tabs";
+import { Tabs } from "./../tabs/multiTabs";
 
 interface DocumentRendererProps {
   rawDocument: WrappedDocument;
@@ -11,11 +11,11 @@ export const DocumentRenderer: React.FunctionComponent<DocumentRendererProps> = 
   rawDocument,
 }: DocumentRendererProps) => {
   const document = useMemo(() => getData(rawDocument), [rawDocument]);
-  // const [templates, setTemplates] = useState<{ id: string; label: string }[]>([]);
+  const [templates, setTemplates] = useState<{ id: string; label: string }[]>([]);
   const [selectedTemplate, setSelectedTemplate] = useState("");
 
   const updateTemplates = useCallback((templates) => {
-    // setTemplates(templates);
+    setTemplates(templates);
     setSelectedTemplate(templates[0].id);
   }, []);
 
@@ -60,13 +60,13 @@ export const DocumentRenderer: React.FunctionComponent<DocumentRendererProps> = 
 
   return (
     <>
-      {/*{templates.length > 0 && (*/}
-      {/*  <Tabs*/}
-      {/*    templates={templates}*/}
-      {/*    selectedTemplate={selectedTemplate}*/}
-      {/*    onSelectTemplate={(selectedTemplate) => setSelectedTemplate(selectedTemplate)}*/}
-      {/*  />*/}
-      {/*)}*/}
+      {templates.length > 0 && (
+        <Tabs
+          templates={templates}
+          selectedTemplate={selectedTemplate}
+          onSelectTemplate={(selectedTemplate) => setSelectedTemplate(selectedTemplate)}
+        />
+      )}
       <FrameConnector
         style={{ height: `${height}px`, width: "100%", border: "0px" }}
         source={document.$template.url}

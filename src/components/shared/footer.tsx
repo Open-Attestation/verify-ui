@@ -12,6 +12,7 @@ export const Footer: React.FunctionComponent = () => (
     <h6>verify.gov.sg is brought to you by Government Technology Agency:</h6>
     <GovtechImage className="mb-4" src={govtechLogo} alt="govtech logo" />
     <p className="small">©2020 Government of Singapore | Last updated 23rd May 2020</p>
+    <p className="small">v1.0.0-{process.env.REACT_APP_COMMIT_REF?.substring(0, 6)}</p>
     <p className="small">
       <Link to="/terms" className="text-primary mx-3">
         Terms of use

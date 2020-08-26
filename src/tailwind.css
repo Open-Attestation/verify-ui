@@ -199,10 +199,14 @@ ol li::marker {
     @apply font-manjari-regular;
   }
 
-  h1,
-  h2 {
+  h1 {
     font-size: 52px;
     line-height: 56px;
+  }
+
+  h2 {
+    font-size: 40px;
+    line-height: 44px;
   }
 
   h5 {

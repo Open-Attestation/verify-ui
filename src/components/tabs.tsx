@@ -12,6 +12,7 @@ export const Tabs: React.FunctionComponent<TabsProps> = ({ selectedTemplate, tem
       <ul className="flex flex-wrap bg-gray-100 p-0">
         {templates.map(({ id, label }) => (
           <li
+            data-testid="tabs-item"
             key={id}
             id={id}
             className={

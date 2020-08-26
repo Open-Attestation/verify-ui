@@ -3,8 +3,8 @@ import { uploadDocument, validateIssuer, validateIframeText } from "./helper";
 
 fixture("Multi tabs").page`http://localhost:3000`;
 
-const tabMain = Selector("button").withText("Main");
-const tabPdf = Selector("button").withText("dummy.pdf");
+const tabMain = Selector("[data-testid='tabs-item']").withText("Main");
+const tabPdf = Selector("[data-testid='tabs-item']").withText("dummy.pdf");
 
 test("Multi tabs should be rendered correctly", async () => {
   await uploadDocument("./certificate-attachments-ropsten.json");

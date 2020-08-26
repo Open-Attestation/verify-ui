@@ -140,7 +140,7 @@ export const VerifyPage: React.FunctionComponent = () => {
               </div>
             </div>
           )}
-          <div className="flex flex-wrap mb-8">
+          <div className="flex flex-wrap mb-10">
             <div className="w-full lg:w-auto">
               <CheckStatus
                 status={issuingStatus}

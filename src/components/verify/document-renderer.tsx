@@ -1,7 +1,7 @@
 import { FrameActions, FrameConnector, HostActionsHandler } from "@govtechsg/decentralized-renderer-react-components";
 import { getData, WrappedDocument } from "@govtechsg/open-attestation";
 import React, { useState, useCallback, useEffect, useMemo } from "react";
-import { Tabs } from "./../tabs/multiTabs";
+import { Tabs } from "../tabs";
 
 interface DocumentRendererProps {
   rawDocument: WrappedDocument;

@@ -17,7 +17,7 @@ export const NavigationBar: React.FunctionComponent<NavigationBarProps> = ({
   onVerifyLinkClicked,
 }: NavigationBarProps) => {
   return (
-    <nav className="container mx-auto pt-4 px-4">
+    <nav className="container container-px mx-auto pt-4">
       <div className="flex flex-wrap items-center">
         <div className="w-auto mr-auto">
           <Logo>

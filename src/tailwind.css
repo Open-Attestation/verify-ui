@@ -85,6 +85,11 @@
   @apply shadow-outline;
 }
 
+/* this will be the standardised lateral spacing for container */
+.container-px {
+  @apply px-4;
+}
+
 #root {
   display: flex;
   flex-direction: column;
@@ -116,36 +121,40 @@ body {
 }
 
 h1 {
-  @apply font-manjari-regular;
+  @apply font-manjari-bold;
   @apply mb-4;
-  font-size: 52px;
-  line-height: 56px;
+  font-size: 32px;
+  line-height: normal;
 }
 
 h2 {
   @apply font-manjari-bold;
-  font-size: 40px;
-  line-height: 44px;
+  font-size: 32px;
+  line-height: normal;
 }
 
 h3 {
   @apply font-manjari-bold;
   font-size: 32px;
+  line-height: normal;
 }
 
 h4 {
   @apply font-manjari-bold;
   font-size: 24px;
+  line-height: normal;
 }
 
 h5 {
   @apply font-roboto-bold;
-  font-size: 20px;
+  font-size: 16px;
+  line-height: normal;
 }
 
 h6 {
   @apply font-roboto-bold;
   font-size: 16px;
+  line-height: normal;
 }
 
 button,
@@ -178,6 +187,35 @@ ul {
 
 ol li::marker {
   font-size: 16px;
+}
+
+/* sm */
+@media (min-width: 640px) {
+}
+
+/* md */
+@media (min-width: 768px) {
+  h1 {
+    @apply font-manjari-regular;
+  }
+
+  h1,
+  h2 {
+    font-size: 52px;
+    line-height: 56px;
+  }
+
+  h5 {
+    font-size: 20px;
+  }
+}
+
+/* lg */
+@media (min-width: 1024px) {
+}
+
+/* xl */
+@media (min-width: 1280px) {
 }
 
 @keyframes rotation {

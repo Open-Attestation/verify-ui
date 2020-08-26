@@ -30,20 +30,23 @@ const CheckStatus: React.FunctionComponent<{
   className?: string;
 }> = ({ status, loadingMessage, successMessage, errorMessage, className = "" }) => {
   return (
-    <span className={`inline-flex ${className} items-center`} data-testid="status-check">
+    <span className={`${className} flex flex-wrap items-center`} data-testid="status-check">
       {status === Status.PENDING && (
         <>
-          <Loader className="mr-1" /> {loadingMessage}
+          <Loader className="text-center w-6 mr-1" />
+          <p className="w-auto mb-0">{loadingMessage}</p>
         </>
       )}
       {status === Status.RESOLVED && (
         <>
-          <CheckCircle className="mr-1" /> {successMessage}
+          <CheckCircle className="text-center w-6 mr-1" />
+          <p className="w-auto mb-0">{successMessage}</p>
         </>
       )}
       {status === Status.REJECTED && (
         <>
-          <i style={{ color: "tomato" }} className="fas fa-skull-crossbones mr-1" /> {errorMessage}
+          <i className="text-center w-6 mr-1 fas fa-skull-crossbones" style={{ color: "tomato" }} />
+          <p className="w-auto mb-0">{errorMessage}</p>
         </>
       )}
     </span>
@@ -114,9 +117,15 @@ export const VerifyPage: React.FunctionComponent = () => {
       <Separator />
       {verificationStatus === Status.IDLE && (
         <>
-          <h2 className="text-center my-2">Verify Documents</h2>
-          <p className="text-center">Drop a government issued certificate</p>
-          <div className="container px-4">
+          <div className="container container-px py-4 text-center">
+            <div className="flex flex-wrap">
+              <div className="w-full">
+                <h2>Verify Documents</h2>
+                <p className="mb-0">Drop a government issued certificate</p>
+              </div>
+            </div>
+          </div>
+          <div className="container container-px">
             <div className="flex flex-wrap">
               <DropzoneContainer className="w-full lg:w-1/2 lg:mx-auto">
                 <DropZone
@@ -130,7 +139,7 @@ export const VerifyPage: React.FunctionComponent = () => {
         </>
       )}
       {verificationStatus !== Status.IDLE && (
-        <div className="container px-4">
+        <div className="container container-px py-4">
           {issuer && (
             <div className="flex flex-wrap mb-4">
               <div className="w-full">
@@ -141,25 +150,23 @@ export const VerifyPage: React.FunctionComponent = () => {
             </div>
           )}
           <div className="flex flex-wrap mb-10">
-            <div className="w-full lg:w-auto">
+            <div className="w-full mb-1 lg:w-auto lg:mb-0 lg:mr-16">
               <CheckStatus
                 status={issuingStatus}
                 loadingMessage="Checking if document was issued"
                 successMessage="Document has been issued"
                 errorMessage="Document has not been issued"
-                className="mr-16"
               />
             </div>
-            <div className="w-full lg:w-auto">
+            <div className="w-full mb-1 lg:w-auto lg:mb-0 lg:mr-16">
               <CheckStatus
                 status={tamperedStatus}
                 loadingMessage="Checking if document has been tampered"
                 successMessage="Document has not been tampered"
                 errorMessage="Document has been tampered"
-                className="mr-16"
               />
             </div>
-            <div className="w-full lg:w-auto">
+            <div className="w-full mb-1 lg:w-auto lg:mb-0 lg:mr-16">
               <CheckStatus
                 status={issuerStatus}
                 loadingMessage="Checking issuer identity"

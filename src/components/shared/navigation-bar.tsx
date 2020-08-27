@@ -1,13 +1,5 @@
-import styled from "@emotion/styled";
 import React from "react";
 import { Link } from "react-router-dom";
-
-const Logo = styled.div`
-  color: var(--grey);
-  font-family: "Libre Franklin", sans-serif;
-  font-weight: 600;
-  font-size: 36px;
-`;
 
 interface NavigationBarProps {
   onVerifyLinkClicked?: () => void;
@@ -17,12 +9,12 @@ export const NavigationBar: React.FunctionComponent<NavigationBarProps> = ({
   onVerifyLinkClicked,
 }: NavigationBarProps) => {
   return (
-    <nav className="container mx-auto pt-4 px-4">
+    <nav className="container container-px mx-auto pt-4">
       <div className="flex flex-wrap items-center">
         <div className="w-auto mr-auto">
-          <Logo>
-            <Link to="/">Verify</Link>
-          </Logo>
+          <Link to="/" className="font-roboto-bold text-4xl">
+            Verify
+          </Link>
         </div>
         <div className="w-auto">
           <div className="flex items-center">

@@ -23,7 +23,7 @@ const Section = styled.section`
 
 const SectionImage = styled.img`
   width: 100%;
-  max-width: 579px;
+  max-width: 580px;
 `;
 
 const Progress = styled.div`
@@ -69,9 +69,9 @@ export const HomePage: React.FunctionComponent = () => {
     <Root>
       <Section>
         <NavigationBar />
-        <div className="container py-12 px-4">
+        <div className="container container-px py-12">
           <div className="flex flex-wrap items-center">
-            <div className="w-full md:w-1/2 md:px-4">
+            <div className="w-full md:w-2/5 md:pr-4">
               <h1>An easy way to check and verify your certificates</h1>
               <p className="my-5">
                 We help you to verify the certificates you have of anyone from any government agencies. All in one
@@ -81,30 +81,36 @@ export const HomePage: React.FunctionComponent = () => {
                 <button className="btn-solid-primary">Verify</button>
               </Link>
             </div>
-            <div className="w-3/4 mx-auto md:w-1/2 py-6">
-              <SectionImage src={mainImage} />
+            <div className="w-3/4 mx-auto md:w-3/5 py-8">
+              <SectionImage src={mainImage} className="md:ml-auto" />
             </div>
           </div>
         </div>
       </Section>
       <Section>
-        <div className="container py-12 px-4">
+        <div className="container container-px py-12">
           <div className="flex flex-wrap items-center">
-            <div className="w-full md:w-1/2 md:px-4 md:order-2">
+            <div className="w-full md:w-1/2 md:pr-4 md:order-2">
               <h1>How we can help</h1>
               <Progress className="mb-2">
                 <div className="flex">
                   <div className="progress-step">
-                    <h5 className="mb-1">View</h5>
-                    <p>Easy way to view your certificate</p>
+                    <div className="pr-5">
+                      <h5 className="mb-1">View</h5>
+                      <p>Easy way to view your certificate</p>
+                    </div>
                   </div>
                   <div className="progress-step">
-                    <h5 className="mb-1">Check</h5>
-                    <p>Make sure it has not been tampered with</p>
+                    <div className="pr-5">
+                      <h5 className="mb-1">Check</h5>
+                      <p>Make sure it has not been tampered with</p>
+                    </div>
                   </div>
                   <div className="progress-step">
-                    <h5 className="mb-1">Verify</h5>
-                    <p>Find out if it is from a recognised institution</p>
+                    <div className="pr-5">
+                      <h5 className="mb-1">Verify</h5>
+                      <p>Find out if it is from a recognised institution</p>
+                    </div>
                   </div>
                 </div>
               </Progress>
@@ -112,16 +118,16 @@ export const HomePage: React.FunctionComponent = () => {
                 <button className="btn-solid-primary">Verify</button>
               </Link>
             </div>
-            <div className="w-3/4 mx-auto md:w-1/2 py-6 md:order-1">
+            <div className="w-3/4 mx-auto md:w-1/2 py-8 md:order-1">
               <SectionImage src={howCanHelpImage} />
             </div>
           </div>
         </div>
       </Section>
       <Section>
-        <div className="container py-12 px-4">
+        <div className="container container-px py-12">
           <div className="flex flex-wrap items-center">
-            <div className="w-full md:w-1/2 md:px-4">
+            <div className="w-full md:w-1/3 md:pr-4">
               <h1>How we can help</h1>
               <p>
                 When an official certificate is issued by the government, a unique digital code is tagged to it. This
@@ -137,8 +143,8 @@ export const HomePage: React.FunctionComponent = () => {
                 <button className="btn-solid-primary">Verify</button>
               </Link>
             </div>
-            <div className="w-3/4 mx-auto md:w-1/2 py-6">
-              <SectionImage src={howItWorksImage} />
+            <div className="w-3/4 mx-auto md:w-2/3 py-8">
+              <SectionImage src={howItWorksImage} className="md:ml-auto" />
             </div>
           </div>
         </div>

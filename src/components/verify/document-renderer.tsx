@@ -59,7 +59,7 @@ export const DocumentRenderer: React.FunctionComponent<DocumentRendererProps> = 
   }, [selectedTemplate, toFrame]);
 
   return (
-    <>
+    <div className="mb-8">
       {templates.length > 0 && (
         <Tabs
           templates={templates}
@@ -73,6 +73,6 @@ export const DocumentRenderer: React.FunctionComponent<DocumentRendererProps> = 
         onConnected={onConnected}
         dispatch={fromFrame}
       />
-    </>
+    </div>
   );
 };

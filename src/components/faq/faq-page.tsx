@@ -15,12 +15,12 @@ const Container = styled.div`
 `;
 
 const FaqTitleContainer = styled.div`
-  height: 56px;
+  min-height: 56px;
 `;
 
 const transitionDuration = "0.3s";
+
 const FaqAnswer = styled.div`
-  padding: 10px 2rem;
   overflow: hidden;
   transition: max-height ${transitionDuration} ease-out;
   height: auto;
@@ -47,15 +47,15 @@ const ArrowImage = styled.img`
 const FaqElement: React.FunctionComponent<{ question: string; answer: string }> = ({ question, answer }) => {
   const [open, setOpen] = useState(false);
   return (
-    <div>
+    <div className={`transition-color duration-200 cursor-pointer bg-white ${open ? "" : "hover:text-primary"}`}>
       <FaqTitleContainer
-        className={`flex justify-between items-center px-6 cursor-pointer bg-white ${open ? "" : ""}`}
+        className={`flex justify-between items-center p-4 ${open ? "" : ""}`}
         onClick={() => setOpen(!open)}
       >
         <h5>{question}</h5>
         <ArrowImage src={arrowDownCircle} alt="Press to toggle answer" className={open ? "rotation90" : "rotation0"} />
       </FaqTitleContainer>
-      <FaqAnswer className={`bg-white mb-2 ${open ? "open" : "close"}`}>
+      <FaqAnswer className={`bg-white mb-2 px-4 ${open ? "open" : "close"}`}>
         <p>{answer}</p>
       </FaqAnswer>
     </div>
@@ -66,7 +66,7 @@ export const FaqPage: React.FunctionComponent = () => (
   <Section>
     <NavigationBar />
     <Separator />
-    <div className="container px-4 py-3">
+    <div className="container container-px py-4">
       <div className="flex flex-wrap">
         <div className="w-auto">
           <h2>Questions? Look here.</h2>
@@ -74,7 +74,7 @@ export const FaqPage: React.FunctionComponent = () => (
       </div>
     </div>
     <Container className="mb-8">
-      <div className="container px-4">
+      <div className="container container-px">
         <div className="flex flex-wrap">
           <div className="w-full md:w-2/3">
             <FaqElement

@@ -30,7 +30,8 @@ export const DropZone: React.FunctionComponent<DropZoneProps> = ({ onDocumentDro
     setFileErrorMsg("");
 
     reader.onerror = () => {
-      setFileErrorMsg(`The file uploaded is not a valid Open Attestation file, error: ${reader.error}`);
+      setFileErrorMsg(`The file uploaded is not a valid Open Attestation file.`);
+      console.error(reader.error);
     };
 
     reader.onload = () => {
@@ -38,10 +39,11 @@ export const DropZone: React.FunctionComponent<DropZoneProps> = ({ onDocumentDro
         if (reader.result && typeof reader.result === "string") {
           onDocumentDropped(JSON.parse(reader.result));
         } else {
-          setFileErrorMsg(`The file uploaded is not a valid Open Attestation file`);
+          setFileErrorMsg(`The file uploaded is not a valid Open Attestation file.`);
         }
       } catch (e) {
-        setFileErrorMsg(`The file uploaded is not a valid Open Attestation file, error: ${e.message}`);
+        setFileErrorMsg(`The file uploaded is not a valid Open Attestation file.`);
+        console.error(e);
       }
     };
 

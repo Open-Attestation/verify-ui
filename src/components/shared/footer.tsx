@@ -17,6 +17,9 @@ export const Footer: React.FunctionComponent = () => (
       <Link to="/terms" className="text-primary mx-3">
         Terms of use
       </Link>
+      <Link to="/privacy-policy" className="text-primary mx-3">
+        Privacy policy
+      </Link>
       <a
         className="text-primary mx-3"
         href="https://www.tech.gov.sg/report_vulnerability"

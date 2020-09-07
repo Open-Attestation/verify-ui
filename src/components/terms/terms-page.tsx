@@ -36,7 +36,7 @@ export const TermsPage: React.FunctionComponent = () => (
         <div className="w-full lg:w-2/3">
           <h4 className="text-primary mb-2">Use of verify.gov.sg</h4>
           <p>You agree that you will not, directly or indirectly —</p>
-          <ol className="list-decimal">
+          <ol className="ol-nested">
             <li>
               <p>
                 modify, reverse-engineer, decompile, adapt, publish, redistribute or interfere with or intercept any
@@ -79,7 +79,7 @@ export const TermsPage: React.FunctionComponent = () => (
                 use verify.gov.sg in any manner that could damage, disrupt, disable, overburden, or impair the operation
                 of verify.gov.sg or interfere with any person’s use of verify.gov.sg;
               </p>
-              <ol className="list-decimal">
+              <ol className="ol-nested">
                 <li>
                   <p>while using verify.gov.sg, upload, post or transmit any material of any type that —</p>
                 </li>

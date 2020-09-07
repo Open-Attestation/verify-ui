@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { FaqPage } from "./components/faq/faq-page";
 import { HomePage } from "./components/home/home-page";
+import { PrivacyPolicyPage } from "./components/privacy/privacy-policy-page";
 import { Footer } from "./components/shared/footer";
 import { Header } from "./components/shared/header";
 import { ScrollToTop } from "./components/shared/scroll-to-top";
@@ -14,6 +15,9 @@ export const App: React.FunctionComponent = () => (
     <Header />
     <main className="main">
       <Switch>
+        <Route path="/privacy-policy">
+          <PrivacyPolicyPage />
+        </Route>
         <Route path="/terms">
           <TermsPage />
         </Route>

@@ -54,7 +54,7 @@ const CheckStatus: React.FunctionComponent<{
 };
 
 export const VerifyPage: React.FunctionComponent = () => {
-  const [rawDocument, setRawDocument] = useState<WrappedDocument>();
+  const [rawDocument, setRawDocument] = useState<WrappedDocument<v2.OpenAttestationDocument>>();
   const [issuer, setIssuer] = useState("");
   // set overall status to idle and set the rest to pending
   const [verificationStatus, setVerificationStatus] = useState<Status>(Status.IDLE);
@@ -130,7 +130,7 @@ export const VerifyPage: React.FunctionComponent = () => {
               <DropzoneContainer className="w-full lg:w-1/2 lg:mx-auto">
                 <DropZone
                   onDocumentDropped={(document) => {
-                    setRawDocument(document);
+                    setRawDocument(document as WrappedDocument<v2.OpenAttestationDocument>);
                   }}
                 />
               </DropzoneContainer>

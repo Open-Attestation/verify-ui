@@ -6,9 +6,9 @@
   "dependencies": {
     "@emotion/core": "^10.0.28",
     "@emotion/styled": "^10.0.27",
-    "@govtechsg/decentralized-renderer-react-components": "^3.0.0",
-    "@govtechsg/oa-verify": "^4.0.0",
-    "@govtechsg/open-attestation": "^3.9.0",
+    "@govtechsg/decentralized-renderer-react-components": "^3.0.6",
+    "@govtechsg/oa-verify": "^4.1.2",
+    "@govtechsg/open-attestation": "^3.11.3",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-dropzone": "^11.0.2",

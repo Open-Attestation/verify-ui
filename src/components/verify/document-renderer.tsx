@@ -1,16 +1,17 @@
 import { FrameActions, FrameConnector, HostActionsHandler } from "@govtechsg/decentralized-renderer-react-components";
-import { getData, WrappedDocument } from "@govtechsg/open-attestation";
+import { getData, v2, WrappedDocument } from "@govtechsg/open-attestation";
 import React, { useState, useCallback, useEffect, useMemo } from "react";
 import { Tabs } from "../tabs";
 
 interface DocumentRendererProps {
-  rawDocument: WrappedDocument;
+  rawDocument: WrappedDocument<v2.OpenAttestationDocument>;
 }
 
 export const DocumentRenderer: React.FunctionComponent<DocumentRendererProps> = ({
   rawDocument,
 }: DocumentRendererProps) => {
-  const document = useMemo(() => getData(rawDocument), [rawDocument]);
+  const document: v2.OpenAttestationDocument = useMemo(() => getData(rawDocument), [rawDocument]);
+  const template: any = document.$template;
   const [templates, setTemplates] = useState<{ id: string; label: string }[]>([]);
   const [selectedTemplate, setSelectedTemplate] = useState("");
 
@@ -69,7 +70,7 @@ export const DocumentRenderer: React.FunctionComponent<DocumentRendererProps> = 
       )}
       <FrameConnector
         style={{ height: `${height}px`, width: "100%", border: "0px" }}
-        source={document.$template.url}
+        source={template.url}
         onConnected={onConnected}
         dispatch={fromFrame}
       />

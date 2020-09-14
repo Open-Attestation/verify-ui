@@ -10,8 +10,7 @@ interface DocumentRendererProps {
 export const DocumentRenderer: React.FunctionComponent<DocumentRendererProps> = ({
   rawDocument,
 }: DocumentRendererProps) => {
-  const document: v2.OpenAttestationDocument = useMemo(() => getData(rawDocument), [rawDocument]);
-  const template: any = document.$template;
+  const document = useMemo(() => getData(rawDocument), [rawDocument]);
   const [templates, setTemplates] = useState<{ id: string; label: string }[]>([]);
   const [selectedTemplate, setSelectedTemplate] = useState("");
 
@@ -70,7 +69,7 @@ export const DocumentRenderer: React.FunctionComponent<DocumentRendererProps> = 
       )}
       <FrameConnector
         style={{ height: `${height}px`, width: "100%", border: "0px" }}
-        source={template.url}
+        source={`${typeof document.$template === "object" ? document.$template.url : document.$template}`}
         onConnected={onConnected}
         dispatch={fromFrame}
       />

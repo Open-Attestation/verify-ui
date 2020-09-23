@@ -9,7 +9,7 @@ REACT_APP_NETWORK_NAME = "mainnet"
 [[headers]]
   for = "/*"
   [headers.values]
-    Content-Security-Policy = "frame-ancestors 'none'; script-src 'self'; object-src 'self'; style-src 'self' https://cdnjs.cloudflare.com/ajax/libs/font-awesome/ https://unpkg.com/sgds-govtech@1.3.14/css/sgds.css https://fonts.googleapis.com/; default-src 'none'; base-uri 'self'; form-action 'self'; img-src 'self'; font-src 'self' https://fonts.gstatic.com/s/ https://cdnjs.cloudflare.com/ajax/libs/font-awesome/ https://unpkg.com/sgds-govtech@1.3.14/"
+    Content-Security-Policy = "frame-ancestors 'none'; script-src 'self unsafe-inline'; object-src 'self'; style-src 'self' https://cdnjs.cloudflare.com/ajax/libs/font-awesome/ https://unpkg.com/sgds-govtech@1.3.14/css/sgds.css https://fonts.googleapis.com/; default-src 'none'; base-uri 'self'; form-action 'self'; img-src 'self'; font-src 'self' https://fonts.gstatic.com/s/ https://cdnjs.cloudflare.com/ajax/libs/font-awesome/ https://unpkg.com/sgds-govtech@1.3.14/; manifest-src 'self'"
     X-Frame-Options = "DENY"
     X-XSS-Protection = "1; mode=block"
     X-Content-Type-Options = "nosniff"

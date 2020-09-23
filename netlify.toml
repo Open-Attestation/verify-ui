@@ -9,7 +9,7 @@ REACT_APP_NETWORK_NAME = "mainnet"
 [[headers]]
   for = "/*"
   [headers.values]
-    Content-Security-Policy = "frame-ancestors 'none'; script-src 'self'; object-src 'none'; style-src 'self'; default-src 'none'; base-uri 'self'; form-action 'self'"
+    Content-Security-Policy = "frame-ancestors 'none'; script-src 'self' https://unpkg.com/ https://cdnjs.cloudflare.com/; object-src 'none'; style-src 'self' https://cdnjs.cloudflare.com/* https://fonts.googleapis.com/; default-src 'none'; base-uri 'self'; form-action 'self'"
     X-Frame-Options = "DENY"
     X-XSS-Protection = "1; mode=block"
     X-Content-Type-Options = "nosniff"

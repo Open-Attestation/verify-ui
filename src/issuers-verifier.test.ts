@@ -1,6 +1,6 @@
 import { isValid, verificationBuilder } from "@govtechsg/oa-verify";
 import { SchemaId, SignedWrappedDocument, v2, v3, WrappedDocument } from "@govtechsg/open-attestation";
-import { verifyAllowedIssuers } from "./issuers-verifier";
+import { isWhitelisted, verifyAllowedIssuers } from "./issuers-verifier";
 
 const verify = verificationBuilder<
   | SignedWrappedDocument<v2.OpenAttestationDocument>
@@ -18,34 +18,55 @@ const v2DocumentShared = {
   },
 };
 
-describe("verifyAllowedIssuers", () => {
-  it("should skip when the issuer does not have location, document store or token registry", async () => {
-    const fragments = await verify(
-      {
-        data: {
-          issuers: [{ name: "name" }],
-        },
-        ...v2DocumentShared,
-      },
-      { network: "ropsten" }
-    );
-
-    expect(fragments).toMatchInlineSnapshot(`
-      Array [
-        Object {
-          "name": "VerifyAllowedIssuers",
-          "reason": Object {
-            "code": 2,
-            "codeString": "SKIPPED",
-            "message": "Document issuers doesn't have \\"documentStore\\" / \\"tokenRegistry\\" property or doesn't use DNS-TXT type",
-          },
-          "status": "SKIPPED",
-          "type": "ISSUER_IDENTITY",
-        },
-      ]
-    `);
-    expect(isValid(fragments, ["ISSUER_IDENTITY"])).toBe(false);
+describe("isWhitelisted", () => {
+  it("should return true when identity is gov.sg", () => {
+    expect(isWhitelisted("gov.sg")).toBe(true);
   });
+  it("should return true when identity is openattestation.com", () => {
+    expect(isWhitelisted("openattestation.com")).toBe(true);
+  });
+  it("should return true when identity ends by .gov.sg or .openattestation.com", () => {
+    expect(isWhitelisted("tech.gov.sg")).toBe(true);
+    expect(isWhitelisted("some.gov.sg")).toBe(true);
+    expect(isWhitelisted("foo.openattestation.com")).toBe(true);
+    expect(isWhitelisted("bar.openattestation.com")).toBe(true);
+  });
+  it("should return false when identity starts with gov.sg or openattestation.com", () => {
+    expect(isWhitelisted("gov.sg.fr")).toBe(false);
+    expect(isWhitelisted("gov.sg.sg")).toBe(false);
+    expect(isWhitelisted("openattestation.com.other")).toBe(false);
+    expect(isWhitelisted("openattestation.com.foo")).toBe(false);
+  });
+  it("should be invalid when the identity last . is replaced by any char", () => {
+    //this test ensure that the . can't be exploit using the regex
+    expect(isWhitelisted("tech.govasg")).toBe(false);
+    expect(isWhitelisted("tech.openattestationccom")).toBe(false);
+  });
+  it("should be not be case sensitive, and allow domain with uppercase", () => {
+    //this test ensure that the . can't be exploit using the regex
+    expect(isWhitelisted("GOV.SG")).toBe(true);
+    expect(isWhitelisted("gov.SG")).toBe(true);
+    expect(isWhitelisted("Tech.gov.Sg")).toBe(true);
+    expect(isWhitelisted("OPENATTESTATION.COM")).toBe(true);
+    expect(isWhitelisted("OPENattestation.COM")).toBe(true);
+    expect(isWhitelisted("Tech.oPENATTESTaTION.CoM")).toBe(true);
+  });
+  it("should return false when identity ends by gov.sg or openattestation.com", () => {
+    expect(isWhitelisted("tech.pownedgov.sg")).toBe(false);
+    expect(isWhitelisted("tech.pownedopenattestation.com")).toBe(false);
+  });
+  it("should return false when identity uses unicode chars", () => {
+    // the first o of both occurence is a unicode char
+    const govDomain = "g𝗈v.sg";
+    const oaDomain = "𝗈penattestation.com";
+    expect(isWhitelisted(govDomain)).toBe(false);
+    expect(govDomain.charCodeAt(1)).toBe(55349);
+    expect(isWhitelisted(oaDomain)).toBe(false);
+    expect(oaDomain.charCodeAt(0)).toBe(55349);
+  });
+});
+
+describe("verifyAllowedIssuers", () => {
   it("should be valid when issuer has document store and location ends with gov.sg", async () => {
     const fragments = await verify(
       {
@@ -228,42 +249,6 @@ describe("verifyAllowedIssuers", () => {
         Object {
           "data": Array [
             "gov.sg.com",
-          ],
-          "name": "VerifyAllowedIssuers",
-          "reason": Object {
-            "code": 1,
-            "codeString": "INVALID_IDENTITY",
-            "message": "No issuers allowed by this platform found. Valid issuers are gov.sg,openattestation.com",
-          },
-          "status": "INVALID",
-          "type": "ISSUER_IDENTITY",
-        },
-      ]
-    `);
-    expect(isValid(fragments, ["ISSUER_IDENTITY"])).toBe(false);
-  });
-  it("should be invalid when issuer has document store and location try to exploit the regex by replacing . by any char", async () => {
-    const fragments = await verify(
-      {
-        data: {
-          issuers: [
-            {
-              name: "name",
-              documentStore: "0xabcd",
-              identityProof: { location: "tech,govasg", type: v2.IdentityProofType.DNSTxt },
-            },
-          ],
-        },
-        ...v2DocumentShared,
-      },
-      { network: "ropsten" }
-    );
-
-    expect(fragments).toMatchInlineSnapshot(`
-      Array [
-        Object {
-          "data": Array [
-            "tech,govasg",
           ],
           "name": "VerifyAllowedIssuers",
           "reason": Object {

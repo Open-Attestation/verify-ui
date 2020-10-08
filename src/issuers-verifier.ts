@@ -6,7 +6,7 @@ import {
   Verifier,
   CodedError,
 } from "@govtechsg/oa-verify";
-import { getData, SignedWrappedDocument, utils, v2, v3, WrappedDocument } from "@govtechsg/open-attestation";
+import { getData, SignedWrappedDocument, v2, v3, WrappedDocument } from "@govtechsg/open-attestation";
 
 export enum VerifyAllowedIssuersCode {
   UNEXPECTED_ERROR = 0,
@@ -21,6 +21,14 @@ const isWrappedV2Document = (document: any): document is WrappedDocument<v2.Open
   return document.data && document.data.issuers;
 };
 const whitelistedIssuers = ["gov.sg", "openattestation.com"];
+export const isWhitelisted = (identity: string): boolean => {
+  // before applying the regex, we escape the . in the whitelisted domain (to avoid regex exploit)
+  const escapedIdentities = whitelistedIssuers.map((issuer) => issuer.replace(/\./g, "\\."));
+  // create a regex group composed of all identities
+  const groupedIdentities = `(${escapedIdentities.join("|")})`;
+  // the regex must match identities that ends with .domain.com or that are equal to domain.com
+  return identity.match(new RegExp(`^(.*\\.${groupedIdentities}|${groupedIdentities})$`, "i")) !== null;
+};
 export const verifyAllowedIssuers: Verifier<
   | WrappedDocument<v2.OpenAttestationDocument>
   | WrappedDocument<v3.OpenAttestationDocument>
@@ -29,43 +37,18 @@ export const verifyAllowedIssuers: Verifier<
   Array<string | undefined>
 > = {
   skip: () => {
-    return Promise.resolve({
-      status: "SKIPPED",
-      type,
-      name,
-      reason: {
-        code: VerifyAllowedIssuersCode.SKIPPED,
-        codeString: VerifyAllowedIssuersCode[VerifyAllowedIssuersCode.SKIPPED],
-        message: `Document issuers doesn't have "documentStore" / "tokenRegistry" property or doesn't use ${v3.IdentityProofType.DNSTxt} type`,
-      },
-    });
+    throw new Error("THis verifier is never skipped");
   },
-  test: (document) => {
-    if (isWrappedV2Document(document)) {
-      const documentData = getData(document);
-      // at least one issuer uses DNS-TXT
-      return documentData.issuers.some((issuer) => {
-        return (
-          (issuer.documentStore || issuer.tokenRegistry || issuer.certificateStore) &&
-          issuer.identityProof?.type === v2.IdentityProofType.DNSTxt
-        );
-      });
-    } else if (utils.isWrappedV3Document(document)) {
-      const documentData = getData(document);
-      return documentData.issuer.identityProof.type === v3.IdentityProofType.DNSTxt;
-    }
-    return false;
+  test: () => {
+    return true;
   },
   verify: async (document) => {
     try {
       if (isWrappedV2Document(document)) {
         const documentData = getData(document);
-        const identities = await Promise.all(documentData.issuers.map((issuer) => issuer.identityProof?.location));
-        const valid = identities.some((identity) =>
-          identity?.match(
-            new RegExp(`^.*(${whitelistedIssuers.map((issuer) => issuer.replace(/\./g, "\\.")).join("|")})$`)
-          )
-        );
+        const identities = documentData.issuers.map((issuer) => issuer.identityProof?.location);
+        // every issuers must be whitelisted
+        const valid = identities.every((identity) => (identity ? isWhitelisted(identity) : false));
         return {
           name,
           type,

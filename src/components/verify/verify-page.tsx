@@ -1,7 +1,10 @@
 import styled from "@emotion/styled";
 import { isValid, verify } from "@govtechsg/oa-verify";
 import { getData, v2, WrappedDocument } from "@govtechsg/open-attestation";
-import React, { useEffect, useState } from "react";
+import queryString from "query-string";
+import React, { useEffect, useLayoutEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import { retrieveDocument } from "../../services/retrieve-document";
 import { CheckCircle, Loader } from "../shared/icons";
 import { Section, Separator } from "../shared/layout";
 import { NavigationBar } from "../shared/navigation-bar";
@@ -57,10 +60,41 @@ export const VerifyPage: React.FunctionComponent = () => {
   const [rawDocument, setRawDocument] = useState<WrappedDocument<v2.OpenAttestationDocument>>();
   const [issuer, setIssuer] = useState("");
   // set overall status to idle and set the rest to pending
-  const [verificationStatus, setVerificationStatus] = useState<Status>(Status.IDLE);
+  const [loadDocumentStatus, setLoadDocumentStatus] = useState(Status.IDLE);
+  const [loadDocumentError, setLoadDocumentError] = useState("");
+  const [verificationStatus, setVerificationStatus] = useState(Status.IDLE);
   const [issuerStatus, setIssuerStatus] = useState(Status.PENDING);
   const [issuingStatus, setIssuingStatus] = useState(Status.PENDING);
   const [tamperedStatus, setTamperedStatus] = useState(Status.PENDING);
+  const location = useLocation();
+  // use layout effect to run this as soon as possible otherwise the dropzone might be displayed before disappearing
+  useLayoutEffect(() => {
+    const run = async () => {
+      try {
+        if (location.search) {
+          const parsedSearch = queryString.parse(location.search);
+          if (typeof parsedSearch.q !== "string") {
+            return;
+          }
+          const action = JSON.parse(window.decodeURI(parsedSearch.q));
+
+          setLoadDocumentStatus(Status.PENDING);
+          const WAIT = 2000;
+          const [wrappedDocument] = await Promise.all([retrieveDocument(action), wait(WAIT)]);
+          setLoadDocumentStatus(Status.REJECTED);
+          setRawDocument(wrappedDocument);
+        }
+      } catch (error) {
+        setLoadDocumentStatus(Status.REJECTED);
+        setLoadDocumentError(
+          error.message.includes("Unexpected token")
+            ? "The URL is malformed. The document could not be loaded"
+            : error.message
+        );
+      }
+    };
+    run();
+  }, [location]);
 
   useEffect(() => {
     // to unset previous verifying statuses (if any), issuer's name when verifying another document
@@ -111,9 +145,16 @@ export const VerifyPage: React.FunctionComponent = () => {
     setStatusAsync();
   }, [rawDocument]);
 
+  const showDropzone = loadDocumentStatus !== Status.PENDING;
   return (
     <Section>
-      <NavigationBar onVerifyLinkClicked={() => setVerificationStatus(Status.IDLE)} />
+      <NavigationBar
+        onVerifyLinkClicked={() => {
+          setVerificationStatus(Status.IDLE);
+          setLoadDocumentStatus(Status.IDLE);
+          setLoadDocumentError("");
+        }}
+      />
       <Separator />
       {verificationStatus === Status.IDLE && (
         <>
@@ -121,20 +162,38 @@ export const VerifyPage: React.FunctionComponent = () => {
             <div className="flex flex-wrap">
               <div className="w-full">
                 <h2>Verify Documents</h2>
-                <p className="mb-0">Drop a government issued certificate</p>
+                {showDropzone && <p className="mb-0">Drop a government issued certificate</p>}
               </div>
             </div>
           </div>
           <div className="container container-px">
-            <div className="flex flex-wrap">
-              <DropzoneContainer className="w-full lg:w-1/2 lg:mx-auto">
-                <DropZone
-                  onDocumentDropped={(document) => {
-                    setRawDocument(document as WrappedDocument<v2.OpenAttestationDocument>);
-                  }}
-                />
-              </DropzoneContainer>
-            </div>
+            {loadDocumentStatus === Status.PENDING && (
+              <div
+                className="bg-blue-100 border-t-4 border-blue-500 text-blue-700 p-4 w-full text-center mb-4 break-all"
+                role="alert"
+              >
+                <Loader /> Loading document from action
+              </div>
+            )}
+            {loadDocumentStatus === Status.REJECTED && (
+              <div
+                className="bg-red-100 border-t-4 border-red-500 text-red-700 p-4 w-full text-center break-all"
+                role="alert"
+              >
+                {loadDocumentError}
+              </div>
+            )}
+            {showDropzone && (
+              <div className="flex flex-wrap">
+                <DropzoneContainer className="w-full lg:w-1/2 lg:mx-auto">
+                  <DropZone
+                    onDocumentDropped={(document) => {
+                      setRawDocument(document as WrappedDocument<v2.OpenAttestationDocument>);
+                    }}
+                  />
+                </DropzoneContainer>
+              </div>
+            )}
           </div>
         </>
       )}

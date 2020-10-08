@@ -27,7 +27,7 @@ test("Load document from action should fail when url can't be parsed", async (t)
   const action = {
     type: "DOCUMENT",
     payload: {
-      uri: `https://gist.githubusercontent.com/Nebulis/dc32c107fc5112ecf863b1dfa25995a9/raw/9aed3bfbbdd2b8/opencerts-ropsten-demo.json`,
+      uri: `https://gist.githubusercontent.com/Nebulis/49b53678e9b445f826125e4ac4f6d7a0/raw/0474e7b9c25dfdb95c046257483c218f27e60136/gistfile1.txt`,
       redirect: "https://verify.gov.sg/verify",
     },
   };
@@ -45,7 +45,6 @@ test("Load document from action should fail when document does not exist", async
     },
   };
 
-  // replace the first %22 after encoding by nothing so that the URL is not valid and can't be parsed
   await t.navigateTo(`http://localhost:3000/verify/?q=${encodeURI(JSON.stringify(action))}`);
   await t
     .expect(

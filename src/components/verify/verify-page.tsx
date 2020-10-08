@@ -81,7 +81,7 @@ export const VerifyPage: React.FunctionComponent = () => {
           setLoadDocumentStatus(Status.PENDING);
           const WAIT = 2000;
           const [wrappedDocument] = await Promise.all([retrieveDocument(action), wait(WAIT)]);
-          setLoadDocumentStatus(Status.REJECTED);
+          setLoadDocumentStatus(Status.RESOLVED);
           setRawDocument(wrappedDocument);
         }
       } catch (error) {

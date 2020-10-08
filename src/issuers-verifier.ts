@@ -22,12 +22,10 @@ const isWrappedV2Document = (document: any): document is WrappedDocument<v2.Open
 };
 const whitelistedIssuers = ["gov.sg", "openattestation.com"];
 export const isWhitelisted = (identity: string): boolean => {
-  // before applying the regex, we escape the . in the whitelisted domain (to avoid regex exploit)
-  const escapedIdentities = whitelistedIssuers.map((issuer) => issuer.replace(/\./g, "\\."));
-  // create a regex group composed of all identities
-  const groupedIdentities = `(${escapedIdentities.join("|")})`;
-  // the regex must match identities that ends with .domain.com or that are equal to domain.com
-  return identity.match(new RegExp(`^(.*\\.${groupedIdentities}|${groupedIdentities})$`, "i")) !== null;
+  return (
+    whitelistedIssuers.some((issuer) => identity.toLowerCase().endsWith(`.${issuer}`)) ||
+    whitelistedIssuers.includes(identity.toLowerCase())
+  );
 };
 export const verifyAllowedIssuers: Verifier<
   | WrappedDocument<v2.OpenAttestationDocument>

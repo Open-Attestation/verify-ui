@@ -55,6 +55,9 @@ describe("isWhitelisted", () => {
     expect(isWhitelisted("tech.pownedgov.sg")).toBe(false);
     expect(isWhitelisted("tech.pownedopenattestation.com")).toBe(false);
   });
+  it("should return false because :)", () => {
+    expect(isWhitelisted("penattestation.com")).toBe(false);
+  });
   it("should return false when identity uses unicode chars", () => {
     // the first o of both occurence is a unicode char
     const govDomain = "g𝗈v.sg";

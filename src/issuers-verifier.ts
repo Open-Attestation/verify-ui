@@ -37,7 +37,7 @@ export const verifyAllowedIssuers: Verifier<
   Array<string | undefined>
 > = {
   skip: () => {
-    throw new Error("THis verifier is never skipped");
+    throw new Error("This verifier is never skipped");
   },
   test: () => {
     return true;

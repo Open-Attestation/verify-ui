@@ -1,9 +1,10 @@
 import styled from "@emotion/styled";
-import { isValid, verify } from "@govtechsg/oa-verify";
+import { isValid } from "@govtechsg/oa-verify";
 import { getData, v2, WrappedDocument } from "@govtechsg/open-attestation";
 import queryString from "query-string";
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import { verify } from "../../issuers-verifier";
 import { retrieveDocument } from "../../services/retrieve-document";
 import { CheckCircle, Loader } from "../shared/icons";
 import { Section, Separator } from "../shared/layout";
@@ -111,9 +112,10 @@ export const VerifyPage: React.FunctionComponent = () => {
           network: NETWORK_NAME,
           promisesCallback: (promises) => {
             const HASH_STATUS_INDEX = 0;
-            const TOKEN_REGISTRY_STATUS_INDEX = 2;
-            const DOCUMENT_STORE_STATUS_INDEX = 3;
-            const DNS_TXT_VERIFIER_INDEX = 4;
+            const TOKEN_REGISTRY_STATUS_INDEX = 1;
+            const DOCUMENT_STORE_STATUS_INDEX = 2;
+            const DNS_TXT_VERIFIER_INDEX = 3;
+            const ALLOWED_ISSUERS_VERIFIER_INDEX = 6;
             const WAIT = 1000;
 
             Promise.all([promises[HASH_STATUS_INDEX], wait(WAIT)]).then(([fragment]) => {
@@ -134,9 +136,15 @@ export const VerifyPage: React.FunctionComponent = () => {
                 setIssuer(document.issuers.map((issuer) => issuer.identityProof?.location).join(","));
               }
             });
-            Promise.all([promises[DNS_TXT_VERIFIER_INDEX], wait(WAIT)]).then(([fragment]) => {
-              setIssuerStatus(isValid([fragment], ["ISSUER_IDENTITY"]) ? Status.RESOLVED : Status.REJECTED);
-            });
+            Promise.all([promises[DNS_TXT_VERIFIER_INDEX], promises[ALLOWED_ISSUERS_VERIFIER_INDEX], wait(WAIT)]).then(
+              ([dnsTextFragment, allowedIssuersFragment]) => {
+                setIssuerStatus(
+                  isValid([dnsTextFragment, allowedIssuersFragment], ["ISSUER_IDENTITY"])
+                    ? Status.RESOLVED
+                    : Status.REJECTED
+                );
+              }
+            );
           },
         });
         setVerificationStatus(isValid(verificationFragment) ? Status.RESOLVED : Status.REJECTED);

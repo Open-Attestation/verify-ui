@@ -96,23 +96,24 @@
   min-height: 100vh;
 }
 
+/* https://philipwalton.com/articles/normalizing-cross-browser-flexbox-bugs/ */
 #root > .main {
-  flex: 1;
+  flex: 0 1 auto;
 }
 /* END - Add custom component classes before your utilities */
 
 @tailwind utilities;
 
 :root {
-  --primary: theme('colors.primary.default');
-  --grey: theme('colors.grey.default');
-  --grey-light: theme('colors.grey.light');
-  --grey-lighter: theme('colors.grey.lighter');
-  --teal: theme('colors.teal.default');
-  --yellow: theme('colors.yellow.default');
-  --yellow-light: theme('colors.yellow.light');
-  --purple: theme('colors.purple.default');
-  --purple-light: theme('colors.purple.light');
+  --primary: theme("colors.primary.default");
+  --grey: theme("colors.grey.default");
+  --grey-light: theme("colors.grey.light");
+  --grey-lighter: theme("colors.grey.lighter");
+  --teal: theme("colors.teal.default");
+  --yellow: theme("colors.yellow.default");
+  --yellow-light: theme("colors.yellow.light");
+  --purple: theme("colors.purple.default");
+  --purple-light: theme("colors.purple.light");
 }
 
 body {

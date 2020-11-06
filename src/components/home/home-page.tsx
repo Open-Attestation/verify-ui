@@ -69,7 +69,7 @@ export const HomePage: React.FunctionComponent = () => {
     <Root>
       <Section>
         <NavigationBar />
-        <div className="container container-px py-12">
+        <div className="container py-12">
           <div className="flex flex-wrap items-center">
             <div className="w-full md:w-2/5 md:pr-4">
               <h1>An easy way to check and verify your certificates</h1>
@@ -88,7 +88,7 @@ export const HomePage: React.FunctionComponent = () => {
         </div>
       </Section>
       <Section>
-        <div className="container container-px py-12">
+        <div className="container py-12">
           <div className="flex flex-wrap items-center">
             <div className="w-full md:w-1/2 md:pr-4 md:order-2">
               <h1>How we can help</h1>
@@ -125,7 +125,7 @@ export const HomePage: React.FunctionComponent = () => {
         </div>
       </Section>
       <Section>
-        <div className="container container-px py-12">
+        <div className="container py-12">
           <div className="flex flex-wrap items-center">
             <div className="w-full md:w-1/3 md:pr-4">
               <h1>How we can help</h1>

@@ -66,7 +66,7 @@ export const FaqPage: React.FunctionComponent = () => (
   <Section>
     <NavigationBar />
     <Separator />
-    <div className="container container-px py-4">
+    <div className="container py-4">
       <div className="flex flex-wrap">
         <div className="w-auto">
           <h2>Questions? Look here.</h2>
@@ -74,7 +74,7 @@ export const FaqPage: React.FunctionComponent = () => (
       </div>
     </div>
     <Container className="mb-8">
-      <div className="container container-px">
+      <div className="container">
         <div className="flex flex-wrap">
           <div className="w-full md:w-2/3">
             <FaqElement

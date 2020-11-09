@@ -122,8 +122,10 @@ export const VerifyPage: React.FunctionComponent = () => {
             ] = promises;
             const WAIT = 1000;
 
-            Promise.all([hashStatus, wait(WAIT)]).then(([fragment]) => {
-              setTamperedStatus(isValid([fragment], ["DOCUMENT_INTEGRITY"]) ? Status.RESOLVED : Status.REJECTED);
+            Promise.all([wait(WAIT), hashStatus]).then(([, ...verificationFragments]) => {
+              setTamperedStatus(
+                isValid(verificationFragments, ["DOCUMENT_INTEGRITY"]) ? Status.RESOLVED : Status.REJECTED
+              );
             });
             Promise.all([wait(WAIT), documentStoreStatus, tokenRegistryStatus, didSignedStatus]).then(
               ([, ...verificationFragments]) => {

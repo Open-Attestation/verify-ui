@@ -111,37 +111,35 @@ export const VerifyPage: React.FunctionComponent = () => {
         const verificationFragment = await verify(rawDocument, {
           network: NETWORK_NAME,
           promisesCallback: (promises) => {
-            const HASH_STATUS_INDEX = 0;
-            const TOKEN_REGISTRY_STATUS_INDEX = 1;
-            const DOCUMENT_STORE_STATUS_INDEX = 2;
-            const DNS_TXT_VERIFIER_INDEX = 3;
-            const ALLOWED_ISSUERS_VERIFIER_INDEX = 6;
+            const [
+              hashStatus,
+              tokenRegistryStatus,
+              documentStoreStatus,
+              didSignedStatus,
+              dnsTxtIdentity,
+              didDnsIdentity,
+              allowedIssuerIdentity,
+            ] = promises;
             const WAIT = 1000;
 
-            Promise.all([promises[HASH_STATUS_INDEX], wait(WAIT)]).then(([fragment]) => {
+            Promise.all([hashStatus, wait(WAIT)]).then(([fragment]) => {
               setTamperedStatus(isValid([fragment], ["DOCUMENT_INTEGRITY"]) ? Status.RESOLVED : Status.REJECTED);
             });
-            Promise.all([
-              promises[DOCUMENT_STORE_STATUS_INDEX],
-              promises[TOKEN_REGISTRY_STATUS_INDEX],
-              wait(WAIT),
-            ]).then(([documentStoreFragment, tokenRegistryFragment]) => {
-              setIssuingStatus(
-                isValid([documentStoreFragment, tokenRegistryFragment], ["DOCUMENT_STATUS"])
-                  ? Status.RESOLVED
-                  : Status.REJECTED
-              );
+            Promise.all([wait(WAIT), documentStoreStatus, tokenRegistryStatus, didSignedStatus]).then(
+              ([, ...verificationFragments]) => {
+                setIssuingStatus(
+                  isValid(verificationFragments, ["DOCUMENT_STATUS"]) ? Status.RESOLVED : Status.REJECTED
+                );
 
-              if (isValid([documentStoreFragment, tokenRegistryFragment], ["DOCUMENT_STATUS"])) {
-                setIssuer(document.issuers.map((issuer) => issuer.identityProof?.location).join(","));
+                if (isValid(verificationFragments, ["DOCUMENT_STATUS"])) {
+                  setIssuer(document.issuers.map((issuer) => issuer.identityProof?.location).join(","));
+                }
               }
-            });
-            Promise.all([promises[DNS_TXT_VERIFIER_INDEX], promises[ALLOWED_ISSUERS_VERIFIER_INDEX], wait(WAIT)]).then(
-              ([dnsTextFragment, allowedIssuersFragment]) => {
+            );
+            Promise.all([wait(WAIT), dnsTxtIdentity, allowedIssuerIdentity, didDnsIdentity]).then(
+              ([, ...verificationFragments]) => {
                 setIssuerStatus(
-                  isValid([dnsTextFragment, allowedIssuersFragment], ["ISSUER_IDENTITY"])
-                    ? Status.RESOLVED
-                    : Status.REJECTED
+                  isValid(verificationFragments, ["ISSUER_IDENTITY"]) ? Status.RESOLVED : Status.REJECTED
                 );
               }
             );

@@ -85,20 +85,19 @@
   @apply shadow-outline;
 }
 
-/* this will be the standardised lateral spacing for container */
-.container-px {
-  @apply px-4;
-}
-
+/* https://philipwalton.com/articles/normalizing-cross-browser-flexbox-bugs/ */
 #root {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  height: 100vh;
 }
 
-/* https://philipwalton.com/articles/normalizing-cross-browser-flexbox-bugs/ */
+#root > .sgds-masthead {
+  flex-shrink: 0;
+}
+
 #root > .main {
-  flex: 0 1 auto;
+  flex: 1 0 auto;
 }
 /* END - Add custom component classes before your utilities */
 

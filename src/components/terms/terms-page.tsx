@@ -1,4 +1,3 @@
-// import styled from "@emotion/styled";
 import React from "react";
 import { Section, Separator } from "../shared/layout";
 import { NavigationBar } from "../shared/navigation-bar";

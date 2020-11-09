@@ -166,7 +166,7 @@ export const VerifyPage: React.FunctionComponent = () => {
       <Separator />
       {verificationStatus === Status.IDLE && (
         <>
-          <div className="container container-px py-4 text-center">
+          <div className="container py-4 text-center">
             <div className="flex flex-wrap">
               <div className="w-full">
                 <h2>Verify Documents</h2>
@@ -174,7 +174,7 @@ export const VerifyPage: React.FunctionComponent = () => {
               </div>
             </div>
           </div>
-          <div className="container container-px">
+          <div className="container">
             {loadDocumentStatus === Status.PENDING && (
               <div
                 className="bg-blue-100 border-t-4 border-blue-500 text-blue-700 p-4 w-full text-center mb-4 break-all"
@@ -206,7 +206,7 @@ export const VerifyPage: React.FunctionComponent = () => {
         </>
       )}
       {verificationStatus !== Status.IDLE && (
-        <div className="container container-px py-4">
+        <div className="container py-4">
           {issuer && (
             <div className="flex flex-wrap mb-4">
               <div className="w-full">

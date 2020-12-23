@@ -9,7 +9,7 @@ const GovtechImage = styled.img`
 `;
 
 export const Footer: React.FunctionComponent = () => (
-  <footer className="flex flex-col items-center m-5">
+  <footer className="flex flex-col items-center text-center m-5">
     <h6>verify.gov.sg is brought to you by Government Technology Agency:</h6>
     <div className="flex flex-wrap items-center my-4">
       <div className="w-full sm:w-auto">
@@ -19,7 +19,7 @@ export const Footer: React.FunctionComponent = () => (
           target="_blank"
           rel="noopener noreferrer"
         >
-          <GovtechImage className="mx-auto" src={govtechLogo} alt="govtech logo" />
+          <GovtechImage src={govtechLogo} alt="govtech logo" />
         </a>
       </div>
       <div className="w-full sm:w-auto">
@@ -29,7 +29,7 @@ export const Footer: React.FunctionComponent = () => (
           target="_blank"
           rel="noopener noreferrer"
         >
-          <GovtechImage className="mx-auto" src={gdsLogo} alt="Government Digital Services logo" />
+          <GovtechImage src={gdsLogo} alt="Government Digital Services logo" />
         </a>
       </div>
     </div>

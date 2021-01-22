@@ -44,6 +44,10 @@ You can learn more in the [Create React App documentation](https://facebook.gith
 To learn React, check out the [React documentation](https://reactjs.org/).
 
 ## Credits
+
 To output credits based on dependancy packages:
+
 - generate credits.md file with https://github.com/opengovsg/credits-generator
 - then convert credits.md file to pdf with https://github.com/alanshaw/markdown-pdf
+
+### asd

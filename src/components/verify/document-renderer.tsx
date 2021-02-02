@@ -58,7 +58,7 @@ export const DocumentRenderer: React.FunctionComponent<DocumentRendererProps> = 
     }
   }, [selectedTemplate, toFrame]);
 
-  const customUrl: string = "http://localhost:3000/";
+  const customUrl = "http://localhost:3000/";
   /* 
   `${typeof document.$template === "object" ? document.$template.url : document.$template}`
   */

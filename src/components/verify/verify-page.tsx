@@ -77,7 +77,7 @@ export const VerifyPage: React.FunctionComponent = () => {
           if (typeof parsedSearch.q !== "string") {
             return;
           }
-          const action = JSON.parse(window.decodeURI(parsedSearch.q));
+          const action = JSON.parse(window.decodeURIComponent(parsedSearch.q));
 
           setLoadDocumentStatus(Status.PENDING);
           const WAIT = 2000;

@@ -5,7 +5,7 @@ import queryString from "query-string";
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { verify } from "../../issuers-verifier";
-import { retrieveDocument } from "../../services/retrieve-document";
+import { Action, retrieveDocument } from "../../services/retrieve-document";
 import { CheckCircle, Loader } from "../shared/icons";
 import { Section, Separator } from "../shared/layout";
 import { NavigationBar } from "../shared/navigation-bar";
@@ -74,10 +74,19 @@ export const VerifyPage: React.FunctionComponent = () => {
       try {
         if (location.search) {
           const parsedSearch = queryString.parse(location.search);
+          
+          console.log("parsedSearch", parsedSearch);
+          console.log("parsedSearch.q", parsedSearch.q);
+          console.log("window.decodeURI", window.decodeURIComponent(parsedSearch.q as string));
+
           if (typeof parsedSearch.q !== "string") {
             return;
-          }
-          const action = JSON.parse(window.decodeURI(parsedSearch.q));
+          }          
+
+          const action: Action = JSON.parse(window.decodeURIComponent(parsedSearch.q));
+
+          console.log("action", typeof(action), action);
+          console.log("action.type", action["type"]);
 
           setLoadDocumentStatus(Status.PENDING);
           const WAIT = 2000;

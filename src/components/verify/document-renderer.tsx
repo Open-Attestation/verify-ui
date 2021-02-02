@@ -58,6 +58,11 @@ export const DocumentRenderer: React.FunctionComponent<DocumentRendererProps> = 
     }
   }, [selectedTemplate, toFrame]);
 
+  const customUrl: string = "http://localhost:3000/";
+  /* 
+  `${typeof document.$template === "object" ? document.$template.url : document.$template}`
+  */
+
   return (
     <div className="mb-8">
       {templates.length > 0 && (
@@ -67,9 +72,10 @@ export const DocumentRenderer: React.FunctionComponent<DocumentRendererProps> = 
           onSelectTemplate={(selectedTemplate) => setSelectedTemplate(selectedTemplate)}
         />
       )}
+      <p>Hello</p>
       <FrameConnector
         style={{ height: `${height}px`, width: "100%", border: "0px" }}
-        source={`${typeof document.$template === "object" ? document.$template.url : document.$template}`}
+        source={customUrl}
         onConnected={onConnected}
         dispatch={fromFrame}
       />

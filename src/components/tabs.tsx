@@ -24,7 +24,7 @@ export const Tabs: React.FunctionComponent<TabsProps> = ({ selectedTemplate, tem
               onSelectTemplate(id);
             }}
           >
-            {label}
+            {label + "Hello"}
           </li>
         ))}
       </ul>

@@ -1,7 +1,7 @@
 import { decryptString } from "@govtechsg/oa-encryption";
 import { v2, WrappedDocument } from "@govtechsg/open-attestation";
 
-interface Action {
+export interface Action {
   type: string;
   payload?: {
     uri?: string;
@@ -10,6 +10,8 @@ interface Action {
 }
 
 export const retrieveDocument = async (action: Action): Promise<WrappedDocument<v2.OpenAttestationDocument>> => {
+  console.log("action.type", action.type);
+
   if (action.type === "DOCUMENT") {
     const { uri = "", key } = action?.payload ?? {};
     let certificate = await window.fetch(uri).then((response) => {

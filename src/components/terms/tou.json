@@ -1,0 +1,15 @@
+{
+    "Nature of this Service": ["Please see the Schedule for more information and terms concerning this Service."],
+    "Licence Terms and Restrictions": [
+        "The Service, including the materials made available on or through the Service, is owned by, licensed to, managed or controlled by GovTech. Please see clause 4 (Third Party Materials) for more information.",
+        "Subject to these Terms of Use, GovTech grants to you a non-exclusive and non-transferable right to access and use the Service for personal or internal purposes only, and only for such use permitted by the functions of the Service. You shall not, amongst other things, modify, reverse-engineer, decompile, adapt, publish, redistribute or sublicense the Service or any part of the Service without the prior written consent of GovTech or the respective third party owners. You also shall not use the Service in violation of any applicable laws or agreements that you have with any third parties. All express or implied rights to the Service not specifically granted herein are expressly reserved to GovTech.",
+        "GovTech reserves the right to:",
+        [
+            "Update or modify this Service from time to time;",
+            "Deny or restrict access to or use of the Service by any particular person without ascribing any reasons whatsoever; and",
+            "Discontinue this Service at any time without notice or liability to you  whatsoever, whereupon all rights granted to you hereunder shall also terminate forthwith. You shall further upon notice from GovTech return or destroy all copies of the Service or materials therein that you may have downloaded."
+        ],
+        "You will not interfere or attempt to interfere with the proper working of the Service or otherwise do anything that imposes an unreasonable or disproportionately large load on GovTech’s servers"
+    ]
+
+}

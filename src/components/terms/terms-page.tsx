@@ -1,11 +1,24 @@
 import React from "react";
 import { Section, Separator } from "../shared/layout";
 import { NavigationBar } from "../shared/navigation-bar";
+import tou from "./tou.json";
+import { generateTOU } from "./generate-tou";
 
-export const TermsPage: React.FunctionComponent = () => (
-  <Section>
+export const TermsPage: React.FC = () => {
+
+  const touDoc = tou as Record<string, string[]>;
+
+  return (<Section>
     <NavigationBar />
     <Separator />
+
+    <div className="container px-4 my-3">
+      {generateTOU(touDoc)}
+
+    </div>
+
+    {/*
+
     <div className="container px-4 my-3">
       <div className="flex flex-wrap">
         <div className="w-auto">
@@ -105,5 +118,7 @@ export const TermsPage: React.FunctionComponent = () => (
         </div>
       </div>
     </div>
+                */}
   </Section>
-);
+ )
+};

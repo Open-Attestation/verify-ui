@@ -9,7 +9,11 @@ function recurselyGenerateList(clauses: string[]): JSX.Element {
       results.push(result);
       continue;
     }
-    results.push(<li>{clause}</li>);
+    results.push(
+      <li>
+        <p>{clause}</p>
+      </li>
+    );
   }
   return <ol className="ol-nested">{results}</ol>;
 }

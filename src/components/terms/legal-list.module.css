@@ -1,0 +1,19 @@
+/* From https://davelane.nz/creating-legal-list-numbering-only-using-css */
+.legal-list {
+    counter-reset: section;
+  }
+  .legal-list h4:before {
+    counter-increment: section;
+    content: counter(section) ". ";
+  }
+  .legal-list ol {
+    counter-reset: clause;      
+  }
+  .legal-list ol li {
+    counter-increment: clause;    
+  }
+  .legal-list ol li:before {
+    font-size: 1rem;
+    line-height: 1rem;
+    content: counter(section) "." counters(clause, ".") ". ";
+  }

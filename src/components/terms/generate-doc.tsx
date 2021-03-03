@@ -17,7 +17,7 @@ const recurselyGenerateList = (clauses: string[] | JSX.Element[]): JSX.Element =
     );
   }
   return <ol>{results}</ol>;
-}
+};
 
 export const GenerateDoc = (doc: Record<string, string[] | JSX.Element[]>): JSX.Element => {
   return (
@@ -30,4 +30,4 @@ export const GenerateDoc = (doc: Record<string, string[] | JSX.Element[]>): JSX.
       ))}
     </div>
   );
-}
+};

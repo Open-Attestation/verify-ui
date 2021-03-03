@@ -11,8 +11,8 @@ function recurselyGenerateList(clauses: string[]): JSX.Element {
       continue;
     }
     results.push(
-      <li>        
-        <span>{clause}</span>
+      <li className="flex">        
+        <p className="text-justify ml-2">{clause}</p>
       </li>
     );
   }
@@ -24,7 +24,7 @@ export function TermsOfUse(doc: Record<string, string[]>): JSX.Element {
     <div id="legal-list">
       {Object.entries(doc).map(([heading, clauses], index) => (
         <Fragment key={index}>
-          <h4 className="text-primary my-2">{heading}</h4>
+          <h4 className="text-primary mt-2">{heading}</h4>
           {recurselyGenerateList(clauses)}
         </Fragment>
       ))}

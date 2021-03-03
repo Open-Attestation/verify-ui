@@ -1,7 +1,7 @@
 import React from "react";
 import { Section, Separator } from "../shared/layout";
 import { NavigationBar } from "../shared/navigation-bar";
-import { TermsOfUse } from "./generate-tou";
+import { TermsOfUse } from "./terms-of-use";
 import tou from "./tou.json";
 
 export const TermsPage: React.FC = () => {

@@ -12,13 +12,10 @@
     
   }
   #legal-list ol li {
-    counter-increment: clause;
-    font-size: 16px;
-    line-height: 1.2;
-    display: inline-block;  
-    margin-bottom: 16px;
-    
+    counter-increment: clause;    
   }
   #legal-list ol li:before {
+    font-size: 1rem;
+    line-height: 1rem;
     content: counter(section) "." counters(clause, ".") ". ";
   }

@@ -11,7 +11,7 @@ function recurselyGenerateList(clauses: string[]): JSX.Element {
       continue;
     }
     results.push(
-      <li className="flex">        
+      <li className="flex">
         <p className="text-justify ml-2">{clause}</p>
       </li>
     );

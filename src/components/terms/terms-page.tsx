@@ -14,10 +14,10 @@ export const TermsPage: React.FC = () => {
 
       <div className="container px-4 my-3">
         <div className="flex flex-wrap">
-          <div className="w-full lg:w-2/3">   
+          <div className="w-full lg:w-2/3">
             {TermsOfUse(touDoc)}
             <p className="text-center">This version of the Terms of Use is dated 20 August 2018.</p>
-            </div>
+          </div>
         </div>
       </div>
     </Section>

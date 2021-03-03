@@ -30,6 +30,6 @@ export const serviceDoc = {
     </a>,
     <Link to="/credits.pdf" target="_blank" download className="underline text-blue-600" key={4}>
       List of open source software
-    </Link> 
+    </Link>,
   ],
 };

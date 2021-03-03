@@ -1,7 +1,6 @@
 import React, { Fragment } from "react";
-import "./legal-list.css";
 
-function recurselyGenerateList(clauses: string[]): JSX.Element {
+function recurselyGenerateList(clauses: string[] | JSX.Element[]): JSX.Element {
   const results: JSX.Element[] = [];
 
   for (const clause of clauses) {
@@ -11,17 +10,17 @@ function recurselyGenerateList(clauses: string[]): JSX.Element {
       continue;
     }
     results.push(
-      <li className="flex">
+      <li>
         <p className="text-justify ml-2">{clause}</p>
       </li>
     );
   }
-  return <ol>{results}</ol>;
+  return <ol className="ol-nested">{results}</ol>;
 }
 
-export function TermsOfUse(doc: Record<string, string[]>): JSX.Element {
+export function TermsOfUse(doc: Record<string, string[] | JSX.Element[]>): JSX.Element {
   return (
-    <div id="legal-list">
+    <div>
       {Object.entries(doc).map(([heading, clauses], index) => (
         <Fragment key={index}>
           <h4 className="text-primary mt-2">{heading}</h4>

@@ -2,10 +2,10 @@ import React from "react";
 import { Section, Separator } from "../shared/layout";
 import { NavigationBar } from "../shared/navigation-bar";
 import { TermsOfUse } from "./terms-of-use";
-import tou from "./tou.json";
+import {tou} from "./tou-doc";
 
 export const TermsPage: React.FC = () => {
-  const touDoc = tou as Record<string, string[]>;
+  const touDoc = tou as Record<string, string[] | JSX.Element[]>;
 
   return (
     <Section>

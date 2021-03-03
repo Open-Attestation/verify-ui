@@ -1,12 +1,12 @@
 import React, { Fragment } from "react";
 import styles from "./legal-list.module.css";
 
-const recurselyGenerateList = (clauses: string[] | JSX.Element[]): JSX.Element => {
+const recursivelyGenerateList = (clauses: string[] | JSX.Element[]): JSX.Element => {
   const results: JSX.Element[] = [];
 
   for (const clause of clauses) {
     if (Array.isArray(clause)) {
-      const result: JSX.Element = recurselyGenerateList(clause);
+      const result: JSX.Element = recursivelyGenerateList(clause);
       results.push(result);
       continue;
     }
@@ -25,7 +25,7 @@ export const GenerateDoc = (doc: Record<string, string[] | JSX.Element[]>): JSX.
       {Object.entries(doc).map(([heading, clauses], index) => (
         <Fragment key={index}>
           <h4 className="text-primary mt-8 mb-1">{heading}</h4>
-          {recurselyGenerateList(clauses)}
+          {recursivelyGenerateList(clauses)}
         </Fragment>
       ))}
     </div>

@@ -5,7 +5,9 @@
         "By accessing or using any part of this Service, you unconditionally agree and accept to be legally bound by these Terms of Use and any amendments thereto from time to time. GovTech reserves the right to change these Terms of Use at its sole discretion and at any time. You should read the Terms of Use carefully each time you access or use any part of this Service as such access or use will constitute your agreement to the Terms of Use and any amendments to it.",
         "If you do not agree to these Terms of Use, please do not use this Service or any part of this Service"
     ],
-    "Nature of this Service": ["Please see the Schedule for more information and terms concerning this Service."],
+    "Nature of this Service": [
+        "Please see the Schedule for more information and terms concerning this Service."
+    ],
     "Licence Terms and Restrictions": [
         "The Service, including the materials made available on or through the Service, is owned by, licensed to, managed or controlled by GovTech. Please see clause 4 (Third Party Materials) for more information.",
         "Subject to these Terms of Use, GovTech grants to you a non-exclusive and non-transferable right to access and use the Service for personal or internal purposes only, and only for such use permitted by the functions of the Service. You shall not, amongst other things, modify, reverse-engineer, decompile, adapt, publish, redistribute or sublicense the Service or any part of the Service without the prior written consent of GovTech or the respective third party owners. You also shall not use the Service in violation of any applicable laws or agreements that you have with any third parties. All express or implied rights to the Service not specifically granted herein are expressly reserved to GovTech.",
@@ -49,6 +51,36 @@
         "Without prejudice and in addition to the foregoing, insofar as the Service facilitates or requires the provision, use or functioning of, or is provided in conjunction with, other products, software, materials and/or services not provided by GovTech, GovTech makes no representation or warranty in relation to such products, software, materials and/or services (including without limitation any representation or warranties as to timeliness, reliability, availability, interoperability, quality, fitness for purpose, non-infringement, suitability or accuracy).",
         "You shall not rely on any part of the Service to claim or assert any form of legitimate expectation against GovTech, whether or not arising out of or in connection with GovTech’s roles and functions as a public authority.",
         "You agree to defend and indemnify and keep GovTech and its officers, employees, agents and contractors harmless against all liabilities, losses, damages, costs or expenses (including legal costs on an indemnity basis) howsoever arising out of or in connection with your access or use of the Service (including third party software or services) or your non-compliance with the Terms of Use, Third Party Terms or Incorporated Terms, whether or not you had been advised or informed of the nature or extent of such liabilities, losses, damages, costs or expenses."
+    ],
+    "Hyperlinks": [
+        "Insofar as the Service provides a hyperlink to material not maintained or controlled by GovTech, GovTech shall not be responsible for the content of the hyperlinked material and shall not be liable for any damages or loss arising from access to the hyperlinked material. Use of the hyperlinks and access to such hyperlinked materials are entirely at your own risk. The hyperlinks are provided merely as a convenience to you and do not imply endorsement by, association or affiliation with GovTech of the contents of or provider of the hyperlinked materials.",
+        "Caching and hyperlinking to, and the framing of, any part of the Service is prohibited save where you have obtained GovTech’s prior written consent. Such consent may be subject to any conditions as may be determined by GovTech in its sole discretion. If you hyperlink to or frame any part of the Service, that shall constitute your acceptance of these Terms of Use and all amendments thereto. If you do not accept these Terms of Use as may be amended from time to time, you must immediately discontinue linking to or framing of any part of the Service.",
+        "GovTech reserves all rights:",
+        [
+            "to disable any links to, or frames of, any materials which are unauthorised (including without limitation materials which imply endorsement by or association or affiliation with GovTech, materials containing inappropriate, profane, defamatory, infringing, obscene, indecent or unlawful topics, names, or information that violates any written law, any applicable intellectual property, proprietary, privacy or publicity rights); and",
+            "to disclaim responsibility and/or liability for materials that link to or frame any part of the Service"
+        ]
+    ],
+    "Privacy Policy": [
+        "You also agree to the terms of the Privacy Policy for this Service as may be amended from time to time. The Privacy Policy will form part of these Terms of Use."
+    ],
+    "Rights of Third Parties": [
+        "Subject to the rights of the Third Party set out in Clause 4.5, a person who is not a party to this Terms of Use shall have no right under the Contract (Rights of Third Parties) Act or otherwise to enforce any of its terms."
+    ],
+    "Assignment": [
+        "You may not assign or sub-contract this Terms of Use without the prior written consent of GovTech.",
+        "GovTech may assign, novate, transfer, or sub-contract the rights and liabilities in respect of the Service and this Terms of Use, without notifying you and without further reference to you. Your acceptance of this Terms of Use shall also constitute your consent to such assignment, novation, transfer or sub-contract"
+    ],
+    "Governing Law and Dispute Resolution": [
+        "These Terms of Use shall be governed and construed in accordance with laws of Singapore.",
+        "Subject to clause 11.3, any dispute arising out of or in connection with these Terms of Use, including any question regarding its existence, validity or termination, shall be referred to and finally resolved in the Courts of the Republic of Singapore and the parties hereby submit to the exclusive jurisdiction of the Courts of the Republic of Singapore.",
+        "GovTech may, at its sole discretion, refer any dispute referred to in clause 11.2 above to arbitration administered by the Singapore International Arbitration Centre (“SIAC”) in Singapore in accordance with the Arbitration Rules of the SIAC (\"SIAC Rules\") for the time being in force, which rules are deemed to be incorporated by reference in this clause. Further:",
+        [
+            "The seat of the arbitration shall be Singapore.",
+            "The tribunal shall consist of one (1) arbitrator.",
+            "The language of the arbitration shall be English.",
+            "All information, pleadings, documents, evidence and all matters relating to the arbitration shall be confidential."
+        ],
+        "Where GovTech is the defendant or respondent, it shall be given at least 30 days before the commencement of any legal action against it to elect to exercise the right herein to have the dispute submitted to arbitration. This right to elect shall not prejudice GovTech’s right to a limitation defence and the period to exercise the right shall not be abridged by reason of any accrual of a limitation defence in favour of GovTech during the said period."
     ]
-
 }

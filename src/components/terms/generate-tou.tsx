@@ -1,4 +1,5 @@
-import React from "react";
+import React, { Fragment } from "react";
+import "./legal-list.css";
 
 function recurselyGenerateList(clauses: string[]): JSX.Element {
   const results: JSX.Element[] = [];
@@ -10,22 +11,22 @@ function recurselyGenerateList(clauses: string[]): JSX.Element {
       continue;
     }
     results.push(
-      <li>
-        <p>{clause}</p>
+      <li>        
+        <span>{clause}</span>
       </li>
     );
   }
-  return <ol className="ol-nested">{results}</ol>;
+  return <ol>{results}</ol>;
 }
 
-export function generateTOU(doc: Record<string, string[]>): JSX.Element {
+export function TermsOfUse(doc: Record<string, string[]>): JSX.Element {
   return (
-    <div>
+    <div id="legal-list">
       {Object.entries(doc).map(([heading, clauses], index) => (
-        <div key={index}>
-          <h4 className="text-primary mb-2">{heading}</h4>
+        <Fragment key={index}>
+          <h4 className="text-primary my-2">{heading}</h4>
           {recurselyGenerateList(clauses)}
-        </div>
+        </Fragment>
       ))}
     </div>
   );

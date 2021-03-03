@@ -1,12 +1,8 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
 export const serviceDoc = {
-  "Description of Service": [
-    <Fragment key={0}>
-      <b>Name of Service</b>: Verify
-    </Fragment>,
-  ],
+  "Name of Service": ["Verify"],
   "Nature of Service and Special Terms": [
     "This Service facilitates the verification of any Singapore government agency-issued OpenAttestation document.",
     "To use the Service, you will need to upload a document onto the site.",

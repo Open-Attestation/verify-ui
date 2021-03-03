@@ -18,7 +18,7 @@ export const TermsPage: React.FC = () => {
             {GenerateDoc(tou as Record<string, string[] | JSX.Element[]>)}
             <p className="text-center">This version of the Terms of Use is dated 20 August 2018.</p>
             <hr />
-            <h2 className="w-auto">Schedule</h2>
+            <h2 className="w-auto">Description of Service</h2>
             {GenerateDoc(serviceDoc as Record<string, string[] | JSX.Element[]>)}
           </div>
         </div>

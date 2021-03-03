@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import styles from "./legal-list.module.css";
 
-function recurselyGenerateList(clauses: string[] | JSX.Element[]): JSX.Element {
+const recurselyGenerateList = (clauses: string[] | JSX.Element[]): JSX.Element => {
   const results: JSX.Element[] = [];
 
   for (const clause of clauses) {
@@ -19,7 +19,7 @@ function recurselyGenerateList(clauses: string[] | JSX.Element[]): JSX.Element {
   return <ol>{results}</ol>;
 }
 
-export function GenerateDoc(doc: Record<string, string[] | JSX.Element[]>): JSX.Element {
+export const GenerateDoc = (doc: Record<string, string[] | JSX.Element[]>): JSX.Element => {
   return (
     <div className={styles["legal-list"]}>
       {Object.entries(doc).map(([heading, clauses], index) => (

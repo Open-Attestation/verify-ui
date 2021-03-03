@@ -1,11 +1,11 @@
 import React from "react";
 import { Section, Separator } from "../shared/layout";
 import { NavigationBar } from "../shared/navigation-bar";
-import { TermsOfUse } from "./terms-of-use";
-import {tou} from "./tou-doc";
+import { GenerateDoc } from "./generate-doc";
+import {tou} from "./docs/tou-doc";
+import {serviceDoc} from "./docs/service-description-doc";
 
 export const TermsPage: React.FC = () => {
-  const touDoc = tou as Record<string, string[] | JSX.Element[]>;
 
   return (
     <Section>
@@ -15,8 +15,12 @@ export const TermsPage: React.FC = () => {
       <div className="container px-4 my-3">
         <div className="flex flex-wrap">
           <div className="w-full lg:w-2/3">
-            {TermsOfUse(touDoc)}
+            <h2 className="w-auto">Terms of Use</h2>
+            {GenerateDoc(tou as Record<string, string[] | JSX.Element[]>)}
             <p className="text-center">This version of the Terms of Use is dated 20 August 2018.</p>
+            <hr/>
+            <h2 className="w-auto">Schedule</h2>
+            {GenerateDoc(serviceDoc as Record<string, string[] | JSX.Element[]>)}
           </div>
         </div>
       </div>

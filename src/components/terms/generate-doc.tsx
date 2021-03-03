@@ -18,12 +18,12 @@ function recurselyGenerateList(clauses: string[] | JSX.Element[]): JSX.Element {
   return <ol className="ol-nested">{results}</ol>;
 }
 
-export function TermsOfUse(doc: Record<string, string[] | JSX.Element[]>): JSX.Element {
+export function GenerateDoc(doc: Record<string, string[] | JSX.Element[]>): JSX.Element {
   return (
     <div>
       {Object.entries(doc).map(([heading, clauses], index) => (
         <Fragment key={index}>
-          <h4 className="text-primary mt-2">{heading}</h4>
+          <h4 className="text-primary mt-8 mb-1">{heading}</h4>
           {recurselyGenerateList(clauses)}
         </Fragment>
       ))}

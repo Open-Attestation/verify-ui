@@ -1,12 +1,11 @@
 import React from "react";
 import { Section, Separator } from "../shared/layout";
 import { NavigationBar } from "../shared/navigation-bar";
+import { serviceDoc } from "./docs/service-description-doc";
+import { tou } from "./docs/tou-doc";
 import { GenerateDoc } from "./generate-doc";
-import {tou} from "./docs/tou-doc";
-import {serviceDoc} from "./docs/service-description-doc";
 
 export const TermsPage: React.FC = () => {
-
   return (
     <Section>
       <NavigationBar />
@@ -18,7 +17,7 @@ export const TermsPage: React.FC = () => {
             <h2 className="w-auto">Terms of Use</h2>
             {GenerateDoc(tou as Record<string, string[] | JSX.Element[]>)}
             <p className="text-center">This version of the Terms of Use is dated 20 August 2018.</p>
-            <hr/>
+            <hr />
             <h2 className="w-auto">Schedule</h2>
             {GenerateDoc(serviceDoc as Record<string, string[] | JSX.Element[]>)}
           </div>

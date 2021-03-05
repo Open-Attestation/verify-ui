@@ -46,7 +46,8 @@ export const verifyAllowedIssuers: Verifier<
         const documentData = getData(document);
         const identities = documentData.issuers.map((issuer) => issuer.identityProof?.location);
         // every issuers must be whitelisted
-        const valid = identities.every((identity) => (identity ? isWhitelisted(identity) : false));
+        const valid =
+          identities.length > 0 && identities.every((identity) => (identity ? isWhitelisted(identity) : false));
         return {
           name,
           type,

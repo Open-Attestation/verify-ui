@@ -70,6 +70,34 @@ describe("isWhitelisted", () => {
 });
 
 describe("verifyAllowedIssuers", () => {
+  it("should be invalid if issuers array is empty", async () => {
+    const fragments = await verify(
+      {
+        data: {
+          issuers: [],
+        },
+        ...v2DocumentShared,
+      },
+      { network: "ropsten" }
+    );
+
+    expect(fragments).toMatchInlineSnapshot(`
+      Array [
+        Object {
+          "data": Array [],
+          "name": "VerifyAllowedIssuers",
+          "reason": Object {
+            "code": 1,
+            "codeString": "INVALID_IDENTITY",
+            "message": "No issuers allowed by this platform found. Valid issuers are gov.sg,openattestation.com",
+          },
+          "status": "INVALID",
+          "type": "ISSUER_IDENTITY",
+        },
+      ]
+    `);
+    expect(isValid(fragments, ["ISSUER_IDENTITY"])).toBe(false);
+  });
   it("should be valid when issuer has document store and location ends with gov.sg", async () => {
     const fragments = await verify(
       {

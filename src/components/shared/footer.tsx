@@ -33,7 +33,7 @@ export const Footer: React.FunctionComponent = () => (
         </a>
       </div>
     </div>
-    <p className="small">©2020 Government of Singapore Technology Agency | Last updated 6th Mar 2021</p>
+    <p className="small">©2020 Government Technology Agency | Last updated 6th Mar 2021</p>
     <p className="small">v1.0.0-{process.env.REACT_APP_COMMIT_REF?.substring(0, 6)}</p>
     <p className="small">
       <Link to="/terms" className="text-primary mx-3">

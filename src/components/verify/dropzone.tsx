@@ -47,7 +47,7 @@ export const DropZone: React.FunctionComponent<DropZoneProps> = ({ onDocumentDro
       }
     };
 
-    reader.readAsBinaryString(files[0]);
+    reader.readAsText(files[0]);
   };
 
   return (

@@ -1,17 +1,21 @@
 import styled from "@emotion/styled";
 import React from "react";
 import { Link } from "react-router-dom";
+import govtechLogo from "./images/govtech-logo.svg";
 import gdsLogo from "./images/logo-colored-dark-on-light.svg";
-import govtechLogo from "./images/logo_govtech_hort.gif";
 
-const GovtechImage = styled.img`
+const GovtechLogoImage = styled.img`
+  width: 160px;
+`;
+
+const GdsLogoImage = styled.img`
   width: 200px;
 `;
 
 export const Footer: React.FunctionComponent = () => (
   <footer className="container mx-auto max-w-lg items-center text-center py-6">
     <h6>verify.gov.sg is brought to you by Government Technology Agency:</h6>
-    <div className="flex flex-wrap items-center justify-center my-4">
+    <div className="flex flex-wrap items-center justify-center my-6">
       <div className="w-full sm:w-auto">
         <a
           className="inline-block transition-opacity hover:opacity-75"
@@ -19,7 +23,7 @@ export const Footer: React.FunctionComponent = () => (
           target="_blank"
           rel="noopener noreferrer"
         >
-          <GovtechImage src={govtechLogo} alt="govtech logo" />
+          <GovtechLogoImage src={govtechLogo} alt="GovTech logo" />
         </a>
       </div>
       <div className="w-full sm:w-auto">
@@ -29,7 +33,7 @@ export const Footer: React.FunctionComponent = () => (
           target="_blank"
           rel="noopener noreferrer"
         >
-          <GovtechImage src={gdsLogo} alt="Government Digital Services logo" />
+          <GdsLogoImage src={gdsLogo} alt="Government Digital Services logo" />
         </a>
       </div>
     </div>

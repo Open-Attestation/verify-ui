@@ -1,6 +1,15 @@
-import { FrameActions, FrameConnector, HostActionsHandler } from "@govtechsg/decentralized-renderer-react-components";
+/** @jsx jsx */
+import { css, jsx } from "@emotion/core";
+import {
+  FrameActions,
+  FrameConnector,
+  HostActionsHandler,
+  print,
+  renderDocument,
+  selectTemplate,
+} from "@govtechsg/decentralized-renderer-react-components";
 import { getData, v2, WrappedDocument } from "@govtechsg/open-attestation";
-import React, { useState, useCallback, useEffect, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Tabs } from "../tabs";
 
 interface DocumentRendererProps {
@@ -40,21 +49,13 @@ export const DocumentRenderer: React.FunctionComponent<DocumentRendererProps> = 
 
   useEffect(() => {
     if (toFrame) {
-      toFrame({
-        type: "RENDER_DOCUMENT",
-        payload: {
-          document,
-        },
-      });
+      toFrame(renderDocument({ document }));
     }
   }, [document, toFrame]);
 
   useEffect(() => {
     if (toFrame && selectedTemplate) {
-      toFrame({
-        type: "SELECT_TEMPLATE",
-        payload: selectedTemplate,
-      });
+      toFrame(selectTemplate(selectedTemplate));
     }
   }, [selectedTemplate, toFrame]);
 
@@ -65,14 +66,32 @@ export const DocumentRenderer: React.FunctionComponent<DocumentRendererProps> = 
           templates={templates}
           selectedTemplate={selectedTemplate}
           onSelectTemplate={(selectedTemplate) => setSelectedTemplate(selectedTemplate)}
+          onPrint={() => {
+            toFrame?.(print());
+          }}
         />
       )}
       <FrameConnector
+        css={css`
+          @media print {
+            display: none;
+          }
+        `}
         style={{ height: `${height}px`, width: "100%", border: "0px" }}
         source={`${typeof document.$template === "object" ? document.$template.url : document.$template}`}
         onConnected={onConnected}
         dispatch={fromFrame}
       />
+      <div
+        css={css`
+          @media print {
+            display: block;
+          }
+        `}
+        className="hidden bg-red-100 border-t-4 border-red-500 text-red-700 p-4 w-full text-center break-all mt-8"
+      >
+        If you want to print the certificate, please click on the highlighted button above.
+      </div>
     </div>
   );
 };

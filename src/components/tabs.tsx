@@ -18,7 +18,7 @@ const InnerButtonIcon = styled.button`
   }
 `;
 
-export const ButtonIcon: FunctionComponent<ButtonHTMLAttributes<any>> = ({
+export const ButtonIcon: FunctionComponent<ButtonHTMLAttributes<HTMLButtonElement>> = ({
   className,
   children,
   disabled,

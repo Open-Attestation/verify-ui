@@ -1,7 +1,10 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": ["dom", "esnext"],
+    "lib": [
+      "dom",
+      "esnext"
+    ],
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
@@ -12,8 +15,12 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react",
-    "allowJs": true
+    "jsx": "react-jsx",
+    "allowJs": true,
+    "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "integration"]
+  "include": [
+    "src",
+    "integration"
+  ]
 }

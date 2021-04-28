@@ -1,5 +1,5 @@
-/** @jsx jsx */
-import { css, jsx } from "@emotion/core";
+/** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react";
 import {
   FrameActions,
   FrameConnector,
@@ -67,7 +67,7 @@ export const DocumentRenderer: React.FunctionComponent<DocumentRendererProps> = 
           selectedTemplate={selectedTemplate}
           onSelectTemplate={(selectedTemplate) => setSelectedTemplate(selectedTemplate)}
           onPrint={() => {
-            toFrame?.(print());
+            return toFrame?.(print());
           }}
         />
       )}

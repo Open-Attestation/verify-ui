@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { WrappedDocument } from "@govtechsg/open-attestation";
+import { WrappedDocument, v2 } from "@govtechsg/open-attestation";
 import React, { useState } from "react";
 import Dropzone from "react-dropzone";
 import { XCircle } from "react-feather";
@@ -19,7 +19,7 @@ const Container = styled.div`
 `;
 
 interface DropZoneProps {
-  onDocumentDropped: (document: WrappedDocument) => void;
+  onDocumentDropped: (document: WrappedDocument<v2.OpenAttestationDocument>) => void;
 }
 export const DropZone: React.FunctionComponent<DropZoneProps> = ({ onDocumentDropped }: DropZoneProps) => {
   const [fileErrorMsg, setFileErrorMsg] = useState("");

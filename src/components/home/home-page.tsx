@@ -39,7 +39,7 @@ const Progress = styled.div`
       display: flex;
       justify-content: center;
       align-items: center;
-      content: "\f00c";
+      content: "\\f00c";
       font-family: "Font Awesome\ 5 Free";
       font-weight: 900;
       font-size: 12px;

@@ -13,8 +13,6 @@ import { Status } from "./../../types";
 import { DocumentRenderer } from "./document-renderer";
 import { DropZone } from "./dropzone";
 
-const NETWORK_NAME = process.env.REACT_APP_NETWORK_NAME || "ropsten";
-
 const DropzoneContainer = styled.div`
   margin-top: 20px;
   margin-bottom: 46px;
@@ -108,44 +106,37 @@ export const VerifyPage: React.FunctionComponent = () => {
       if (rawDocument) {
         setVerificationStatus(Status.PENDING);
         const document: v2.OpenAttestationDocument = getData(rawDocument);
-        const verificationFragment = await verify(rawDocument, {
-          network: NETWORK_NAME,
-          promisesCallback: (promises) => {
-            const [
-              hashStatus,
-              tokenRegistryStatus,
-              documentStoreStatus,
-              didSignedStatus,
-              dnsTxtIdentity,
-              didDnsIdentity,
-              allowedIssuerIdentity,
-            ] = promises;
-            const WAIT = 1000;
+        const verificationFragment = await verify(rawDocument, (promises) => {
+          const [
+            hashStatus,
+            tokenRegistryStatus,
+            documentStoreStatus,
+            didSignedStatus,
+            dnsTxtIdentity,
+            didDnsIdentity,
+            allowedIssuerIdentity,
+          ] = promises;
+          const WAIT = 1000;
 
-            Promise.all([wait(WAIT), hashStatus]).then(([, ...verificationFragments]) => {
-              setTamperedStatus(
-                isValid(verificationFragments, ["DOCUMENT_INTEGRITY"]) ? Status.RESOLVED : Status.REJECTED
-              );
-            });
-            Promise.all([wait(WAIT), documentStoreStatus, tokenRegistryStatus, didSignedStatus]).then(
-              ([, ...verificationFragments]) => {
-                setIssuingStatus(
-                  isValid(verificationFragments, ["DOCUMENT_STATUS"]) ? Status.RESOLVED : Status.REJECTED
-                );
+          Promise.all([wait(WAIT), hashStatus]).then(([, ...verificationFragments]) => {
+            setTamperedStatus(
+              isValid(verificationFragments, ["DOCUMENT_INTEGRITY"]) ? Status.RESOLVED : Status.REJECTED
+            );
+          });
+          Promise.all([wait(WAIT), documentStoreStatus, tokenRegistryStatus, didSignedStatus]).then(
+            ([, ...verificationFragments]) => {
+              setIssuingStatus(isValid(verificationFragments, ["DOCUMENT_STATUS"]) ? Status.RESOLVED : Status.REJECTED);
 
-                if (isValid(verificationFragments, ["DOCUMENT_STATUS"])) {
-                  setIssuer(document.issuers.map((issuer) => issuer.identityProof?.location).join(","));
-                }
+              if (isValid(verificationFragments, ["DOCUMENT_STATUS"])) {
+                setIssuer(document.issuers.map((issuer) => issuer.identityProof?.location).join(","));
               }
-            );
-            Promise.all([wait(WAIT), dnsTxtIdentity, allowedIssuerIdentity, didDnsIdentity]).then(
-              ([, ...verificationFragments]) => {
-                setIssuerStatus(
-                  isValid(verificationFragments, ["ISSUER_IDENTITY"]) ? Status.RESOLVED : Status.REJECTED
-                );
-              }
-            );
-          },
+            }
+          );
+          Promise.all([wait(WAIT), dnsTxtIdentity, allowedIssuerIdentity, didDnsIdentity]).then(
+            ([, ...verificationFragments]) => {
+              setIssuerStatus(isValid(verificationFragments, ["ISSUER_IDENTITY"]) ? Status.RESOLVED : Status.REJECTED);
+            }
+          );
         });
         setVerificationStatus(isValid(verificationFragment) ? Status.RESOLVED : Status.REJECTED);
       }

@@ -245,35 +245,33 @@ describe("verifyAllowedIssuers", () => {
     expect(isValid(fragments, ["ISSUER_IDENTITY"])).toBe(false);
   });
   it("should error when document is v3", async () => {
-    const fragments = await verify(
-      {
-        version: SchemaId.v3,
-        data: {
+    const fragments = await verify({
+      version: SchemaId.v3,
+      data: {
+        name: "name",
+        reference: "reference",
+        validFrom: "validFrom",
+        template: {
           name: "name",
-          reference: "reference",
-          validFrom: "validFrom",
-          template: {
-            name: "name",
-            type: v3.TemplateType.EmbeddedRenderer,
-            url: "url",
-          },
-          issuer: {
-            name: "name",
-            id: "id",
-            identityProof: {
-              type: v3.IdentityProofType.DNSTxt,
-              location: "any",
-            },
-          },
-          proof: {
-            method: v3.Method.DocumentStore,
-            type: v3.ProofType.OpenAttestationSignature2018,
-            value: "value",
+          type: v3.TemplateType.EmbeddedRenderer,
+          url: "url",
+        },
+        issuer: {
+          name: "name",
+          id: "id",
+          identityProof: {
+            type: v3.IdentityProofType.DNSTxt,
+            location: "any",
           },
         },
-        signature: v2DocumentShared.signature,
+        proof: {
+          method: v3.Method.DocumentStore,
+          type: v3.ProofType.OpenAttestationSignature2018,
+          value: "value",
+        },
       },
-    );
+      signature: v2DocumentShared.signature,
+    });
 
     expect(fragments).toMatchInlineSnapshot(`
       Array [

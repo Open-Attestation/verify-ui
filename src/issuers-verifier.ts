@@ -2,11 +2,26 @@ import {
   openAttestationVerifiers,
   verificationBuilder,
   VerificationFragmentType,
-  VerificationManagerOptions,
   Verifier,
   CodedError,
+  ValidVerificationFragment,
+  InvalidVerificationFragment,
+  ErrorVerificationFragment,
+  SkippedVerificationFragment,
 } from "@govtechsg/oa-verify";
-import { getData, SignedWrappedDocument, v2, v3, WrappedDocument } from "@govtechsg/open-attestation";
+import { getData, utils } from "@govtechsg/open-attestation";
+
+type AllowedIssuersValidFragment = ValidVerificationFragment<Array<string | undefined>>;
+type AllowedIssuersInvalidFragment = InvalidVerificationFragment<Array<string | undefined>>;
+type AllowedIssuersErrorFragment = ErrorVerificationFragment<any>;
+
+type AllowedIssuersFragment =
+  | AllowedIssuersValidFragment
+  | AllowedIssuersErrorFragment
+  | AllowedIssuersInvalidFragment
+  | SkippedVerificationFragment;
+
+type VerifierType = Verifier<AllowedIssuersFragment>;
 
 export enum VerifyAllowedIssuersCode {
   UNEXPECTED_ERROR = 0,
@@ -17,9 +32,6 @@ export enum VerifyAllowedIssuersCode {
 
 const name = "VerifyAllowedIssuers";
 const type: VerificationFragmentType = "ISSUER_IDENTITY";
-const isWrappedV2Document = (document: any): document is WrappedDocument<v2.OpenAttestationDocument> => {
-  return document.data && document.data.issuers;
-};
 const whitelistedIssuers = ["gov.sg", "openattestation.com"];
 export const isWhitelisted = (identity: string): boolean => {
   return (
@@ -27,68 +39,70 @@ export const isWhitelisted = (identity: string): boolean => {
     whitelistedIssuers.includes(identity.toLowerCase())
   );
 };
-export const verifyAllowedIssuers: Verifier<
-  | WrappedDocument<v2.OpenAttestationDocument>
-  | WrappedDocument<v3.OpenAttestationDocument>
-  | SignedWrappedDocument<v2.OpenAttestationDocument>,
-  VerificationManagerOptions,
-  Array<string | undefined>
-> = {
-  skip: () => {
-    throw new Error("This verifier is never skipped");
-  },
-  test: () => {
-    return true;
-  },
-  verify: async (document) => {
-    try {
-      if (isWrappedV2Document(document)) {
-        const documentData = getData(document);
-        const identities = documentData.issuers.map((issuer) => issuer.identityProof?.location);
-        // every issuers must be whitelisted
-        const valid =
-          identities.length > 0 && identities.every((identity) => (identity ? isWhitelisted(identity) : false));
+
+const skip: VerifierType["skip"] = () => {
+  throw new Error("This verifier is never skipped");
+};
+
+const test: VerifierType["test"] = () => {
+  return true;
+};
+
+const verifyMethod: VerifierType["verify"] = async (document) => {
+  try {
+    if (utils.isWrappedV2Document(document)) {
+      const documentData = getData(document);
+      const identities = documentData.issuers.map((issuer) => issuer.identityProof?.location);
+      // every issuers must be whitelisted
+      const valid =
+        identities.length > 0 && identities.every((identity) => (identity ? isWhitelisted(identity) : false));
+      if (!valid) {
         return {
           name,
           type,
           data: identities,
-          status: valid ? "VALID" : "INVALID",
-          ...(valid
-            ? {}
-            : {
-                reason: {
-                  code: VerifyAllowedIssuersCode.INVALID_IDENTITY,
-                  codeString: VerifyAllowedIssuersCode[VerifyAllowedIssuersCode.INVALID_IDENTITY],
-                  message: `No issuers allowed by this platform found. Valid issuers are ${whitelistedIssuers.join(
-                    ","
-                  )}`,
-                },
-              }),
+          status: "INVALID" as const,
+          reason: {
+            code: VerifyAllowedIssuersCode.INVALID_IDENTITY,
+            codeString: VerifyAllowedIssuersCode[VerifyAllowedIssuersCode.INVALID_IDENTITY],
+            message: `No issuers allowed by this platform found. Valid issuers are ${whitelistedIssuers.join(",")}`,
+          },
         };
       }
-      throw new CodedError(
-        "Verify does not support v3 document",
-        VerifyAllowedIssuersCode.UNSUPPORTED_V3_DOCUMENT,
-        VerifyAllowedIssuersCode[VerifyAllowedIssuersCode.UNSUPPORTED_V3_DOCUMENT]
-      );
-    } catch (e) {
       return {
         name,
         type,
-        data: e,
-        reason: {
-          code: e.code || VerifyAllowedIssuersCode.UNEXPECTED_ERROR,
-          codeString: e.codeString || VerifyAllowedIssuersCode[VerifyAllowedIssuersCode.UNEXPECTED_ERROR],
-          message: e.message,
-        },
-        status: "ERROR",
+        data: identities,
+        status: "VALID" as const,
       };
     }
-  },
+    // TODO: support for V3 is available now
+    throw new CodedError(
+      "Verify does not support v3 document",
+      VerifyAllowedIssuersCode.UNSUPPORTED_V3_DOCUMENT,
+      VerifyAllowedIssuersCode[VerifyAllowedIssuersCode.UNSUPPORTED_V3_DOCUMENT]
+    );
+  } catch (e) {
+    return {
+      name,
+      type,
+      data: e,
+      reason: {
+        code: e.code || VerifyAllowedIssuersCode.UNEXPECTED_ERROR,
+        codeString: e.codeString || VerifyAllowedIssuersCode[VerifyAllowedIssuersCode.UNEXPECTED_ERROR],
+        message: e.message,
+      },
+      status: "ERROR" as const,
+    };
+  }
 };
 
-export const verify = verificationBuilder<
-  | SignedWrappedDocument<v2.OpenAttestationDocument>
-  | WrappedDocument<v2.OpenAttestationDocument>
-  | WrappedDocument<v3.OpenAttestationDocument>
->([...openAttestationVerifiers, verifyAllowedIssuers]);
+export const verifyAllowedIssuers: VerifierType = {
+  skip,
+  test,
+  verify: verifyMethod,
+};
+const NETWORK_NAME = process.env.REACT_APP_NETWORK_NAME || "ropsten";
+export const verify = verificationBuilder([...openAttestationVerifiers, verifyAllowedIssuers], {
+  network: NETWORK_NAME,
+});

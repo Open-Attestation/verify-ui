@@ -82,7 +82,7 @@
 }
 
 .btn-solid-primary:active {
-  @apply shadow-outline;
+  @apply ring;
 }
 
 /* https://philipwalton.com/articles/normalizing-cross-browser-flexbox-bugs/ */
@@ -104,14 +104,14 @@
 @tailwind utilities;
 
 :root {
-  --primary: theme("colors.primary.default");
-  --grey: theme("colors.grey.default");
+  --primary: theme("colors.primary.DEFAULT");
+  --grey: theme("colors.grey.DEFAULT");
   --grey-light: theme("colors.grey.light");
   --grey-lighter: theme("colors.grey.lighter");
-  --teal: theme("colors.teal.default");
-  --yellow: theme("colors.yellow.default");
+  --teal: theme("colors.teal.DEFAULT");
+  --yellow: theme("colors.yellow.DEFAULT");
   --yellow-light: theme("colors.yellow.light");
-  --purple: theme("colors.purple.default");
+  --purple: theme("colors.purple.DEFAULT");
   --purple-light: theme("colors.purple.light");
 }
 

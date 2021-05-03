@@ -1,12 +1,8 @@
 import { isValid, verificationBuilder } from "@govtechsg/oa-verify";
-import { SchemaId, SignedWrappedDocument, v2, v3, WrappedDocument } from "@govtechsg/open-attestation";
+import { SchemaId, v2, v3 } from "@govtechsg/open-attestation";
 import { isWhitelisted, verifyAllowedIssuers } from "./issuers-verifier";
-
-const verify = verificationBuilder<
-  | SignedWrappedDocument<v2.OpenAttestationDocument>
-  | WrappedDocument<v2.OpenAttestationDocument>
-  | WrappedDocument<v3.OpenAttestationDocument>
->([verifyAllowedIssuers]);
+const NETWORK_NAME = process.env.REACT_APP_NETWORK_NAME || "ropsten";
+const verify = verificationBuilder([verifyAllowedIssuers], { network: NETWORK_NAME });
 
 const v2DocumentShared = {
   version: SchemaId.v2,
@@ -70,50 +66,19 @@ describe("isWhitelisted", () => {
 });
 
 describe("verifyAllowedIssuers", () => {
-  it("should be invalid if issuers array is empty", async () => {
-    const fragments = await verify(
-      {
-        data: {
-          issuers: [],
-        },
-        ...v2DocumentShared,
-      },
-      { network: "ropsten" }
-    );
-
-    expect(fragments).toMatchInlineSnapshot(`
-      Array [
-        Object {
-          "data": Array [],
-          "name": "VerifyAllowedIssuers",
-          "reason": Object {
-            "code": 1,
-            "codeString": "INVALID_IDENTITY",
-            "message": "No issuers allowed by this platform found. Valid issuers are gov.sg,openattestation.com",
-          },
-          "status": "INVALID",
-          "type": "ISSUER_IDENTITY",
-        },
-      ]
-    `);
-    expect(isValid(fragments, ["ISSUER_IDENTITY"])).toBe(false);
-  });
   it("should be valid when issuer has document store and location ends with gov.sg", async () => {
-    const fragments = await verify(
-      {
-        data: {
-          issuers: [
-            {
-              name: "name",
-              documentStore: "0xabcd",
-              identityProof: { location: "test.gov.sg", type: v2.IdentityProofType.DNSTxt },
-            },
-          ],
-        },
-        ...v2DocumentShared,
+    const fragments = await verify({
+      data: {
+        issuers: [
+          {
+            name: "name",
+            documentStore: "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            identityProof: { location: "test.gov.sg", type: v2.IdentityProofType.DNSTxt },
+          },
+        ],
       },
-      { network: "ropsten" }
-    );
+      ...v2DocumentShared,
+    });
 
     expect(fragments).toMatchInlineSnapshot(`
       Array [
@@ -130,21 +95,18 @@ describe("verifyAllowedIssuers", () => {
     expect(isValid(fragments, ["ISSUER_IDENTITY"])).toBe(true);
   });
   it("should be valid when issuer has token registry and location ends with openattestation.com", async () => {
-    const fragments = await verify(
-      {
-        data: {
-          issuers: [
-            {
-              name: "name",
-              tokenRegistry: "0xabcd",
-              identityProof: { location: "test.openattestation.com", type: v2.IdentityProofType.DNSTxt },
-            },
-          ],
-        },
-        ...v2DocumentShared,
+    const fragments = await verify({
+      data: {
+        issuers: [
+          {
+            name: "name",
+            tokenRegistry: "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            identityProof: { location: "test.openattestation.com", type: v2.IdentityProofType.DNSTxt },
+          },
+        ],
       },
-      { network: "ropsten" }
-    );
+      ...v2DocumentShared,
+    });
 
     expect(fragments).toMatchInlineSnapshot(`
       Array [
@@ -161,21 +123,18 @@ describe("verifyAllowedIssuers", () => {
     expect(isValid(fragments, ["ISSUER_IDENTITY"])).toBe(true);
   });
   it("should be valid when issuer has token registry and location is openattestation.com", async () => {
-    const fragments = await verify(
-      {
-        data: {
-          issuers: [
-            {
-              name: "name",
-              tokenRegistry: "0xabcd",
-              identityProof: { location: "openattestation.com", type: v2.IdentityProofType.DNSTxt },
-            },
-          ],
-        },
-        ...v2DocumentShared,
+    const fragments = await verify({
+      data: {
+        issuers: [
+          {
+            name: "name",
+            tokenRegistry: "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            identityProof: { location: "openattestation.com", type: v2.IdentityProofType.DNSTxt },
+          },
+        ],
       },
-      { network: "ropsten" }
-    );
+      ...v2DocumentShared,
+    });
 
     expect(fragments).toMatchInlineSnapshot(`
       Array [
@@ -192,21 +151,18 @@ describe("verifyAllowedIssuers", () => {
     expect(isValid(fragments, ["ISSUER_IDENTITY"])).toBe(true);
   });
   it("should be valid when issuer has token registry and location is gov.sg", async () => {
-    const fragments = await verify(
-      {
-        data: {
-          issuers: [
-            {
-              name: "name",
-              tokenRegistry: "0xabcd",
-              identityProof: { location: "gov.sg", type: v2.IdentityProofType.DNSTxt },
-            },
-          ],
-        },
-        ...v2DocumentShared,
+    const fragments = await verify({
+      data: {
+        issuers: [
+          {
+            name: "name",
+            tokenRegistry: "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            identityProof: { location: "gov.sg", type: v2.IdentityProofType.DNSTxt },
+          },
+        ],
       },
-      { network: "ropsten" }
-    );
+      ...v2DocumentShared,
+    });
 
     expect(fragments).toMatchInlineSnapshot(`
       Array [
@@ -223,21 +179,18 @@ describe("verifyAllowedIssuers", () => {
     expect(isValid(fragments, ["ISSUER_IDENTITY"])).toBe(true);
   });
   it("should be invalid when issuer has document store and location starts with openattestation.com", async () => {
-    const fragments = await verify(
-      {
-        data: {
-          issuers: [
-            {
-              name: "name",
-              documentStore: "0xabcd",
-              identityProof: { location: "openattestation.com.fr", type: v2.IdentityProofType.DNSTxt },
-            },
-          ],
-        },
-        ...v2DocumentShared,
+    const fragments = await verify({
+      data: {
+        issuers: [
+          {
+            name: "name",
+            documentStore: "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            identityProof: { location: "openattestation.com.fr", type: v2.IdentityProofType.DNSTxt },
+          },
+        ],
       },
-      { network: "ropsten" }
-    );
+      ...v2DocumentShared,
+    });
 
     expect(fragments).toMatchInlineSnapshot(`
       Array [
@@ -259,21 +212,18 @@ describe("verifyAllowedIssuers", () => {
     expect(isValid(fragments, ["ISSUER_IDENTITY"])).toBe(false);
   });
   it("should be invalid when issuer has document store and location starts with gov.sg", async () => {
-    const fragments = await verify(
-      {
-        data: {
-          issuers: [
-            {
-              name: "name",
-              documentStore: "0xabcd",
-              identityProof: { location: "gov.sg.com", type: v2.IdentityProofType.DNSTxt },
-            },
-          ],
-        },
-        ...v2DocumentShared,
+    const fragments = await verify({
+      data: {
+        issuers: [
+          {
+            name: "name",
+            documentStore: "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            identityProof: { location: "gov.sg.com", type: v2.IdentityProofType.DNSTxt },
+          },
+        ],
       },
-      { network: "ropsten" }
-    );
+      ...v2DocumentShared,
+    });
 
     expect(fragments).toMatchInlineSnapshot(`
       Array [
@@ -295,36 +245,33 @@ describe("verifyAllowedIssuers", () => {
     expect(isValid(fragments, ["ISSUER_IDENTITY"])).toBe(false);
   });
   it("should error when document is v3", async () => {
-    const fragments = await verify(
-      {
-        version: SchemaId.v3,
-        data: {
+    const fragments = await verify({
+      version: SchemaId.v3,
+      data: {
+        name: "name",
+        reference: "reference",
+        validFrom: "validFrom",
+        template: {
           name: "name",
-          reference: "reference",
-          validFrom: "validFrom",
-          template: {
-            name: "name",
-            type: v3.TemplateType.EmbeddedRenderer,
-            url: "url",
-          },
-          issuer: {
-            name: "name",
-            id: "id",
-            identityProof: {
-              type: v3.IdentityProofType.DNSTxt,
-              location: "any",
-            },
-          },
-          proof: {
-            method: v3.Method.DocumentStore,
-            type: v3.ProofType.OpenAttestationSignature2018,
-            value: "value",
+          type: v3.TemplateType.EmbeddedRenderer,
+          url: "url",
+        },
+        issuer: {
+          name: "name",
+          id: "id",
+          identityProof: {
+            type: v3.IdentityProofType.DNSTxt,
+            location: "any",
           },
         },
-        signature: v2DocumentShared.signature,
+        proof: {
+          method: v3.Method.DocumentStore,
+          type: v3.ProofType.OpenAttestationSignature2018,
+          value: "value",
+        },
       },
-      { network: "ropsten" }
-    );
+      signature: v2DocumentShared.signature,
+    });
 
     expect(fragments).toMatchInlineSnapshot(`
       Array [

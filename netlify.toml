@@ -3,9 +3,5 @@ from = "/*"
 to = "/index.html"
 status = 200
 
-[context.production.environment]
-REACT_APP_NETWORK_NAME = "mainnet"
-REACT_APP_WOGAA = "production"
-
 # headers are available in _headers.$NODE_ENV files
 # waiting for https://community.netlify.com/t/toml-different-headers-for-different-contexts/1159

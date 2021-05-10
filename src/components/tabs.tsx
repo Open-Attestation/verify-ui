@@ -26,7 +26,7 @@ export const ButtonIcon: FunctionComponent<ButtonHTMLAttributes<HTMLButtonElemen
 }) => {
   return (
     <InnerButtonIcon
-      className={`transition-colors duration-200 ease-out cursor-pointer font-bold p-2 rounded shadow-md border border-transparent text-primary hover:text-primary-dark bg-white hover:bg-gray-100 hidden md:inline-block ${className} ${
+      className={`transition-colors duration-200 ease-out cursor-pointer font-bold p-2 rounded shadow-md border border-transparent text-primary hover:text-primary-dark bg-white hover:bg-gray-100 inline-block ${className} ${
         disabled && "cursor-not-allowed"
       }`}
       type="submit"
@@ -53,7 +53,7 @@ export const Tabs: React.FunctionComponent<TabsProps> = ({
 }) => {
   return (
     <nav className="flex justify-between">
-      <ul className="flex flex-wrap bg-gray-100 p-0">
+      <ul className="flex bg-gray-100 p-0 mr-2 overflow-x-auto">
         {templates.map(({ id, label }) => (
           <li
             data-testid="tabs-item"

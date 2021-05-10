@@ -53,7 +53,7 @@ export const Tabs: React.FunctionComponent<TabsProps> = ({
 }) => {
   return (
     <nav className="flex justify-between">
-      <ul className="flex flex-wrap bg-gray-100 p-0">
+      <ul className="flex bg-gray-100 p-0 mr-2 overflow-x-auto">
         {templates.map(({ id, label }) => (
           <li
             data-testid="tabs-item"

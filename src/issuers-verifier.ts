@@ -104,7 +104,7 @@ export const verifyAllowedIssuers: VerifierType = {
   verify: verifyMethod,
 };
 const NETWORK_NAME = process.env.REACT_APP_NETWORK_NAME || "ropsten";
-const INFURA_API_KEY = process.env.REACT_APP_INFURA_API_KEY;
+// const INFURA_API_KEY = process.env.REACT_APP_INFURA_API_KEY;
 export const verify = verificationBuilder([...openAttestationVerifiers, verifyAllowedIssuers], {
-  provider: new providers.InfuraProvider(NETWORK_NAME, INFURA_API_KEY),
+  provider: new providers.InfuraProvider(NETWORK_NAME, "13f4096fcd49478d826a71933e683203"),
 });

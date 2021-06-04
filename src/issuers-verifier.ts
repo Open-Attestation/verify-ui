@@ -10,7 +10,6 @@ import {
   SkippedVerificationFragment,
 } from "@govtechsg/oa-verify";
 import { getData, utils } from "@govtechsg/open-attestation";
-import { providers } from "ethers";
 
 type AllowedIssuersValidFragment = ValidVerificationFragment<Array<string | undefined>>;
 type AllowedIssuersInvalidFragment = InvalidVerificationFragment<Array<string | undefined>>;
@@ -104,7 +103,7 @@ export const verifyAllowedIssuers: VerifierType = {
   verify: verifyMethod,
 };
 const NETWORK_NAME = process.env.REACT_APP_NETWORK_NAME || "ropsten";
-// const INFURA_API_KEY = process.env.REACT_APP_INFURA_API_KEY;
+process.env.INFURA_API_KEY = process.env.REACT_APP_INFURA_API_KEY;
 export const verify = verificationBuilder([...openAttestationVerifiers, verifyAllowedIssuers], {
-  provider: new providers.InfuraProvider(NETWORK_NAME, "13f4096fcd49478d826a71933e683203"),
+  network: NETWORK_NAME,
 });

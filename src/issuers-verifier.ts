@@ -34,7 +34,7 @@ export enum VerifyAllowedIssuersCode {
 
 const name = "VerifyAllowedIssuers";
 const type: VerificationFragmentType = "ISSUER_IDENTITY";
-const whitelistedIssuers = ["gov.sg", "openattestation.com"];
+const whitelistedIssuers = process.env.REACT_APP_WHITELISTED_ISSUERS?.split(",") || ["gov.sg", "openattestation.com"];
 export const isWhitelisted = (identity: string): boolean => {
   return (
     whitelistedIssuers.some((issuer) => identity.toLowerCase().endsWith(`.${issuer}`)) ||

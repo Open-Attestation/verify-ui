@@ -1,10 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": [
-      "dom",
-      "esnext"
-    ],
+    "lib": ["dom", "esnext"],
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
@@ -19,8 +16,5 @@
     "allowJs": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": [
-    "src",
-    "integration"
-  ]
+  "include": ["src", "integration", "monitoring"]
 }

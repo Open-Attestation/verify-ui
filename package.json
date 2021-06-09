@@ -52,6 +52,7 @@
     "eslint-plugin-testcafe": "^0.2.1",
     "eslint-plugin-testing-library": "^4.1.2",
     "git-cz": "^4.7.6",
+    "node-fetch": "^2.6.1",
     "npm-run-all": "^4.1.5",
     "postcss-cli": "^8.3.1",
     "postcss-import": "^14.0.1",
@@ -60,7 +61,8 @@
     "serve": "^11.3.2",
     "tailwindcss": "^2.1.2",
     "testcafe": "^1.14.0",
-    "typescript": "^4.2.4"
+    "typescript": "^4.2.4",
+    "zlib": "^1.0.5"
   },
   "scripts": {
     "build": "NODE_ENV=production npm-run-all -s build:css build:js && cp ./_headers.${CONTEXT:-production} ./build/_headers",
@@ -73,6 +75,7 @@
     "integration:headless": "testcafe chrome:headless integration/**/*.spec.ts --ts-config-path ./tsconfig.testcafe.json --app \"serve ./build --listen 3000 --single\" --app-init-delay 5000",
     "lint": "eslint . --ext .ts,.tsx --max-warnings 0",
     "lint:fix": "npm run lint -- --fix",
+    "monitoring": "testcafe chrome:headless monitoring/**/*.spec.ts --ts-config-path ./tsconfig.testcafe.json",
     "start": "npm-run-all -p start:*",
     "start:css": "postcss src/tailwind.css -o src/index.css --watch",
     "start:js": "sleep 2 && react-scripts start",

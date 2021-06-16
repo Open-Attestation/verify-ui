@@ -23,7 +23,6 @@ const Issuer = styled.span`
 `;
 
 const wait = (time: number): Promise<void> => new Promise((resolve) => setTimeout(resolve, time));
-const getAnchor = (url: string) => (url.split("#").length > 1 ? `${url.split("#").pop()}` : null);
 
 const CheckStatus: React.FunctionComponent<{
   status: Status;
@@ -69,8 +68,8 @@ export const VerifyPage: React.FunctionComponent = () => {
   const location = useLocation();
   // use layout effect to run this as soon as possible otherwise the dropzone might be displayed before disappearing
   useLayoutEffect(() => {
-    const anchorStr = getAnchor(window.document.URL) ?? "{}";
-    const anchor: Anchor = JSON.parse(decodeURIComponent(anchorStr));
+    const anchorStr = decodeURIComponent(window.location.hash.substr(1));
+    const anchor: Anchor = anchorStr === "" ? {} : JSON.parse(anchorStr);
     const run = async () => {
       try {
         if (location.search) {

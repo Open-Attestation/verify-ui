@@ -16,7 +16,7 @@ export const retrieveDocument = async (
 ): Promise<WrappedDocument<v2.OpenAttestationDocument>> => {
   if (action.type === "DOCUMENT") {
     const { uri = "" } = action.payload ?? {};
-    const key = action.payload?.key ?? anchor.key;
+    const key = anchor.key ?? action.payload?.key;
     let certificate = await window.fetch(uri).then((response) => {
       if (response.status >= 400 && response.status < 600) {
         throw new Error(`Unable to load the certificate from ${uri}`);

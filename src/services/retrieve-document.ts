@@ -1,5 +1,6 @@
 import { decryptString } from "@govtechsg/oa-encryption";
 import { v2, WrappedDocument } from "@govtechsg/open-attestation";
+import { Anchor } from "../types";
 
 interface Action {
   type: string;
@@ -9,9 +10,13 @@ interface Action {
   };
 }
 
-export const retrieveDocument = async (action: Action): Promise<WrappedDocument<v2.OpenAttestationDocument>> => {
+export const retrieveDocument = async (
+  action: Action,
+  anchor: Anchor
+): Promise<WrappedDocument<v2.OpenAttestationDocument>> => {
   if (action.type === "DOCUMENT") {
-    const { uri = "", key } = action?.payload ?? {};
+    const { uri = "" } = action.payload ?? {};
+    const key = anchor.key ?? action.payload?.key;
     let certificate = await window.fetch(uri).then((response) => {
       if (response.status >= 400 && response.status < 600) {
         throw new Error(`Unable to load the certificate from ${uri}`);

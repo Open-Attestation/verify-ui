@@ -9,7 +9,7 @@ import { retrieveDocument } from "../../services/retrieve-document";
 import { CheckCircle, Loader } from "../shared/icons";
 import { Section, Separator } from "../shared/layout";
 import { NavigationBar } from "../shared/navigation-bar";
-import { Status } from "./../../types";
+import { Status, Anchor } from "./../../types";
 import { DocumentRenderer } from "./document-renderer";
 import { DropZone } from "./dropzone";
 
@@ -68,6 +68,8 @@ export const VerifyPage: React.FunctionComponent = () => {
   const location = useLocation();
   // use layout effect to run this as soon as possible otherwise the dropzone might be displayed before disappearing
   useLayoutEffect(() => {
+    const anchorStr = decodeURIComponent(window.location.hash.substr(1));
+    const anchor: Anchor = anchorStr === "" ? {} : JSON.parse(anchorStr);
     const run = async () => {
       try {
         if (location.search) {
@@ -79,7 +81,7 @@ export const VerifyPage: React.FunctionComponent = () => {
 
           setLoadDocumentStatus(Status.PENDING);
           const WAIT = 2000;
-          const [wrappedDocument] = await Promise.all([retrieveDocument(action), wait(WAIT)]);
+          const [wrappedDocument] = await Promise.all([retrieveDocument(action, anchor), wait(WAIT)]);
           setLoadDocumentStatus(Status.RESOLVED);
           setRawDocument(wrappedDocument);
         }

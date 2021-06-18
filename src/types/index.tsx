@@ -5,3 +5,8 @@ export enum Status {
   RESOLVED,
   REJECTED,
 }
+
+// embedding secrets in anchor
+export interface Anchor {
+  key?: string;
+}

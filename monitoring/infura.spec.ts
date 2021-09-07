@@ -32,9 +32,9 @@ const getRequestCount = async (requestLogger: RequestLogger) => {
       const parsedBody = JSON.parse(Buffer.isBuffer(body) ? await getBody(body) : body);
       const time = parsedBody?.data?.[0]?.query?.time;
       // there are multiple stats call. We only want the one for the past 24h
-      if (time?.from === "24h" && time?.tick === "h") {
+      if (time?.from === "14d" && time?.tick === "d") {
         const results = parsedBody.data[0].result;
-        return results.reduce((acc: any, cur: any) => acc + cur.value, 0);
+        return results[results.length - 1].value;
       }
     }
     await sleep(1000);

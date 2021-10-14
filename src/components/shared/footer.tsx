@@ -14,7 +14,7 @@ const GdsLogoImage = styled.img`
 
 export const Footer: React.FunctionComponent = () => (
   <footer className="container mx-auto max-w-lg items-center text-center py-6">
-    <h6>verify.gov.sg is brought to you by Government Technology Agency:</h6>
+    <div className="text-md font-bold">verify.gov.sg is brought to you by Government Technology Agency:</div>
     <div className="flex flex-wrap items-center justify-center my-6">
       <div className="w-full sm:w-auto">
         <a

@@ -82,7 +82,7 @@ export const HomePage: React.FunctionComponent = () => {
               </Link>
             </div>
             <div className="w-3/4 mx-auto md:w-3/5 py-8">
-              <SectionImage src={mainImage} className="md:ml-auto" />
+              <SectionImage alt="icon" src={mainImage} className="md:ml-auto" />
             </div>
           </div>
         </div>
@@ -96,19 +96,19 @@ export const HomePage: React.FunctionComponent = () => {
                 <div className="flex">
                   <div className="progress-step">
                     <div className="pr-5">
-                      <h5 className="mb-1">View</h5>
+                      <div className="mb-1 text-xl font-bold">View</div>
                       <p>Easy way to view your certificate</p>
                     </div>
                   </div>
                   <div className="progress-step">
                     <div className="pr-5">
-                      <h5 className="mb-1">Check</h5>
+                      <div className="mb-1 text-xl font-bold">Check</div>
                       <p>Make sure it has not been tampered with</p>
                     </div>
                   </div>
                   <div className="progress-step">
                     <div className="pr-5">
-                      <h5 className="mb-1">Verify</h5>
+                      <div className="mb-1 text-xl font-bold">Verify</div>
                       <p>Find out if it is from a recognised institution</p>
                     </div>
                   </div>
@@ -119,7 +119,7 @@ export const HomePage: React.FunctionComponent = () => {
               </Link>
             </div>
             <div className="w-3/4 mx-auto md:w-1/2 py-8 md:order-1">
-              <SectionImage src={howCanHelpImage} />
+              <SectionImage alt="icon" src={howCanHelpImage} />
             </div>
           </div>
         </div>
@@ -144,7 +144,7 @@ export const HomePage: React.FunctionComponent = () => {
               </Link>
             </div>
             <div className="w-3/4 mx-auto md:w-2/3 py-8">
-              <SectionImage src={howItWorksImage} className="md:ml-auto" />
+              <SectionImage alt="icon" src={howItWorksImage} className="md:ml-auto" />
             </div>
           </div>
         </div>

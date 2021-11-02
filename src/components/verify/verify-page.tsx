@@ -80,7 +80,7 @@ export const VerifyPage: React.FunctionComponent = () => {
           const action = JSON.parse(window.decodeURIComponent(parsedSearch.q));
 
           setLoadDocumentStatus(Status.PENDING);
-          const WAIT = 2000;
+          const WAIT = 600;
           const [wrappedDocument] = await Promise.all([retrieveDocument(action, anchor), wait(WAIT)]);
           setLoadDocumentStatus(Status.RESOLVED);
           setRawDocument(wrappedDocument);
@@ -118,7 +118,7 @@ export const VerifyPage: React.FunctionComponent = () => {
             didDnsIdentity,
             allowedIssuerIdentity,
           ] = promises;
-          const WAIT = 1000;
+          const WAIT = 600;
 
           Promise.all([wait(WAIT), hashStatus]).then(([, ...verificationFragments]) => {
             setTamperedStatus(

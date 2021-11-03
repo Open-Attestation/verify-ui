@@ -47,7 +47,7 @@ const CheckStatus: React.FunctionComponent<{
       )}
       {status === Status.REJECTED && (
         <>
-          <i className="text-center w-6 mr-1 fas fa-skull-crossbones" style={{ color: "tomato" }} />
+          <i className="text-center text-2xl w-6 mr-1 fas fa-times" style={{ color: "tomato" }} />
           <p className="w-auto mb-0">{errorMessage}</p>
         </>
       )}

@@ -1,8 +1,5 @@
 import styled from "@emotion/styled";
-import React from "react";
-import { Link } from "react-router-dom";
-import govtechLogo from "./images/govtech-logo.svg";
-import gdsLogo from "./images/logo-colored-dark-on-light.svg";
+import Link from "next/link";
 
 const GovtechLogoImage = styled.img`
   width: 160px;
@@ -23,7 +20,7 @@ export const Footer: React.FunctionComponent = () => (
           target="_blank"
           rel="noopener noreferrer"
         >
-          <GovtechLogoImage src={govtechLogo} alt="GovTech logo" />
+          <GovtechLogoImage src="/images/shared/govtech-logo.svg" alt="GovTech logo" />{" "}
         </a>
       </div>
       <div className="w-full sm:w-auto">
@@ -33,18 +30,18 @@ export const Footer: React.FunctionComponent = () => (
           target="_blank"
           rel="noopener noreferrer"
         >
-          <GdsLogoImage src={gdsLogo} alt="Government Digital Services logo" />
+          <GdsLogoImage src="/images/shared/logo-colored-dark-on-light.svg" alt="Government Digital Services logo" />
         </a>
       </div>
     </div>
     <p className="small">©2020 Government Technology Agency | Last updated 6th Mar 2021</p>
     <p className="small">v1.0.0-{process.env.REACT_APP_COMMIT_REF?.substring(0, 6)}</p>
     <p className="small">
-      <Link to="/terms" className="text-primary mx-3">
-        Terms of use
+      <Link href="/terms">
+        <a className="text-primary mx-3">Terms of use</a>
       </Link>
-      <Link to="/privacy-policy" className="text-primary mx-3">
-        Privacy policy
+      <Link href="/privacy-policy">
+        <a className="text-primary mx-3">Privacy policy</a>
       </Link>
       <a
         className="text-primary mx-3"

@@ -1,11 +1,7 @@
 import styled from "@emotion/styled";
-import React from "react";
-import { Link } from "react-router-dom";
-import { flexCenterColumn } from "../shared/mixin";
-import { NavigationBar } from "../shared/navigation-bar";
-import howCanHelpImage from "./images/how-can-help.svg";
-import howItWorksImage from "./images/how-it-works.svg";
-import mainImage from "./images/main.svg";
+import Link from "next/link";
+import { flexCenterColumn } from "../src/components/shared/mixin";
+import { NavigationBar } from "../src/components/shared/navigation-bar";
 
 const Root = styled.div`
   section:nth-of-type(odd) {
@@ -77,12 +73,12 @@ export const HomePage: React.FunctionComponent = () => {
                 We help you to verify the certificates you have of anyone from any government agencies. All in one
                 place.
               </p>
-              <Link to="/verify">
+              <Link href="/verify">
                 <button className="btn-solid-primary">Verify</button>
               </Link>
             </div>
             <div className="w-3/4 mx-auto md:w-3/5 py-8">
-              <SectionImage alt="icon" src={mainImage} className="md:ml-auto" />
+              <SectionImage alt="icon" src="/images/home/main.svg" className="md:ml-auto" />
             </div>
           </div>
         </div>
@@ -114,12 +110,12 @@ export const HomePage: React.FunctionComponent = () => {
                   </div>
                 </div>
               </Progress>
-              <Link to="/verify">
+              <Link href="/verify">
                 <button className="btn-solid-primary">Verify</button>
               </Link>
             </div>
             <div className="w-3/4 mx-auto md:w-1/2 py-8 md:order-1">
-              <SectionImage alt="icon" src={howCanHelpImage} />
+              <SectionImage alt="icon" src="/images/home/how-can-help.svg" />
             </div>
           </div>
         </div>
@@ -139,12 +135,12 @@ export const HomePage: React.FunctionComponent = () => {
               </p>
               <p>We'll check if the contents match and if the certificate comes from a recognised government body.</p>
               <p>This way, you'll know if the certificate is valid when you try to view it.</p>
-              <Link to="/verify">
+              <Link href="/verify">
                 <button className="btn-solid-primary">Verify</button>
               </Link>
             </div>
             <div className="w-3/4 mx-auto md:w-2/3 py-8">
-              <SectionImage alt="icon" src={howItWorksImage} className="md:ml-auto" />
+              <SectionImage alt="icon" src="/images/home/how-it-works.svg" className="md:ml-auto" />
             </div>
           </div>
         </div>
@@ -152,3 +148,5 @@ export const HomePage: React.FunctionComponent = () => {
     </Root>
   );
 };
+
+export default HomePage;

@@ -1,5 +1,8 @@
 import styled from "@emotion/styled";
 import { flexCenterColumn } from "./mixin";
+import { Footer } from "./footer";
+import { Masthead } from "./masthead";
+import { NavigationBar } from "./navigation-bar";
 
 export const Section = styled.section`
   ${flexCenterColumn()};
@@ -12,3 +15,13 @@ export const Separator = styled.hr`
   max-width: 1280px;
   margin: 20px 0;
 `;
+
+export default function Layout({ children }: any) {
+  return (
+    <>
+      <Masthead />
+      <main>{children}</main>
+      <Footer />
+    </>
+  );
+}

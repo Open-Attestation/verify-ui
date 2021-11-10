@@ -1,5 +1,3 @@
-import React from "react";
-
 export const Masthead: React.FunctionComponent = () => (
   <header className="sgds-masthead">
     <div className="container">

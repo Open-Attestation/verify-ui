@@ -1,16 +1,14 @@
 import styled from "@emotion/styled";
 import React, { useState } from "react";
-import arrowDownCircle from "../shared/images/arrow-down-circle.svg";
-import { Section, Separator } from "../shared/layout";
-import { NavigationBar } from "../shared/navigation-bar";
-import mainFaqImage from "./images/main-faq.svg";
+import { Section, Separator } from "../src/components/shared/layout";
+import { NavigationBar } from "../src/components/shared/navigation-bar";
 
 const Container = styled.div`
   background-repeat: no-repeat;
   background-position: top right;
 
   @media screen and (min-width: 768px) {
-    background-image: url(${mainFaqImage});
+    background-image: url(images/faq/main-faq.svg);
   }
 `;
 
@@ -53,7 +51,11 @@ const FaqElement: React.FunctionComponent<{ question: string; answer: string }> 
         onClick={() => setOpen(!open)}
       >
         <h5>{question}</h5>
-        <ArrowImage src={arrowDownCircle} alt="Press to toggle answer" className={open ? "rotation90" : "rotation0"} />
+        <ArrowImage
+          src="/images/shared/arrow-down-circle.svg"
+          alt="Press to toggle answer"
+          className={open ? "rotation90" : "rotation0"}
+        />
       </FaqTitleContainer>
       <FaqAnswer className={`bg-white mb-2 px-4 ${open ? "open" : "close"}`}>
         <p>{answer}</p>
@@ -123,3 +125,5 @@ export const FaqPage: React.FunctionComponent = () => (
     </Container>
   </Section>
 );
+
+export default FaqPage;

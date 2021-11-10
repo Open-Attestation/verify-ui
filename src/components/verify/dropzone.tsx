@@ -3,7 +3,6 @@ import { WrappedDocument, v2 } from "@govtechsg/open-attestation";
 import React, { useState } from "react";
 import Dropzone from "react-dropzone";
 import { XCircle } from "react-feather";
-import documentImage from "./images/document.svg";
 
 const Container = styled.div`
   border: 2px dashed var(--grey-light);
@@ -75,7 +74,7 @@ export const DropZone: React.FunctionComponent<DropZoneProps> = ({ onDocumentDro
             </div>
           )}
           <input {...getInputProps()} />
-          <img src={documentImage} className="mt-12 mr-6" alt="" />
+          <img src="images/verify/document.svg" className="mt-12 mr-6" alt="" />
           <h5 className="mt-6">Drag and drop file here</h5>
           <p className="mt-6">or</p>
           <button className="btn-solid-primary mt-6">Select File</button>

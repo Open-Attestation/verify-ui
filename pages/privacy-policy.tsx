@@ -1,6 +1,5 @@
-import React from "react";
-import { Section, Separator } from "../shared/layout";
-import { NavigationBar } from "../shared/navigation-bar";
+import { Section, Separator } from "../src/components/shared/layout";
+import { NavigationBar } from "../src/components/shared/navigation-bar";
 
 export const PrivacyPolicyPage: React.FunctionComponent = () => (
   <Section>
@@ -173,3 +172,5 @@ export const PrivacyPolicyPage: React.FunctionComponent = () => (
     </div>
   </Section>
 );
+
+export default PrivacyPolicyPage;

@@ -66,7 +66,7 @@
     "zlib": "^1.0.5"
   },
   "scripts": {
-    "build": "NODE_ENV=production npm-run-all -s build:css build:js && cp ./_headers.${CONTEXT:-production} ./build/_headers",
+    "build": "next build",
     "build:css": "postcss src/tailwind.css -o src/index.css",
     "build:next": "next build",
     "commit": "git-cz",
@@ -78,7 +78,7 @@
     "lint": "next lint",
     "lint:fix": "npm run lint -- --fix",
     "monitoring": "testcafe chrome:headless monitoring/**/*.spec.ts --ts-config-path ./tsconfig.testcafe.json",
-    "start": "npm-run-all -p start:*",
+    "start": "next start",
     "start:css": "postcss src/tailwind.css -o src/index.css --watch",
     "start:next": "next start",
     "storybook": "start-storybook -p 9009 -s public",

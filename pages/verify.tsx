@@ -157,7 +157,6 @@ export const VerifyPage: React.FunctionComponent = () => {
           setVerificationStatus(Status.IDLE);
           setLoadDocumentStatus(Status.IDLE);
           setLoadDocumentError("");
-          console.log("asdasd");
         }}
       />
       <Separator />

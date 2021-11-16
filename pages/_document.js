@@ -12,7 +12,6 @@ class MyDocument extends Document {
         <Head>
           <meta charset="utf-8" />
           <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-          <meta name="viewport" content="width=device-width, initial-scale=1" />
           <meta name="theme-color" content="#000000" />
           <meta
             name="description"
@@ -52,7 +51,6 @@ class MyDocument extends Document {
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
    */}
-          <title>verify.gov.sg</title>
           {/* wogaa youpi .. :) */}
           {/* <% if (process.env.REACT_APP_WOGAA === 'production') { %>
     <script src="https://assets.wogaa.sg/scripts/wogaa.js"></script>

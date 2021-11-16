@@ -43,6 +43,7 @@
     "autoprefixer": "^10.2.5",
     "commitizen": "^4.2.4",
     "eslint": "^7.25.0",
+    "eslint-config-next": "12.0.4",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jest": "^24.3.6",
@@ -67,19 +68,19 @@
   "scripts": {
     "build": "NODE_ENV=production npm-run-all -s build:css build:js && cp ./_headers.${CONTEXT:-production} ./build/_headers",
     "build:css": "postcss src/tailwind.css -o src/index.css",
-    "build:js": "next build",
+    "build:next": "next build",
     "commit": "git-cz",
     "commit:retry": "npm run commit -- --retry",
     "dev": "next dev",
     "eject": "react-scripts eject",
     "integration": "testcafe chrome integration/**/*.spec.ts --ts-config-path ./tsconfig.testcafe.json",
     "integration:headless": "testcafe chrome:headless integration/**/*.spec.ts --ts-config-path ./tsconfig.testcafe.json --app \"serve ./build --listen 3000 --single\" --app-init-delay 5000",
-    "lint": "eslint . --ext .ts,.tsx --max-warnings 0",
+    "lint": "next lint",
     "lint:fix": "npm run lint -- --fix",
     "monitoring": "testcafe chrome:headless monitoring/**/*.spec.ts --ts-config-path ./tsconfig.testcafe.json",
     "start": "npm-run-all -p start:*",
     "start:css": "postcss src/tailwind.css -o src/index.css --watch",
-    "start:js": "sleep 2 && next start",
+    "start:next": "next start",
     "storybook": "start-storybook -p 9009 -s public",
     "storybook:build": "npm run build:css && build-storybook -s public",
     "test": "react-scripts test --passWithNoTests"
@@ -88,112 +89,6 @@
     "commitizen": {
       "path": "node_modules/@commitlint/prompt"
     }
-  },
-  "eslintConfig": {
-    "parser": "@typescript-eslint/parser",
-    "env": {
-      "browser": true,
-      "jest": true
-    },
-    "extends": [
-      "plugin:react/recommended",
-      "plugin:prettier/recommended",
-      "plugin:import/typescript",
-      "plugin:testing-library/react",
-      "plugin:@typescript-eslint/recommended"
-    ],
-    "parserOptions": {
-      "project": "./tsconfig.json"
-    },
-    "plugins": [
-      "import",
-      "react",
-      "@typescript-eslint",
-      "react-hooks",
-      "testing-library",
-      "@emotion"
-    ],
-    "rules": {
-      "@typescript-eslint/explicit-function-return-type": "off",
-      "@typescript-eslint/no-explicit-any": 0,
-      "@typescript-eslint/explicit-member-accessibility": 0,
-      "@typescript-eslint/no-use-before-define": 0,
-      "array-callback-return": "warn",
-      "import/no-default-export": "error",
-      "import/no-unresolved": 2,
-      "import/order": [
-        "error",
-        {
-          "alphabetize": {
-            "order": "asc"
-          }
-        }
-      ],
-      "jest/no-hooks": 0,
-      "no-unused-vars": "off",
-      "@typescript-eslint/no-unused-vars": [
-        "error",
-        {
-          "argsIgnorePattern": "^_"
-        }
-      ],
-      "react/no-unescaped-entities": [
-        "error",
-        {
-          "forbid": [
-            ">",
-            "}",
-            "\""
-          ]
-        }
-      ],
-      "react/prop-types": "off",
-      "react/self-closing-comp": "error",
-      "react-hooks/exhaustive-deps": "error",
-      "react-hooks/rules-of-hooks": "error",
-      "@emotion/pkg-renaming": "error"
-    },
-    "overrides": [
-      {
-        "files": [
-          "./**/*.js"
-        ],
-        "rules": {
-          "@typescript-eslint/no-var-requires": "off"
-        }
-      },
-      {
-        "files": [
-          "./**/*.stories.tsx"
-        ],
-        "rules": {
-          "import/no-default-export": "off",
-          "@typescript-eslint/explicit-function-return-type": "off"
-        }
-      },
-      {
-        "files": [
-          "*.test.ts",
-          "*.test.tsx"
-        ],
-        "extends": [
-          "plugin:jest/all"
-        ],
-        "rules": {
-          "jest/prefer-expect-assertions": "off"
-        }
-      },
-      {
-        "files": [
-          "*.spec.ts",
-          "*.spec.tsx"
-        ],
-        "plugins": [
-          "testcafe"
-        ],
-        "extends": "plugin:testcafe/recommended"
-      }
-    ]
   },
   "prettier": {
     "printWidth": 120

@@ -20,8 +20,10 @@ export const NavigationBar: React.FunctionComponent<NavigationBarProps> = ({
             <Link href="/faq">
               <a className="text-grey font-bold mr-8">FAQ</a>
             </Link>
-            <Link href="/verify" onClick={onVerifyLinkClicked}>
-              <button className="btn-outline-primary">Verify</button>
+            <Link href="/verify" passHref>
+              <button className="btn-outline-primary" onClick={onVerifyLinkClicked}>
+                Verify
+              </button>
             </Link>
           </div>
         </div>

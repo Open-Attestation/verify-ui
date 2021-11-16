@@ -2,7 +2,6 @@ import styled from "@emotion/styled";
 import { flexCenterColumn } from "./mixin";
 import { Footer } from "./footer";
 import { Masthead } from "./masthead";
-import { NavigationBar } from "./navigation-bar";
 
 export const Section = styled.section`
   ${flexCenterColumn()};

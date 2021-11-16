@@ -12,9 +12,10 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx",
+    "jsx": "preserve",
     "allowJs": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "integration", "monitoring"]
+  "include": ["pages", "src", "integration", "monitoring"],
+  "exclude": ["node_modules"]
 }

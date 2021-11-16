@@ -73,7 +73,7 @@ export const HomePage: React.FunctionComponent = () => {
                 We help you to verify the certificates you have of anyone from any government agencies. All in one
                 place.
               </p>
-              <Link href="/verify">
+              <Link href="/verify" passHref>
                 <button className="btn-solid-primary">Verify</button>
               </Link>
             </div>
@@ -110,7 +110,7 @@ export const HomePage: React.FunctionComponent = () => {
                   </div>
                 </div>
               </Progress>
-              <Link href="/verify">
+              <Link href="/verify" passHref>
                 <button className="btn-solid-primary">Verify</button>
               </Link>
             </div>
@@ -135,7 +135,7 @@ export const HomePage: React.FunctionComponent = () => {
               </p>
               <p>We'll check if the contents match and if the certificate comes from a recognised government body.</p>
               <p>This way, you'll know if the certificate is valid when you try to view it.</p>
-              <Link href="/verify">
+              <Link href="/verify" passHref>
                 <button className="btn-solid-primary">Verify</button>
               </Link>
             </div>

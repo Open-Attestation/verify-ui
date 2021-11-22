@@ -23,10 +23,6 @@ interface DropZoneProps {
 export const DropZone: React.FunctionComponent<DropZoneProps> = ({ onDocumentDropped }: DropZoneProps) => {
   const [fileErrorMsg, setFileErrorMsg] = useState("");
 
-  const Image = styled.img`
-    display: inline;
-  `;
-
   const onFileDrop = (files: File[]): void => {
     const reader = new FileReader();
 
@@ -78,7 +74,7 @@ export const DropZone: React.FunctionComponent<DropZoneProps> = ({ onDocumentDro
             </div>
           )}
           <input {...getInputProps()} />
-          <Image src="/images/verify/document.svg" className="mt-12 mr-6" alt="" />
+          <img src="/images/verify/document.svg" className="mt-12 mr-6" alt="" />
           <h5 className="mt-6">Drag and drop file here</h5>
           <p className="mt-6">or</p>
           <button className="btn-solid-primary mt-6">Select File</button>

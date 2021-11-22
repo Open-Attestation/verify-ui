@@ -67,8 +67,6 @@
   },
   "scripts": {
     "build": "next build",
-    "build:css": "postcss src/tailwind.css -o src/index.css",
-    "build:next": "next build",
     "commit": "git-cz",
     "commit:retry": "npm run commit -- --retry",
     "dev": "next dev",
@@ -79,8 +77,6 @@
     "lint:fix": "npm run lint -- --fix",
     "monitoring": "testcafe chrome:headless monitoring/**/*.spec.ts --ts-config-path ./tsconfig.testcafe.json",
     "start": "next start",
-    "start:css": "postcss src/tailwind.css -o src/index.css --watch",
-    "start:next": "next start",
     "storybook": "start-storybook -p 9009 -s public",
     "storybook:build": "npm run build:css && build-storybook -s public",
     "test": "react-scripts test --passWithNoTests"

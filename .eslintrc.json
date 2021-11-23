@@ -1,12 +1,46 @@
 {
-  "extends": "next/core-web-vitals",
+  "extends": [
+    "next/core-web-vitals",
+    "plugin:import/typescript",
+    "plugin:prettier/recommended",
+    "plugin:testing-library/react",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "plugins": ["import", "@typescript-eslint", "react-hooks", "testing-library", "@emotion"],
   "rules": {
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/no-explicit-any": 0,
+    "@typescript-eslint/explicit-member-accessibility": 0,
+    "@typescript-eslint/no-use-before-define": 0,
+    "array-callback-return": "warn",
+    "import/no-default-export": "error",
+    "import/no-unresolved": 2,
+    "import/order": [
+      "error",
+      {
+        "alphabetize": {
+          "order": "asc"
+        }
+      }
+    ],
+    "jest/no-hooks": 0,
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "argsIgnorePattern": "^_"
+      }
+    ],
     "react/no-unescaped-entities": [
       "error",
       {
         "forbid": [">", "}", "\""]
       }
     ],
-    "react-hooks/exhaustive-deps": "error"
+    "react/prop-types": "off",
+    "react/self-closing-comp": "error",
+    "react-hooks/exhaustive-deps": "error",
+    "react-hooks/rules-of-hooks": "error",
+    "@emotion/pkg-renaming": "error"
   }
 }

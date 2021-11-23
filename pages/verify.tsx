@@ -1,17 +1,17 @@
 import styled from "@emotion/styled";
 import { isValid } from "@govtechsg/oa-verify";
 import { getData, v2, WrappedDocument } from "@govtechsg/open-attestation";
+import { useRouter } from "next/router";
 import queryString from "query-string";
 import { useEffect, useLayoutEffect, useState } from "react";
-import { verify } from "../src/issuers-verifier";
-import { retrieveDocument } from "../src/services/retrieve-document";
 import { CheckCircle, Loader } from "../src/components/shared/icons";
 import { Section, Separator } from "../src/components/shared/layout";
 import { NavigationBar } from "../src/components/shared/navigation-bar";
-import { Status, Anchor } from "../src/types";
 import { DocumentRenderer } from "../src/components/verify/document-renderer";
 import { DropZone } from "../src/components/verify/dropzone";
-import { useRouter } from "next/router";
+import { verify } from "../src/issuers-verifier";
+import { retrieveDocument } from "../src/services/retrieve-document";
+import { Status, Anchor } from "../src/types";
 
 const DropzoneContainer = styled.div`
   margin-top: 20px;

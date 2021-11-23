@@ -1,6 +1,6 @@
 import "../index.css";
-import Layout from "../src/components/shared/layout";
 import Head from "next/head";
+import { Layout } from "../src/components/shared/layout";
 
 function MyApp({ Component, pageProps }) {
   return (

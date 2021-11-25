@@ -72,7 +72,7 @@
     "dev": "next dev",
     "eject": "react-scripts eject",
     "integration": "testcafe chrome integration/**/*.spec.ts --ts-config-path ./tsconfig.testcafe.json",
-    "integration:headless": "testcafe chrome:headless integration/**/*.spec.ts --ts-config-path ./tsconfig.testcafe.json --app \"serve ./build --listen 3000 --single\" --app-init-delay 5000",
+    "integration:headless": "testcafe chrome:headless integration/**/*.spec.ts --ts-config-path ./tsconfig.testcafe.json --app \"next start\" --app-init-delay 5000",
     "lint": "next lint",
     "lint:fix": "npm run lint -- --fix",
     "monitoring": "testcafe chrome:headless monitoring/**/*.spec.ts --ts-config-path ./tsconfig.testcafe.json",

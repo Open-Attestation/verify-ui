@@ -7,11 +7,17 @@ import { useEffect, useLayoutEffect, useState } from "react";
 import { CheckCircle, Loader } from "../src/components/shared/icons";
 import { Section, Separator } from "../src/components/shared/layout";
 import { NavigationBar } from "../src/components/shared/navigation-bar";
-import { DocumentRenderer } from "../src/components/verify/document-renderer";
 import { DropZone } from "../src/components/verify/dropzone";
 import { verify } from "../src/issuers-verifier";
 import { retrieveDocument } from "../src/services/retrieve-document";
 import { Status, Anchor } from "../src/types";
+import dynamic from "next/dynamic";
+const DocumentRenderer = dynamic(
+  () => import("../src/components/verify/document-renderer"),
+  {
+    ssr: false,
+  }
+);
 
 const DropzoneContainer = styled.div`
   margin-top: 20px;

@@ -95,3 +95,5 @@ export const DocumentRenderer: React.FunctionComponent<DocumentRendererProps> = 
     </div>
   );
 };
+
+export default DocumentRenderer;

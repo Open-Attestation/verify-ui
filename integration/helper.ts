@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { t, Selector } from "testcafe";
 
-const LinkVerify = Selector("a[href='/verify']");
+const LinkVerify = Selector("button").withText("Verify");
 const FileInput = Selector("input[type=file]");
 const Issuer = Selector("h2").withText("Issued by");
 const Iframe = Selector("iframe[title='Decentralised Rendered Certificate']");

@@ -28,7 +28,7 @@ jobs:
           command: npm run monitoring
   build:
     docker:
-      - image: "circleci/node:lts-browsers"
+      - image: "circleci/node:14.16-browsers"
     steps:
       - checkout
       - run:

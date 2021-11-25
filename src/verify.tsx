@@ -5,14 +5,14 @@ import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import queryString from "query-string";
 import { useEffect, useLayoutEffect, useState } from "react";
-import { CheckCircle, Loader } from "../src/components/shared/icons";
-import { Section, Separator } from "../src/components/shared/layout";
-import { NavigationBar } from "../src/components/shared/navigation-bar";
-import { DropZone } from "../src/components/verify/dropzone";
-import { verify } from "../src/issuers-verifier";
-import { retrieveDocument } from "../src/services/retrieve-document";
-import { Status, Anchor } from "../src/types";
-const DocumentRenderer = dynamic(() => import("../src/components/verify/document-renderer"), {
+import { CheckCircle, Loader } from "./components/shared/icons";
+import { Section, Separator } from "./components/shared/layout";
+import { NavigationBar } from "./components/shared/navigation-bar";
+import { DropZone } from "./components/verify/dropzone";
+import { verify } from "./issuers-verifier";
+import { retrieveDocument } from "./services/retrieve-document";
+import { Status, Anchor } from "./types";
+const DocumentRenderer = dynamic(() => import("./components/verify/document-renderer"), {
   ssr: false,
 });
 

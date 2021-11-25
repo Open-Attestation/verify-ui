@@ -14,7 +14,9 @@
     "noEmit": true,
     "jsx": "preserve",
     "allowJs": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "incremental": true,
+    "useUnknownInCatchVariables": false
   },
   "include": ["pages", "src", "integration", "monitoring"],
   "exclude": ["node_modules"]

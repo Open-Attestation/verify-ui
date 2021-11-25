@@ -96,4 +96,5 @@ export const DocumentRenderer: React.FunctionComponent<DocumentRendererProps> = 
   );
 };
 
+// eslint-disable-next-line import/no-default-export
 export default DocumentRenderer;

@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import { isValid } from "@govtechsg/oa-verify";
 import { getData, v2, WrappedDocument } from "@govtechsg/open-attestation";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import queryString from "query-string";
 import { useEffect, useLayoutEffect, useState } from "react";
@@ -11,13 +12,9 @@ import { DropZone } from "../src/components/verify/dropzone";
 import { verify } from "../src/issuers-verifier";
 import { retrieveDocument } from "../src/services/retrieve-document";
 import { Status, Anchor } from "../src/types";
-import dynamic from "next/dynamic";
-const DocumentRenderer = dynamic(
-  () => import("../src/components/verify/document-renderer"),
-  {
-    ssr: false,
-  }
-);
+const DocumentRenderer = dynamic(() => import("../src/components/verify/document-renderer"), {
+  ssr: false,
+});
 
 const DropzoneContainer = styled.div`
   margin-top: 20px;

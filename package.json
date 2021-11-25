@@ -23,7 +23,6 @@
     "@commitlint/prompt": "^12.1.1",
     "@emotion/eslint-plugin": "^11.2.0",
     "@ls-age/commitlint-circle": "^1.0.0",
-    "@netlify/plugin-nextjs": "^3.9.2",
     "@storybook/addon-actions": "^6.2.0",
     "@storybook/addon-info": "^5.3.21",
     "@storybook/addon-knobs": "^6.2.9",

@@ -161,7 +161,7 @@ export const VerifyPage: React.FunctionComponent = () => {
         } catch (error) {
           // Fallback to OA Verify
           const verificationFragment = await verify(rawDocument, (promises) => {
-            Promise.all(promises).then(([, ...verificationFragments]) => {
+            Promise.all(promises).then((verificationFragments) => {
               setTamperedStatus(
                 isValid(verificationFragments, ["DOCUMENT_INTEGRITY"]) ? Status.RESOLVED : Status.REJECTED
               );

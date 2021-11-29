@@ -161,40 +161,19 @@ export const VerifyPage: React.FunctionComponent = () => {
         } catch (error) {
           // Fallback to OA Verify
           const verificationFragment = await verify(rawDocument, (promises) => {
-            const [
-              hashStatus,
-              tokenRegistryStatus,
-              documentStoreStatus,
-              didSignedStatus,
-              dnsTxtIdentity,
-              didDnsIdentity,
-              allowedIssuerIdentity,
-            ] = promises;
-            const WAIT = 600;
-
-            Promise.all([wait(WAIT), hashStatus]).then(([, ...verificationFragments]) => {
+            Promise.all(promises).then(([, ...verificationFragments]) => {
               setTamperedStatus(
                 isValid(verificationFragments, ["DOCUMENT_INTEGRITY"]) ? Status.RESOLVED : Status.REJECTED
               );
-            });
-            Promise.all([wait(WAIT), documentStoreStatus, tokenRegistryStatus, didSignedStatus]).then(
-              ([, ...verificationFragments]) => {
-                setIssuingStatus(
-                  isValid(verificationFragments, ["DOCUMENT_STATUS"]) ? Status.RESOLVED : Status.REJECTED
-                );
 
-                if (isValid(verificationFragments, ["DOCUMENT_STATUS"])) {
-                  setIssuer(document.issuers.map((issuer) => issuer.identityProof?.location).join(","));
-                }
+              setIssuingStatus(isValid(verificationFragments, ["DOCUMENT_STATUS"]) ? Status.RESOLVED : Status.REJECTED);
+
+              if (isValid(verificationFragments, ["DOCUMENT_STATUS"])) {
+                setIssuer(document.issuers.map((issuer) => issuer.identityProof?.location).join(","));
               }
-            );
-            Promise.all([wait(WAIT), dnsTxtIdentity, allowedIssuerIdentity, didDnsIdentity]).then(
-              ([, ...verificationFragments]) => {
-                setIssuerStatus(
-                  isValid(verificationFragments, ["ISSUER_IDENTITY"]) ? Status.RESOLVED : Status.REJECTED
-                );
-              }
-            );
+
+              setIssuerStatus(isValid(verificationFragments, ["ISSUER_IDENTITY"]) ? Status.RESOLVED : Status.REJECTED);
+            });
           });
 
           setVerificationStatus(isValid(verificationFragment) ? Status.RESOLVED : Status.REJECTED);

@@ -118,7 +118,7 @@ export const VerifyPage: React.FunctionComponent = () => {
           const verificationResponse = await fetch(API_VERIFY_URL, {
             method: "POST",
             headers: {
-              ContentType: "application/json",
+              "Content-Type": "application/json",
             },
             body: data,
           });

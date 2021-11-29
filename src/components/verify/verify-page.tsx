@@ -23,7 +23,7 @@ const Issuer = styled.span`
   word-break: break-word;
 `;
 
-const API_VERIFY_URL = process.env.API_VERIFY_URL || "http://localhost:3000/dev/verify";
+const API_VERIFY_URL = process.env.REACT_APP_API_VERIFY_URL || "http://localhost:3000/dev/verify";
 
 const wait = (time: number): Promise<void> => new Promise((resolve) => setTimeout(resolve, time));
 

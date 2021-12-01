@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import { isValid } from "@govtechsg/oa-verify";
 import { getData, v2, WrappedDocument } from "@govtechsg/open-attestation";
+import fetch from "node-fetch";
 import queryString from "query-string";
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
@@ -21,6 +22,8 @@ const Issuer = styled.span`
   color: var(--primary);
   word-break: break-word;
 `;
+
+const API_VERIFY_URL = process.env.REACT_APP_API_VERIFY_URL || "http://localhost:3000/dev/verify";
 
 const wait = (time: number): Promise<void> => new Promise((resolve) => setTimeout(resolve, time));
 
@@ -80,7 +83,7 @@ export const VerifyPage: React.FunctionComponent = () => {
           const action = JSON.parse(window.decodeURIComponent(parsedSearch.q));
 
           setLoadDocumentStatus(Status.PENDING);
-          const WAIT = 2000;
+          const WAIT = 600;
           const [wrappedDocument] = await Promise.all([retrieveDocument(action, anchor), wait(WAIT)]);
           setLoadDocumentStatus(Status.RESOLVED);
           setRawDocument(wrappedDocument);
@@ -108,7 +111,24 @@ export const VerifyPage: React.FunctionComponent = () => {
       if (rawDocument) {
         setVerificationStatus(Status.PENDING);
         const document: v2.OpenAttestationDocument = getData(rawDocument);
-        const verificationFragment = await verify(rawDocument, (promises) => {
+        const enc = new TextEncoder();
+        const data = enc.encode(JSON.stringify(rawDocument));
+
+        try {
+          const verificationResponse = await fetch(API_VERIFY_URL, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: data,
+          });
+
+          if (!verificationResponse.ok) {
+            throw new Error("api.verify.gov.sg failed");
+          }
+
+          const response = await verificationResponse.json();
+
           const [
             hashStatus,
             tokenRegistryStatus,
@@ -117,30 +137,47 @@ export const VerifyPage: React.FunctionComponent = () => {
             dnsTxtIdentity,
             didDnsIdentity,
             allowedIssuerIdentity,
-          ] = promises;
-          const WAIT = 1000;
+          ] = response.fragments;
 
-          Promise.all([wait(WAIT), hashStatus]).then(([, ...verificationFragments]) => {
-            setTamperedStatus(
-              isValid(verificationFragments, ["DOCUMENT_INTEGRITY"]) ? Status.RESOLVED : Status.REJECTED
-            );
-          });
-          Promise.all([wait(WAIT), documentStoreStatus, tokenRegistryStatus, didSignedStatus]).then(
-            ([, ...verificationFragments]) => {
+          setTamperedStatus(isValid([hashStatus], ["DOCUMENT_INTEGRITY"]) ? Status.RESOLVED : Status.REJECTED);
+
+          setIssuingStatus(
+            isValid([documentStoreStatus, tokenRegistryStatus, didSignedStatus], ["DOCUMENT_STATUS"])
+              ? Status.RESOLVED
+              : Status.REJECTED
+          );
+
+          if (isValid([documentStoreStatus, tokenRegistryStatus, didSignedStatus], ["DOCUMENT_STATUS"])) {
+            setIssuer(document.issuers.map((issuer) => issuer.identityProof?.location).join(","));
+          }
+
+          setIssuerStatus(
+            isValid([dnsTxtIdentity, allowedIssuerIdentity, didDnsIdentity], ["ISSUER_IDENTITY"])
+              ? Status.RESOLVED
+              : Status.REJECTED
+          );
+
+          setVerificationStatus(response.isValid ? Status.RESOLVED : Status.REJECTED);
+        } catch (error) {
+          // Fallback to OA Verify
+          const verificationFragment = await verify(rawDocument, (promises) => {
+            Promise.all(promises).then((verificationFragments) => {
+              setTamperedStatus(
+                isValid(verificationFragments, ["DOCUMENT_INTEGRITY"]) ? Status.RESOLVED : Status.REJECTED
+              );
+
               setIssuingStatus(isValid(verificationFragments, ["DOCUMENT_STATUS"]) ? Status.RESOLVED : Status.REJECTED);
 
               if (isValid(verificationFragments, ["DOCUMENT_STATUS"])) {
                 setIssuer(document.issuers.map((issuer) => issuer.identityProof?.location).join(","));
               }
-            }
-          );
-          Promise.all([wait(WAIT), dnsTxtIdentity, allowedIssuerIdentity, didDnsIdentity]).then(
-            ([, ...verificationFragments]) => {
+
               setIssuerStatus(isValid(verificationFragments, ["ISSUER_IDENTITY"]) ? Status.RESOLVED : Status.REJECTED);
-            }
-          );
-        });
-        setVerificationStatus(isValid(verificationFragment) ? Status.RESOLVED : Status.REJECTED);
+            });
+          });
+
+          setVerificationStatus(isValid(verificationFragment) ? Status.RESOLVED : Status.REJECTED);
+        }
       }
     };
     setStatusAsync();

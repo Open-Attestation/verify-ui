@@ -8,29 +8,38 @@ import { Masthead } from "./components/shared/masthead";
 import { ScrollToTop } from "./components/shared/scroll-to-top";
 import { TermsPage } from "./components/terms/terms-page";
 import { VerifyPage } from "./components/verify/verify-page";
+import { useGoogleAnalytics } from "./services/google-analytics";
+
+const Routes = () => {
+  useGoogleAnalytics();
+
+  return (
+    <Switch>
+      <Route path="/privacy-policy">
+        <PrivacyPolicyPage />
+      </Route>
+      <Route path="/terms">
+        <TermsPage />
+      </Route>
+      <Route path="/verify">
+        <VerifyPage />
+      </Route>
+      <Route path="/faq">
+        <FaqPage />
+      </Route>
+      <Route path="/">
+        <HomePage />
+      </Route>
+    </Switch>
+  );
+};
 
 export const App: React.FunctionComponent = () => (
   <Router>
     <ScrollToTop />
     <Masthead />
     <main className="main">
-      <Switch>
-        <Route path="/privacy-policy">
-          <PrivacyPolicyPage />
-        </Route>
-        <Route path="/terms">
-          <TermsPage />
-        </Route>
-        <Route path="/verify">
-          <VerifyPage />
-        </Route>
-        <Route path="/faq">
-          <FaqPage />
-        </Route>
-        <Route path="/">
-          <HomePage />
-        </Route>
-      </Switch>
+      <Routes />
     </main>
     <Footer />
   </Router>

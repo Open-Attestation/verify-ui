@@ -6,6 +6,7 @@ import queryString from "query-string";
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { verify } from "../../issuers-verifier";
+import { sendEventCertificateVerified } from "../../services/google-analytics";
 import { retrieveDocument } from "../../services/retrieve-document";
 import { CheckCircle, Loader } from "../shared/icons";
 import { Section, Separator } from "../shared/layout";
@@ -168,7 +169,13 @@ export const VerifyPage: React.FunctionComponent = () => {
             : Status.REJECTED
         );
 
-        setVerificationStatus(isValidFragments ? Status.RESOLVED : Status.REJECTED);
+        if (isValidFragments) {
+          setVerificationStatus(Status.RESOLVED);
+          sendEventCertificateVerified({ document_id: "uuid", document_type: "PCR" });
+        } else {
+          setVerificationStatus(Status.REJECTED);
+          // TODO: Send certificate_failed event
+        }
       }
     })();
   }, [rawDocument]);

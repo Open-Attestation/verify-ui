@@ -12,3 +12,16 @@ export const useGoogleAnalytics = (): void => {
     }
   }, []);
 };
+
+enum EVENT_CATEGORY {
+  VERIFIED = "certificate_verified",
+  ERROR = "certificate_error",
+}
+
+interface EventCertificateVerifiedParams {
+  document_id: string;
+  document_type: "PCR" | "ART" | "SER" | ["PCR", "SER"];
+}
+export const sendEventCertificateVerified = ({ document_id, document_type }: EventCertificateVerifiedParams): void => {
+  ReactGA.event(EVENT_CATEGORY.VERIFIED, { document_id, document_type });
+};

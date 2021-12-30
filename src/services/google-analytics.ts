@@ -13,7 +13,6 @@ export const useGoogleAnalytics = (): void => {
       if (GTAG_ID?.startsWith("G-")) {
         ReactGA.initialize(GTAG_ID);
         ReactGA.send("pageview");
-        console.error("initialized ga");
       }
     } catch (error) {
       console.error(error);
@@ -49,7 +48,6 @@ export const sendHealthCertVerifiedEvent = (data: OpenAttestationDocument): void
   if (!isHealthCert(data)) {
     return;
   }
-
   try {
     ReactGA.event(EVENT_CATEGORY.VERIFIED, {
       document_id: data.id ?? "",
@@ -60,24 +58,31 @@ export const sendHealthCertVerifiedEvent = (data: OpenAttestationDocument): void
   }
 };
 
-export enum VERIFY_ERROR_TYPE {
-  DOCUMENT_INTEGRITY_ERROR = "DOCUMENT_INTEGRITY_ERROR",
-  DOCUMENT_STATUS_ERROR = "DOCUMENT_STATUS_ERROR",
-  ISSUER_IDENTITY_ERROR = "ISSUER_IDENTITY_ERROR",
+// if true, error is present for verfication type
+interface VerificationErrorMap {
+  document_integrity_error: boolean;
+  document_status_error: boolean;
+  issuer_identity_error: boolean;
 }
 
-export const sendHealthCertErrorEvent = (verificationError: VERIFY_ERROR_TYPE, data: OpenAttestationDocument): void => {
+export const sendHealthCertErrorEvent = (statuses: VerificationErrorMap, data: OpenAttestationDocument): void => {
   if (!isHealthCert(data)) {
     return;
   }
 
-  try {
-    ReactGA.event(EVENT_CATEGORY.ERROR, {
-      document_id: data.id ?? "",
-      document_type: getHealthCertType(data),
-      error_type: verificationError,
-    });
-  } catch (error) {
-    console.error(error);
+  for (const [errorName, isError] of Object.entries(statuses)) {
+    if (!isError) {
+      continue;
+    }
+    console.log(`error detected: ${errorName}`);
+    try {
+      ReactGA.event(EVENT_CATEGORY.ERROR, {
+        document_id: data.id ?? "",
+        document_type: getHealthCertType(data),
+        error_type: errorName,
+      });
+    } catch (error) {
+      console.error(error);
+    }
   }
 };

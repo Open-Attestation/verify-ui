@@ -6,7 +6,7 @@ import queryString from "query-string";
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { verify } from "../../issuers-verifier";
-import { sendHealthCertVerifiedEvent } from "../../services/google-analytics";
+import { sendHealthCertErrorEvent, sendHealthCertVerifiedEvent } from "../../services/google-analytics";
 import { retrieveDocument } from "../../services/retrieve-document";
 import { CheckCircle, Loader } from "../shared/icons";
 import { Section, Separator } from "../shared/layout";
@@ -157,8 +157,7 @@ export const VerifyPage: React.FunctionComponent = () => {
           ["DOCUMENT_STATUS"]
         );
         setIssuingStatus(isValidDocumentStatus ? Status.RESOLVED : Status.REJECTED);
-
-        if (isValid([documentStoreStatus, tokenRegistryStatus, didSignedStatus], ["DOCUMENT_STATUS"])) {
+        if (isValidDocumentStatus) {
           setIssuer(document.issuers.map((issuer) => issuer.identityProof?.location).join(","));
         }
 
@@ -167,6 +166,16 @@ export const VerifyPage: React.FunctionComponent = () => {
           ["ISSUER_IDENTITY"]
         );
         setIssuerStatus(isValidIssuerIdentity ? Status.RESOLVED : Status.REJECTED);
+
+        // if healthcert has verification error, send event to google analytics
+        sendHealthCertErrorEvent(
+          {
+            document_integrity_error: !isValidDocumentIntegrity,
+            document_status_error: !isValidDocumentStatus,
+            issuer_identity_error: !isValidIssuerIdentity,
+          },
+          document
+        );
 
         if (isValidFragments) {
           setVerificationStatus(Status.RESOLVED);

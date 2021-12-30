@@ -16,7 +16,8 @@
     "react-dropzone": "^11.3.2",
     "react-feather": "^2.0.9",
     "react-ga4": "^1.4.1",
-    "react-router-dom": "^5.2.0"
+    "react-router-dom": "^5.2.0",
+    "use-deep-compare-effect": "^1.8.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^12.1.1",

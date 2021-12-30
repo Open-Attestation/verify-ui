@@ -6,7 +6,7 @@ import queryString from "query-string";
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { verify } from "../../issuers-verifier";
-import { sendEventCertificateVerified } from "../../services/google-analytics";
+import { sendHealthCertVerifiedEvent } from "../../services/google-analytics";
 import { retrieveDocument } from "../../services/retrieve-document";
 import { CheckCircle, Loader } from "../shared/icons";
 import { Section, Separator } from "../shared/layout";
@@ -149,27 +149,29 @@ export const VerifyPage: React.FunctionComponent = () => {
           allowedIssuerIdentity,
         ] = fragments;
 
-        setTamperedStatus(isValid([hashStatus], ["DOCUMENT_INTEGRITY"]) ? Status.RESOLVED : Status.REJECTED);
+        const isValidDocumentIntegrity = isValid([hashStatus], ["DOCUMENT_INTEGRITY"]);
+        setTamperedStatus(isValidDocumentIntegrity ? Status.RESOLVED : Status.REJECTED);
 
-        setIssuingStatus(
-          isValid([documentStoreStatus, tokenRegistryStatus, didSignedStatus], ["DOCUMENT_STATUS"])
-            ? Status.RESOLVED
-            : Status.REJECTED
+        const isValidDocumentStatus = isValid(
+          [documentStoreStatus, tokenRegistryStatus, didSignedStatus],
+          ["DOCUMENT_STATUS"]
         );
+        setIssuingStatus(isValidDocumentStatus ? Status.RESOLVED : Status.REJECTED);
 
         if (isValid([documentStoreStatus, tokenRegistryStatus, didSignedStatus], ["DOCUMENT_STATUS"])) {
           setIssuer(document.issuers.map((issuer) => issuer.identityProof?.location).join(","));
         }
 
-        setIssuerStatus(
-          isValid([dnsTxtIdentity, allowedIssuerIdentity, didDnsIdentity], ["ISSUER_IDENTITY"])
-            ? Status.RESOLVED
-            : Status.REJECTED
+        const isValidIssuerIdentity = isValid(
+          [dnsTxtIdentity, allowedIssuerIdentity, didDnsIdentity],
+          ["ISSUER_IDENTITY"]
         );
+        setIssuerStatus(isValidIssuerIdentity ? Status.RESOLVED : Status.REJECTED);
 
         if (isValidFragments) {
           setVerificationStatus(Status.RESOLVED);
-          sendEventCertificateVerified({ document_id: "uuid", document_type: "PCR" });
+          // if document is a healthcert, send event to google analytics
+          sendHealthCertVerifiedEvent(document);
         } else {
           setVerificationStatus(Status.REJECTED);
           // TODO: Send certificate_failed event

@@ -1,7 +1,7 @@
+import { OpenAttestationDocument } from "@govtechsg/open-attestation";
+import get from "lodash.get";
 import { useEffect } from "react";
 import ReactGA from "react-ga4";
-import { UaEventOptions } from "react-ga4/types/ga4";
-import useDeepCompareEffect from "use-deep-compare-effect";
 
 const GTAG_ID = process.env.REACT_APP_GTAG_ID;
 
@@ -13,12 +13,31 @@ export const useGoogleAnalytics = (): void => {
       if (GTAG_ID?.startsWith("G-")) {
         ReactGA.initialize(GTAG_ID);
         ReactGA.send("pageview");
-        console.log("initialized ga");
+        console.error("initialized ga");
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }, []);
+};
+
+enum HEALTHCERT_TYPE {
+  PDT = "PDT",
+  VAC = "VAC",
+}
+
+const isVac = (data: OpenAttestationDocument): boolean => get(data, "name") === "VaccinationHealthCert";
+const isPDT = (data: OpenAttestationDocument): boolean =>
+  get(data, "name") === "HealthCert" || get(data, "version") === "pdt-healthcert-v2.0";
+export const isHealthCert = (data: OpenAttestationDocument): boolean => isVac(data) || isPDT(data);
+
+export const getHealthCertType = (data: OpenAttestationDocument): HEALTHCERT_TYPE | "" => {
+  if (isVac(data)) {
+    return HEALTHCERT_TYPE.VAC;
+  } else if (isPDT(data)) {
+    return HEALTHCERT_TYPE.PDT;
+  }
+  return "";
 };
 
 enum EVENT_CATEGORY {
@@ -26,10 +45,39 @@ enum EVENT_CATEGORY {
   ERROR = "certificate_error",
 }
 
-interface EventCertificateVerifiedParams {
-  document_id: string;
-  document_type: "PCR" | "ART" | "SER" | ["PCR", "SER"];
+export const sendHealthCertVerifiedEvent = (data: OpenAttestationDocument): void => {
+  if (!isHealthCert(data)) {
+    return;
+  }
+
+  try {
+    ReactGA.event(EVENT_CATEGORY.VERIFIED, {
+      document_id: data.id ?? "",
+      document_type: getHealthCertType(data),
+    });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export enum VERIFY_ERROR_TYPE {
+  DOCUMENT_INTEGRITY_ERROR = "DOCUMENT_INTEGRITY_ERROR",
+  DOCUMENT_STATUS_ERROR = "DOCUMENT_STATUS_ERROR",
+  ISSUER_IDENTITY_ERROR = "ISSUER_IDENTITY_ERROR",
 }
-export const sendEventCertificateVerified = ({ document_id, document_type }: EventCertificateVerifiedParams): void => {
-  ReactGA.event(EVENT_CATEGORY.VERIFIED, { document_id, document_type });
+
+export const sendHealthCertErrorEvent = (verificationError: VERIFY_ERROR_TYPE, data: OpenAttestationDocument): void => {
+  if (!isHealthCert(data)) {
+    return;
+  }
+
+  try {
+    ReactGA.event(EVENT_CATEGORY.ERROR, {
+      document_id: data.id ?? "",
+      document_type: getHealthCertType(data),
+      error_type: verificationError,
+    });
+  } catch (error) {
+    console.error(error);
+  }
 };

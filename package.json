@@ -197,7 +197,8 @@
     ]
   },
   "prettier": {
-    "printWidth": 120
+    "printWidth": 120,
+    "endOfLine": "auto"
   },
   "browserslist": {
     "production": [

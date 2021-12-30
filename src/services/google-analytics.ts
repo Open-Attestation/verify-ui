@@ -21,7 +21,6 @@ export const useGoogleAnalytics = (): void => {
   }, []);
 };
 
-<<<<<<< HEAD
 enum EVENT_CATEGORY {
   VERIFIED = "certificate_verified",
   ERROR = "certificate_error",
@@ -33,18 +32,4 @@ interface EventCertificateVerifiedParams {
 }
 export const sendEventCertificateVerified = ({ document_id, document_type }: EventCertificateVerifiedParams): void => {
   ReactGA.event(EVENT_CATEGORY.VERIFIED, { document_id, document_type });
-=======
-interface GAEvent extends UaEventOptions {
-  [arg: string]: any;
-}
-/* custom hook to send google analytics custom event whenever custom event changes */
-export const useGaEvent = (params: GAEvent): void => {
-  useDeepCompareEffect(() => {
-    try {
-      ReactGA.event(params);
-    } catch (error) {
-      console.log(error);
-    }
-  }, [params]);
->>>>>>> 52945c9 (chore: added error handling and customEvenHook)
 };

@@ -22,7 +22,7 @@ export const useGoogleAnalytics = (): void => {
 interface GAEvent extends UaEventOptions {
   [arg: string]: any;
 }
-// custom hook to send google analytics custom event
+/* custom hook to send google analytics custom event whenever custom event changes */
 export const useGaEvent = (params: GAEvent): void => {
   useDeepCompareEffect(() => {
     try {

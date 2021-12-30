@@ -174,8 +174,7 @@ export const VerifyPage: React.FunctionComponent = () => {
         } else {
           setVerificationStatus(Status.REJECTED);
           // if healthcert has verification error, send event to google analytics
-        sendHealthCertErrorEvent(document, fragments);
-
+          sendHealthCertErrorEvent(document, fragments);
         }
       }
     })();

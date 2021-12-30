@@ -9,9 +9,11 @@ export const useGoogleAnalytics = (): void => {
   /* Initialise Google Analytics 4 if GTAG_ID is provided */
   useEffect(() => {
     try {
+      console.log(GTAG_ID);
       if (GTAG_ID?.startsWith("G-")) {
         ReactGA.initialize(GTAG_ID);
         ReactGA.send("pageview");
+        console.log("initialized ga");
       }
     } catch (error) {
       console.log(error);

@@ -89,7 +89,7 @@ export const VerifyPage: React.FunctionComponent = () => {
           setLoadDocumentStatus(Status.RESOLVED);
           setRawDocument(wrappedDocument);
         }
-      } catch (error) {
+      } catch (error: any) {
         setLoadDocumentStatus(Status.REJECTED);
         setLoadDocumentError(
           error.message.includes("Unexpected token")

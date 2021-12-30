@@ -84,7 +84,7 @@ const verifyMethod: VerifierType["verify"] = async (document) => {
       VerifyAllowedIssuersCode.UNSUPPORTED_V3_DOCUMENT,
       VerifyAllowedIssuersCode[VerifyAllowedIssuersCode.UNSUPPORTED_V3_DOCUMENT]
     );
-  } catch (e) {
+  } catch (e: any) {
     return {
       name,
       type,

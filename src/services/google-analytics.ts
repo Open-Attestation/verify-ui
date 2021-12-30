@@ -1,3 +1,4 @@
+import { VerificationFragment } from "@govtechsg/oa-verify";
 import { OpenAttestationDocument } from "@govtechsg/open-attestation";
 import get from "lodash.get";
 import { useEffect } from "react";
@@ -58,31 +59,23 @@ export const sendHealthCertVerifiedEvent = (data: OpenAttestationDocument): void
   }
 };
 
-// if true, error is present for verfication type
-interface VerificationErrorMap {
-  document_integrity_error: boolean;
-  document_status_error: boolean;
-  issuer_identity_error: boolean;
-}
-
-export const sendHealthCertErrorEvent = (statuses: VerificationErrorMap, data: OpenAttestationDocument): void => {
+export const sendHealthCertErrorEvent = (data: OpenAttestationDocument, fragments: VerificationFragment[]): void => {
   if (!isHealthCert(data)) {
     return;
   }
 
-  for (const [errorName, isError] of Object.entries(statuses)) {
-    if (!isError) {
-      continue;
-    }
-    console.log(`error detected: ${errorName}`);
-    try {
-      ReactGA.event(EVENT_CATEGORY.ERROR, {
-        document_id: data.id ?? "",
-        document_type: getHealthCertType(data),
-        error_type: errorName,
-      });
-    } catch (error) {
-      console.error(error);
-    }
+  const message: string = fragments
+    .filter((fragment) => fragment.status === "INVALID")
+    .map((fragment) => `INVALID ${fragment.type}: ${(fragment as any)?.reason?.message}`)
+    .join(". ");
+
+  try {
+    ReactGA.event(EVENT_CATEGORY.ERROR, {
+      document_id: data.id ?? "",
+      document_type: getHealthCertType(data),
+      error_message: message,
+    });
+  } catch (error) {
+    console.error(error);
   }
 };

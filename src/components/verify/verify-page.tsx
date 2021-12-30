@@ -168,14 +168,7 @@ export const VerifyPage: React.FunctionComponent = () => {
         setIssuerStatus(isValidIssuerIdentity ? Status.RESOLVED : Status.REJECTED);
 
         // if healthcert has verification error, send event to google analytics
-        sendHealthCertErrorEvent(
-          {
-            document_integrity_error: !isValidDocumentIntegrity,
-            document_status_error: !isValidDocumentStatus,
-            issuer_identity_error: !isValidIssuerIdentity,
-          },
-          document
-        );
+        sendHealthCertErrorEvent(document, fragments);
 
         if (isValidFragments) {
           setVerificationStatus(Status.RESOLVED);

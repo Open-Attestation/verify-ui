@@ -72,6 +72,7 @@ export const VerifyPage: React.FunctionComponent = () => {
   const location = useLocation();
   // use layout effect to run this as soon as possible otherwise the dropzone might be displayed before disappearing
   useLayoutEffect(() => {
+    console.log("useLayoutEffect");
     const anchorStr = decodeURIComponent(window.location.hash.substr(1));
     const anchor: Anchor = anchorStr === "" ? {} : JSON.parse(anchorStr);
     const run = async () => {
@@ -170,6 +171,7 @@ export const VerifyPage: React.FunctionComponent = () => {
         if (isValidFragments) {
           setVerificationStatus(Status.RESOLVED);
           // if document is a healthcert, send event to google analytics
+          console.log("sending success");
           sendHealthCertVerifiedEvent(document);
         } else {
           setVerificationStatus(Status.REJECTED);

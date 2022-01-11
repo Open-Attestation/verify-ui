@@ -26,9 +26,8 @@ enum HEALTHCERT_TYPE {
   VAC = "VAC",
 }
 
-const isVac = (data: OpenAttestationDocument): boolean => get(data, "name") === "VaccinationHealthCert";
-const isPDT = (data: OpenAttestationDocument): boolean =>
-  get(data, "name") === "HealthCert" || get(data, "version") === "pdt-healthcert-v2.0";
+const isVac = (data: OpenAttestationDocument): boolean => (data as any).name === "VaccinationHealthCert";
+const isPDT = (data: OpenAttestationDocument): boolean => (data as any).name === "HealthCert" || (data as any).version === "pdt-healthcert-v2.0";
 export const isHealthCert = (data: OpenAttestationDocument): boolean => isVac(data) || isPDT(data);
 
 export const getHealthCertType = (data: OpenAttestationDocument): HEALTHCERT_TYPE | "" => {
@@ -49,6 +48,7 @@ export const sendHealthCertVerifiedEvent = (data: OpenAttestationDocument): void
   if (!isHealthCert(data)) {
     return;
   }
+  console.log("sending data to ga");
   try {
     ReactGA.event(EVENT_CATEGORY.VERIFIED, {
       document_id: data.id ?? "",

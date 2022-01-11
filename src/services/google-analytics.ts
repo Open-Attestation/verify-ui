@@ -1,6 +1,5 @@
 import { VerificationFragment } from "@govtechsg/oa-verify";
 import { OpenAttestationDocument } from "@govtechsg/open-attestation";
-import get from "lodash.get";
 import { useEffect } from "react";
 import ReactGA from "react-ga4";
 
@@ -26,7 +25,8 @@ enum HEALTHCERT_TYPE {
 }
 
 const isVac = (data: OpenAttestationDocument): boolean => (data as any).name === "VaccinationHealthCert";
-const isPDT = (data: OpenAttestationDocument): boolean => (data as any).name === "HealthCert" || (data as any).version === "pdt-healthcert-v2.0";
+const isPDT = (data: OpenAttestationDocument): boolean =>
+  (data as any).name === "HealthCert" || (data as any).version === "pdt-healthcert-v2.0";
 export const isHealthCert = (data: OpenAttestationDocument): boolean => isVac(data) || isPDT(data);
 
 export const getHealthCertType = (data: OpenAttestationDocument): HEALTHCERT_TYPE | "" => {
@@ -47,7 +47,6 @@ export const sendHealthCertVerifiedEvent = (data: OpenAttestationDocument): void
   if (!isHealthCert(data)) {
     return;
   }
-  console.log("sending data to ga");
   try {
     ReactGA.event(EVENT_CATEGORY.VERIFIED, {
       document_id: data.id ?? "",
@@ -62,7 +61,10 @@ export const sendHealthCertErrorEvent = (data: OpenAttestationDocument, fragment
   if (!isHealthCert(data)) {
     return;
   }
-  const message: string = JSON.stringify(fragments.filter(({ status }) => status === "ERROR" || status === "INVALID"));
+  const message: string = fragments
+    .filter((fragment) => fragment.status === "ERROR")
+    .map((fragment) => `INVALID ${fragment.type}: ${(fragment as any)?.reason?.message}`)
+    .join(". ");
   try {
     ReactGA.event(EVENT_CATEGORY.ERROR, {
       document_id: data.id ?? "",

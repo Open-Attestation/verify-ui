@@ -1,6 +1,5 @@
 import styled from "@emotion/styled";
-import React, { useEffect, useState } from "react";
-import ReactGA from "react-ga4";
+import React, { useState } from "react";
 import arrowDownCircle from "../shared/images/arrow-down-circle.svg";
 import { Section, Separator } from "../shared/layout";
 import { NavigationBar } from "../shared/navigation-bar";
@@ -64,12 +63,6 @@ const FaqElement: React.FunctionComponent<{ question: string; answer: string }> 
 };
 
 export const FaqPage: React.FunctionComponent = () => {
-  useEffect(() => {
-    ReactGA.event("faq", {
-      msg: "hello",
-    });
-  }, []);
-
   return (
     <Section>
       <NavigationBar />

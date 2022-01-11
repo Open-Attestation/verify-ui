@@ -10,7 +10,6 @@ export const useGoogleAnalytics = (): void => {
   /* Initialise Google Analytics 4 if GTAG_ID is provided */
   useEffect(() => {
     try {
-      console.log(GTAG_ID);
       if (GTAG_ID?.startsWith("G-")) {
         ReactGA.initialize(GTAG_ID);
         ReactGA.send("pageview");
@@ -63,10 +62,7 @@ export const sendHealthCertErrorEvent = (data: OpenAttestationDocument, fragment
   if (!isHealthCert(data)) {
     return;
   }
-  const message: string = fragments
-    .filter((fragment) => fragment.status === "ERROR")
-    .map((fragment) => `INVALID ${fragment.type}: ${(fragment as any)?.reason?.message}`)
-    .join(". ");
+  const message: string = JSON.stringify(fragments.filter(({ status }) => status === "ERROR" || status === "INVALID"));
   try {
     ReactGA.event(EVENT_CATEGORY.ERROR, {
       document_id: data.id ?? "",

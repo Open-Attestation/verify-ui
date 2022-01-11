@@ -22,20 +22,21 @@ export const useGoogleAnalytics = (): void => {
 enum HEALTHCERT_TYPE {
   PDT = "PDT",
   VAC = "VAC",
+  UNKNOWN = "UNKNOWN",
 }
 
-const isVac = (data: OpenAttestationDocument): boolean => (data as any).name === "VaccinationHealthCert";
-const isPDT = (data: OpenAttestationDocument): boolean =>
-  (data as any).name === "HealthCert" || (data as any).version === "pdt-healthcert-v2.0";
+const isVac = (data: any): boolean => data?.name === "VaccinationHealthCert";
+const isPDT = (data: any): boolean => data?.name === "HealthCert" || data?.version === "pdt-healthcert-v2.0";
 export const isHealthCert = (data: OpenAttestationDocument): boolean => isVac(data) || isPDT(data);
 
-export const getHealthCertType = (data: OpenAttestationDocument): HEALTHCERT_TYPE | "" => {
+export const getHealthCertType = (data: OpenAttestationDocument): HEALTHCERT_TYPE => {
   if (isVac(data)) {
     return HEALTHCERT_TYPE.VAC;
   } else if (isPDT(data)) {
     return HEALTHCERT_TYPE.PDT;
+  } else {
+    return HEALTHCERT_TYPE.UNKNOWN;
   }
-  return "";
 };
 
 enum EVENT_CATEGORY {

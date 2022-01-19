@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import preval from "preval.macro";
 import React from "react";
 import { Link } from "react-router-dom";
 import govtechLogo from "./images/govtech-logo.svg";
@@ -11,6 +12,21 @@ const GovtechLogoImage = styled.img`
 const GdsLogoImage = styled.img`
   width: 200px;
 `;
+
+export const LastUpdated: React.FunctionComponent = () => {
+  // https://github.com/facebook/create-react-app/issues/4960
+  const year = preval`module.exports = new Date().getFullYear();`;
+  const buildDate = preval`module.exports = new Intl.DateTimeFormat("en-GB", { year: "numeric", month: "long", day: "numeric" }).format(new Date());`;
+
+  return (
+    <>
+      <p className="small">
+        ©{year} Government Technology Agency | Last updated {buildDate}
+      </p>
+      <p className="small">v1.0.0-{process.env.REACT_APP_COMMIT_REF?.substring(0, 6)}</p>
+    </>
+  );
+};
 
 export const Footer: React.FunctionComponent = () => (
   <footer className="container mx-auto max-w-lg items-center text-center py-6">
@@ -37,8 +53,7 @@ export const Footer: React.FunctionComponent = () => (
         </a>
       </div>
     </div>
-    <p className="small">©2020 Government Technology Agency | Last updated 6th Mar 2021</p>
-    <p className="small">v1.0.0-{process.env.REACT_APP_COMMIT_REF?.substring(0, 6)}</p>
+    <LastUpdated />
     <p className="small">
       <Link to="/terms" className="text-primary mx-3">
         Terms of use

@@ -1,0 +1,52 @@
+{
+  "version": "https://schema.openattestation.com/2.0/schema.json",
+  "data": {
+    "name": "7c50121d-7ca0-419d-b413-a551f2822d92:string:TradeTrust Bill of Lading v2",
+    "shipper": {
+      "address": {
+        "street": "a794f916-8c12-45f8-bdde-e822bb1634e8:string:One North",
+        "country": "0c0f6a80-d098-441c-b2b3-f60d160e0027:string:Singapore"
+      },
+      "name": "64c96845-3405-4eda-b16b-a1dff26604a5:string:Demo Shipper"
+    },
+    "consignee": {
+      "name": "6a326403-7bf0-45f6-af56-8639622cdd2f:string:Demo Consignee"
+    },
+    "notifyParty": {
+      "name": "5c47bd2c-b287-4025-8298-00a3bd4bbdbc:string:Demo Notify"
+    },
+    "$template": {
+      "type": "b6a48761-f87f-4b6a-8786-5dfc91f58e75:string:EMBEDDED_RENDERER",
+      "name": "33a2f2a2-cff3-437f-8f97-4a270bb0d870:string:BILL_OF_LADING",
+      "url": "18b01213-771d-47f1-ab86-982deae655fb:string:https://generic-templates.tradetrust.io"
+    },
+    "issuers": [
+      {
+        "identityProof": {
+          "type": "b227f5f4-9025-4cd6-ac7e-ca08e6fb292e:string:DNS-TXT",
+          "location": "ab9656ad-e48f-4a90-9d13-5ad9ad1d7a1d:string:demo-tradetrust.openattestation.com"
+        },
+        "name": "eeabe456-103b-4196-bf68-e5584b5f6896:string:DEMO STORE",
+        "tokenRegistry": "385501a2-06ee-40e1-9071-e6958f56a3ba:string:0x72d9a82203Ef9177239A5E3cB7A8FB9a78D04f17"
+      }
+    ],
+    "blNumber": "d8600696-04ef-46d8-a28e-d7d11a5ab14a:string:123",
+    "vessel": "ed283677-0136-4fd3-9789-c288e0678cf4:string:1",
+    "voyageNo": "164cc8c8-1e60-47a6-8166-94d6fc9c070c:string:100",
+    "portOfLoading": "6a1088d5-b0da-4c20-a949-c45b8d35fa8b:string:Singapore Port",
+    "portOfDischarge": "e65ac825-8b42-43bf-a2c1-f95d75a7ccc8:string:China Port",
+    "placeOfReceipt": "788b25e0-3a5d-4e8b-8f1e-1e8227be75e5:string:Beijing",
+    "placeOfDelivery": "f9ad1486-856d-4c83-96f0-550b5f5024ff:string:Singapore",
+    "links": {
+      "self": {
+        "href": "38e11066-8bbb-4523-8ef1-208dbac997cb:string:https://action.openattestation.com?q=%7B%22type%22%3A%22DOCUMENT%22%2C%22payload%22%3A%7B%22uri%22%3A%22https%3A%2F%2Fgallery.openattestation.com%2Fstatic%2Fdocuments%2Ftradetrust%2Fv2%2Febl-ropsten.tt%22%2C%22permittedActions%22%3A%5B%22VIEW%22%5D%2C%22redirect%22%3A%22https%3A%2F%2Fdev.tradetrust.io%22%7D%7D"
+      }
+    }
+  },
+  "signature": {
+    "type": "SHA3MerkleProof",
+    "targetHash": "0a4b1df954f58f984fee56a35b7e85d86e0e99513e6608ca76dc041ce45867c7",
+    "proof": [],
+    "merkleRoot": "0a4b1df954f58f984fee56a35b7e85d86e0e99513e6608ca76dc041ce45867c7"
+  }
+}

@@ -4,12 +4,11 @@ import get from "lodash.get";
 import { useEffect } from "react";
 import ReactGA from "react-ga4";
 
-const GTAG_ID = process.env.REACT_APP_GTAG_ID;
-
 export const useGoogleAnalytics = (): void => {
   /* Initialise Google Analytics 4 if GTAG_ID is provided */
   useEffect(() => {
     try {
+      const GTAG_ID = process.env.REACT_APP_GTAG_ID;
       console.log(GTAG_ID);
       if (GTAG_ID?.startsWith("G-")) {
         ReactGA.initialize(GTAG_ID);
@@ -21,7 +20,7 @@ export const useGoogleAnalytics = (): void => {
   }, []);
 };
 
-enum HEALTHCERT_TYPE {
+export enum HEALTHCERT_TYPE {
   PDT = "PDT",
   VAC = "VAC",
 }
@@ -40,7 +39,7 @@ export const getHealthCertType = (data: OpenAttestationDocument): HEALTHCERT_TYP
   return "";
 };
 
-enum EVENT_CATEGORY {
+export enum EVENT_CATEGORY {
   VERIFIED = "certificate_verified",
   ERROR = "certificate_error",
 }

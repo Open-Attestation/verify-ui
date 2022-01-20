@@ -13,5 +13,6 @@ export interface Anchor {
   key?: string;
 }
 
+// eslint-disable-next-line
 export const isCodedError = (e: any): e is CodedError =>
   typeof e.message === "string" && typeof e.code === "number" && typeof e.codeString === "string";

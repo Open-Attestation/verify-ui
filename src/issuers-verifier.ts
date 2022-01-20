@@ -84,18 +84,32 @@ const verifyMethod: VerifierType["verify"] = async (document) => {
       VerifyAllowedIssuersCode.UNSUPPORTED_V3_DOCUMENT,
       VerifyAllowedIssuersCode[VerifyAllowedIssuersCode.UNSUPPORTED_V3_DOCUMENT]
     );
-  } catch (e: any) {
-    return {
-      name,
-      type,
-      data: e,
-      reason: {
-        code: e.code || VerifyAllowedIssuersCode.UNEXPECTED_ERROR,
-        codeString: e.codeString || VerifyAllowedIssuersCode[VerifyAllowedIssuersCode.UNEXPECTED_ERROR],
-        message: e.message,
-      },
-      status: "ERROR" as const,
-    };
+  } catch (e) {
+    if (e instanceof CodedError) {
+      return {
+        name,
+        type,
+        data: e,
+        reason: {
+          code: e.code || VerifyAllowedIssuersCode.UNEXPECTED_ERROR,
+          codeString: e.codeString || VerifyAllowedIssuersCode[VerifyAllowedIssuersCode.UNEXPECTED_ERROR],
+          message: e.message,
+        },
+        status: "ERROR" as const,
+      };
+    } else {
+      return {
+        name,
+        type,
+        data: e,
+        reason: {
+          code: VerifyAllowedIssuersCode.UNEXPECTED_ERROR,
+          codeString: VerifyAllowedIssuersCode[VerifyAllowedIssuersCode.UNEXPECTED_ERROR],
+          message: JSON.stringify(e || ""),
+        },
+        status: "ERROR" as const,
+      };
+    }
   }
 };
 

@@ -12,6 +12,7 @@ import {
 } from "@govtechsg/oa-verify";
 import { getData, utils } from "@govtechsg/open-attestation";
 import { providers } from "ethers";
+import { isCodedError } from "./types";
 
 type AllowedIssuersValidFragment = ValidVerificationFragment<Array<string | undefined>>;
 type AllowedIssuersInvalidFragment = InvalidVerificationFragment<Array<string | undefined>>;
@@ -85,7 +86,7 @@ const verifyMethod: VerifierType["verify"] = async (document) => {
       VerifyAllowedIssuersCode[VerifyAllowedIssuersCode.UNSUPPORTED_V3_DOCUMENT]
     );
   } catch (e) {
-    if (e instanceof CodedError) {
+    if (isCodedError(e)) {
       return {
         name,
         type,

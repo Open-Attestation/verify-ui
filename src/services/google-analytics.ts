@@ -1,6 +1,5 @@
 import { VerificationFragment } from "@govtechsg/oa-verify";
 import { OpenAttestationDocument } from "@govtechsg/open-attestation";
-import get from "lodash.get";
 import { useEffect } from "react";
 import ReactGA from "react-ga4";
 
@@ -23,20 +22,21 @@ export const useGoogleAnalytics = (): void => {
 export enum HEALTHCERT_TYPE {
   PDT = "PDT",
   VAC = "VAC",
+  UNKNOWN = "UNKNOWN",
 }
 
-const isVac = (data: OpenAttestationDocument): boolean => get(data, "name") === "VaccinationHealthCert";
-const isPDT = (data: OpenAttestationDocument): boolean =>
-  get(data, "name") === "HealthCert" || get(data, "version") === "pdt-healthcert-v2.0";
+const isVac = (data: any): boolean => data?.name === "VaccinationHealthCert";
+const isPDT = (data: any): boolean => data?.name === "HealthCert" || data?.version === "pdt-healthcert-v2.0";
 export const isHealthCert = (data: OpenAttestationDocument): boolean => isVac(data) || isPDT(data);
 
-export const getHealthCertType = (data: OpenAttestationDocument): HEALTHCERT_TYPE | "" => {
+export const getHealthCertType = (data: OpenAttestationDocument): HEALTHCERT_TYPE => {
   if (isVac(data)) {
     return HEALTHCERT_TYPE.VAC;
   } else if (isPDT(data)) {
     return HEALTHCERT_TYPE.PDT;
+  } else {
+    return HEALTHCERT_TYPE.UNKNOWN;
   }
-  return "";
 };
 
 export enum EVENT_CATEGORY {
@@ -62,10 +62,7 @@ export const sendHealthCertErrorEvent = (data: OpenAttestationDocument, fragment
   if (!isHealthCert(data)) {
     return;
   }
-  const message: string = fragments
-    .filter((fragment) => fragment.status === "ERROR")
-    .map((fragment) => `INVALID ${fragment.type}: ${(fragment as any)?.reason?.message}`)
-    .join(". ");
+  const message: string = JSON.stringify(fragments.filter(({ status }) => status === "ERROR" || status === "INVALID"));
   try {
     ReactGA.event(EVENT_CATEGORY.ERROR, {
       document_id: data.id ?? "",

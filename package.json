@@ -83,7 +83,7 @@
     "start:js": "sleep 2 && react-scripts start",
     "storybook": "start-storybook -p 9009 -s public",
     "storybook:build": "npm run build:css && build-storybook -s public",
-    "test": "react-scripts test google-analytics --passWithNoTests"
+    "test": "react-scripts test --passWithNoTests"
   },
   "config": {
     "commitizen": {

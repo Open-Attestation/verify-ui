@@ -2,6 +2,8 @@ import { getData } from "@govtechsg/open-attestation";
 import { render } from "@testing-library/react";
 import React from "react";
 import ReactGA from "react-ga4";
+import { verify } from "../issuers-verifier";
+import invalid_vac_cert from "./fixtures/invalid_v2_pdt_healthcert.json";
 import tt_bill from "./fixtures/tt_bill_of_lading.json";
 import v1_pdt from "./fixtures/v1_pdt_healthcert.json";
 import v2_pdt from "./fixtures/v2_pdt_healthcert.json";
@@ -13,6 +15,7 @@ import {
   useGoogleAnalytics,
   sendHealthCertVerifiedEvent,
   EVENT_CATEGORY,
+  sendHealthCertErrorEvent,
 } from "./google-analytics";
 
 describe("test useGoogleAnalytics hook", () => {
@@ -70,7 +73,7 @@ describe("test getHealthCertType() util function", () => {
   });
   it("getHealthCertType() for non health cert should return empty", () => {
     const data = getData(tt_bill as any);
-    expect(getHealthCertType(data)).toBe("");
+    expect(getHealthCertType(data)).toBe("UNKNOWN");
   });
 });
 
@@ -82,6 +85,21 @@ describe("sendHealthCertVerifiedEvent and sendHealthCertErrorEvent", () => {
     expect(spy).toHaveBeenCalledWith(EVENT_CATEGORY.VERIFIED, {
       document_id: data.id,
       document_type: HEALTHCERT_TYPE.PDT,
+    });
+  });
+
+  it("sendHealthCertErrorEvent should send document id, type and error message", async () => {
+    const data = getData(invalid_vac_cert as any);
+    const fragments = await verify(invalid_vac_cert as any);
+    const spy = jest.spyOn(ReactGA, "event");
+    sendHealthCertErrorEvent(data, fragments);
+    const message: string = JSON.stringify(
+      fragments.filter(({ status }) => status === "ERROR" || status === "INVALID")
+    );
+    expect(spy).toHaveBeenCalledWith(EVENT_CATEGORY.ERROR, {
+      document_id: data.id,
+      document_type: HEALTHCERT_TYPE.PDT,
+      errors: message,
     });
   });
 });

@@ -25,7 +25,6 @@ describe("test useGoogleAnalytics hook", () => {
       ...originalEnv,
       REACT_APP_GTAG_ID: "G-TEST",
     };
-    console.log("test env", process.env.REACT_APP_GTAG_ID);
     const Container: React.FC = () => {
       useGoogleAnalytics();
       return <div />;

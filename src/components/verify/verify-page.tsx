@@ -15,6 +15,13 @@ import { Status, Anchor } from "./../../types";
 import { DocumentRenderer } from "./document-renderer";
 import { DropZone } from "./dropzone";
 
+// TO DO - refactor ----
+// same util method will be from the google analytics pull request
+const isVac = (data: any): boolean => data?.name === "VaccinationHealthCert";
+const isPDT = (data: any): boolean => data?.name === "HealthCert" || data?.version === "pdt-healthcert-v2.0";
+export const isHealthCert = (data: OpenAttestationDocument | null): boolean => isVac(data) || isPDT(data);
+// -----
+
 const DropzoneContainer = styled.div`
   margin-top: 20px;
   margin-bottom: 46px;
@@ -61,6 +68,7 @@ const CheckStatus: React.FunctionComponent<{
 
 export const VerifyPage: React.FunctionComponent = () => {
   const [rawDocument, setRawDocument] = useState<WrappedDocument<v2.OpenAttestationDocument>>();
+  const data = rawDocument != null ? getData(rawDocument) : null;
   const [issuer, setIssuer] = useState("");
   // set overall status to idle and set the rest to pending
   const [loadDocumentStatus, setLoadDocumentStatus] = useState(Status.IDLE);
@@ -264,8 +272,14 @@ export const VerifyPage: React.FunctionComponent = () => {
               <CheckStatus
                 status={issuerStatus}
                 loadingMessage="Checking issuer identity"
-                successMessage="Document’s issuer has been identified"
-                errorMessage="Document’s issuer has not been identified"
+                successMessage={
+                  isHealthCert(data) ? "Issued by Singapore Government" : "Document’s issuer has been identified"
+                }
+                errorMessage={
+                  isHealthCert(data)
+                    ? "Document not issued by Singapore Government"
+                    : "Document’s issuer has not been identified"
+                }
               />
             </div>
           </div>

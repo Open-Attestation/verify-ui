@@ -3,11 +3,11 @@ import { render } from "@testing-library/react";
 import React from "react";
 import ReactGA from "react-ga4";
 import { verify } from "../issuers-verifier";
-import invalid_vac_cert from "./fixtures/invalid_v2_pdt_healthcert.json";
+import pdt_v1 from "./fixtures/pdt_v1_healthcert.json";
+import pdt_v2 from "./fixtures/pdt_v2_healthcert.json";
+import pdt_v2_invalid from "./fixtures/pdt_v2_healthcert_invalid.json";
 import tt_bill from "./fixtures/tt_bill_of_lading.json";
-import v1_pdt from "./fixtures/v1_pdt_healthcert.json";
-import v2_pdt from "./fixtures/v2_pdt_healthcert.json";
-import vac_cert from "./fixtures/vac_cert.json";
+import vac_v1 from "./fixtures/vac_v1_healthcert.json";
 import {
   getHealthCertType,
   HEALTHCERT_TYPE,
@@ -39,15 +39,15 @@ describe("test useGoogleAnalytics hook", () => {
 
 describe("test isHealthCert() util functions", () => {
   it("isHealthCert() should return true for v1 pdt", () => {
-    const data = getData(v1_pdt as any);
+    const data = getData(pdt_v1 as any);
     expect(isHealthCert(data)).toBeTruthy();
   });
   it("isHealthCert() should return true for v2 pdt", () => {
-    const data = getData(v2_pdt as any);
+    const data = getData(pdt_v2 as any);
     expect(isHealthCert(data)).toBeTruthy();
   });
   it("isHealthCert() should return true for vac cert", () => {
-    const data = getData(vac_cert as any);
+    const data = getData(vac_v1 as any);
     expect(isHealthCert(data)).toBeTruthy();
   });
   it("isHealthCert() should return false for trade trust cert", () => {
@@ -58,16 +58,16 @@ describe("test isHealthCert() util functions", () => {
 
 describe("test getHealthCertType() util function", () => {
   it("getHealthCertType() for v1 pdt should return pdt", () => {
-    const data = getData(v1_pdt as any);
+    const data = getData(pdt_v1 as any);
     expect(getHealthCertType(data)).toBe(HEALTHCERT_TYPE.PDT);
   });
 
   it("getHealthCertType() for v2 pdt should return pdt", () => {
-    const data = getData(v2_pdt as any);
+    const data = getData(pdt_v2 as any);
     expect(getHealthCertType(data)).toBe(HEALTHCERT_TYPE.PDT);
   });
   it("getHealthCertType() for vac cert should return pdt", () => {
-    const data = getData(vac_cert as any);
+    const data = getData(vac_v1 as any);
     expect(getHealthCertType(data)).toBe(HEALTHCERT_TYPE.VAC);
   });
   it("getHealthCertType() for non health cert should return empty", () => {
@@ -78,7 +78,7 @@ describe("test getHealthCertType() util function", () => {
 
 describe("sendHealthCertVerifiedEvent and sendHealthCertErrorEvent", () => {
   it("sendHealthCertVerifiedEvent should send document id and type", () => {
-    const data = getData(v2_pdt as any);
+    const data = getData(pdt_v2 as any);
     const spy = jest.spyOn(ReactGA, "event");
     sendHealthCertVerifiedEvent(data);
     expect(spy).toHaveBeenCalledWith(EVENT_CATEGORY.VERIFIED, {
@@ -88,8 +88,8 @@ describe("sendHealthCertVerifiedEvent and sendHealthCertErrorEvent", () => {
   });
 
   it("sendHealthCertErrorEvent should send document id, type and error message", async () => {
-    const data = getData(invalid_vac_cert as any);
-    const fragments = await verify(invalid_vac_cert as any);
+    const data = getData(pdt_v2_invalid as any);
+    const fragments = await verify(pdt_v2_invalid as any);
     const spy = jest.spyOn(ReactGA, "event");
     sendHealthCertErrorEvent(data, fragments);
     const message: string = JSON.stringify(

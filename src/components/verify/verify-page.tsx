@@ -1,11 +1,12 @@
 import styled from "@emotion/styled";
-import { isValid } from "@govtechsg/oa-verify";
+import { isValid, VerificationFragment } from "@govtechsg/oa-verify";
 import { getData, v2, WrappedDocument } from "@govtechsg/open-attestation";
 import fetch from "node-fetch";
 import queryString from "query-string";
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { verify } from "../../issuers-verifier";
+import { sendHealthCertErrorEvent, sendHealthCertVerifiedEvent } from "../../services/google-analytics";
 import { retrieveDocument } from "../../services/retrieve-document";
 import { CheckCircle, Loader } from "../shared/icons";
 import { Section, Separator } from "../shared/layout";
@@ -88,7 +89,7 @@ export const VerifyPage: React.FunctionComponent = () => {
           setLoadDocumentStatus(Status.RESOLVED);
           setRawDocument(wrappedDocument);
         }
-      } catch (error) {
+      } catch (error: any) {
         setLoadDocumentStatus(Status.REJECTED);
         setLoadDocumentError(
           error.message.includes("Unexpected token")
@@ -107,80 +108,76 @@ export const VerifyPage: React.FunctionComponent = () => {
     setIssuingStatus(Status.PENDING);
     setTamperedStatus(Status.PENDING);
 
-    const setStatusAsync = async (): Promise<void> => {
+    (async () => {
       if (rawDocument) {
         setVerificationStatus(Status.PENDING);
         const document: v2.OpenAttestationDocument = getData(rawDocument);
         const enc = new TextEncoder();
         const data = enc.encode(JSON.stringify(rawDocument));
 
+        let fragments: VerificationFragment[];
+        let isValidFragments: boolean;
+
         try {
-          const verificationResponse = await fetch(API_VERIFY_URL, {
+          // Use API Verify
+          const apiVerifyResponse = await fetch(API_VERIFY_URL, {
             method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
+            headers: { "Content-Type": "application/json" },
             body: data,
           });
 
-          if (!verificationResponse.ok) {
-            throw new Error("api.verify.gov.sg failed");
+          if (!apiVerifyResponse.ok) {
+            throw new Error("Unsuccessful response from API_VERIFY_URL (api.verify.gov.sg)");
           }
 
-          const response = await verificationResponse.json();
+          const parsed = await apiVerifyResponse.json();
+          fragments = parsed.fragments;
+          isValidFragments = parsed.isValid;
+        } catch (e) {
+          // Fallback: Use local OA Verify
+          fragments = await verify(rawDocument);
+          isValidFragments = isValid(fragments);
+        }
 
-          const [
-            hashStatus,
-            tokenRegistryStatus,
-            documentStoreStatus,
-            didSignedStatus,
-            dnsTxtIdentity,
-            didDnsIdentity,
-            allowedIssuerIdentity,
-          ] = response.fragments;
+        const [
+          hashStatus,
+          tokenRegistryStatus,
+          documentStoreStatus,
+          didSignedStatus,
+          dnsTxtIdentity,
+          didDnsIdentity,
+          allowedIssuerIdentity,
+        ] = fragments;
 
-          setTamperedStatus(isValid([hashStatus], ["DOCUMENT_INTEGRITY"]) ? Status.RESOLVED : Status.REJECTED);
+        const isValidDocumentIntegrity = isValid([hashStatus], ["DOCUMENT_INTEGRITY"]);
+        setTamperedStatus(isValidDocumentIntegrity ? Status.RESOLVED : Status.REJECTED);
 
-          setIssuingStatus(
-            isValid([documentStoreStatus, tokenRegistryStatus, didSignedStatus], ["DOCUMENT_STATUS"])
-              ? Status.RESOLVED
-              : Status.REJECTED
-          );
+        const isValidDocumentStatus = isValid(
+          [documentStoreStatus, tokenRegistryStatus, didSignedStatus],
+          ["DOCUMENT_STATUS"]
+        );
+        setIssuingStatus(isValidDocumentStatus ? Status.RESOLVED : Status.REJECTED);
+        if (isValidDocumentStatus) {
+          setIssuer(document.issuers.map((issuer) => issuer.identityProof?.location).join(","));
+        }
 
-          if (isValid([documentStoreStatus, tokenRegistryStatus, didSignedStatus], ["DOCUMENT_STATUS"])) {
-            setIssuer(document.issuers.map((issuer) => issuer.identityProof?.location).join(","));
-          }
+        const isValidIssuerIdentity = isValid(
+          [dnsTxtIdentity, allowedIssuerIdentity, didDnsIdentity],
+          ["ISSUER_IDENTITY"]
+        );
+        setIssuerStatus(isValidIssuerIdentity ? Status.RESOLVED : Status.REJECTED);
 
-          setIssuerStatus(
-            isValid([dnsTxtIdentity, allowedIssuerIdentity, didDnsIdentity], ["ISSUER_IDENTITY"])
-              ? Status.RESOLVED
-              : Status.REJECTED
-          );
-
-          setVerificationStatus(response.isValid ? Status.RESOLVED : Status.REJECTED);
-        } catch (error) {
-          // Fallback to OA Verify
-          const verificationFragment = await verify(rawDocument, (promises) => {
-            Promise.all(promises).then((verificationFragments) => {
-              setTamperedStatus(
-                isValid(verificationFragments, ["DOCUMENT_INTEGRITY"]) ? Status.RESOLVED : Status.REJECTED
-              );
-
-              setIssuingStatus(isValid(verificationFragments, ["DOCUMENT_STATUS"]) ? Status.RESOLVED : Status.REJECTED);
-
-              if (isValid(verificationFragments, ["DOCUMENT_STATUS"])) {
-                setIssuer(document.issuers.map((issuer) => issuer.identityProof?.location).join(","));
-              }
-
-              setIssuerStatus(isValid(verificationFragments, ["ISSUER_IDENTITY"]) ? Status.RESOLVED : Status.REJECTED);
-            });
-          });
-
-          setVerificationStatus(isValid(verificationFragment) ? Status.RESOLVED : Status.REJECTED);
+        if (isValidFragments) {
+          setVerificationStatus(Status.RESOLVED);
+          // if document is a healthcert, send event to google analytics
+          sendHealthCertVerifiedEvent(document);
+        } else {
+          setVerificationStatus(Status.REJECTED);
+          // if healthcert has verification error, send event to google analytics
+          sendHealthCertErrorEvent(document, fragments);
         }
       }
-    };
-    setStatusAsync();
+    })();
   }, [rawDocument]);
 
   const showDropzone = loadDocumentStatus !== Status.PENDING;

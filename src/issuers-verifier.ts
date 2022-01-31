@@ -12,6 +12,7 @@ import {
 } from "@govtechsg/oa-verify";
 import { getData, utils } from "@govtechsg/open-attestation";
 import { providers } from "ethers";
+import { isCodedError } from "./types";
 
 type AllowedIssuersValidFragment = ValidVerificationFragment<Array<string | undefined>>;
 type AllowedIssuersInvalidFragment = InvalidVerificationFragment<Array<string | undefined>>;
@@ -85,17 +86,31 @@ const verifyMethod: VerifierType["verify"] = async (document) => {
       VerifyAllowedIssuersCode[VerifyAllowedIssuersCode.UNSUPPORTED_V3_DOCUMENT]
     );
   } catch (e) {
-    return {
-      name,
-      type,
-      data: e,
-      reason: {
-        code: e.code || VerifyAllowedIssuersCode.UNEXPECTED_ERROR,
-        codeString: e.codeString || VerifyAllowedIssuersCode[VerifyAllowedIssuersCode.UNEXPECTED_ERROR],
-        message: e.message,
-      },
-      status: "ERROR" as const,
-    };
+    if (isCodedError(e)) {
+      return {
+        name,
+        type,
+        data: e,
+        reason: {
+          code: e.code || VerifyAllowedIssuersCode.UNEXPECTED_ERROR,
+          codeString: e.codeString || VerifyAllowedIssuersCode[VerifyAllowedIssuersCode.UNEXPECTED_ERROR],
+          message: e.message,
+        },
+        status: "ERROR" as const,
+      };
+    } else {
+      return {
+        name,
+        type,
+        data: e,
+        reason: {
+          code: VerifyAllowedIssuersCode.UNEXPECTED_ERROR,
+          codeString: VerifyAllowedIssuersCode[VerifyAllowedIssuersCode.UNEXPECTED_ERROR],
+          message: JSON.stringify(e || ""),
+        },
+        status: "ERROR" as const,
+      };
+    }
   }
 };
 

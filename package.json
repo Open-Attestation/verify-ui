@@ -15,6 +15,7 @@
     "react-dom": "^17.0.2",
     "react-dropzone": "^11.3.2",
     "react-feather": "^2.0.9",
+    "react-ga4": "^1.4.1",
     "react-router-dom": "^5.2.0"
   },
   "devDependencies": {
@@ -43,6 +44,7 @@
     "@typescript-eslint/parser": "^4.22.0",
     "autoprefixer": "^10.2.5",
     "commitizen": "^4.2.4",
+    "cross-env": "^7.0.3",
     "eslint": "^7.25.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.22.1",
@@ -67,7 +69,7 @@
     "zlib": "^1.0.5"
   },
   "scripts": {
-    "build": "NODE_ENV=production npm-run-all -s build:css build:js && cp ./_headers.${CONTEXT:-production} ./build/_headers",
+    "build": "cross-env NODE_ENV=production npm-run-all -s build:css build:js && cp ./_headers.${CONTEXT:-production} ./build/_headers",
     "build:css": "postcss src/tailwind.css -o src/index.css",
     "build:js": "react-scripts build",
     "commit": "git-cz",
@@ -197,7 +199,8 @@
     ]
   },
   "prettier": {
-    "printWidth": 120
+    "printWidth": 120,
+    "endOfLine": "auto"
   },
   "browserslist": {
     "production": [

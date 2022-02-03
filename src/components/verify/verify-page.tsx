@@ -6,7 +6,7 @@ import queryString from "query-string";
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { verify } from "../../issuers-verifier";
-import { sendHealthCertErrorEvent, sendHealthCertVerifiedEvent } from "../../services/google-analytics";
+import { isHealthCert, sendHealthCertErrorEvent, sendHealthCertVerifiedEvent } from "../../services/google-analytics";
 import { retrieveDocument } from "../../services/retrieve-document";
 import { CheckCircle, Loader } from "../shared/icons";
 import { Section, Separator } from "../shared/layout";
@@ -14,13 +14,6 @@ import { NavigationBar } from "../shared/navigation-bar";
 import { Status, Anchor } from "./../../types";
 import { DocumentRenderer } from "./document-renderer";
 import { DropZone } from "./dropzone";
-
-// TO DO - refactor ----
-// same util method will be from the google analytics pull request
-const isVac = (data: any): boolean => data?.name === "VaccinationHealthCert";
-const isPDT = (data: any): boolean => data?.name === "HealthCert" || data?.version === "pdt-healthcert-v2.0";
-export const isHealthCert = (data: OpenAttestationDocument | null): boolean => isVac(data) || isPDT(data);
-// -----
 
 const DropzoneContainer = styled.div`
   margin-top: 20px;
@@ -189,6 +182,13 @@ export const VerifyPage: React.FunctionComponent = () => {
   }, [rawDocument]);
 
   const showDropzone = loadDocumentStatus !== Status.PENDING;
+  const issuerSuccessMessage: string = isHealthCert(data)
+    ? "Issued by Singapore Government"
+    : "Document’s issuer has been identified";
+  const issuerErrorMessage: string = isHealthCert(data)
+    ? "Document not issued by Singapore Government"
+    : "Document’s issuer has not been identified";
+
   return (
     <Section>
       <NavigationBar
@@ -264,22 +264,16 @@ export const VerifyPage: React.FunctionComponent = () => {
               <CheckStatus
                 status={tamperedStatus}
                 loadingMessage="Checking if document has been tampered"
-                successMessage="Document has not been tampered"
-                errorMessage="Document has been tampered"
+                successMessage="Document has not been tampered with"
+                errorMessage="Document has been tampered with"
               />
             </div>
             <div className="w-full mb-1 lg:w-auto lg:mb-0 lg:mr-16">
               <CheckStatus
                 status={issuerStatus}
                 loadingMessage="Checking issuer identity"
-                successMessage={
-                  isHealthCert(data) ? "Issued by Singapore Government" : "Document’s issuer has been identified"
-                }
-                errorMessage={
-                  isHealthCert(data)
-                    ? "Document not issued by Singapore Government"
-                    : "Document’s issuer has not been identified"
-                }
+                successMessage={issuerSuccessMessage}
+                errorMessage={issuerErrorMessage}
               />
             </div>
           </div>

@@ -32,12 +32,8 @@ export enum HEALTHCERT_TYPE {
 
 const isVac = (data: any): boolean => data?.name === "VaccinationHealthCert";
 const isPDT = (data: any): boolean => data?.name === "HealthCert" || data?.version === "pdt-healthcert-v2.0";
-export const isHealthCert = (data: OpenAttestationDocument | null): boolean => {
-  if (data == null) {
-    return false;
-  }
-  return isVac(data) || isPDT(data);
-};
+export const isHealthCert = (data: OpenAttestationDocument | null): boolean =>
+  data ? isVac(data) || isPDT(data) : false;
 
 export const getHealthCertType = (data: OpenAttestationDocument): HEALTHCERT_TYPE => {
   if (isVac(data)) {

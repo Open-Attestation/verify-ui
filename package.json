@@ -1,217 +1,23 @@
 {
-  "name": "react-template",
+  "name": "verify.gov.sg",
   "version": "0.1.0",
   "private": true,
-  "license": "Apache-2.0",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
   "dependencies": {
-    "@emotion/react": "^11.1.5",
-    "@emotion/styled": "^11.3.0",
-    "@govtechsg/decentralized-renderer-react-components": "^3.5.3",
-    "@govtechsg/oa-encryption": "^1.3.3",
-    "@govtechsg/oa-verify": "^7.4.3",
-    "@govtechsg/open-attestation": "^5.2.2",
-    "query-string": "^7.0.0",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-dropzone": "^11.3.2",
-    "react-feather": "^2.0.9",
-    "react-ga4": "^1.4.1",
-    "react-router-dom": "^5.2.0"
+    "next": "12.1.0",
+    "react": "17.0.2",
+    "react-dom": "17.0.2"
   },
   "devDependencies": {
-    "@commitlint/cli": "^12.1.1",
-    "@commitlint/config-conventional": "^12.1.1",
-    "@commitlint/prompt": "^12.1.1",
-    "@emotion/eslint-plugin": "^11.2.0",
-    "@ls-age/commitlint-circle": "^1.0.0",
-    "@storybook/addon-actions": "^6.2.0",
-    "@storybook/addon-info": "^5.3.21",
-    "@storybook/addon-knobs": "^6.2.9",
-    "@storybook/addon-links": "^6.2.9",
-    "@storybook/addons": "^6.2.9",
-    "@storybook/preset-create-react-app": "^3.1.7",
-    "@storybook/react": "^6.4.19",
-    "@testing-library/jest-dom": "^5.12.0",
-    "@testing-library/react": "^11.2.6",
-    "@testing-library/user-event": "^13.1.5",
-    "@types/jest": "^26.0.23",
-    "@types/node": "^15.0.1",
-    "@types/preval.macro": "^3.0.0",
-    "@types/react": "^17.0.4",
-    "@types/react-dom": "^17.0.3",
-    "@types/react-router-dom": "^5.1.7",
-    "@typescript-eslint/eslint-plugin": "^4.22.0",
-    "@typescript-eslint/parser": "^4.22.0",
-    "autoprefixer": "^10.2.5",
-    "commitizen": "^4.2.4",
-    "cross-env": "^7.0.3",
-    "eslint": "^7.25.0",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-jest": "^24.3.6",
-    "eslint-plugin-prettier": "^3.4.0",
-    "eslint-plugin-react": "^7.23.2",
-    "eslint-plugin-react-hooks": "^4.2.0",
-    "eslint-plugin-testcafe": "^0.2.1",
-    "eslint-plugin-testing-library": "^4.1.2",
-    "git-cz": "^4.7.6",
-    "node-fetch": "^2.6.7",
-    "npm-run-all": "^4.1.5",
-    "postcss-cli": "^8.3.1",
-    "postcss-import": "^14.0.1",
-    "prettier": "^2.2.1",
-    "preval.macro": "^5.0.0",
-    "react-scripts": "^4.0.3",
-    "serve": "^11.3.2",
-    "tailwindcss": "^2.1.2",
-    "testcafe": "^1.14.0",
-    "typescript": "^4.2.4",
-    "zlib": "^1.0.5"
-  },
-  "scripts": {
-    "build": "cross-env NODE_ENV=production npm-run-all -s build:css build:js && cp ./_headers.${CONTEXT:-production} ./build/_headers",
-    "build:css": "postcss src/tailwind.css -o src/index.css",
-    "build:js": "react-scripts build",
-    "commit": "git-cz",
-    "commit:retry": "npm run commit -- --retry",
-    "eject": "react-scripts eject",
-    "integration": "testcafe chrome integration/**/*.spec.ts --ts-config-path ./tsconfig.testcafe.json",
-    "integration:headless": "testcafe chrome:headless integration/**/*.spec.ts --ts-config-path ./tsconfig.testcafe.json --app \"serve ./build --listen 3000 --single\" --app-init-delay 5000",
-    "lint": "eslint . --ext .ts,.tsx --max-warnings 0",
-    "lint:fix": "npm run lint -- --fix",
-    "monitoring": "testcafe chrome:headless monitoring/**/*.spec.ts --ts-config-path ./tsconfig.testcafe.json",
-    "start": "npm-run-all -p start:*",
-    "start:css": "postcss src/tailwind.css -o src/index.css --watch",
-    "start:js": "sleep 2 && react-scripts start",
-    "storybook": "start-storybook -p 9009 -s public",
-    "storybook:build": "npm run build:css && build-storybook -s public",
-    "test": "react-scripts test --passWithNoTests"
-  },
-  "config": {
-    "commitizen": {
-      "path": "node_modules/@commitlint/prompt"
-    }
-  },
-  "eslintConfig": {
-    "parser": "@typescript-eslint/parser",
-    "env": {
-      "browser": true,
-      "jest": true
-    },
-    "extends": [
-      "plugin:react/recommended",
-      "plugin:prettier/recommended",
-      "plugin:import/typescript",
-      "plugin:testing-library/react",
-      "plugin:@typescript-eslint/recommended"
-    ],
-    "parserOptions": {
-      "project": "./tsconfig.json"
-    },
-    "plugins": [
-      "import",
-      "react",
-      "@typescript-eslint",
-      "react-hooks",
-      "testing-library",
-      "@emotion"
-    ],
-    "rules": {
-      "@typescript-eslint/explicit-function-return-type": "off",
-      "@typescript-eslint/no-explicit-any": 0,
-      "@typescript-eslint/explicit-member-accessibility": 0,
-      "@typescript-eslint/no-use-before-define": 0,
-      "array-callback-return": "warn",
-      "import/no-default-export": "error",
-      "import/no-unresolved": 2,
-      "import/order": [
-        "error",
-        {
-          "alphabetize": {
-            "order": "asc"
-          }
-        }
-      ],
-      "jest/no-hooks": 0,
-      "no-unused-vars": "off",
-      "@typescript-eslint/no-unused-vars": [
-        "error",
-        {
-          "argsIgnorePattern": "^_"
-        }
-      ],
-      "react/no-unescaped-entities": [
-        "error",
-        {
-          "forbid": [
-            ">",
-            "}",
-            "\""
-          ]
-        }
-      ],
-      "react/prop-types": "off",
-      "react/self-closing-comp": "error",
-      "react-hooks/exhaustive-deps": "error",
-      "react-hooks/rules-of-hooks": "error",
-      "@emotion/pkg-renaming": "error"
-    },
-    "overrides": [
-      {
-        "files": [
-          "./**/*.js"
-        ],
-        "rules": {
-          "@typescript-eslint/no-var-requires": "off"
-        }
-      },
-      {
-        "files": [
-          "./**/*.stories.tsx"
-        ],
-        "rules": {
-          "import/no-default-export": "off",
-          "@typescript-eslint/explicit-function-return-type": "off"
-        }
-      },
-      {
-        "files": [
-          "*.test.ts",
-          "*.test.tsx"
-        ],
-        "extends": [
-          "plugin:jest/all"
-        ],
-        "rules": {
-          "jest/prefer-expect-assertions": "off"
-        }
-      },
-      {
-        "files": [
-          "*.spec.ts",
-          "*.spec.tsx"
-        ],
-        "plugins": [
-          "testcafe"
-        ],
-        "extends": "plugin:testcafe/recommended"
-      }
-    ]
-  },
-  "prettier": {
-    "printWidth": 120,
-    "endOfLine": "auto"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+    "@types/node": "17.0.21",
+    "@types/react": "17.0.39",
+    "eslint": "8.9.0",
+    "eslint-config-next": "12.1.0",
+    "typescript": "4.5.5"
   }
 }

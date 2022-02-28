@@ -60,12 +60,12 @@ test("Status check should reflect error correctly", async (t) => {
   await t.click(Selector("[data-testid='auth-button']"));
 
   // wait to be logged in
-  await Selector("[data-testid='header-user-icon']");
+  await Selector("[data-testid='header-user-icon']").with({ visibilityCheck: true })();
 
   await t.navigateTo("https://infura.io/dashboard/ethereum").addRequestHooks(statsLogger);
 
   // wait to see the create project button
-  await Selector("[data-testid='create-project']");
+  await Selector("[data-testid='create-project']").with({ visibilityCheck: true })();
 
   const requestCount = await getRequestCount(statsLogger);
   const maximumRequest = 1000000;

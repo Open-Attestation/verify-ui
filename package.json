@@ -25,7 +25,6 @@
     "@emotion/eslint-plugin": "^11.2.0",
     "@ls-age/commitlint-circle": "^1.0.0",
     "@storybook/addon-actions": "^6.2.0",
-    "@storybook/addon-info": "^5.3.21",
     "@storybook/addon-knobs": "^6.2.9",
     "@storybook/addon-links": "^6.2.9",
     "@storybook/addons": "^6.2.9",

@@ -22,7 +22,7 @@
   "devDependencies": {
     "@commitlint/cli": "^12.1.1",
     "@commitlint/config-conventional": "^12.1.1",
-    "@commitlint/prompt": "^12.1.1",
+    "@commitlint/prompt": "^14.2.0",
     "@emotion/eslint-plugin": "^11.2.0",
     "@ls-age/commitlint-circle": "^1.0.0",
     "@storybook/addon-actions": "^6.2.0",

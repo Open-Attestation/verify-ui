@@ -46,15 +46,15 @@ const Home: NextPage = () => {
         <div className="max-w-xl flex flex-col items-start gap-5">
           <Heading level="h1">How we can help</Heading>
           <p>
-            When an official certificate is issued by the government, a unique digital code is tagged to it. This code,
-            together with condensed information from the certificate, is stored on the blockchain.
+            {`When an official certificate is issued by the government, a unique digital code is tagged to it. This code,
+            together with condensed information from the certificate, is stored on the blockchain.`}
           </p>
           <p>
-            When you open the certificate on this site, its contents will be compared with what was stored on the
-            blockchain.
+            {`When you open the certificate on this site, its contents will be compared with what was stored on the
+            blockchain.`}
           </p>
-          <p>We'll check if the contents match and if the certificate comes from a recognised government body.</p>
-          <p>This way, you'll know if the certificate is valid when you try to view it.</p>
+          <p>{`We'll check if the contents match and if the certificate comes from a recognised government body.`}</p>
+          <p>{`This way, you'll know if the certificate is valid when you try to view it.`}</p>
           <InternalButton href="/verify">Verify</InternalButton>
         </div>
         <div className="flex-auto max-w-lg">

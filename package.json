@@ -11,6 +11,7 @@
     "@govtechsg/oa-verify": "^7.4.3",
     "@govtechsg/open-attestation": "^5.2.2",
     "isomorphic-fetch": "^3.0.0",
+    "npm-force-resolutions": "0.0.10",
     "query-string": "^7.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -69,6 +70,7 @@
     "zlib": "^1.0.5"
   },
   "scripts": {
+    "preinstall": "npx npm-force-resolutions",
     "build": "cross-env NODE_ENV=production npm-run-all -s build:css build:js && cp ./_headers.${CONTEXT:-production} ./build/_headers",
     "build:css": "postcss src/tailwind.css -o src/index.css",
     "build:js": "react-scripts build",
@@ -213,5 +215,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "resolutions": {
+    "immer": "9.0.6"
   }
 }

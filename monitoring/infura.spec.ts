@@ -14,7 +14,7 @@ export const getBody = async (body: Buffer): Promise<string> =>
   });
 
 const statsLogger = RequestLogger(
-  { url: "https://infura.io/api/stats", method: "post" },
+  { url: "https://infura.io/api/stats/request-volume", method: "post" },
   {
     logResponseBody: true,
   }
@@ -32,9 +32,9 @@ const getRequestCount = async (requestLogger: RequestLogger) => {
       const parsedBody = JSON.parse(Buffer.isBuffer(body) ? await getBody(body) : body);
       const time = parsedBody?.data?.[0]?.query?.time;
       // there are multiple stats call. We only want the one for the past 24h
-      if (time?.from === "14d" && time?.tick === "d") {
+      if (time?.from === "24h" && time?.tick === "h") {
         const results = parsedBody.data[0].result;
-        return results[results.length - 1].value;
+        return results.reduce((acc: any, cur: any) => acc + cur.value, 0);
       }
     }
     await sleep(1000);
@@ -59,13 +59,11 @@ test("Status check should reflect error correctly", async (t) => {
   await t.typeText(Selector("[data-testid='field_password']"), process.env.INFURA_PASSWORD ?? "");
   await t.click(Selector("[data-testid='auth-button']"));
 
-  // wait to be logged in
-  await Selector("[data-testid='header-user-icon']");
-
-  await t.navigateTo("https://infura.io/dashboard/ethereum").addRequestHooks(statsLogger);
-
   // wait to see the create project button
-  await Selector("[data-testid='create-project']");
+  await Selector("[data-testid='create-project']").with({ visibilityCheck: true })();
+
+  // go to verify.gov.sg project
+  await t.click(Selector("p").withText("verify.gov.sg")).addRequestHooks(statsLogger);
 
   const requestCount = await getRequestCount(statsLogger);
   const maximumRequest = 1000000;

@@ -10,8 +10,8 @@ interface StepperTimelineProps extends React.HTMLAttributes<HTMLDivElement> {
   items: StepperItem[];
 }
 
-const genStepperItem = ({ title, description }: StepperItem, isLast: boolean) => (
-  <li className="relative mb-6 sm:mb-0">
+const genStepperItem = ({ title, description }: StepperItem, key: number, isLast: boolean) => (
+  <li key={key} className="relative mb-6 sm:mb-0">
     <div className="flex items-center">
       <div className="flex z-10 justify-center items-center w-8 h-8 rounded-full bg-white text-secondary border-4 border-secondary">
         <FontAwesomeIcon icon={faCheck} />
@@ -29,7 +29,7 @@ const StepperTimeline: React.FC<StepperTimelineProps> = ({ items }) => (
   <ol className="sm:flex">
     {items.map((item, i, arr) => {
       const isLast = arr.length - 1 === i;
-      return genStepperItem(item, isLast);
+      return genStepperItem(item, i, isLast);
     })}
   </ol>
 );

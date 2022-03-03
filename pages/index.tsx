@@ -23,7 +23,7 @@ const Home: NextPage = () => {
           <InternalButton href="/verify">Verify</InternalButton>
         </div>
         <div className="flex-auto max-w-lg">
-          <img src="/images/main.svg" className="w-full h-auto" draggable={false} />
+          <img src="/images/main.svg" alt="Verify document" className="w-full h-auto" draggable={false} />
         </div>
       </Section>
       <Section isBlue>
@@ -39,12 +39,12 @@ const Home: NextPage = () => {
           <InternalButton href="/verify">Verify</InternalButton>
         </div>
         <div className="flex-auto max-w-lg lg:order-1">
-          <img src="/images/how-can-help.svg" className="w-full h-auto" draggable={false} />
+          <img src="/images/how-can-help.svg" alt="How we can help" className="w-full h-auto" draggable={false} />
         </div>
       </Section>
       <Section>
         <div className="max-w-xl flex flex-col items-start gap-5">
-          <Heading level="h1">How we can help</Heading>
+          <Heading level="h1">How it works</Heading>
           <p>
             {`When an official certificate is issued by the government, a unique digital code is tagged to it. This code,
             together with condensed information from the certificate, is stored on the blockchain.`}
@@ -58,7 +58,7 @@ const Home: NextPage = () => {
           <InternalButton href="/verify">Verify</InternalButton>
         </div>
         <div className="flex-auto max-w-lg">
-          <img src="/images/how-it-works.svg" className="w-full h-auto" draggable={false} />
+          <img src="/images/how-it-works.svg" alt="How it works" className="w-full h-auto" draggable={false} />
         </div>
       </Section>
     </Layout>

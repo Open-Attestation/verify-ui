@@ -1,12 +1,12 @@
 import React from "react";
 import Link, { LinkProps } from "next/link";
 
-const buttonClass = `font-bold py-2 px-4
+const buttonClass = `btn hover:text-white inline-block
 text-white bg-primary hover:bg-primary-dark
 rounded-xl focus:ring
 transition-colors`;
 
-const invertedButtonClass = `font-bold py-2 px-4
+const invertedButtonClass = `btn block
 text-primary hover:text-white hover:bg-primary
 rounded-xl border-2 border-primary focus:ring
 transition-colors`;

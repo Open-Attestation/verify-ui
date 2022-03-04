@@ -1,7 +1,20 @@
 const Masthead: React.FC = () => {
   return (
     <header className="bg-gray-100">
-      <div className="container py-1 text-gray-500 text-center text-sm">TODO: Add sgds masthead</div>
+      <div className="container">
+        <div className="flex flex-wrap py-0.5">
+          <a className="no-underline text-black hover:text-black cursor-pointer">
+            <img
+              src="/images/crest.svg"
+              alt="Singapore lion head symbol"
+              width="14"
+              height="14"
+              className="inline-block align-middle"
+            />
+            <span className="text-sm pl-2">A Singapore Government Agency Website</span>
+          </a>
+        </div>
+      </div>
     </header>
   );
 };

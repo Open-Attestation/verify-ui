@@ -2,7 +2,7 @@ import { DefaultSeoProps } from "next-seo";
 
 const isProduction = process.env.NODE_ENV === "production";
 const SITE_URL = isProduction
-  ? process.env.siteUrl // See "next.config.js"
+  ? process.env.SITE_URL // See "next.config.js"
   : "http://localhost:3000";
 
 const defaultSeo: DefaultSeoProps = {

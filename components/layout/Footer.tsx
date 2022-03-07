@@ -5,7 +5,7 @@ const Footer: React.FC = () => {
   return (
     <footer className="bg-white">
       <div className="h-px w-full bg-gray-200" />
-      <section className="container pt-12 pb-8 ">
+      <section className="container pt-12 pb-8">
         <h3 className="text-3xl text-gray-600 font-roboto-bold">Verify</h3>
         <p className="text-gray-600 opacity-60 max-w-xl mt-1">
           Verify provides an easy way to check the validity of digital documents with an .oa extension, that have been
@@ -20,7 +20,7 @@ const Footer: React.FC = () => {
           </Link>
           <a
             className="mr-8 xs:inline-block block text-gray-500 hover:text-gray-600"
-            href="mailto:support@notarise.gov.sg"
+            href="OpenAttestation_Support@tech.gov.sg"
           >
             Contact Us
           </a>

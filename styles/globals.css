@@ -104,8 +104,8 @@
 @tailwind utilities;
 
 html {
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
 
 body {
@@ -171,40 +171,6 @@ a {
 
 a:hover {
   @apply text-primary;
-}
-
-ol,
-ul {
-  padding-left: 20px;
-}
-
-.ol-nested {
-  list-style: none;
-  counter-reset: item;
-  padding-left: 24px;
-}
-
-.ol-nested li {
-  position: relative;
-  counter-increment: item;
-}
-
-.ol-nested li:before {
-  content: counters(item, ".") " ";
-  display: inline-block;
-  position: absolute;
-  left: -10px;
-  transform: translateX(-100%);
-  font-size: 16px;
-  line-height: 1.2;
-}
-
-.ol-nested > li > .ol-nested {
-  padding-left: 32px;
-}
-
-.ol-nested > li > .ol-nested > li > .ol-nested {
-  padding-left: 48px;
 }
 
 /* sm */

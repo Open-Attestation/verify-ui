@@ -1,55 +1,82 @@
 import React, { useState, useCallback } from "react";
 import { useDropzone, DropzoneOptions } from "react-dropzone";
+import { validateSchema, v2, v3 } from "@govtechsg/open-attestation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark } from "@fortawesome/free-regular-svg-icons";
 
 import Heading from "@components/text/Heading";
+import { CodedError } from "@utils/coded-error";
 
-const Error = (
+const ErrorMessage = (
   <div className="bg-red-100 px-6 py-4 rounded-lg text-lg">
     <Heading level="h2" className="text-xl font-bold">
       <FontAwesomeIcon className="mr-2" icon={faCircleXmark} />
       File cannot be read
     </Heading>
-    The file uploaded is not a valid Open Attestation file.
+    The uploaded file is not a valid OpenAttestation document.
   </div>
 );
 
 interface DropzoneProps extends React.HTMLAttributes<HTMLElement> {
-  // onDocumentDropped: (document: WrappedDocument<v2.OpenAttestationDocument>) => void;
+  onDocumentDropped?: (wrappedDocument: v2.WrappedDocument | v3.WrappedDocument) => void;
 }
 
-const Dropzone: React.FC<DropzoneProps> = () => {
+const Dropzone: React.FC<DropzoneProps> = ({ onDocumentDropped }) => {
   const [errorState, setErrorState] = useState(false);
 
-  const onDrop: DropzoneOptions["onDrop"] = useCallback(async (files: File[]) => {
-    setErrorState(false);
+  const onDrop: DropzoneOptions["onDrop"] = useCallback(
+    async (files: File[]) => {
+      setErrorState(false);
 
-    const reader = new FileReader();
+      const reader = new FileReader();
 
-    reader.onerror = () => {
-      setErrorState(true);
-      console.error(reader.error);
-    };
+      reader.onerror = () => {
+        setErrorState(true);
+        console.error(reader.error);
+      };
 
-    reader.onload = () => {
-      console.log(reader.result);
-    };
+      reader.onload = () => {
+        try {
+          const { result } = reader;
 
-    reader.readAsText(files[0]);
-  }, []);
+          if (typeof result !== "string") {
+            throw new CodedError(
+              "InvalidDocumentError",
+              "Unable to read file content. Please upload a .OA or .JSON file."
+            );
+          }
+
+          const parsed = JSON.parse(result);
+
+          if (!validateSchema(parsed)) {
+            throw new CodedError(
+              "InvalidDocumentError",
+              "File is not a valid OpenAttestation document. Please upload a .OA or .JSON file."
+            );
+          }
+
+          if (typeof onDocumentDropped === "function") onDocumentDropped(parsed as any);
+        } catch (e) {
+          setErrorState(true);
+          console.error(e);
+        }
+      };
+
+      reader.readAsText(files[0]);
+    },
+    [onDocumentDropped]
+  );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   return (
-    <>
-      <section className="container text-center my-10">
-        <Heading level="h1">Verify Documents</Heading>
-        <p>Drop a government issued certificate</p>
-      </section>
+    <section className="container text-center my-10">
+      <Heading level="h1">Verify Documents</Heading>
+      <p>Drop a government issued certificate</p>
+
       <div
         className={[
-          "container my-10 p-20 border-4 border-dotted rounded-lg bg-white",
+          "my-10 py-20 border-4 border-dotted rounded-lg bg-white",
           isDragActive && "ring-4 ring-primary shadow-xl",
         ]
           .filter(Boolean)
@@ -58,7 +85,7 @@ const Dropzone: React.FC<DropzoneProps> = () => {
       >
         <input {...getInputProps()} />
         <div className="flex flex-col items-center gap-5">
-          {errorState && Error}
+          {errorState && ErrorMessage}
           <img className="max-w-[200px]" src="images/upload-document.svg" alt="Upload document" />
           <Heading level="h2" className="text-xl">
             Drag and drop file here
@@ -71,7 +98,7 @@ const Dropzone: React.FC<DropzoneProps> = () => {
           </button>
         </div>
       </div>
-    </>
+    </section>
   );
 };
 

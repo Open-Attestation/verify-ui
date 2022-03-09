@@ -3,7 +3,7 @@ import type { NextPage } from "next";
 import Layout from "@components/layout/Layout";
 import Heading from "@components/text/Heading";
 import InternalButton from "@components/button/InternalButton";
-import StepperTimeline from "@components/feature/timeline";
+import StepperTimeline from "@components/figure/Timeline";
 
 const Section: React.FC<{ isBlue?: boolean }> = ({ children, isBlue = false }) => (
   <section className={["py-12", isBlue && "bg-background-blue"].filter(Boolean).join(" ")}>
@@ -58,7 +58,12 @@ const Home: NextPage = () => {
           <InternalButton href="/verify">Verify</InternalButton>
         </div>
         <div className="w-3/4 mx-auto md:w-2/3 py-8">
-          <img src="/images/how-it-works.svg" alt="How it works" className="w-full max-w-xl md:ml-auto" draggable={false} />
+          <img
+            src="/images/how-it-works.svg"
+            alt="How it works"
+            className="w-full max-w-xl md:ml-auto"
+            draggable={false}
+          />
         </div>
       </Section>
     </Layout>

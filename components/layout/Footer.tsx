@@ -68,12 +68,13 @@ const Footer: React.FC = () => {
           </Link>
         </div>
         <div className="mt-4 flex justify-between items-end flex-wrap">
-          <div className="flex">
+          <div className="flex gap-4">
             <a href="https://hive.tech.gov.sg" target="_blank" rel="noopener noreferrer" className="flex-none">
               <img src="/images/hive.png" width="96" height="40" alt="Government Digital Services" />
             </a>
-            <p className="text-xs text-gray-600 opacity-60 ml-6">
-              Developed by Government Digital Services <br />A Division of Government Technology Agency Singapore
+            <p className="text-xs text-gray-600 opacity-60">
+              Developed by Government Digital Services
+              <br />A Division of Government Technology Agency Singapore
             </p>
           </div>
           <div className="flex text-gray-600 text-xs flex-wrap mt-4 justify-items-end opacity-60">

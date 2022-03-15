@@ -81,7 +81,7 @@ const Dropzone: React.FC<DropzoneProps> = ({ onDocumentDropped = () => {}, onDoc
 
       reader.readAsText(files[0]);
     },
-    [onDocumentDropped]
+    [onDocumentDropped, onDocumentError]
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });

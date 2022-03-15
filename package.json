@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "postbuild": "cp ./_headers.${CONTEXT:-production} ./.next/_headers",
     "start": "next start",
     "lint": "next lint",
     "test": "jest",

@@ -42,13 +42,14 @@ const Verifier: React.FC<VerifierProps> = ({ wrappedDocument }) => {
 
       if (isValidFragments) {
         setVerificationStatus("VERIFIED");
-        if (utils.isRawV2Document(document)) {
-          setIssuerDomain(document.issuers.map((issuer) => issuer.identityProof?.location).join(","));
-        } else {
-          setIssuerDomain(typeof document.issuer === "object" ? document.issuer.name : document.issuer);
-        }
       } else {
         setVerificationStatus("REJECTED");
+      }
+
+      if (utils.isRawV2Document(document)) {
+        setIssuerDomain(document.issuers.map((issuer) => issuer.identityProof?.location).join(","));
+      } else {
+        setIssuerDomain(typeof document.issuer === "object" ? document.issuer.name : document.issuer);
       }
 
       // 1. Document issue status (Was it issued?)
@@ -77,14 +78,13 @@ const Verifier: React.FC<VerifierProps> = ({ wrappedDocument }) => {
 
   return (
     <section className="container my-10">
-      {verificationStatus === "VERIFIED" && (
+      {issuerDomain && (
         <Heading level="h1" className="text-4xl font-bold break-words">
           Issued by <span className="text-primary">{issuerDomain}</span>
         </Heading>
       )}
 
       <VerificationChecks {...fragmentVerificationStatus} customMessage={customMessage} />
-
       {verificationStatus === "VERIFIED" && <Renderer document={getDataV2OrV3(wrappedDocument)} />}
     </section>
   );

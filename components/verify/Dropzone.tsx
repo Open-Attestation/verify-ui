@@ -1,37 +1,34 @@
-import React, { useState, useCallback } from "react";
+import React, { useCallback } from "react";
 import { useDropzone, DropzoneOptions } from "react-dropzone";
 import { validateSchema, v2, v3 } from "@govtechsg/open-attestation";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleXmark } from "@fortawesome/free-regular-svg-icons";
 
 import Heading from "@components/text/Heading";
 import { CodedError } from "@utils/coded-error";
+import { ErrorProps } from "@components/figure/ErrorMessage";
 
-const ErrorMessage = (
-  <div className="bg-red-100 px-6 py-4 rounded-lg text-lg">
-    <Heading level="h2" className="text-xl font-bold">
-      <FontAwesomeIcon className="mr-2" icon={faCircleXmark} />
-      File cannot be read
-    </Heading>
-    The uploaded file is not a valid OpenAttestation document.
-  </div>
-);
+// const ErrorMessage = (
+//   <div className="bg-red-100 px-6 py-4 rounded-lg text-lg">
+//     <Heading level="h2" className="text-xl font-bold">
+//       <FontAwesomeIcon className="mr-2" icon={faCircleXmark} />
+//       File cannot be read
+//     </Heading>
+//     The uploaded file is not a valid OpenAttestation document.
+//   </div>
+// );
 
 interface DropzoneProps extends React.HTMLAttributes<HTMLElement> {
   onDocumentDropped?: (wrappedDocument: v2.WrappedDocument | v3.WrappedDocument) => void;
+  onDocumentError?: (e: ErrorProps) => void;
 }
 
-const Dropzone: React.FC<DropzoneProps> = ({ onDocumentDropped }) => {
-  const [errorState, setErrorState] = useState(false);
-
+const Dropzone: React.FC<DropzoneProps> = ({ onDocumentDropped = () => {}, onDocumentError = () => {} }) => {
   const onDrop: DropzoneOptions["onDrop"] = useCallback(
     async (files: File[]) => {
-      setErrorState(false);
+      onDocumentError({ type: "NIL" });
 
       const reader = new FileReader();
 
       reader.onerror = () => {
-        setErrorState(true);
         console.error(reader.error);
       };
 
@@ -42,22 +39,42 @@ const Dropzone: React.FC<DropzoneProps> = ({ onDocumentDropped }) => {
           if (typeof result !== "string") {
             throw new CodedError(
               "InvalidDocumentError",
-              "Unable to read file content. Please upload a .OA or .JSON file."
+              `Unable to read file of type: ${typeof result}. The uploaded file is not a valid OpenAttestation document`
             );
           }
 
           const parsed = JSON.parse(result);
 
           if (!validateSchema(parsed)) {
-            throw new CodedError(
-              "InvalidDocumentError",
-              "File is not a valid OpenAttestation document. Please upload a .OA or .JSON file."
-            );
+            throw new CodedError("InvalidDocumentError", "The uploaded file is not a valid OpenAttestation document");
           }
 
-          if (typeof onDocumentDropped === "function") onDocumentDropped(parsed as any);
+          onDocumentDropped(parsed as any);
         } catch (e) {
-          setErrorState(true);
+          if (e instanceof CodedError) {
+            onDocumentError({
+              type: "ERROR",
+              message: (
+                <div className="text-center">
+                  {e.type}: {[e.message, e.details].filter(Boolean).join(" - ")}
+                </div>
+              ),
+            });
+          } else if (e instanceof SyntaxError) {
+            onDocumentError({
+              type: "ERROR",
+              message: (
+                <div className="text-center">{e.name}: The uploaded file is not a valid OpenAttestation document</div>
+              ),
+            });
+          } else {
+            onDocumentError({
+              type: "ERROR",
+              message: (
+                <div className="text-center">{e instanceof Error ? `${e.name}: ${e.message}` : JSON.stringify(e)}</div>
+              ),
+            });
+          }
           console.error(e);
         }
       };
@@ -85,7 +102,6 @@ const Dropzone: React.FC<DropzoneProps> = ({ onDocumentDropped }) => {
       >
         <input {...getInputProps()} />
         <div className="flex flex-col items-center gap-5">
-          {errorState && ErrorMessage}
           <img className="max-w-[200px]" src="images/upload-document.svg" alt="Upload document" />
           <Heading level="h2" className="text-xl">
             Drag and drop file here

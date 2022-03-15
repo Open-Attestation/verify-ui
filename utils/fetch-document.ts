@@ -26,22 +26,24 @@ export const getQueryAndHash = (encodedQuery: string, encodedHash: string | unde
     decodedQ = decodeAndParseUri(encodedQuery);
     decodedHash = String.guard(encodedHash) ? decodeAndParseUri(encodedHash) : undefined;
   } catch (e) {
-    throw new CodedError(
-      "QueryParamsError",
-      "Unable to parse query/hash parameters",
-      e instanceof Error ? e.message : JSON.stringify(e)
-    );
+    console.error(e);
+    throw new CodedError("QueryParamsError", "The URL is malformed so the document cannot be loaded");
   }
 
   try {
     ActionUrlQueryRecord.check(decodedQ);
     ActionUrlAnchorRecord.check(decodedHash);
   } catch (e) {
-    throw new CodedError(
-      "QueryParamsError",
-      e instanceof ValidationError ? JSON.stringify(e.details) : "Unable to parse query/hash parameters",
-      e instanceof Error ? e.message : JSON.stringify(e)
-    );
+    const msg = "The provided action/anchor is unsupported";
+
+    const details =
+      e instanceof ValidationError
+        ? Object.entries(e.details || {})
+            .map(([key, value]) => `"${key}": ${value}`)
+            .join(", ")
+        : undefined;
+
+    throw new CodedError("QueryParamsError", msg, details);
   }
 
   return { decodedQ, decodedHash };
@@ -61,18 +63,24 @@ export const fetchAndDecryptDocument = async (uri: string, key?: string) => {
 };
 
 const decryptDoc = (doc: any, key?: string) => {
+  // If OpenCerts, opencerts-function returns the document in a nested document object
+  doc = doc.document || doc;
+
   // If encrypted document
   if (EncryptionDocumentRecord.guard(doc)) {
     // If key is missing, throw error
     if (!key) {
-      throw new CodedError(
-        "DecryptionError",
-        "An encrypted document has been fetched without specifying the decrypting key in the query parameters."
-      );
+      throw new CodedError("DecryptionError", `Unable to decrypt certificate with key=${key} and type=${doc.type}`);
     }
 
     // Key is provided, decrypt it
-    return JSON.parse(decryptString({ ...doc, key })) as v2.WrappedDocument | v3.WrappedDocument;
+    try {
+      return JSON.parse(decryptString({ ...doc, key })) as v2.WrappedDocument | v3.WrappedDocument;
+    } catch (e) {
+      if (e instanceof Error) {
+        throw new CodedError("DecryptionError", e.message);
+      }
+    }
   }
 
   // If invalid OpenAttestation document, throw error

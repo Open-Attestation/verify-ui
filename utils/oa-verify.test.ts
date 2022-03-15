@@ -1,6 +1,7 @@
 import { isValid, verificationBuilder } from "@govtechsg/oa-verify";
-import { SchemaId, v2, v3 } from "@govtechsg/open-attestation";
-import { isWhitelisted, verifyAllowedIssuers } from "./issuers-verifier";
+import { SchemaId, v2 } from "@govtechsg/open-attestation";
+import { isWhitelisted, verifyAllowedIssuers } from "./oa-verify";
+
 const NETWORK_NAME = process.env.REACT_APP_NETWORK_NAME || "ropsten";
 const verify = verificationBuilder([verifyAllowedIssuers], { network: NETWORK_NAME });
 
@@ -248,28 +249,9 @@ describe("verifyAllowedIssuers", () => {
     const fragments = await verify({
       version: SchemaId.v3,
       data: {
-        name: "name",
-        reference: "reference",
-        validFrom: "validFrom",
-        template: {
-          name: "name",
-          type: v3.TemplateType.EmbeddedRenderer,
-          url: "url",
-        },
-        issuer: {
-          name: "name",
-          id: "id",
-          identityProof: {
-            type: v3.IdentityProofType.DNSTxt,
-            location: "any",
-          },
-        },
-        proof: {
-          method: v3.Method.DocumentStore,
-          type: v3.ProofType.OpenAttestationSignature2018,
-          value: "value",
-        },
+        issuers: [],
       },
+      proof: [],
       signature: v2DocumentShared.signature,
     });
 

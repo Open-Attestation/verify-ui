@@ -1,19 +1,21 @@
 import axios from "axios";
 
 import { CodedError } from "@utils/coded-error";
-import { StatusProps } from "@components/figure/Status";
+import { ErrorProps } from "@components/figure/ErrorMessage";
 
 /**
  * Error handler for the Verify page (pages/verify.tsx)
  * @param e
  */
-export const verifyErrorHandler = (e: unknown): StatusProps => {
+export const verifyErrorHandler = (e: unknown): ErrorProps => {
   if (e instanceof CodedError) {
     return {
       type: "ERROR",
       message: (
         <div className="text-center">
-          ${e.type}: ${[e.message, e.details].join(" - ")}
+          {e.type}: {e.message}
+          {e.details && <br />}
+          {e.details && <span className="break-words">{e.details}</span>}
         </div>
       ),
     };
@@ -33,6 +35,15 @@ export const verifyErrorHandler = (e: unknown): StatusProps => {
           {e.message}: Unable to fetch document from
           <br />
           <span className="text-xs break-all">{e.config.url}</span>
+        </div>
+      ),
+    };
+  } else if (e instanceof Error) {
+    return {
+      type: "ERROR",
+      message: (
+        <div className="text-center">
+          {e.name}: {e.message}
         </div>
       ),
     };

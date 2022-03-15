@@ -63,17 +63,18 @@ const Renderer: React.FC<RendererProps> = ({ document }) => {
   return (
     <article className="my-10">
       <nav className="flex gap-4 gap-y-6 justify-between flex-wrap">
-        <div className="flex gap-2 flex-wrap print:opacity-50">
+        <ul className="flex gap-2 flex-wrap print:opacity-50">
           {templates?.map((t, i) => (
-            <button
+            <li
+              data-testid="renderer-tab"
               key={i}
               onClick={handleTemplateSelection(t)}
               className="p-4 text-lg select-none font-bold border-t-4 border-primary shadow-lg bg-white hover:bg-primary hover:text-white transition-colors"
             >
               {t.label}
-            </button>
+            </li>
           ))}
-        </div>
+        </ul>
         <div className="ml-auto">
           <button
             className="my-2 p-4 rounded-lg shadow-lg bg-white print:ring-8 print:ring-orange-500 text-primary hover:bg-primary hover:text-white transition-colors"

@@ -37,7 +37,7 @@ const VerificationChecks: React.FC<VerificationChecksProps & CustomMessageProps>
   ISSUER_IDENTITY,
   customMessage,
 }) => (
-  <ol className="list-none leading-relaxed">
+  <ol data-testid="verification-checks" className="list-none leading-relaxed">
     <li className="flex gap-2 items-center">
       {genIcon(DOCUMENT_STATUS)}
       {genMessage(DOCUMENT_STATUS, {

@@ -4,28 +4,28 @@ workflows:
   commit:
     jobs:
       - build
-  # monitoring_hourly:
-  #   triggers:
-  #     - schedule:
-  #         cron: "0 * * * *"
-  #         filters:
-  #           branches:
-  #             only:
-  #               - master
-  #   jobs:
-  #     - monitoring
+  monitoring_hourly:
+    triggers:
+      - schedule:
+          cron: "0 * * * *"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - monitoring
 jobs:
-  # monitoring:
-  #   docker:
-  #     - image: "cimg/node:14.19-browsers"
-  #   steps:
-  #     - checkout
-  #     - run:
-  #         name: install
-  #         command: npm ci
-  #     - run:
-  #         name: monitor
-  #         command: npm run monitoring
+  monitoring:
+    docker:
+      - image: "cimg/node:14.19-browsers"
+    steps:
+      - checkout
+      - run:
+          name: install
+          command: npm ci
+      - run:
+          name: monitor
+          command: npm run monitoring
   build:
     docker:
       - image: "cimg/node:14.19-browsers"
@@ -40,13 +40,13 @@ jobs:
       - run:
           name: lint
           command: npm run lint
-      # - run:
-      #     name: test
-      #     command: npm run test
-      # - run:
-      #     name: build
-      #     # Critical dependency issue with react-pdf - https://github.com/wojtekmaj/react-pdf/issues/280
-      #     command: CI=false npm run build
-      # - run:
-      #     name: integration
-      #     command: npm run integration:headless
+      - run:
+          name: test
+          command: npm run test
+      - run:
+          name: build
+          # Critical dependency issue with react-pdf - https://github.com/wojtekmaj/react-pdf/issues/280
+          command: CI=false npm run build
+      - run:
+          name: integration
+          command: npm run integration:headless

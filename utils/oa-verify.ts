@@ -1,5 +1,5 @@
 import {
-  CodedError,
+  CodedError as VerifyCodedError,
   createResolver,
   ErrorVerificationFragment,
   InvalidVerificationFragment,
@@ -11,6 +11,7 @@ import {
   Verifier,
 } from "@govtechsg/oa-verify";
 import { getData, utils } from "@govtechsg/open-attestation";
+import { isVerifyCodedError } from "@types";
 import { providers } from "ethers";
 
 type AllowedIssuersValidFragment = ValidVerificationFragment<Array<string | undefined>>;
@@ -79,7 +80,7 @@ const verifyMethod: VerifierType["verify"] = async (document) => {
       };
     }
     // TODO: support for V3 is available now
-    throw new CodedError(
+    throw new VerifyCodedError(
       "Verify does not support v3 document",
       VerifyAllowedIssuersCode.UNSUPPORTED_V3_DOCUMENT,
       VerifyAllowedIssuersCode[VerifyAllowedIssuersCode.UNSUPPORTED_V3_DOCUMENT]
@@ -90,10 +91,11 @@ const verifyMethod: VerifierType["verify"] = async (document) => {
       type,
       data: e,
       reason: {
-        code: e instanceof CodedError ? e.code : VerifyAllowedIssuersCode.UNEXPECTED_ERROR,
-        codeString:
-          e instanceof CodedError ? e.codeString : VerifyAllowedIssuersCode[VerifyAllowedIssuersCode.UNEXPECTED_ERROR],
-        message: e instanceof CodedError ? e.message : "",
+        code: isVerifyCodedError(e) ? e.code : VerifyAllowedIssuersCode.UNEXPECTED_ERROR,
+        codeString: isVerifyCodedError(e)
+          ? e.codeString
+          : VerifyAllowedIssuersCode[VerifyAllowedIssuersCode.UNEXPECTED_ERROR],
+        message: isVerifyCodedError(e) ? e.message : "",
       },
       status: "ERROR" as const,
     };

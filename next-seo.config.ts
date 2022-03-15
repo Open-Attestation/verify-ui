@@ -1,9 +1,6 @@
 import { DefaultSeoProps } from "next-seo";
 
-const isProduction = process.env.NODE_ENV === "production";
-const SITE_URL = isProduction
-  ? process.env.SITE_URL // See "next.config.js"
-  : "http://localhost:3000";
+const SITE_URL = process.env.SITE_URL; // See "next.config.js"
 
 const defaultSeo: DefaultSeoProps = {
   title: `Verify.gov.sg`,

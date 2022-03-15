@@ -12,7 +12,6 @@ const nextConfig = {
   reactStrictMode: true,
   env: {
     SITE_URL,
-    WOGAA_ENV: process.env.WOGAA_ENV,
   },
 };
 

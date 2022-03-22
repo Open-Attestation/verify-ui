@@ -7,13 +7,15 @@ import { NextSeo } from "next-seo";
 
 import Layout from "@components/layout/Layout";
 
+const SITE_URL = process.env.SITE_URL; // See "next.config.js"
+
 const MDXPages = ({ mdxSource }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const title = mdxSource.frontmatter?.title;
 
   return (
     <Layout className="container py-12">
       <NextSeo title={title} />
-      <MDXRemote {...mdxSource} />
+      <MDXRemote {...mdxSource} scope={{ SITE_URL }} />
     </Layout>
   );
 };

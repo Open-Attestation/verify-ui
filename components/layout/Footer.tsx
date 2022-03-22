@@ -63,7 +63,7 @@ const Footer: React.FC = () => {
           <Link href="/privacy-policy">
             <a className="mr-10 xs:inline-block block text-gray-500 hover:text-gray-600">Privacy Statement</a>
           </Link>
-          <Link href="/terms-of-use">
+          <Link href="/terms">
             <a className="mr-10 xs:inline-block block  text-gray-500 hover:text-gray-600">Terms of Use</a>
           </Link>
         </div>

@@ -176,12 +176,11 @@ a:hover {
 /* [Start] All orderered lists with .nested-list parent */
 .nested-list ol {
   counter-reset: item;
-  border-spacing: 0 10px;
+  border-spacing: 0 5px;
   @apply table;
 }
 
 .nested-list li {
-  border-spacing: 0 5px;
   /* Align text to the right */
   @apply table-row;
 }

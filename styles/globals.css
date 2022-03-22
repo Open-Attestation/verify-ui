@@ -173,6 +173,28 @@ a:hover {
   @apply text-primary;
 }
 
+/* [Start] All orderered lists with .nested-list parent */
+.nested-list ol {
+  counter-reset: item;
+  border-spacing: 0 10px;
+  @apply table;
+}
+
+.nested-list li {
+  border-spacing: 0 5px;
+  /* Align text to the right */
+  @apply table-row;
+}
+
+.nested-list li:before {
+  /* Nested numbering (e.g. 1.1, 1.2, etc. */
+  content: counters(item, ".") ". ";
+  counter-increment: item;
+  /* Align numbering to the left */
+  @apply table-cell pr-2;
+}
+/* [End] All orderered lists with .nested-list parent */
+
 /* sm */
 @media (min-width: 640px) {
 }

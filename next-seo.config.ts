@@ -3,7 +3,8 @@ import { DefaultSeoProps } from "next-seo";
 const SITE_URL = process.env.SITE_URL; // See "next.config.js"
 
 const defaultSeo: DefaultSeoProps = {
-  title: `Verify.gov.sg`,
+  defaultTitle: `Verify.gov.sg`,
+  titleTemplate: `%s | Verify.gov.sg`,
   description: `We help you to verify the certificates you have of anyone from any government agencies. All in one place.`,
   openGraph: {
     type: `website`,

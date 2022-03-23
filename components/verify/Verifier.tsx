@@ -4,10 +4,10 @@ import { isValid } from "@govtechsg/oa-verify";
 
 import { VerificationStatus } from "@types";
 import { getDataV2OrV3 } from "@utils/oa-details";
-import { verify } from "@utils/oa-verify";
 import Heading from "@components/text/Heading";
 import Renderer from "@components/figure/Renderer";
 import VerificationChecks, { VerificationChecksProps, CustomMessageProps } from "@components/figure/VerificationChecks";
+import { apiVerifyWithFallback } from "@utils/oa-api-verify";
 import { isHealthCert } from "@utils/notarise-healthcerts";
 
 const defaultFragVeriStatus: VerificationChecksProps = {
@@ -36,7 +36,7 @@ const Verifier: React.FC<VerifierProps> = ({ wrappedDocument }) => {
       setVerificationStatus("PENDING");
       setFragmentVerificationStatus(defaultFragVeriStatus);
 
-      const fragments = await verify(wrappedDocument);
+      const fragments = await apiVerifyWithFallback(wrappedDocument);
       const isValidFragments = isValid(fragments);
       const document = getDataV2OrV3(wrappedDocument);
 

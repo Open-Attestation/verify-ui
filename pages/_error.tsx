@@ -1,8 +1,8 @@
-import { NextPage, GetStaticProps } from "next";
+import { NextPage, GetServerSideProps } from "next";
 
 const NotFound: NextPage = () => null;
 
-export const getStaticProps: GetStaticProps = () => ({
+export const getServerSideProps: GetServerSideProps = async () => ({
   redirect: {
     destination: "/",
     permanent: false,

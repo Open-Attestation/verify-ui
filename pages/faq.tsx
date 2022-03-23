@@ -14,7 +14,7 @@ const FAQ: NextPage = () => {
     <Layout className="container py-12 min-h-[75vh] bg-[length:450px] bg-right-top bg-no-repeat md:bg-[url('/images/main-faq.svg')]">
       <NextSeo title="FAQ" />
       <h2>Questions? Look here.</h2>
-      <div className="grid gap-2 my-5 md:max-w-lg">
+      <div className="grid gap-2 my-5 md:max-w-4xl">
         {faqs.map((faq, i) => (
           <Accordion key={i} title={faq.question} content={faq.answer} />
         ))}

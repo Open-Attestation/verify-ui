@@ -115,9 +115,9 @@ describe("sendHealthCertVerifiedEvent and sendHealthCertErrorEvent", () => {
     ];
     const spy = jest.spyOn(ReactGA, "event");
     sendHealthCertErrorEvent(data, fragments);
-    const message: string = JSON.stringify(
+    const message = JSON.stringify(
       fragments.filter(({ status }) => status === "ERROR" || status === "INVALID")
-    );
+    ).replace(/[\[\]"]/g, "");
     expect(spy).toHaveBeenCalledWith(EVENT_CATEGORY.ERROR, {
       document_id: data.id,
       document_type: HEALTHCERT_TYPE.PDT,

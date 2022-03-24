@@ -65,7 +65,10 @@ export const sendHealthCertErrorEvent = (data: OpenAttestationDocument, fragment
   if (!isHealthCert(data)) {
     return;
   }
-  const message: string = JSON.stringify(fragments.filter(({ status }) => status === "ERROR" || status === "INVALID"));
+  const message = JSON.stringify(fragments.filter(({ status }) => status === "ERROR" || status === "INVALID")).replace(
+    /[\[\]"]/g,
+    ""
+  );
   try {
     ReactGA.event(EVENT_CATEGORY.ERROR, {
       document_id: data.id ?? "",

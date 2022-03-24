@@ -9,6 +9,7 @@ import Renderer from "@components/figure/Renderer";
 import VerificationChecks, { VerificationChecksProps, CustomMessageProps } from "@components/figure/VerificationChecks";
 import { apiVerifyWithFallback } from "@utils/oa-api-verify";
 import { isHealthCert } from "@utils/notarise-healthcerts";
+import { sendHealthCertVerifiedEvent, sendHealthCertErrorEvent } from "@utils/google-analytics";
 
 const defaultFragVeriStatus: VerificationChecksProps = {
   DOCUMENT_STATUS: "PENDING",
@@ -42,8 +43,10 @@ const Verifier: React.FC<VerifierProps> = ({ wrappedDocument }) => {
 
       if (isValidFragments) {
         setVerificationStatus("VERIFIED");
+        sendHealthCertVerifiedEvent(document);
       } else {
         setVerificationStatus("REJECTED");
+        sendHealthCertErrorEvent(document, fragments);
       }
 
       if (utils.isRawV2Document(document)) {

@@ -22,7 +22,7 @@ export const apiVerifyWithFallback: typeof verify = async (document, promisesCal
 
     return data.fragments;
   } catch (e) {
-    console.error(`Unsuccessful response from ${API_VERIFY_URL} - Falling back to oa-verify`, e);
+    console.error(`Unsuccessful response from ${API_VERIFY_URL} - Falling back to oa-verify`, "-", e);
     return await verify(document, promisesCallback);
   }
 };

@@ -7,3 +7,14 @@ export const isPDT = (doc: any): boolean => doc?.name === "HealthCert" || doc?.v
 export const isHealthCert = (document: OpenAttestationDocument): boolean => {
   return isVac(document) || isPDT(document);
 };
+
+export const isSpmTransientStorage = (url = "") => {
+  const spmTransientStorages = [
+    "https://api-spm-vac.storage.staging.notarise.io",
+    "https://api-spm-vac.storage.aws.notarise.gov.sg",
+    "https://api-spm-recov.storage.staging.notarise.io",
+    "https://api-spm-recov.storage.aws.notarise.gov.sg",
+  ];
+
+  return spmTransientStorages.some((prefix) => url.startsWith(prefix));
+};

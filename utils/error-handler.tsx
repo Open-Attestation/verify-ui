@@ -1,6 +1,7 @@
 import axios from "axios";
 
 import { CodedError } from "@utils/coded-error";
+import { isSpmTransientStorage } from "@utils/notarise-healthcerts";
 import { ErrorProps } from "@components/figure/ErrorMessage";
 
 /**
@@ -20,7 +21,6 @@ export const verifyErrorHandler = (e: unknown): ErrorProps => {
       ),
     };
   } else if (axios.isAxiosError(e)) {
-    const isSpmTransientStorage = (url = "") => url?.startsWith("https://api-spm-vac.storage.aws.notarise.gov.sg");
     return {
       type: "ERROR",
       message: isSpmTransientStorage(e.config.url) ? (

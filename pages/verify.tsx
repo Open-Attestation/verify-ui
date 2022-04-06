@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { v2, v3 } from "@govtechsg/open-attestation";
 
 import Layout from "@components/layout/Layout";
-import StatusZone, { ErrorProps } from "@components/figure/ErrorMessage";
+import Status, { StatusProps } from "@components/figure/StatusMessage";
 import Dropzone from "@components/verify/Dropzone";
 import Verifier from "@components/verify/Verifier";
 import { fetchAndDecryptDocument, getQueryAndHash } from "@utils/fetch-document";
@@ -12,7 +12,7 @@ import { verifyErrorHandler } from "@utils/error-handler";
 
 const Verify: NextPage = () => {
   const router = useRouter();
-  const [status, setStatus] = useState<ErrorProps>({ type: "NIL" });
+  const [status, setStatus] = useState<StatusProps>({ type: "NIL" });
   const [document, setDocument] = useState<v2.WrappedDocument | v3.WrappedDocument | null>(null);
 
   /* Check for universal action in URL */
@@ -46,14 +46,14 @@ const Verify: NextPage = () => {
     setDocument(wrappedDocument);
   }, []);
 
-  const handleDocumentError = useCallback((e: ErrorProps) => {
+  const handleDocumentError = useCallback((e: StatusProps) => {
     setStatus(e);
     setDocument(null);
   }, []);
 
   return (
     <Layout>
-      {<StatusZone {...status} />}
+      {<Status {...status} />}
       {document === null && (
         <Dropzone onDocumentDropped={handleDocumentDropped} onDocumentError={handleDocumentError} />
       )}

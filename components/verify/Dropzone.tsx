@@ -4,7 +4,7 @@ import { validateSchema, v2, v3 } from "@govtechsg/open-attestation";
 
 import Heading from "@components/text/Heading";
 import { CodedError } from "@utils/coded-error";
-import { ErrorProps } from "@components/figure/ErrorMessage";
+import { StatusProps } from "@components/figure/StatusMessage";
 
 // const ErrorMessage = (
 //   <div className="bg-red-100 px-6 py-4 rounded-lg text-lg">
@@ -18,7 +18,7 @@ import { ErrorProps } from "@components/figure/ErrorMessage";
 
 interface DropzoneProps extends React.HTMLAttributes<HTMLElement> {
   onDocumentDropped?: (wrappedDocument: v2.WrappedDocument | v3.WrappedDocument) => void;
-  onDocumentError?: (e: ErrorProps) => void;
+  onDocumentError?: (e: StatusProps) => void;
 }
 
 const Dropzone: React.FC<DropzoneProps> = ({ onDocumentDropped = () => {}, onDocumentError = () => {} }) => {

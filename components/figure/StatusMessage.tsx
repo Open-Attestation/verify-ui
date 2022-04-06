@@ -1,4 +1,4 @@
-export interface ErrorProps {
+export interface StatusProps {
   type: "NIL" | "LOADING" | "ERROR";
   message?: JSX.Element;
 }
@@ -13,7 +13,7 @@ export interface ErrorProps {
 //   }
 // };
 
-const genColour = (type: ErrorProps["type"]) => {
+const genColour = (type: StatusProps["type"]) => {
   switch (type) {
     case "LOADING":
       return "bg-secondary/10 border-t-secondary";
@@ -23,7 +23,7 @@ const genColour = (type: ErrorProps["type"]) => {
   }
 };
 
-const Status: React.FC<ErrorProps> = ({ type, message }) => {
+const Status: React.FC<StatusProps> = ({ type, message }) => {
   if (type === "NIL" || !message) return null;
 
   return (

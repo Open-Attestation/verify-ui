@@ -2,13 +2,13 @@ import axios from "axios";
 
 import { CodedError } from "@utils/coded-error";
 import { isSpmTransientStorage } from "@utils/notarise-healthcerts";
-import { ErrorProps } from "@components/figure/ErrorMessage";
+import { StatusProps } from "@components/figure/StatusMessage";
 
 /**
  * Error handler for the Verify page (pages/verify.tsx)
  * @param e
  */
-export const verifyErrorHandler = (e: unknown): ErrorProps => {
+export const verifyErrorHandler = (e: unknown): StatusProps => {
   if (e instanceof CodedError) {
     return {
       type: "ERROR",

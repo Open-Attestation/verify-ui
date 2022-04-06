@@ -21,7 +21,7 @@ import { OpenAttestationDocument } from "@govtechsg/open-attestation";
 // FIXME: Weird type error occurs without dynamic<any> (i.e. type error occurs when you do not specify props type for FrameConnector)
 const FrameConnector = dynamic<any>(
   () => import("@govtechsg/decentralized-renderer-react-components").then((m) => m.FrameConnector),
-  { ssr: false, loading: () => <p>This component will render on client-side.</p> }
+  { ssr: false }
 );
 
 interface RendererProps extends React.HTMLAttributes<HTMLDivElement> {

@@ -6,27 +6,24 @@ const Footer: React.FC = () => {
     <footer className="bg-white">
       <div className="h-px w-full bg-gray-200" />
       <section className="container pt-12 pb-8">
-        <h3 className="text-3xl text-gray-600 font-roboto-bold">Verify</h3>
-        <p className="text-gray-600 opacity-60 max-w-xl mt-1">
+        <p className="text-3xl text-gray-600 font-roboto-bold">Verify</p>
+        <p className="text-gray-600/80 max-w-xl mt-1">
           Verify provides an easy way to check the validity of digital documents with an .oa extension, that have been
           issued by Singapore government entities.
         </p>
-        <div className="text-base mt-8 font-bold">
+        <div className="flex flex-col xs:flex-row gap-y-4 gap-x-8 text-base mt-8 font-bold">
           <Link href="/">
-            <a className="mr-8 xs:inline-block block text-gray-500 hover:text-gray-600 font-bold">Verify</a>
+            <a className="text-gray-500 hover:text-gray-600 font-bold">Verify</a>
           </Link>
           <Link href="/faq">
-            <a className="mr-8 xs:inline-block block text-gray-500 hover:text-gray-600">FAQs</a>
+            <a className="text-gray-500 hover:text-gray-600">FAQs</a>
           </Link>
-          <a
-            className="mr-8 xs:inline-block block text-gray-500 hover:text-gray-600"
-            href="OpenAttestation_Support@tech.gov.sg"
-          >
+          <a className="text-gray-500 hover:text-gray-600" href="OpenAttestation_Support@tech.gov.sg">
             Contact Us
           </a>
         </div>
         <div className="w-full block mt-12">
-          <p className="text-gray-600 text-xs w-full opacity-60">A collaboration between</p>
+          <p className="text-gray-600 text-xs w-full">A collaboration between</p>
           <div className="">
             <a href="https://www.tech.gov.sg" target="_blank" rel="noopener noreferrer">
               <img
@@ -51,34 +48,34 @@ const Footer: React.FC = () => {
       </section>
       <div className="h-px w-full bg-gray-100" />
       <section className="container py-6">
-        <div className="text-sm font-bold">
+        <div className="flex flex-col xs:flex-row gap-y-4 gap-x-8 text-sm font-bold">
           <a
             href="https://www.tech.gov.sg/report_vulnerability"
             target="_blank"
             rel="noreferrer noopener"
-            className="mr-10 xs:inline-block block text-gray-500 hover:text-gray-600"
+            className="text-gray-500 hover:text-gray-600"
           >
             Report Vulnerability
           </a>
           <Link href="/privacy-policy">
-            <a className="mr-10 xs:inline-block block text-gray-500 hover:text-gray-600">Privacy Statement</a>
+            <a className="text-gray-500 hover:text-gray-600">Privacy Statement</a>
           </Link>
           <Link href="/terms">
-            <a className="mr-10 xs:inline-block block  text-gray-500 hover:text-gray-600">Terms of Use</a>
+            <a className="text-gray-500 hover:text-gray-600">Terms of Use</a>
           </Link>
         </div>
-        <div className="mt-4 flex justify-between items-end flex-wrap">
+        <div className="mt-8 flex justify-between items-end flex-wrap">
           <div className="flex gap-4">
             <a href="https://hive.tech.gov.sg" target="_blank" rel="noopener noreferrer" className="flex-none">
               <img src="/images/hive.png" width="96" height="40" alt="Government Digital Services" />
             </a>
-            <p className="text-xs text-gray-600 opacity-60">
+            <p className="text-xs text-gray-600/80">
               Developed by Government Digital Services
               <br />A Division of Government Technology Agency Singapore
             </p>
           </div>
-          <div className="flex text-gray-600 text-xs flex-wrap mt-4 justify-items-end opacity-60">
-            <p className="mr-8">Version {process.env.VERSION}</p>
+          <div className="flex text-gray-600 text-xs flex-wrap mt-4 justify-items-end">
+            <p className="mr-8">Version {process.env.VERSION || "v1.0.0"}</p>
             <p>© {year} Government Technology Agency</p>
           </div>
         </div>

@@ -3,7 +3,12 @@ const Masthead: React.FC = () => {
     <header className="bg-gray-100">
       <div className="container">
         <div className="flex flex-wrap py-0.5">
-          <a className="no-underline text-black hover:text-black cursor-pointer">
+          <a
+            className="no-underline text-black hover:text-black cursor-pointer"
+            href="https://www.gov.sg"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <img
               src="/images/crest.svg"
               alt="Singapore lion head symbol"

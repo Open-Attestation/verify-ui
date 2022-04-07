@@ -4,7 +4,7 @@ const WOGAA_ENV = process.env.NEXT_PUBLIC_WOGAA_ENV === "production";
 
 export default function Document() {
   return (
-    <Html>
+    <Html lang="en">
       <Head>
         {WOGAA_ENV ? (
           <script src="https://assets.wogaa.sg/scripts/wogaa.js" async></script>

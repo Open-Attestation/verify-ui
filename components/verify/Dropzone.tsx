@@ -6,16 +6,6 @@ import Heading from "@components/text/Heading";
 import { CodedError } from "@utils/coded-error";
 import { StatusProps } from "@components/figure/StatusMessage";
 
-// const ErrorMessage = (
-//   <div className="bg-red-100 px-6 py-4 rounded-lg text-lg">
-//     <Heading level="h2" className="text-xl font-bold">
-//       <FontAwesomeIcon className="mr-2" icon={faCircleXmark} />
-//       File cannot be read
-//     </Heading>
-//     The uploaded file is not a valid OpenAttestation document.
-//   </div>
-// );
-
 interface DropzoneProps extends React.HTMLAttributes<HTMLElement> {
   onDocumentDropped?: (wrappedDocument: v2.WrappedDocument | v3.WrappedDocument) => void;
   onDocumentError?: (e: StatusProps) => void;

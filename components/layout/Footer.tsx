@@ -1,7 +1,13 @@
 import Link from "next/link";
 
+const COMMIT_REF = process.env.COMMIT_REF?.substring(0, 6) || "v1.0.0"; // See "next.config.js"
+const BUILD_DATE = process.env.BUILD_DATE || new Date().toISOString(); // See "next.config.js"
+
 const Footer: React.FC = () => {
   const year = new Date().getFullYear();
+  const buildDate = new Intl.DateTimeFormat("en-GB", { year: "numeric", month: "long", day: "numeric" }).format(
+    new Date(BUILD_DATE)
+  );
   return (
     <footer className="bg-white">
       <div className="h-px w-full bg-gray-200" />
@@ -75,7 +81,9 @@ const Footer: React.FC = () => {
             </p>
           </div>
           <div className="flex text-gray-600 text-xs flex-wrap mt-4 justify-items-end">
-            <p className="mr-8">Version {process.env.VERSION || "v1.0.0"}</p>
+            <p className="mr-8">
+              Version: {COMMIT_REF} | {buildDate}
+            </p>
             <p>© {year} Government Technology Agency</p>
           </div>
         </div>

@@ -3,11 +3,12 @@ import { OpenAttestationDocument } from "@govtechsg/open-attestation";
 import { useEffect } from "react";
 import ReactGA from "react-ga4";
 
-import { isHealthCert, isPDT, isVac } from "@utils/notarise-healthcerts";
+import { isHealthCert, isPDT, isVac, isREC } from "@utils/notarise-healthcerts";
 
 export enum HEALTHCERT_TYPE {
   PDT = "PDT",
   VAC = "VAC",
+  REC = "REC",
   UNKNOWN = "UNKNOWN",
 }
 
@@ -21,6 +22,8 @@ export const getHealthCertType = (data: OpenAttestationDocument): HEALTHCERT_TYP
     return HEALTHCERT_TYPE.VAC;
   } else if (isPDT(data)) {
     return HEALTHCERT_TYPE.PDT;
+  } else if (isREC(data)) {
+    return HEALTHCERT_TYPE.REC;
   } else {
     return HEALTHCERT_TYPE.UNKNOWN;
   }

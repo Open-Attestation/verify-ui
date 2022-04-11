@@ -24,7 +24,7 @@ type Action =
   | { type: "STATUS_MESSAGE"; status: StatusProps }
   | { type: "STATUS_ERROR"; status: StatusProps };
 
-const initialState: State = {
+const defaultState: State = {
   status: { type: "NIL" },
   document: null,
   showDropzone: true,
@@ -33,23 +33,27 @@ const initialState: State = {
 const reducer: Reducer<State, Action> = (state, action) => {
   switch (action.type) {
     case "VERIFY_DOCUMENT":
-      return { ...initialState, document: action.document, showDropzone: false };
+      return { ...defaultState, document: action.document, showDropzone: false };
     case "STATUS_MESSAGE":
       const showDropzone = action.status.type !== "LOADING";
       return { ...state, status: action.status, showDropzone };
     case "STATUS_ERROR":
-      return { ...initialState, status: action.status };
+      return { ...defaultState, status: action.status };
     default:
-      return initialState;
+      return defaultState;
   }
 };
 
 const Verify: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = (props) => {
-  const router = useRouter();
-  const [{ status, document, showDropzone }, dispatch] = useReducer(reducer, {
-    ...initialState,
+  const initialState: State = {
+    ...defaultState,
     showDropzone: !props.hasUniversalAction,
-  });
+    status: props.hasUniversalAction
+      ? { type: "LOADING", message: <>Loading document from action...</> }
+      : { type: "NIL" },
+  };
+  const router = useRouter();
+  const [{ status, document, showDropzone }, dispatch] = useReducer(reducer, initialState);
 
   /* Check for universal action in URL */
   useEffect(() => {
@@ -64,10 +68,6 @@ const Verify: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> =
       }
 
       try {
-        dispatch({
-          type: "STATUS_MESSAGE",
-          status: { type: "LOADING", message: <>Loading document from action...</> },
-        });
         const { decodedQ, decodedHash } = getQueryAndHash(encodedQ, encodedHash);
         const document = await fetchAndDecryptDocument(decodedQ.payload.uri, decodedHash?.key || decodedQ.payload.key);
         dispatch({ type: "VERIFY_DOCUMENT", document });

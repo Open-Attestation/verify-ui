@@ -16,6 +16,6 @@ describe("oa-api-verify with fallback", () => {
 
     await apiVerifyWithFallback({ foo: "bar" } as any);
 
-    expect(spy).toBeCalledWith({ foo: "bar" }, undefined);
+    expect(spy).toBeCalledWith({ foo: "bar" });
   });
 });

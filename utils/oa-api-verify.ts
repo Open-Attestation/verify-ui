@@ -1,7 +1,5 @@
 import axios from "axios";
-import { VerificationFragment } from "@govtechsg/oa-verify";
-
-import { verify } from "@utils/oa-verify";
+import { VerificationFragment, DocumentsToVerify } from "@govtechsg/oa-verify";
 
 const API_VERIFY_URL = process.env.NEXT_PUBLIC_API_VERIFY_URL || "https://stg.api.verify.gov.sg/verify";
 
@@ -11,7 +9,7 @@ interface ApiVerifyResponse {
   diagnostics: { message: string }[];
 }
 
-export const apiVerifyWithFallback: typeof verify = async (document, promisesCallback) => {
+export const apiVerifyWithFallback = async (document: DocumentsToVerify) => {
   try {
     const { data } = await axios.post<ApiVerifyResponse>(API_VERIFY_URL, document);
 
@@ -23,6 +21,7 @@ export const apiVerifyWithFallback: typeof verify = async (document, promisesCal
     return data.fragments;
   } catch (e) {
     console.error(`Unsuccessful response from ${API_VERIFY_URL} - Falling back to oa-verify`, "-", e);
-    return await verify(document, promisesCallback);
+    const { verify } = await import("@utils/oa-verify");
+    return await verify(document);
   }
 };

@@ -22,10 +22,7 @@ export const NavigationBar: React.FunctionComponent<NavigationBarProps> = ({
               FAQ
             </Link>
             <Link to="/verify" onClick={onVerifyLinkClicked}>
-              <button className="btn-outline-primary" disabled={true}>
-                Verify
-              </button>{" "}
-              {/* remove disabled when infura is backuo */}
+              <button className="btn-outline-primary">Verify</button>{" "}
             </Link>
           </div>
         </div>

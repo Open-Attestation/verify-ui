@@ -69,8 +69,8 @@ export const HomePage: React.FunctionComponent = () => {
   return (
     <Root>
       <Section>
-        <Banner />
         <NavigationBar />
+        <Banner /> {/* Comment this out once infura is backup */}
         <div className="container py-12">
           <div className="flex flex-wrap items-center">
             <div className="w-full md:w-2/5 md:pr-4">

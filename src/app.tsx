@@ -7,7 +7,7 @@ import { Footer } from "./components/shared/footer";
 import { Masthead } from "./components/shared/masthead";
 import { ScrollToTop } from "./components/shared/scroll-to-top";
 import { TermsPage } from "./components/terms/terms-page";
-// import { VerifyPage } from "./components/verify/verify-page";
+import { VerifyPage } from "./components/verify/verify-page";
 import { useGoogleAnalytics } from "./services/google-analytics";
 
 const Routes = () => {
@@ -21,10 +21,9 @@ const Routes = () => {
       <Route path="/terms">
         <TermsPage />
       </Route>
-      {/* uncomment once maintence is over */}
-      {/* <Route path="/verify">
+      <Route path="/verify">
         <VerifyPage />
-      </Route> */}
+      </Route>
       <Route path="/faq">
         <FaqPage />
       </Route>

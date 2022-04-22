@@ -22,7 +22,7 @@ export const NavigationBar: React.FunctionComponent<NavigationBarProps> = ({
               FAQ
             </Link>
             <Link to="/verify" onClick={onVerifyLinkClicked}>
-              <button className="btn-outline-primary">Verify</button>{" "}
+              <button className="btn-outline-primary">Verify</button>
             </Link>
           </div>
         </div>

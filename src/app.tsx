@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Banner } from "./components/banner/banner";
 import { FaqPage } from "./components/faq/faq-page";
 import { HomePage } from "./components/home/home-page";
 import { PrivacyPolicyPage } from "./components/privacy/privacy-policy-page";
@@ -14,23 +15,26 @@ const Routes = () => {
   useGoogleAnalytics();
 
   return (
-    <Switch>
-      <Route path="/privacy-policy">
-        <PrivacyPolicyPage />
-      </Route>
-      <Route path="/terms">
-        <TermsPage />
-      </Route>
-      <Route path="/verify">
-        <VerifyPage />
-      </Route>
-      <Route path="/faq">
-        <FaqPage />
-      </Route>
-      <Route path="/">
-        <HomePage />
-      </Route>
-    </Switch>
+    <>
+      <Banner /> {/* Comment this out once infura is backup */}
+      <Switch>
+        <Route path="/privacy-policy">
+          <PrivacyPolicyPage />
+        </Route>
+        <Route path="/terms">
+          <TermsPage />
+        </Route>
+        <Route path="/verify">
+          <VerifyPage />
+        </Route>
+        <Route path="/faq">
+          <FaqPage />
+        </Route>
+        <Route path="/">
+          <HomePage />
+        </Route>
+      </Switch>
+    </>
   );
 };
 

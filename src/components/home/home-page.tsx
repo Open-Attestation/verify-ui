@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import React from "react";
 import { Link } from "react-router-dom";
+import { Banner } from "../banner/banner";
 import { flexCenterColumn } from "../shared/mixin";
 import { NavigationBar } from "../shared/navigation-bar";
 import howCanHelpImage from "./images/how-can-help.svg";
@@ -68,6 +69,7 @@ export const HomePage: React.FunctionComponent = () => {
   return (
     <Root>
       <Section>
+        <Banner />
         <NavigationBar />
         <div className="container py-12">
           <div className="flex flex-wrap items-center">

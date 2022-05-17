@@ -1,0 +1,228 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* https://tailwindcss.com/docs/extracting-components */
+/* START - Add custom component classes before your utilities */
+.font-manjari-regular {
+  font-family: "Manjari", sans-serif;
+  font-weight: 400;
+}
+
+.font-manjari-bold {
+  font-family: "Manjari", sans-serif;
+  font-weight: 700;
+}
+
+.font-roboto-regular {
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+}
+
+.font-roboto-bold {
+  font-family: "Roboto", sans-serif;
+  font-weight: 700;
+}
+
+.font-base {
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.btn {
+  @apply font-roboto-bold;
+  @apply px-5;
+  @apply py-3;
+  border-radius: 15px;
+}
+
+.btn-outline {
+  transition: border-color 0.2s ease-out, background-color 0.2s ease-out, color 0.2s ease-out;
+  @apply btn;
+  @apply border-solid;
+  @apply border-2;
+}
+
+.btn-outline-primary {
+  @apply btn-outline;
+  @apply border-primary;
+  @apply text-primary;
+}
+
+.btn-outline-primary:hover {
+  @apply bg-primary;
+  @apply text-white;
+}
+
+.btn-outline-primary:focus {
+  @apply outline-none;
+}
+
+.btn-outline-primary:active {
+  @apply bg-primary-dark;
+}
+
+.btn-solid {
+  transition: background-color 0.2s ease-out, color 0.2s ease-out;
+  @apply btn;
+}
+
+.btn-solid-primary {
+  @apply btn-solid;
+  @apply bg-primary;
+  @apply text-white;
+}
+
+.btn-solid-primary:hover {
+  @apply bg-primary-dark;
+}
+
+.btn-solid-primary:focus {
+  @apply outline-none;
+}
+
+.btn-solid-primary:active {
+  @apply ring;
+}
+
+/* https://philipwalton.com/articles/normalizing-cross-browser-flexbox-bugs/ */
+#root {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+#root > .sgds-masthead {
+  flex-shrink: 0;
+}
+
+#root > .main {
+  flex: 1 0 auto;
+}
+/* END - Add custom component classes before your utilities */
+
+@tailwind utilities;
+
+html {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  @apply font-roboto-regular;
+  color: var(--grey);
+}
+
+h1 {
+  @apply font-manjari-bold;
+  @apply mb-4;
+  font-size: 32px;
+  line-height: normal;
+}
+
+h2 {
+  @apply font-manjari-bold;
+  font-size: 32px;
+  line-height: normal;
+}
+
+h3 {
+  @apply font-manjari-bold;
+  font-size: 32px;
+  line-height: normal;
+}
+
+h4 {
+  @apply font-manjari-bold;
+  font-size: 24px;
+  line-height: normal;
+}
+
+h5 {
+  @apply font-roboto-bold;
+  font-size: 16px;
+  line-height: normal;
+}
+
+h6 {
+  @apply font-roboto-bold;
+  font-size: 16px;
+  line-height: normal;
+}
+
+button,
+p {
+  @apply font-base;
+}
+
+p {
+  @apply font-roboto-regular;
+  @apply mb-4;
+}
+
+p.small {
+  font-size: 13px;
+  line-height: 15px;
+}
+
+a {
+  transition: color 0.2s ease-out;
+}
+
+a:hover {
+  @apply text-primary;
+}
+
+/* [Start] All orderered lists with .nested-list parent */
+.nested-list ol {
+  counter-reset: item;
+  border-spacing: 0 5px;
+  @apply table;
+}
+
+.nested-list li {
+  /* Align text to the right */
+  @apply table-row;
+}
+
+.nested-list li:before {
+  /* Nested numbering (e.g. 1.1, 1.2, etc. */
+  content: counters(item, ".") ". ";
+  counter-increment: item;
+  /* Align numbering to the left */
+  @apply table-cell pr-2;
+}
+/* [End] All orderered lists with .nested-list parent */
+
+/* sm */
+@media (min-width: 640px) {
+}
+
+/* md */
+@media (min-width: 768px) {
+  h1 {
+    @apply font-manjari-regular;
+  }
+
+  h1 {
+    font-size: 52px;
+    line-height: 56px;
+  }
+
+  h2 {
+    font-size: 40px;
+    line-height: 44px;
+  }
+
+  h5 {
+    font-size: 20px;
+  }
+}
+
+/* lg */
+@media (min-width: 1024px) {
+}
+
+/* xl */
+@media (min-width: 1280px) {
+}

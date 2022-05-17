@@ -5,7 +5,7 @@ import { validateIframeText, validateIssuer } from "./helper";
 fixture("Load action from encrypted certificate").page`http://localhost:3000`;
 
 const AlertContainer = Selector('[role="alert"]');
-const StatusCheck = Selector("[data-testid='status-check']");
+const StatusCheck = Selector("[data-testid='verification-checks']");
 
 const key = "c246183c5dacff3a90ab82024ba2361b4bd8f9ade0b443f7c2d0cc5eebe9c8ca";
 

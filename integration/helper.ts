@@ -4,7 +4,7 @@ import { t, Selector } from "testcafe";
 
 const LinkVerify = Selector("a[href='/verify']");
 const FileInput = Selector("input[type=file]");
-const Issuer = Selector("h2").withText("Issued by");
+const Issuer = Selector("h1").withText("Issued by");
 const Iframe = Selector("iframe[title='Decentralised Rendered Certificate']");
 
 export const uploadDocument = async (documentPath: string) => {

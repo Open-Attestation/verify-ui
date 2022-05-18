@@ -12,7 +12,7 @@
     "test": "jest",
     "integration": "testcafe chrome integration/**/*.spec.ts --compilerOptions noEmit=true",
     "integration:headless": "testcafe chrome:headless integration/**/*.spec.ts --compilerOptions noEmit=true --app 'npm start' --app-init-delay 5000",
-    "monitoring": "testcafe chrome:headless monitoring/**/*.spec.ts --compilerOptions noEmit=true"
+    "monitoring": "testcafe chrome:headless monitoring/**/*.spec.ts --skip-js-errors --compiler-options typescript.options.esModuleInterop=true"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.1.1",
@@ -52,11 +52,11 @@
     "eslint": "^8.13.0",
     "eslint-config-next": "^12.1.4",
     "jest": "^27.5.1",
-    "node-fetch": "^3.2.3",
+    "node-fetch": "^2.6.7",
     "postcss": "^8.4.12",
     "prettier": "^2.6.2",
     "tailwindcss": "^3.0.23",
-    "testcafe": "^1.18.5",
+    "testcafe": "^1.18.6",
     "ts-jest": "^27.1.4",
     "typescript": "^4.6.3",
     "zlib": "^1.0.5"

@@ -65,7 +65,7 @@ const openGithubIssue = async (requestCount: number) => {
 };
 
 const notifySlack = async (requestCount: number, threshold: number) => {
-  await fetch(process.env.SLACK_WEBHOOK, {
+  await fetch(process.env.SLACK_WEBHOOK_URL, {
     method: "POST",
     body: JSON.stringify({ 
       text: `ALERT - ${requestCount} REQUESTS ON INFURA, current API limit is ${threshold}` 

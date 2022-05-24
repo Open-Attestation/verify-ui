@@ -1,0 +1,23 @@
+name: Staging Apply DSC
+on:
+  # push:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 2 * * *'
+
+env:
+  SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+  STAGE: staging
+  AWS_REGION: ap-southeast-1
+  DEBIAN_FRONTEND: noninteractive
+
+jobs:
+  check-infura:
+    name: check-infura
+    runs-on: self-hosted
+    container:
+      image: ubuntu:latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+      - run: npm run monitoring

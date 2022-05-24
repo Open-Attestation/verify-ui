@@ -64,11 +64,11 @@ const openGithubIssue = async (requestCount: number) => {
   });
 };
 
-const notifySlack = async (requestCount: number, threshold: number) => {
+const notifySlack = async (requestCount: number, threshold: number, maximumRequest: number) => {
   await fetch(process.env.SLACK_WEBHOOK_URL, {
     method: "POST",
     body: JSON.stringify({ 
-      text: `ALERT - ${requestCount} REQUESTS ON INFURA, current API limit is ${threshold}` 
+      text: `ALERT - ${requestCount} REQUESTS ON INFURA, current API limit is ${maximumRequest} (threshold at ${threshold}%)` 
     }),
   });
 };
@@ -94,7 +94,7 @@ test("Status check should reflect error correctly", async (t) => {
   console.log(`current request count is ${requestCount} out of ${maximumRequest}`)
   if (requestCount > threshold) {
     if (process.env.SLACK_WEBHOOK_URL){
-      await notifySlack(requestCount, threshold);
+      await notifySlack(requestCount, thresholdPercentage, maximumRequest);
     }
     else {
       await openGithubIssue(requestCount);

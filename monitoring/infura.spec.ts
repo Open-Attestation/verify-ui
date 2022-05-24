@@ -93,7 +93,7 @@ test("Status check should reflect error correctly", async (t) => {
   const threshold = (maximumRequest * thresholdPercentage) / 100;
   console.log(`current request count is ${requestCount} out of ${maximumRequest}`)
   if (requestCount > threshold) {
-    if (process.env.SLACK_WEBHOOK){
+    if (process.env.SLACK_WEBHOOK_URL){
       await notifySlack(requestCount, threshold);
     }
     else {

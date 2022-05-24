@@ -91,6 +91,7 @@ test("Status check should reflect error correctly", async (t) => {
   const maximumRequest = Number(String(process.env.INFURA_THRESHOLD)) ?? 1000000;
   const thresholdPercentage = 60; // 60%
   const threshold = (maximumRequest * thresholdPercentage) / 100;
+  console.log(`current request count is ${request} out of ${maximumRequest}`)
   if (requestCount > threshold) {
     if (process.env.SLACK_WEBHOOK){
       await notifySlack(requestCount, threshold);

@@ -54,7 +54,7 @@ const Footer: React.FC = () => {
       </section>
       <div className="h-px w-full bg-gray-100" />
       <section className="container py-6">
-        <div className="flex flex-col xs:flex-row gap-y-4 gap-x-8 text-sm font-bold">
+        <div className="flex sm:flex-row flex-col gap-y-4 gap-x-8 text-sm font-bold">
           <a
             href="https://www.tech.gov.sg/report_vulnerability"
             target="_blank"
@@ -80,11 +80,11 @@ const Footer: React.FC = () => {
               <br />A Division of Government Technology Agency Singapore
             </p>
           </div>
-          <div className="flex text-gray-600 text-xs flex-wrap mt-4 justify-items-end">
-            <p className="mr-8">
+          <div className="flex text-gray-600 flex-wrap mt-4 justify-items-end">
+            <p className="mr-8 text-xs inline-block">
               Version: {COMMIT_REF} | {buildDate}
             </p>
-            <p>© {year} Government Technology Agency</p>
+            <p className="text-xs inline-block">© {year} Government Technology Agency</p>
           </div>
         </div>
       </section>

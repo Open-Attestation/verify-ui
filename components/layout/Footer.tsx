@@ -81,10 +81,10 @@ const Footer: React.FC = () => {
             </p>
           </div>
           <div className="flex text-gray-600 flex-wrap mt-4 justify-items-end">
-            <p className="mr-8 text-xs inline-block">
+            <p className="mr-8 text-xs">
               Version: {COMMIT_REF} | {buildDate}
             </p>
-            <p className="text-xs inline-block">© {year} Government Technology Agency</p>
+            <p className="text-xs">© {year} Government Technology Agency</p>
           </div>
         </div>
       </section>

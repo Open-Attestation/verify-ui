@@ -24,6 +24,9 @@ const Footer: React.FC = () => {
           <Link href="/faq">
             <a className="text-gray-500 hover:text-gray-600">FAQs</a>
           </Link>
+          <Link href="/contact">
+            <a className="text-gray-500 hover:text-gray-600">Contact Us</a>
+          </Link>
           {/* <a className="text-gray-500 hover:text-gray-600" href="mailto:OpenAttestation_Support@tech.gov.sg">
             Contact Us
           </a> */}

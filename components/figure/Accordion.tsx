@@ -24,9 +24,7 @@ const Accordion: React.FC<AccordianProps> = ({ title, content }) => {
           className={`text-2xl transition-transform ${isOpen ? "rotate-180" : "rotate-0"}`}
         />
       </div>
-      <div
-        className={`mx-6 transition-all text-left overflow-hidden ${isOpen ? "max-h-[500px] my-6" : "max-h-0 my-0"}`}
-      >
+      <div className={`mx-6 transition-all text-left overflow-hidden ${isOpen ? "max-h-fit my-6" : "max-h-0 my-0"}`}>
         {content}
       </div>
     </article>

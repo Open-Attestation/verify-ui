@@ -36,7 +36,7 @@ const Contactus: NextPage = () => {
           </ul>
         </p>
         <h2 className="font-sans text-2xl pt-6">Submit your query</h2>
-        <p className="font-sans text-lg">
+        <p className="font-sans text-lg pt-2">
           If your query is related to :
           <ul className="list-disc list-outside pl-8">
             <li>

@@ -45,7 +45,7 @@ const Contactus: NextPage = () => {
                 href="mailto:OpenAttestation_Support@tech.gov.sg"
                 target="_blank"
                 rel="noreferrer"
-                className="text-blue-600 underline hover:text-blue-700"
+                className="text-blue-600 underline hover:text-blue-700 break-all"
               >
                 OpenAttestation_Support@tech.gov.sg
               </a>

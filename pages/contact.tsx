@@ -36,32 +36,32 @@ const Contactus: NextPage = () => {
           </ul>
         </p>
         <h2 className="font-sans text-2xl pt-6">Submit your query</h2>
-        <p className="font-sans text-lg pt-2">
+        <p className="pt-2 text-lg font-sans">
           If your query is related to :
-          <ul className="list-disc list-outside pl-8">
+          <ul className="list-disc list-outside pl-8 text-lg">
             <li>
-              OpenAttestation, please email us at{" "}
-              <a
-                href="mailto:OpenAttestation_Support@tech.gov.sg"
-                target="_blank"
-                rel="noreferrer"
-                className="text-blue-600 underline hover:text-blue-700 break-all"
-              >
-                OpenAttestation_Support@tech.gov.sg
-              </a>
-              .
-            </li>
-            <li>
-              Notαrise/HealthCerts or any other matters, fill in the{" "}
+              Notαrise/HealthCerts or any other matters, please{" "}
               <a
                 href="https://faq.notarise.gov.sg/hc/en-gb/requests/new"
                 target="_blank"
                 rel="noreferrer"
                 className="text-blue-600 underline hover:text-blue-700"
               >
-                contact us form
-              </a>{" "}
-              at Notαrise.
+                contact us
+              </a>
+              .
+            </li>
+            <li>
+              OpenAttestation, please contact us {" "}
+              <a
+                href="mailto:OpenAttestation_Support@tech.gov.sg"
+                target="_blank"
+                rel="noreferrer"
+                className="text-blue-600 underline hover:text-blue-700 break-all"
+              >
+                here
+              </a>
+              .
             </li>
           </ul>
         </p>

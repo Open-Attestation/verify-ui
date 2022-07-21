@@ -9,6 +9,9 @@ import Status, { StatusProps } from "@components/figure/StatusMessage";
 import Dropzone from "@components/verify/Dropzone";
 import { fetchAndDecryptDocument, getQueryAndHash } from "@utils/fetch-document";
 import { verifyErrorHandler } from "@utils/error-handler";
+import { BackDrop } from "@components/verify/BackDrop";
+import { QrPopup } from "@components/verify/QrPopup";
+import { QR } from "@components/verify/qr";
 
 const Verifier = dynamic(() => import("@components/verify/Verifier"), { ssr: false });
 
@@ -54,6 +57,7 @@ const Verify: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> =
   };
   const router = useRouter();
   const [{ status, document, showDropzone }, dispatch] = useReducer(reducer, initialState);
+  const [open, setOpen] = useState(false);
 
   /* Check for universal action in URL */
   useEffect(() => {
@@ -87,10 +91,23 @@ const Verify: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> =
     dispatch({ type: "STATUS_ERROR", status: e });
   }, []);
 
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
   return (
     <Layout>
       {<Status {...status} />}
-      {showDropzone && <Dropzone onDocumentDropped={handleDocumentDropped} onDocumentError={handleDocumentError} />}
+      <BackDrop open={open} onClick={() => setOpen(!open)} data-testid="qr-pop-up">
+        <QrPopup onClose={() => setOpen(false)} child={<QR></QR>}></QrPopup>
+      </BackDrop>
+      {showDropzone && (
+        <Dropzone
+          onDocumentDropped={handleDocumentDropped}
+          onDocumentError={handleDocumentError}
+          onScanQrClicked={handleOpen}
+        />
+      )}
       {document !== null && <Verifier wrappedDocument={document} />}
     </Layout>
   );

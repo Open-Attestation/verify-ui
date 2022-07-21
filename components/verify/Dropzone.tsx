@@ -9,9 +9,14 @@ import { StatusProps } from "@components/figure/StatusMessage";
 interface DropzoneProps extends React.HTMLAttributes<HTMLElement> {
   onDocumentDropped?: (wrappedDocument: v2.WrappedDocument | v3.WrappedDocument) => void;
   onDocumentError?: (e: StatusProps) => void;
+  onScanQrClicked: () => void;
 }
 
-const Dropzone: React.FC<DropzoneProps> = ({ onDocumentDropped = () => {}, onDocumentError = () => {} }) => {
+const Dropzone: React.FC<DropzoneProps> = ({
+  onDocumentDropped = () => {},
+  onDocumentError = () => {},
+  onScanQrClicked = () => {},
+}) => {
   const onDrop: DropzoneOptions["onDrop"] = useCallback(
     async (files: File[]) => {
       onDocumentError({ type: "NIL" });
@@ -80,6 +85,12 @@ const Dropzone: React.FC<DropzoneProps> = ({ onDocumentDropped = () => {}, onDoc
     <section className="container text-center my-10">
       <Heading level="h1">Verify Documents</Heading>
       <p>Drop a government issued certificate</p>
+      <button
+        className={`font-bold py-2 px-4 text-white bg-primary hover:bg-primary-dark rounded-xl focus:ring transition-colors`}
+        onClick={onScanQrClicked}
+      >
+        Scan QR
+      </button>
 
       <div
         className={[

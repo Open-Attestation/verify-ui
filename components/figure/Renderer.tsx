@@ -15,7 +15,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPrint } from "@fortawesome/free-solid-svg-icons";
 
 import { getTemplateUrl } from "@utils/oa-details";
-import { OpenAttestationDocument } from "@govtechsg/open-attestation";
+import { OpenAttestationDocument, WrappedDocument } from "@govtechsg/open-attestation";
 
 /* Workaround for undefined window object: Dynamic import so FrameConnector will not load on server-side */
 // FIXME: Weird type error occurs without dynamic<any> (i.e. type error occurs when you do not specify props type for FrameConnector)
@@ -26,16 +26,17 @@ const FrameConnector = dynamic<any>(
 
 interface RendererProps extends React.HTMLAttributes<HTMLDivElement> {
   document: OpenAttestationDocument;
+  rawDocument: WrappedDocument<OpenAttestationDocument>;
 }
 
-const Renderer: React.FC<RendererProps> = ({ document }) => {
+const Renderer: React.FC<RendererProps> = ({ document, rawDocument }) => {
   const [height, setHeight] = useState(0);
   const [templates, setTemplates] = useState<Template[]>();
   const [toFrame, setToFrame] = useState<HostActionsHandler>();
 
   const onConnected = useCallback(
     (toFrame: HostActionsHandler) => {
-      toFrame(renderDocument({ document }));
+      toFrame(renderDocument({ document, rawDocument }));
       setToFrame(() => toFrame);
     },
     [document]

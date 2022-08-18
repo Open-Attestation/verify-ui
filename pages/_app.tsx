@@ -7,6 +7,7 @@ import { config } from "@fortawesome/fontawesome-svg-core";
 
 import { useGoogleAnalytics } from "@utils/google-analytics";
 import defaultSeoConfig from "../next-seo.config";
+import "grapesjs/dist/css/grapes.min.css";
 
 config.autoAddCss = false;
 

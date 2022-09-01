@@ -92,7 +92,7 @@ const Dropzone: React.FC<DropzoneProps> = ({ onDocumentDropped = () => {}, onDoc
       >
         <input {...getInputProps()} />
         <div className="flex flex-col items-center gap-5">
-          <img className="max-w-[200px]" src="images/upload-document.svg" alt="Upload document" />
+          <img className="max-w-[200px]" src="/images/upload-document.svg" alt="Upload document" />
           <Heading level="h2" className="text-xl">
             Drag and drop file here
           </Heading>

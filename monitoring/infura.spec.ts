@@ -54,6 +54,9 @@ const openGithubIssue = async (requestCount: number) => {
 };
 
 test("Status check should reflect error correctly", async (t) => {
+  // temporarily set cookie to dismiss Sep 2022 modal
+  await t.setCookies({ merge_acked: new Date(Date.now() - 5 * 60 * 1000).valueOf().toString() }, "https://infura.io");
+
   // login
   await t.typeText(Selector("[data-testid='field_email']"), process.env.INFURA_EMAIL ?? "");
   await t.typeText(Selector("[data-testid='field_password']"), process.env.INFURA_PASSWORD ?? "");

@@ -45,12 +45,14 @@ const reducer: Reducer<State, Action> = (state, action) => {
 };
 
 const Verify: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = (props) => {
+  const { hasUniversalAction, hasEmbedded } = props;
   const initialState: State = {
     ...defaultState,
-    showDropzone: !props.hasUniversalAction,
-    status: props.hasUniversalAction
-      ? { type: "LOADING", message: <>Loading document from action...</> }
-      : { type: "NIL" },
+    showDropzone: hasUniversalAction || hasEmbedded,
+    status:
+      hasUniversalAction || hasEmbedded
+        ? { type: "LOADING", message: <>Loading document from action...</> }
+        : { type: "NIL" },
   };
   const router = useRouter();
   const [{ status, document, showDropzone }, dispatch] = useReducer(reducer, initialState);
@@ -61,9 +63,26 @@ const Verify: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> =
       const encodedQ = router.query.q;
       const encodedHash = window.location.hash.substring(1) || undefined;
 
+      // If there is embedded OA
+      if (hasEmbedded) {
+        const xOa = window.document.getElementsByTagName("x-oa")[0];
+        const encodedOa = xOa.getAttribute("data-encoded-oa-doc") || "";
+        const document = JSON.parse(decodeURIComponent(encodedOa));
+        dispatch({ type: "VERIFY_DOCUMENT", document });
+        return;
+      }
+
       // If no universal action in URL, skip function
       if (typeof encodedQ !== "string") {
         dispatch({ type: "INITIAL" });
+        return;
+      }
+      // If there is embedded OA
+      else if (hasEmbedded) {
+        const xOa = window.document.getElementsByTagName("x-oa")[0];
+        const encodedOa = xOa.getAttribute("data-encoded-oa-doc") || "";
+        const document = JSON.parse(decodeURIComponent(encodedOa));
+        dispatch({ type: "VERIFY_DOCUMENT", document });
         return;
       }
 
@@ -98,10 +117,12 @@ const Verify: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> =
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const hasUniversalAction = typeof context.query.q === "string";
+  const hasEmbedded = context.query.embedded === "true";
 
   return {
     props: {
       hasUniversalAction,
+      hasEmbedded,
     },
   };
 };

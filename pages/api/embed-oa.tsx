@@ -18,9 +18,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(405).end();
   }
 
-  const { oaDoc } = req.body;
 
   // TODO: Validate incoming request body
+  const { oaDoc } = req.body;
   if (!(typeof oaDoc === "string" && isJsonString(oaDoc))) return res.status(400).send("Invalid payload");
 
   const parsedOaDoc = JSON.parse(oaDoc);
@@ -28,7 +28,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   const verifyUrl = new URL(`${SITE_URL}/verify`);
   verifyUrl.searchParams.append("embedded", "true");
 
-  console.log(verifyUrl.toString());
   const verifyRes = await fetch(verifyUrl.toString());
   const verifyHtml = await verifyRes.text();
 

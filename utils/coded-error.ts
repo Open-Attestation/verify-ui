@@ -1,5 +1,6 @@
 enum ErrorType {
   QueryParamsError,
+  EmbedOaError,
   FetchError,
   DecryptionError,
   InvalidDocumentError,

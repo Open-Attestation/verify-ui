@@ -7,7 +7,7 @@ jest.mock("axios");
 
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 mockedAxios.post.mockImplementationOnce(async () => {
-  throw new Error("Some error");
+  throw new Error("Axios mocked error");
 });
 
 describe("oa-api-verify with fallback", () => {

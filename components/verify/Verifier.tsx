@@ -5,11 +5,12 @@ import { isValid } from "@govtechsg/oa-verify";
 import { VerificationStatus } from "@types";
 import { getDataV2OrV3 } from "@utils/oa-details";
 import Heading from "@components/text/Heading";
-import Renderer from "@components/figure/Renderer";
+// import Renderer from "@components/figure/Renderer";
 import VerificationChecks, { VerificationChecksProps, CustomMessageProps } from "@components/figure/VerificationChecks";
 import { apiVerifyWithFallback } from "@utils/oa-api-verify";
 import { isHealthCert } from "@utils/notarise-healthcerts";
 import { sendHealthCertVerifiedEvent, sendHealthCertErrorEvent } from "@utils/google-analytics";
+import HtmlRenderer from "@components/figure/HtmlRenderer";
 
 const defaultFragVeriStatus: VerificationChecksProps = {
   DOCUMENT_STATUS: "PENDING",
@@ -88,7 +89,7 @@ const Verifier: React.FC<VerifierProps> = ({ wrappedDocument }) => {
       )}
 
       <VerificationChecks {...fragmentVerificationStatus} customMessage={customMessage} />
-      {verificationStatus === "VERIFIED" && <Renderer document={getDataV2OrV3(wrappedDocument)} />}
+      {verificationStatus === "VERIFIED" && <HtmlRenderer document={getDataV2OrV3(wrappedDocument)} />}
     </section>
   );
 };

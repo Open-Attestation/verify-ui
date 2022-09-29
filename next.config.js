@@ -24,6 +24,10 @@ const nextConfig = {
     BUILD_DATE: new Date().toISOString(),
   },
   headers: generateHeaders,
+  webpack: (config) => {
+    config.resolve.fallback = { fs: false };
+    return config;
+  },
 };
 
 module.exports = nextConfig;

@@ -19,7 +19,7 @@ const Grapes: NextPage = () => {
   return (
     <Layout>
       <NoSSR>
-        <GrapesjsReact id="grapesjs-react" plugins={["gjs-preset-newsletter", "gjs-blocks-basic", myPlugin]} />
+        <GrapesjsReact id="grapesjs-react" plugins={["grapesjs-plugin-export", "gjs-preset-newsletter", "gjs-blocks-basic", myPlugin]} />
       </NoSSR>
     </Layout>
   );

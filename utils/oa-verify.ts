@@ -108,7 +108,7 @@ export const verifyAllowedIssuers: VerifierType = {
   verify: verifyMethod,
 };
 
-const NETWORK_NAME = process.env.NEXT_PUBLIC_NETWORK_NAME || "ropsten";
+const NETWORK_NAME = process.env.NEXT_PUBLIC_NETWORK_NAME || "goerli";
 const INFURA_API_KEY = process.env.NEXT_PUBLIC_INFURA_API_KEY;
 
 export const verify = verificationBuilder([...openAttestationVerifiers, verifyAllowedIssuers], {

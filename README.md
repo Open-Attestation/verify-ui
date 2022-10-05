@@ -17,7 +17,7 @@ NEXT_PUBLIC_GTAG_ID=G-xxx
 NEXT_PUBLIC_WOGAA_ENV=development
 NEXT_PUBLIC_API_VERIFY_URL=https://stg.api.verify.gov.sg/verify
 NEXT_PUBLIC_INFURA_API_KEY=xxx
-NEXT_PUBLIC_NETWORK_NAME=ropsten
+NEXT_PUBLIC_NETWORK_NAME=goerli
 NEXT_PUBLIC_WHITELISTED_ISSUERS=gov.sg,openattestation.com
 ```
 

@@ -6,6 +6,6 @@ fixture("Verified unissued").page`http://localhost:3000`;
 const StatusCheck = Selector("[data-testid='verification-checks']");
 
 test("Status check should reflect error correctly", async () => {
-  await uploadDocument("./certificate-unissued-ropsten.json");
+  await uploadDocument("./certificate-unissued-goerli.json");
   await t.expect(StatusCheck.withText("Document has not been issued").exists).ok();
 });

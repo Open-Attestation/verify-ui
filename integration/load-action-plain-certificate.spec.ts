@@ -11,7 +11,7 @@ test("Load document from action should work when url is valid", async (t) => {
   const action = {
     type: "DOCUMENT",
     payload: {
-      uri: `https://gist.githubusercontent.com/Nebulis/49b53678e9b445f826125e4ac4f6d7a0/raw/0474e7b9c25dfdb95c046257483c218f27e60136/gistfile1.txt`,
+      uri: `https://gist.githubusercontent.com/john-dot-oa/501c38d7f65d71000e520be77422d03c/raw/c9c86e0aee61b0365077454acc3b366aedd7975a/certificate-issued-goerli.json`,
       redirect: "https://verify.gov.sg/verify",
     },
   };
@@ -28,7 +28,7 @@ test("Load document from action should fail when url can't be parsed", async (t)
   const action = {
     type: "DOCUMENT",
     payload: {
-      uri: `https://gist.githubusercontent.com/Nebulis/49b53678e9b445f826125e4ac4f6d7a0/raw/0474e7b9c25dfdb95c046257483c218f27e60136/gistfile1.txt`,
+      uri: `https://gist.githubusercontent.com/john-dot-oa/501c38d7f65d71000e520be77422d03c/raw/c9c86e0aee61b0365077454acc3b366aedd7975a/certificate-issued-goerli.json`,
       redirect: "https://verify.gov.sg/verify",
     },
   };
@@ -42,7 +42,7 @@ test("Load document from action should fail when document does not exist", async
   const action = {
     type: "DOCUMENT",
     payload: {
-      uri: `https://gist.githubusercontent.com/Nebulis/fake-path/raw/fake-path/opencerts-ropsten-demo.json`,
+      uri: `https://gist.githubusercontent.com/john-dot-oa/fake-path/raw/fake-path/non-existent-certificate.json`,
       redirect: "https://verify.gov.sg/verify",
     },
   };
@@ -56,7 +56,7 @@ test("Load document from action should fail when action type is invalid", async 
   const action = {
     type: "DOCUM",
     payload: {
-      uri: `https://gist.githubusercontent.com/Nebulis/49b53678e9b445f826125e4ac4f6d7a0/raw/0474e7b9c25dfdb95c046257483c218f27e60136/gistfile1.txt`,
+      uri: `https://gist.githubusercontent.com/john-dot-oa/501c38d7f65d71000e520be77422d03c/raw/c9c86e0aee61b0365077454acc3b366aedd7975a/certificate-issued-goerli.json`,
       permittedAction: ["STORE"],
       redirect: "https://verify.gov.sg/verify",
     },

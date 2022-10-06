@@ -7,14 +7,14 @@ fixture("Load action from encrypted certificate").page`http://localhost:3000`;
 const AlertContainer = Selector('[role="alert"]');
 const StatusCheck = Selector("[data-testid='verification-checks']");
 
-const key = "c246183c5dacff3a90ab82024ba2361b4bd8f9ade0b443f7c2d0cc5eebe9c8ca";
+const key = "7b9fbe27e47485e71729ce9faf3e361e8e84b9a72092196826457fda0136d38a";
 
 test("Load document from action should work when action is valid (key from anchor)", async (t) => {
   const anchor = { key };
   const action = {
     type: "DOCUMENT",
     payload: {
-      uri: `https://gist.githubusercontent.com/Nebulis/49b53678e9b445f826125e4ac4f6d7a0/raw/ff6b53474fa24534f4f8c3c4aa89d17ac82a6289/encrypted-oa-issuer`,
+      uri: `https://gist.githubusercontent.com/john-dot-oa/501c38d7f65d71000e520be77422d03c/raw/c9c86e0aee61b0365077454acc3b366aedd7975a/certificate-issued-goerli-encrypted.json`,
       permittedAction: ["STORE"],
       redirect: "https://verify.gov.sg/verify",
     },
@@ -33,7 +33,7 @@ test("Load document from action should work when action is valid", async (t) => 
   const action = {
     type: "DOCUMENT",
     payload: {
-      uri: `https://gist.githubusercontent.com/Nebulis/49b53678e9b445f826125e4ac4f6d7a0/raw/ff6b53474fa24534f4f8c3c4aa89d17ac82a6289/encrypted-oa-issuer`,
+      uri: `https://gist.githubusercontent.com/john-dot-oa/501c38d7f65d71000e520be77422d03c/raw/c9c86e0aee61b0365077454acc3b366aedd7975a/certificate-issued-goerli-encrypted.json`,
       key,
       permittedAction: ["STORE"],
       redirect: "https://verify.gov.sg/verify",
@@ -54,7 +54,7 @@ test("Load document from action should fail when key is invalid (key from anchor
   const action = {
     type: "DOCUMENT",
     payload: {
-      uri: `https://gist.githubusercontent.com/Nebulis/49b53678e9b445f826125e4ac4f6d7a0/raw/ff6b53474fa24534f4f8c3c4aa89d17ac82a6289/encrypted-oa-issuer`,
+      uri: `https://gist.githubusercontent.com/john-dot-oa/501c38d7f65d71000e520be77422d03c/raw/c9c86e0aee61b0365077454acc3b366aedd7975a/certificate-issued-goerli-encrypted.json`,
       permittedAction: ["STORE"],
       redirect: "https://verify.gov.sg/verify",
     },
@@ -70,7 +70,7 @@ test("Load document from action should fail when key is invalid", async (t) => {
   const action = {
     type: "DOCUMENT",
     payload: {
-      uri: `https://gist.githubusercontent.com/Nebulis/49b53678e9b445f826125e4ac4f6d7a0/raw/ff6b53474fa24534f4f8c3c4aa89d17ac82a6289/encrypted-oa-issuer`,
+      uri: `https://gist.githubusercontent.com/john-dot-oa/501c38d7f65d71000e520be77422d03c/raw/c9c86e0aee61b0365077454acc3b366aedd7975a/certificate-issued-goerli-encrypted.json`,
       permittedAction: ["STORE"],
       redirect: "https://verify.gov.sg/verify",
       key: "2a237b35cb50544a2c9a4b4a629e7c547bd1ff4a0137489700891532001e83f6", // random key, must have correct length
@@ -85,7 +85,7 @@ test("Load document from action should fail when the required key is not provide
   const action = {
     type: "DOCUMENT",
     payload: {
-      uri: `https://gist.githubusercontent.com/Nebulis/328b757c7b56aa5a7d537c88cd250f92/raw/2816aad4811846ee8cd554bd19e08706da19ae09/e2e.json`,
+      uri: `https://gist.githubusercontent.com/john-dot-oa/501c38d7f65d71000e520be77422d03c/raw/c9c86e0aee61b0365077454acc3b366aedd7975a/certificate-issued-goerli-encrypted.json`,
       permittedAction: ["STORE"],
       redirect: "https://verify.gov.sg/verify",
     },

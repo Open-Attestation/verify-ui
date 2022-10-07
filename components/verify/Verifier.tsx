@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { utils, v2, v3 } from "@govtechsg/open-attestation";
-import { isValid } from "@govtechsg/oa-verify";
+import { isValid, InvalidVerificationFragment } from "@govtechsg/oa-verify";
 
 import { VerificationStatus } from "@types";
 import { getDataV2OrV3 } from "@utils/oa-details";
@@ -66,13 +66,29 @@ const Verifier: React.FC<VerifierProps> = ({ wrappedDocument }) => {
 
       setFragmentVerificationStatus({ DOCUMENT_STATUS, DOCUMENT_INTEGRITY, ISSUER_IDENTITY });
 
+      const docStatusFragments = fragments.filter(
+        (fragment) => fragment.type === "DOCUMENT_STATUS" && fragment.status === "INVALID"
+      ) as InvalidVerificationFragment<{}>[];
+      const isRevoked = docStatusFragments.some((fragment) => fragment.reason.codeString === "DOCUMENT_REVOKED");
+
       if (isHealthCert(document)) {
-        setCustomMessage({
+        let customMessage = {};
+        if (isRevoked) {
+          customMessage = {
+            DOCUMENT_STATUS: {
+              REJECTED: "Document has been revoked",
+            },
+            ...customMessage,
+          };
+        }
+        customMessage = {
           ISSUER_IDENTITY: {
             VERIFIED: "Issued by Singapore Government",
             REJECTED: "Document not issued by Singapore Government",
           },
-        });
+          ...customMessage,
+        };
+        setCustomMessage(customMessage);
       } else {
         setCustomMessage(undefined);
       }

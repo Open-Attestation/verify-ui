@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { utils, v2, v3 } from "@govtechsg/open-attestation";
-import { isValid } from "@govtechsg/oa-verify";
+import { isValid, utils as verifyUtils } from "@govtechsg/oa-verify";
 
 import { VerificationStatus } from "@types";
 import { getDataV2OrV3 } from "@utils/oa-details";
@@ -66,16 +66,33 @@ const Verifier: React.FC<VerifierProps> = ({ wrappedDocument }) => {
 
       setFragmentVerificationStatus({ DOCUMENT_STATUS, DOCUMENT_INTEGRITY, ISSUER_IDENTITY });
 
+      const isRevoked = verifyUtils
+        .getDocumentStatusFragments(fragments)
+        .filter((fragment) => verifyUtils.isInvalidFragment(fragment))
+        .some((invalidFragment: any) => invalidFragment.data.revokedOnAny); // FIXME: To update oa-verify library so that types are automatically inferred
+
+      let customMessage: CustomMessageProps["customMessage"] = {};
+
+      if (isRevoked) {
+        customMessage = {
+          ...customMessage,
+          DOCUMENT_STATUS: {
+            REJECTED: "Document has been revoked",
+          },
+        };
+      }
+
       if (isHealthCert(document)) {
-        setCustomMessage({
+        customMessage = {
+          ...customMessage,
           ISSUER_IDENTITY: {
             VERIFIED: "Issued by Singapore Government",
             REJECTED: "Document not issued by Singapore Government",
           },
-        });
-      } else {
-        setCustomMessage(undefined);
+        };
       }
+
+      setCustomMessage(customMessage);
     })();
   }, [wrappedDocument]);
 

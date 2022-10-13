@@ -69,7 +69,7 @@ const Verifier: React.FC<VerifierProps> = ({ wrappedDocument }) => {
       const isRevoked = verifyUtils
         .getDocumentStatusFragments(fragments)
         .filter((fragment) => verifyUtils.isInvalidFragment(fragment))
-        .some((invalidFragment: any) => invalidFragment.data.revokedOnAny);
+        .some((invalidFragment: any) => invalidFragment.data.revokedOnAny); // FIXME: To update oa-verify library so that types are automatically inferred
 
       let customMessage: CustomMessageProps["customMessage"] = {};
 

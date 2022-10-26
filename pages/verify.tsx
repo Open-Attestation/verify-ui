@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useReducer, useState, Reducer } from "react";
-import type { NextPage, InferGetServerSidePropsType, GetServerSidePropsContext } from "next";
+import { useCallback, useEffect, useReducer, Reducer } from "react";
+import type { GetServerSidePropsContext, InferGetServerSidePropsType, NextPage } from "next";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { v2, v3 } from "@govtechsg/open-attestation";
@@ -7,8 +7,9 @@ import { v2, v3 } from "@govtechsg/open-attestation";
 import Layout from "@components/layout/Layout";
 import Status, { StatusProps } from "@components/figure/StatusMessage";
 import Dropzone from "@components/verify/Dropzone";
-import { fetchAndDecryptDocument, decodeQueryAndHash } from "@utils/fetch-document";
+import { fetchAndDecryptDocument, decodeQueryAndHash, decodeUriFragment } from "@utils/fetch-document";
 import { verifyErrorHandler } from "@utils/error-handler";
+import { getUniversalActionType } from "@utils/get-universal-action-type";
 
 const Verifier = dynamic(() => import("@components/verify/Verifier"), { ssr: false });
 
@@ -56,15 +57,8 @@ const Verify: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> =
   const router = useRouter();
   const [{ status, document, showDropzone }, dispatch] = useReducer(reducer, initialState);
 
-  /* Check for universal action in URL */
   useEffect(() => {
     (async () => {
-      // If no universal action in URL, skip function
-      if (props.universalActionType === "NONE") {
-        dispatch({ type: "INITIAL" });
-        return;
-      }
-
       try {
         if (props.universalActionType === "HOSTED_URL") {
           const encodedQ = router.query.q?.toString() || "";
@@ -74,13 +68,13 @@ const Verify: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> =
             decodedQ.payload.uri,
             decodedHash?.key || decodedQ.payload.key
           );
-          dispatch({ type: "VERIFY_DOCUMENT", document });
-        } else {
+          return dispatch({ type: "VERIFY_DOCUMENT", document });
+        } else if (props.universalActionType === "EMBEDDED_URI_FRAGMENT") {
           const encodedHash = window.location.hash.substring(1);
-          // TODO: Tidy up with util functions
-          const decodedHash = decodeURIComponent(encodedHash);
-          const document = JSON.parse(decodedHash);
-          dispatch({ type: "VERIFY_DOCUMENT", document });
+          const document = decodeUriFragment(encodedHash);
+          return dispatch({ type: "VERIFY_DOCUMENT", document });
+        } else {
+          return dispatch({ type: "INITIAL" });
         }
       } catch (e) {
         console.error(e);
@@ -108,20 +102,9 @@ const Verify: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> =
 };
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
-  type UniversalActionType = "NONE" | "HOSTED_URL" | "EMBEDDED_URI_FRAGMENT";
-
-  const hasHostedUrl = typeof context.query.q === "string";
-  const hasUriFragment = context.query.uriFragment === "true";
-
-  const universalActionType: UniversalActionType = hasUriFragment
-    ? "EMBEDDED_URI_FRAGMENT"
-    : hasHostedUrl
-    ? "HOSTED_URL"
-    : "NONE";
-
   return {
     props: {
-      universalActionType,
+      universalActionType: getUniversalActionType(context.query),
     },
   };
 };

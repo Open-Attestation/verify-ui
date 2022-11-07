@@ -51,6 +51,15 @@ const Renderer: React.FC<RendererProps> = ({ document, rawDocument }) => {
   }, []);
 
   const handlePrint = useCallback(() => {
+    if (
+      navigator.userAgent.includes("SamsungBrowser") ||
+      navigator.userAgent.includes("CriOS") ||
+      navigator.userAgent.includes("FxiOS")
+    ) {
+      alert(
+        "Printing this document is not optimised on your device.\nFor the best result, use: \n- Chrome on Android devices \n- Safari on IOS devices \n- Any major browsers on desktop"
+      );
+    }
     toFrame && toFrame(print());
   }, [toFrame]);
 

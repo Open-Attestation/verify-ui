@@ -14,7 +14,7 @@ export const getBody = async (body: Buffer): Promise<string> =>
   });
 
 const statsLogger = RequestLogger(
-  { url: "https://infura.io/api/stats/request-volume", method: "post" },
+  { url: "https://app.infura.io/api/stats/request-volume", method: "post" },
   {
     logResponseBody: true,
   }

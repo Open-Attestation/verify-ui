@@ -5,6 +5,7 @@ import { validateSchema, v2, v3 } from "@govtechsg/open-attestation";
 import Heading from "@components/text/Heading";
 import { CodedError } from "@utils/coded-error";
 import { StatusProps } from "@components/figure/StatusMessage";
+import Link from "next/link";
 
 interface DropzoneProps extends React.HTMLAttributes<HTMLElement> {
   onDocumentDropped?: (wrappedDocument: v2.WrappedDocument | v3.WrappedDocument) => void;
@@ -80,7 +81,6 @@ const Dropzone: React.FC<DropzoneProps> = ({ onDocumentDropped = () => {}, onDoc
     <section className="container text-center my-10">
       <Heading level="h1">Verify Documents</Heading>
       <p>Drop a government issued certificate</p>
-
       <div
         className={[
           "my-10 py-20 border-4 border-dotted rounded-lg bg-white",
@@ -102,6 +102,21 @@ const Dropzone: React.FC<DropzoneProps> = ({ onDocumentDropped = () => {}, onDoc
           >
             Select File
           </button>
+          <div className="flex flex-row gap-1 pt-10">
+            <div>Alternatively, if you have a Verify QR, you could verify the document by </div>
+            <Link href="/qr" passHref>
+              <a
+                target="_blank"
+                rel="noreferrer"
+                onClick={(event) => {
+                  event.stopPropagation();
+                }}
+                className="text-blue-600 underline hover:text-blue-700"
+              >
+                scanning it
+              </a>
+            </Link>
+          </div>
         </div>
       </div>
     </section>

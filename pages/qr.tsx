@@ -4,6 +4,8 @@ import type { NextPage } from "next";
 import Layout from "@components/layout/Layout";
 import Heading from "@components/text/Heading";
 import QrScanner from "@components/verify/QrScanner";
+import Link from "next/link";
+import { NextSeo } from "next-seo";
 
 const SCAN_MODES = ["Camera 1", "Camera 2", "barcode scanner"];
 
@@ -33,6 +35,7 @@ const Qr: NextPage = () => {
 
   return (
     <Layout>
+      <NextSeo title="QR page" />
       <section className="container text-center my-10 pb-2 mx-auto">
         <Heading level="h1">Scan Verify QR</Heading>
         <p>Show the Verify QR in front of the camera or scanner</p>
@@ -47,14 +50,11 @@ const Qr: NextPage = () => {
             <QrScanner currentMode={currentMode}></QrScanner>
             <div className="flex flex-col pt-10">
               <div>If you have problems scanning the QR, you may want to verify by</div>
-              <a
-                href="/verify"
-                target="_blank"
-                rel="noreferrer"
-                className="text-blue-600 underline hover:text-blue-700"
-              >
-                uploading your OA certificate
-              </a>
+              <Link href="/verify">
+                <a target="_blank" rel="noreferrer" className="text-blue-600 underline hover:text-blue-700">
+                  uploading your OA certificate
+                </a>
+              </Link>
             </div>
           </div>
         </div>

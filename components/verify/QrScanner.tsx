@@ -14,7 +14,8 @@ export const QrScanner: React.FC<QrScannerProps> = ({ currentMode }) => {
 
   const checkIfVerifyUrl = () => {};
 
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const isWindowUndefined = typeof window === "undefined";
+  const [isMobile, setIsMobile] = useState(!isWindowUndefined && window.innerWidth < 768);
   const updateWidth = () => setIsMobile(window.innerWidth < 768);
 
   useEffect(() => {
@@ -25,7 +26,6 @@ export const QrScanner: React.FC<QrScannerProps> = ({ currentMode }) => {
   return (
     <div className="w-full px-8">
       <div className="relative">
-        <NextSeo title="QR page" />
         <QrReader
           onResult={(result, error) => {
             if (!!result) {

@@ -41,10 +41,11 @@ export const verifyErrorHandler = (e: unknown): StatusProps => {
       message: (
         <div className="text-left">
           <b>An error occurred while displaying your {documentLabel}. Please ensure</b>:
-          <ol className="list-decimal mt-4 ml-4">
+          <ol className="list-decimal my-4 ml-4">
             <li>Your {documentLabel} is still valid</li>
             <li>Your internet connection is available, and you are not behind a corporate or personal firewall</li>
           </ol>
+          <span className="text-xs break-all">{e.config.url}</span>
         </div>
       ),
     };

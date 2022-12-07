@@ -1,11 +1,11 @@
 import axios from "axios";
 
 import { CodedError } from "@utils/coded-error";
-import { isSpmTransientStorage } from "@utils/notarise-healthcerts";
+import { isNotariseSpmTransientStorage, isNotariseTransientStorage } from "@utils/notarise-healthcerts";
 import { StatusProps } from "@components/figure/StatusMessage";
 
 /**
- * Error handler for the Verify page (pages/verify.tsx)
+ * Custom error message handler for the Verify page (pages/verify.tsx)
  * @param e
  */
 export const verifyErrorHandler = (e: unknown): StatusProps => {
@@ -20,21 +20,31 @@ export const verifyErrorHandler = (e: unknown): StatusProps => {
         </div>
       ),
     };
-  } else if (axios.isAxiosError(e)) {
+  }
+  // isNotariseSpmTransientStorage() has to be checked first because isNotariseTransientStorage() encompasses SPM URLs as well
+  else if (axios.isAxiosError(e) && isNotariseSpmTransientStorage(e.config.url)) {
     return {
       type: "ERROR",
-      message: isSpmTransientStorage(e.config.url) ? (
+      message: (
         <div className="flex flex-col items-center gap-10 text-center">
           Unable to fetch document.
           <br />
           Please click on the refresh icon on the top right of your Singpass QR code and try again.
           <img src="/images/spm-refresh-button.png" alt="SPM screenshot of refresh button" />
         </div>
-      ) : (
-        <div className="text-center">
-          {e.message}: Unable to fetch document from
-          <br />
-          <span className="text-xs break-all">{e.config.url}</span>
+      ),
+    };
+  } else if (axios.isAxiosError(e)) {
+    const documentLabel = isNotariseTransientStorage(e.config.url) ? "HealthCert" : "document";
+    return {
+      type: "ERROR",
+      message: (
+        <div className="text-left">
+          <b>An error occurred while displaying your {documentLabel}. Please ensure</b>:
+          <ol className="list-decimal mt-4 ml-4">
+            <li>Your {documentLabel} is still valid</li>
+            <li>Your internet connection is available, and you are not behind a corporate or personal firewall</li>
+          </ol>
         </div>
       ),
     };
@@ -47,7 +57,7 @@ export const verifyErrorHandler = (e: unknown): StatusProps => {
         </div>
       ),
     };
+  } else {
+    return { type: "ERROR", message: <>Something went wrong.</> };
   }
-
-  return { type: "ERROR", message: <>Something went wrong.</> };
 };

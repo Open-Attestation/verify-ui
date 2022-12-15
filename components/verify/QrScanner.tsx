@@ -7,11 +7,7 @@ export interface QrScannerProps {
   currentMode: number;
 }
 
-const MEDIA_MODES = [
-  "f8f0b9416450ce38cff04c1042155721e4144d769b284c0c3f2d8dd1b8aa71b6",
-  "ad07d1769cc8a810a60ed4813f518e8ffd6b054399b5e1bca050482a7d47cf27",
-  "scanner",
-];
+const MEDIA_MODES = ["environment", "user", "scanner"];
 
 export const QrScanner: React.FC<QrScannerProps> = ({ currentMode }) => {
   const [, setData] = useState("No result");
@@ -23,6 +19,30 @@ export const QrScanner: React.FC<QrScannerProps> = ({ currentMode }) => {
   const updateWidth = () => setIsMobile(window.innerWidth < 768);
 
   useEffect(() => {
+    let stream;
+    navigator.mediaDevices
+      .getUserMedia({ video: true })
+      .then(
+        (s) => (stream = s),
+        (e) => console.log(e.message)
+      )
+      .then(() => navigator.mediaDevices.enumerateDevices())
+      .then((devices) => {
+        devices
+          .filter((device) => {
+            device.kind === "videoinput";
+          })
+          .forEach((device, n) => {
+            console.log(`Device ${n}: ` + JSON.stringify(device, null, 2));
+            if (device.label.includes("back")) {
+              MEDIA_MODES[0] = device.deviceId;
+            } else if (device.label.includes("front")) {
+              MEDIA_MODES[1] = device.deviceId;
+            }
+          });
+      })
+      .catch((e) => console.log(e));
+
     window.addEventListener("resize", updateWidth);
     return () => window.removeEventListener("resize", updateWidth);
   }, []);
@@ -42,7 +62,10 @@ export const QrScanner: React.FC<QrScannerProps> = ({ currentMode }) => {
             }
           }}
           //this is facing mode : "environment " it will open backcamera of the smartphone and if not found will
-          constraints={{ deviceId: MEDIA_MODES[currentMode], aspectRatio: 1 }}
+          constraints={{
+            deviceId: { ideal: MEDIA_MODES[currentMode] },
+            aspectRatio: 1,
+          }}
           videoContainerStyle={{ paddingTop: isMobile ? "100%" : "50%" }}
           videoStyle={{ width: "unset", borderRadius: "0.5rem", margin: "auto", left: 0, right: 0 }}
         />

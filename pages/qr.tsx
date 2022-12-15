@@ -28,11 +28,11 @@ const Qr: NextPage = () => {
         const videoDevices = devices.filter((device) => device.kind === "videoinput");
         const tempList = mediaModesFound;
         videoDevices.forEach((device) => {
-          if (device.label.toLocaleLowerCase().includes("face")) {
+          if (device.label.toLocaleLowerCase().includes("back")) {
             tempList[0] = device.deviceId;
             setLog(`FOUND ${device.deviceId}`);
           }
-          if (device.label.toLocaleLowerCase().includes("face")) {
+          if (device.label.toLocaleLowerCase().includes("front")) {
             tempList[1] = device.deviceId;
             setLog(`FOUND ${device.deviceId}`);
           }

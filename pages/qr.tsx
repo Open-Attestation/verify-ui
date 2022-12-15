@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type { NextPage } from "next";
 
 import Layout from "@components/layout/Layout";
@@ -11,6 +11,43 @@ const SCAN_MODES = ["Camera 1", "Camera 2", "barcode scanner"];
 
 const Qr: NextPage = () => {
   const [currentMode, setCurrentMode] = useState<number>(0);
+  const [mediaModesFound, setMediaModesFound] = useState<string[]>(["", "", "scanner"]);
+  const [isLoaded, setIsLoaded] = useState<boolean>(false);
+
+  useEffect(() => {
+    let stream;
+    navigator.mediaDevices
+      .getUserMedia({ video: true })
+      .then(
+        (s) => (stream = s),
+        (e) => console.log(e.message)
+      )
+      .then(() => navigator.mediaDevices.enumerateDevices())
+      .then((devices) => {
+        devices
+          .filter((device) => device.kind === "videoinput")
+          .map((device, n) => {
+            console.log(`Device ${n}: ` + JSON.stringify(device, null, 2));
+            if (device.label.includes("FaceTime")) {
+              setMediaModesFound(
+                mediaModesFound.map((mode, i) => {
+                  if (i === 0) return device.deviceId;
+                  else return mode;
+                })
+              );
+            } else if (device.label.includes("front")) {
+              setMediaModesFound(
+                mediaModesFound.map((mode, i) => {
+                  if (i === 1) return device.deviceId;
+                  else return mode;
+                })
+              );
+            }
+          });
+        setIsLoaded(true);
+      })
+      .catch((e) => console.log(e));
+  }, []);
 
   const remainingModes = () => {
     return (
@@ -47,7 +84,7 @@ const Qr: NextPage = () => {
               <div className="font-bold">{SCAN_MODES[currentMode]}</div>
             </div>
             {remainingModes()}
-            <QrScanner currentMode={currentMode}></QrScanner>
+            {isLoaded && <QrScanner currentMode={currentMode} mediaModes={mediaModesFound}></QrScanner>}
             <div className="flex flex-col pt-10">
               <div>If you have problems scanning the QR, you may want to verify by</div>
               <Link href="/verify">

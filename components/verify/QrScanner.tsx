@@ -5,11 +5,12 @@ import { QrReader } from "react-qr-reader";
 
 export interface QrScannerProps {
   currentMode: number;
+  mediaModes: string[];
 }
 
 const MEDIA_MODES = ["environment", "user", "scanner"];
 
-export const QrScanner: React.FC<QrScannerProps> = ({ currentMode }) => {
+export const QrScanner: React.FC<QrScannerProps> = ({ currentMode, mediaModes }) => {
   const [, setData] = useState("No result");
 
   const checkIfVerifyUrl = () => {};
@@ -19,28 +20,7 @@ export const QrScanner: React.FC<QrScannerProps> = ({ currentMode }) => {
   const updateWidth = () => setIsMobile(window.innerWidth < 768);
 
   useEffect(() => {
-    let stream;
-    navigator.mediaDevices
-      .getUserMedia({ video: true })
-      .then(
-        (s) => (stream = s),
-        (e) => console.log(e.message)
-      )
-      .then(() => navigator.mediaDevices.enumerateDevices())
-      .then((devices) => {
-        devices
-          .filter((device) => device.kind === "videoinput")
-          .forEach((device, n) => {
-            console.log(`Device ${n}: ` + JSON.stringify(device, null, 2));
-            if (device.label.includes("back")) {
-              MEDIA_MODES[0] = device.deviceId;
-            } else if (device.label.includes("front")) {
-              MEDIA_MODES[1] = device.deviceId;
-            }
-          });
-      })
-      .catch((e) => console.log(e));
-
+    console.log(mediaModes);
     window.addEventListener("resize", updateWidth);
     return () => window.removeEventListener("resize", updateWidth);
   }, []);
@@ -59,9 +39,8 @@ export const QrScanner: React.FC<QrScannerProps> = ({ currentMode }) => {
             if (!!error) {
             }
           }}
-          //this is facing mode : "environment " it will open backcamera of the smartphone and if not found will
           constraints={{
-            deviceId: { ideal: MEDIA_MODES[currentMode] },
+            deviceId: { exact: mediaModes[currentMode] },
             aspectRatio: 1,
           }}
           videoContainerStyle={{ paddingTop: isMobile ? "100%" : "50%" }}

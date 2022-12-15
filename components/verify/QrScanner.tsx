@@ -14,6 +14,11 @@ export const QrScanner: React.FC<QrScannerProps> = ({ currentMode, mediaModes })
   const [, setData] = useState("No result");
 
   const checkIfVerifyUrl = () => {};
+  const hardcoded = [
+    "79502a85310f82077a11f49786f5520a8e9c4b3d7fea4ac136be26e062f7d77c",
+    "f39b4ed2489ab9f4087268806e6536b4ca5bf4a0b319712f0bb057be679bdbed",
+    "scanner",
+  ];
 
   const isWindowUndefined = typeof window === "undefined";
   const [isMobile, setIsMobile] = useState(!isWindowUndefined && window.innerWidth < 768);
@@ -40,7 +45,7 @@ export const QrScanner: React.FC<QrScannerProps> = ({ currentMode, mediaModes })
             }
           }}
           constraints={{
-            deviceId: { exact: mediaModes[currentMode] },
+            deviceId: { exact: hardcoded[currentMode] },
             aspectRatio: 1,
           }}
           videoContainerStyle={{ paddingTop: isMobile ? "100%" : "50%" }}

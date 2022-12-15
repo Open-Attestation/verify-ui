@@ -25,19 +25,17 @@ const Qr: NextPage = () => {
       )
       .then(() => navigator.mediaDevices.enumerateDevices())
       .then((devices) => {
-        devices
-          .filter((device) => device.kind === "videoinput")
-          .map((device, n) => {
-            console.log(`Device ${n}: ` + JSON.stringify(device, null, 2));
-            if (device.label.toLocaleLowerCase().includes("front")) {
-              setMediaModesFound(mediaModesFound.map((mediaMode, i) => (i === 0 ? device.deviceId : mediaMode)));
-              setLog(`FOUND ${device.deviceId}`);
-            }
-            // } else if (device.label.toLocaleLowerCase().includes("front")) {
-            //   setMediaModesFound(mediaModesFound.map((mediaMode, i) => (i === 1 ? device.deviceId : mediaMode)));
-            //   setLog(`FOUND ${device.deviceId}`);
-            // }
-          });
+        const videoDevices = devices.filter((device) => device.kind === "videoinput");
+        const tempList = mediaModesFound;
+        videoDevices.forEach((device) => {
+          if (device.label.toLocaleLowerCase().includes("back")) {
+            tempList[0] = device.deviceId;
+          }
+          if (device.label.toLocaleLowerCase().includes("front")) {
+            tempList[1] = device.deviceId;
+          }
+        });
+        setMediaModesFound(tempList);
         setIsLoaded(true);
       })
       .catch((e) => console.log(e));

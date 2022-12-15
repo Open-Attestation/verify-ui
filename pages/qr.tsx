@@ -28,20 +28,10 @@ const Qr: NextPage = () => {
           .filter((device) => device.kind === "videoinput")
           .map((device, n) => {
             console.log(`Device ${n}: ` + JSON.stringify(device, null, 2));
-            if (device.label.includes("FaceTime")) {
-              setMediaModesFound(
-                mediaModesFound.map((mode, i) => {
-                  if (i === 0) return device.deviceId;
-                  else return mode;
-                })
-              );
-            } else if (device.label.includes("front")) {
-              setMediaModesFound(
-                mediaModesFound.map((mode, i) => {
-                  if (i === 1) return device.deviceId;
-                  else return mode;
-                })
-              );
+            if (device.label.toLocaleLowerCase().includes("back")) {
+              setMediaModesFound(mediaModesFound.map((mediaMode, i) => (i === 0 ? device.deviceId : mediaMode)));
+            } else if (device.label.toLocaleLowerCase().includes("front")) {
+              setMediaModesFound(mediaModesFound.map((mediaMode, i) => (i === 1 ? device.deviceId : mediaMode)));
             }
           });
         setIsLoaded(true);

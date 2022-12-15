@@ -1,7 +1,7 @@
 import axios from "axios";
 
 import { CodedError } from "@utils/coded-error";
-import { isNotariseSpmTransientStorage, isNotariseTransientStorage } from "@utils/notarise-healthcerts";
+import { isNotariseSpmTransientStorage } from "@utils/notarise-healthcerts";
 import { StatusProps } from "@components/figure/StatusMessage";
 
 /**
@@ -35,15 +35,14 @@ export const verifyErrorHandler = (e: unknown): StatusProps => {
       ),
     };
   } else if (axios.isAxiosError(e)) {
-    const documentLabel = isNotariseTransientStorage(e.config.url) ? "HealthCert" : "document";
     return {
       type: "ERROR",
       message: (
         <div className="text-left">
-          <b>An error occurred while displaying your {documentLabel}. Please ensure</b>:
+          <b>An error occurred while displaying your document. Please ensure</b>:
           <ol className="list-decimal my-4 ml-4">
-            <li>Your {documentLabel} is still valid</li>
             <li>Your internet connection is available, and you are not behind a corporate or personal firewall</li>
+            <li>Alternatively, you may request for a new document to be issued</li>
           </ol>
           <span className="text-xs break-all">{e.config.url}</span>
         </div>

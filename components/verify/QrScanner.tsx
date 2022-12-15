@@ -45,7 +45,7 @@ export const QrScanner: React.FC<QrScannerProps> = ({ currentMode, mediaModes })
             }
           }}
           constraints={{
-            deviceId: { exact: "f39b4ed2489ab9f4087268806e6536b4ca5bf4a0b319712f0bb057be679bdbed" },
+            deviceId: { exact: "79502a85310f82077a11f49786f5520a8e9c4b3d7fea4ac136be26e062f7d77c" },
             aspectRatio: 1,
           }}
           videoContainerStyle={{ paddingTop: isMobile ? "100%" : "50%" }}

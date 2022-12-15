@@ -13,6 +13,7 @@ const Qr: NextPage = () => {
   const [currentMode, setCurrentMode] = useState<number>(0);
   const [mediaModesFound, setMediaModesFound] = useState<string[]>(["", "", "scanner"]);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
+  const [log, setLog] = useState<string>("yes");
 
   useEffect(() => {
     let stream;
@@ -28,8 +29,9 @@ const Qr: NextPage = () => {
           .filter((device) => device.kind === "videoinput")
           .map((device, n) => {
             console.log(`Device ${n}: ` + JSON.stringify(device, null, 2));
-            if (device.label.toLocaleLowerCase().includes("back")) {
+            if (device.label.toLocaleLowerCase().includes("face")) {
               setMediaModesFound(mediaModesFound.map((mediaMode, i) => (i === 0 ? device.deviceId : mediaMode)));
+              setLog(`FOUND ${device.deviceId}`);
             } else if (device.label.toLocaleLowerCase().includes("front")) {
               setMediaModesFound(mediaModesFound.map((mediaMode, i) => (i === 1 ? device.deviceId : mediaMode)));
             }
@@ -70,6 +72,7 @@ const Qr: NextPage = () => {
         <div className="md:mx-40 my-10 py-10 border-4 border-dashed rounded-lg bg-white ring-primary shadow-xl">
           <div className="flex flex-col items-center">
             <div className="flex flex-row gap-2">
+              <div> {log} </div>
               <div>Current scan mode: </div>
               <div className="font-bold">{SCAN_MODES[currentMode]}</div>
             </div>

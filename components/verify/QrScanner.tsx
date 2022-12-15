@@ -29,9 +29,7 @@ export const QrScanner: React.FC<QrScannerProps> = ({ currentMode }) => {
       .then(() => navigator.mediaDevices.enumerateDevices())
       .then((devices) => {
         devices
-          .filter((device) => {
-            device.kind === "videoinput";
-          })
+          .filter((device) => device.kind === "videoinput")
           .forEach((device, n) => {
             console.log(`Device ${n}: ` + JSON.stringify(device, null, 2));
             if (device.label.includes("back")) {

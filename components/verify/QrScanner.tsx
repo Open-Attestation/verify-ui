@@ -7,7 +7,11 @@ export interface QrScannerProps {
   currentMode: number;
 }
 
-const MEDIA_MODES = ["environment", "user", "scanner"];
+const MEDIA_MODES = [
+  "f8f0b9416450ce38cff04c1042155721e4144d769b284c0c3f2d8dd1b8aa71b6",
+  "ad07d1769cc8a810a60ed4813f518e8ffd6b054399b5e1bca050482a7d47cf27",
+  "scanner",
+];
 
 export const QrScanner: React.FC<QrScannerProps> = ({ currentMode }) => {
   const [, setData] = useState("No result");
@@ -38,7 +42,7 @@ export const QrScanner: React.FC<QrScannerProps> = ({ currentMode }) => {
             }
           }}
           //this is facing mode : "environment " it will open backcamera of the smartphone and if not found will
-          constraints={{ facingMode: { ideal: MEDIA_MODES[currentMode] }, aspectRatio: 1 }}
+          constraints={{ deviceId: MEDIA_MODES[currentMode], aspectRatio: 1 }}
           videoContainerStyle={{ paddingTop: isMobile ? "100%" : "50%" }}
           videoStyle={{ width: "unset", borderRadius: "0.5rem", margin: "auto", left: 0, right: 0 }}
         />

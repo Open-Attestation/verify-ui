@@ -29,13 +29,14 @@ const Qr: NextPage = () => {
           .filter((device) => device.kind === "videoinput")
           .map((device, n) => {
             console.log(`Device ${n}: ` + JSON.stringify(device, null, 2));
-            if (device.label.toLocaleLowerCase().includes("back")) {
+            if (device.label.toLocaleLowerCase().includes("front")) {
               setMediaModesFound(mediaModesFound.map((mediaMode, i) => (i === 0 ? device.deviceId : mediaMode)));
               setLog(`FOUND ${device.deviceId}`);
-            } else if (device.label.toLocaleLowerCase().includes("front")) {
-              setMediaModesFound(mediaModesFound.map((mediaMode, i) => (i === 1 ? device.deviceId : mediaMode)));
-              setLog(`FOUND ${device.deviceId}`);
             }
+            // } else if (device.label.toLocaleLowerCase().includes("front")) {
+            //   setMediaModesFound(mediaModesFound.map((mediaMode, i) => (i === 1 ? device.deviceId : mediaMode)));
+            //   setLog(`FOUND ${device.deviceId}`);
+            // }
           });
         setIsLoaded(true);
       })

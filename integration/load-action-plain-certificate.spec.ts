@@ -49,7 +49,6 @@ test("Load document from action should fail when document does not exist", async
 
   await t.navigateTo(`http://localhost:3000/verify/?q=${encodeURI(JSON.stringify(action))}`);
   await t.expect(AlertContainer.withText(`An error occurred while displaying your document`).exists).ok();
-  await t.expect(AlertContainer.withText(action.payload.uri).exists).ok();
 });
 
 test("Load document from action should fail when action type is invalid", async (t) => {

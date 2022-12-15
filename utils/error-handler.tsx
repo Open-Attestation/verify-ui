@@ -44,7 +44,6 @@ export const verifyErrorHandler = (e: unknown): StatusProps => {
             <li>Your internet connection is available, and you are not behind a corporate or personal firewall</li>
             <li>Alternatively, you may request for a new document to be issued</li>
           </ol>
-          <span className="text-xs break-all">{e.config.url}</span>
         </div>
       ),
     };

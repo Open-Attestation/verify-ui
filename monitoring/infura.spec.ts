@@ -39,7 +39,7 @@ const getRequestCount = async (requestLogger: RequestLogger) => {
     }
     await sleep(1000);
   }
-  throw new Error("Could not find the stats");
+  throw new Error(`Could not find the stats: ${JSON.stringify(requestLogger.requests)}`);
 };
 
 const openGithubIssue = async (requestCount: number) => {

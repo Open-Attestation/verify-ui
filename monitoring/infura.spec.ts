@@ -19,7 +19,8 @@ const statsLogger = RequestLogger(
     logResponseBody: true,
   }
 );
-fixture("Infura Monitoring").page`https://infura.io/login`;
+
+fixture("Infura Monitoring").page`https://infura.io/login`.requestHooks(statsLogger);
 
 const sleep = (timeout: number) => new Promise((resolve) => setTimeout(resolve, timeout));
 
@@ -39,7 +40,7 @@ const getRequestCount = async (requestLogger: RequestLogger) => {
     }
     await sleep(1000);
   }
-  throw new Error("Could not find the stats");
+  throw new Error(`Could not find the stats: ${JSON.stringify(requestLogger.requests)}`);
 };
 
 const openGithubIssue = async (requestCount: number) => {
@@ -67,7 +68,7 @@ test("Status check should reflect error correctly", async (t) => {
   await Selector("[data-testid='create-project']").with({ visibilityCheck: true })();
 
   // go to verify.gov.sg project
-  await t.click(Selector("p").withText("verify.gov.sg")).addRequestHooks(statsLogger);
+  await t.click(Selector("p").withText("verify.gov.sg"));
 
   const requestCount = await getRequestCount(statsLogger);
   const maximumRequest = 1000000;

@@ -33,7 +33,7 @@ export const QrScanner: React.FC<QrScannerProps> = ({ currentMode, mediaModes })
   return (
     <div className="w-full px-8">
       <div className="relative">
-        <QrReader
+        {/* <QrReader
           onResult={(result, error) => {
             if (!!result) {
               setData(result?.getText());
@@ -45,9 +45,14 @@ export const QrScanner: React.FC<QrScannerProps> = ({ currentMode, mediaModes })
             }
           }}
           constraints={{
-            deviceId: { exact: "79502a85310f82077a11f49786f5520a8e9c4b3d7fea4ac136be26e062f7d77c" },
+            // deviceId: { exact: "79502a85310f82077a11f49786f5520a8e9c4b3d7fea4ac136be26e062f7d77c" },
+            facingMode: 'environment'
             aspectRatio: 1,
           }}
+          videoContainerStyle={{ paddingTop: isMobile ? "100%" : "50%" }}
+          videoStyle={{ width: "unset", borderRadius: "0.5rem", margin: "auto", left: 0, right: 0 }}
+        /> */}
+        <QrReader
           videoContainerStyle={{ paddingTop: isMobile ? "100%" : "50%" }}
           videoStyle={{ width: "unset", borderRadius: "0.5rem", margin: "auto", left: 0, right: 0 }}
         />

@@ -7,41 +7,42 @@ import QrScanner from "@components/verify/QrScanner";
 import Link from "next/link";
 import { NextSeo } from "next-seo";
 
-const SCAN_MODES = ["Camera 1", "Camera 2", "barcode scanner"];
+const SCAN_MODES = ["Camera 1", "Camera 2", "Camera", "barcode scanner"];
 
 const Qr: NextPage = () => {
   const [currentMode, setCurrentMode] = useState<number>(0);
-  const [mediaModesFound, setMediaModesFound] = useState<string[]>(["", "", "scanner"]);
+  const [devicesFound, setDevicesFound] = useState<string[]>(["", "", "scanner"]);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
-  const [log, setLog] = useState<string>("yes");
+  const [isError, setIsError] = useState<boolean>(false);
 
   useEffect(() => {
-    let stream;
     navigator.mediaDevices
       .getUserMedia({ video: true })
-      .then(
-        (s) => (stream = s),
-        (e) => console.log(e.message)
-      )
       .then(() => navigator.mediaDevices.enumerateDevices())
       .then((devices) => {
         const videoDevices = devices.filter((device) => device.kind === "videoinput");
-        const tempList = mediaModesFound;
+        const tempList = devicesFound;
+        let hasFrontCamera = false;
+        let hasBackCamera = false;
         videoDevices.forEach((device) => {
-          if (device.label.toLocaleLowerCase().includes("back")) {
-            tempList[0] = device.deviceId;
-            setLog(`FOUND ${device.deviceId}`);
-          }
           if (device.label.toLocaleLowerCase().includes("front")) {
+            tempList[0] = device.deviceId;
+            hasFrontCamera = true;
+          }
+          if (device.label.toLocaleLowerCase().includes("back")) {
             tempList[1] = device.deviceId;
-            setLog(`FOUND ${device.deviceId}`);
+            hasBackCamera = true;
           }
         });
-        setLog(tempList.toString());
-        setMediaModesFound(tempList);
+        if (hasFrontCamera && hasBackCamera) {
+          SCAN_MODES.splice(2, 1);
+        } else {
+          SCAN_MODES.splice(0, 2);
+        }
+        setDevicesFound(tempList);
         setIsLoaded(true);
       })
-      .catch((e) => console.log(e));
+      .catch((e) => setIsError(true));
   }, []);
 
   const remainingModes = () => {
@@ -73,22 +74,28 @@ const Qr: NextPage = () => {
         <p>Show the Verify QR in front of the camera or scanner</p>
 
         <div className="md:mx-40 my-10 py-10 border-4 border-dashed rounded-lg bg-white ring-primary shadow-xl">
-          <div className="flex flex-col items-center">
-            <div className="flex flex-row gap-2">
-              <div> {log} </div>
-              <div>Current scan mode: </div>
-              <div className="font-bold">{SCAN_MODES[currentMode]}</div>
+          {isLoaded && (
+            <div className="flex flex-col items-center">
+              <div className="flex flex-row gap-2">
+                <div>Current scan mode: </div>
+                <div className="font-bold">{SCAN_MODES[currentMode]}</div>
+              </div>
+              {remainingModes()}
+              <QrScanner currentMode={currentMode} deviceIds={devicesFound}></QrScanner>
             </div>
-            {remainingModes()}
-            {isLoaded && <QrScanner currentMode={currentMode} mediaModes={mediaModesFound}></QrScanner>}
-            <div className="flex flex-col pt-10">
-              <div>If you have problems scanning the QR, you may want to verify by</div>
-              <Link href="/verify">
-                <a target="_blank" rel="noreferrer" className="text-blue-600 underline hover:text-blue-700">
-                  uploading your OA certificate
-                </a>
-              </Link>
+          )}
+          {isError && (
+            <div className="flex flex-col items-center bg-gray-200 mx-8">
+              <h2>Error accessing camera</h2>
             </div>
+          )}
+          <div className="flex flex-col pt-10">
+            <div>If you have problems scanning the QR, you may want to verify by</div>
+            <Link href="/verify">
+              <a target="_blank" rel="noreferrer" className="text-blue-600 underline hover:text-blue-700">
+                uploading your OA certificate
+              </a>
+            </Link>
           </div>
         </div>
       </section>

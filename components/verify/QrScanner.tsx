@@ -22,6 +22,7 @@ export const QrScanner: React.FC<QrScannerProps> = ({ currentMode, mediaModes })
 
   const isWindowUndefined = typeof window === "undefined";
   const [isMobile, setIsMobile] = useState(!isWindowUndefined && window.innerWidth < 768);
+  const [startScan, setStartScan] = useState(false);
   const updateWidth = () => setIsMobile(window.innerWidth < 768);
 
   useEffect(() => {
@@ -52,11 +53,20 @@ export const QrScanner: React.FC<QrScannerProps> = ({ currentMode, mediaModes })
           videoContainerStyle={{ paddingTop: isMobile ? "100%" : "50%" }}
           videoStyle={{ width: "unset", borderRadius: "0.5rem", margin: "auto", left: 0, right: 0 }}
         /> */}
-        <QrReader
-          constraints={{ facingMode: MEDIA_MODES[currentMode] }}
-          videoContainerStyle={{ paddingTop: isMobile ? "100%" : "50%" }}
-          videoStyle={{ width: "unset", borderRadius: "0.5rem", margin: "auto", left: 0, right: 0 }}
-        />
+        <button
+          onClick={() => {
+            setStartScan(!startScan);
+          }}
+        >
+          {startScan ? "Stop Scan" : "Start Scan"}
+        </button>
+        {startScan && (
+          <QrReader
+            constraints={{ facingMode: MEDIA_MODES[currentMode] }}
+            videoContainerStyle={{ paddingTop: isMobile ? "100%" : "50%" }}
+            videoStyle={{ width: "unset", borderRadius: "0.5rem", margin: "auto", left: 0, right: 0 }}
+          />
+        )}
         <img
           alt="qr visual guide"
           src="/images/qr-crosshair.svg"

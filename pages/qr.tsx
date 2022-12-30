@@ -11,19 +11,26 @@ const SCAN_MODES = ["Camera 1", "Camera 2", "Camera", "barcode scanner"];
 
 const Qr: NextPage = () => {
   const [currentMode, setCurrentMode] = useState<number>(0);
-  const [devicesFound, setDevicesFound] = useState<string[]>(["", "", "scanner"]);
+  const [devicesFound, setDevicesFound] = useState<string[]>(["", ""]);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
+  const [isCameraMissing, setIsCameraMissing] = useState<boolean>(false);
 
   useEffect(() => {
     navigator.mediaDevices
       .getUserMedia({ video: true })
       .then(() => navigator.mediaDevices.enumerateDevices())
       .then((devices) => {
-        const videoDevices = devices.filter((device) => device.kind === "videoinput");
+        let videoDevices = devices.filter((device) => device.kind === "videoinput");
         const tempList = devicesFound;
         let hasFrontCamera = false;
         let hasBackCamera = false;
+        console.log(videoDevices);
+        // videoDevices = [];
+        if (videoDevices.length === 0) {
+          setIsCameraMissing(true);
+          return;
+        }
         videoDevices.forEach((device) => {
           if (device.label.toLocaleLowerCase().includes("front")) {
             tempList[0] = device.deviceId;
@@ -39,10 +46,16 @@ const Qr: NextPage = () => {
         } else {
           SCAN_MODES.splice(0, 2);
         }
-        setDevicesFound(tempList);
+        setDevicesFound(tempList.filter((deviceId) => deviceId !== ""));
         setIsLoaded(true);
       })
-      .catch((e) => setIsError(true));
+      .catch((e) => {
+        if (e.message.includes("Permission denied")) {
+          setIsError(true);
+        } else {
+          setIsCameraMissing(true);
+        }
+      });
   }, []);
 
   const remainingModes = () => {
@@ -53,6 +66,7 @@ const Qr: NextPage = () => {
           return (
             <div
               onClick={() => {
+                console.log("PRESSED", i)
                 setCurrentMode(i);
               }}
               className="text-blue-600 underline hover:text-blue-700"
@@ -62,6 +76,24 @@ const Qr: NextPage = () => {
             </div>
           );
         })}
+      </div>
+    );
+  };
+
+  const errorComponent = (isError: boolean, isCameraMissing: boolean) => {
+    return (
+      <div className="flex flex-col items-center bg-gray-200 mx-8 py-32">
+        <Heading level="h2" className="text-2xl">
+          {isCameraMissing ? "Camera not found" : "Error accessing camera"}
+        </Heading>
+        {isCameraMissing ? (
+          <>
+            <div>Please ensure it is connected, installed properly, and not in use by other applications.</div>
+            <div>Refresh the page after connecting your camera.</div>
+          </>
+        ) : (
+          <p>Please refresh the page and grant access to your camera from your browser settings.</p>
+        )}
       </div>
     );
   };
@@ -84,11 +116,7 @@ const Qr: NextPage = () => {
               <QrScanner currentMode={currentMode} deviceIds={devicesFound}></QrScanner>
             </div>
           )}
-          {isError && (
-            <div className="flex flex-col items-center bg-gray-200 mx-8">
-              <h2>Error accessing camera</h2>
-            </div>
-          )}
+          {(isError || isCameraMissing) && errorComponent(isError, isCameraMissing)}
           <div className="flex flex-col pt-10">
             <div>If you have problems scanning the QR, you may want to verify by</div>
             <Link href="/verify">

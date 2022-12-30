@@ -8,12 +8,34 @@ export interface QrScannerProps {
   deviceIds: string[];
 }
 
+enum ScanMode {
+  FRONT_CAMERA,
+  BACK_CAMERA,
+  SCANNER,
+}
+
 export const QrScanner: React.FC<QrScannerProps> = ({ currentMode, deviceIds }) => {
   const checkIfVerifyUrl = () => {};
-
   const isWindowUndefined = typeof window === "undefined";
   const [isMobile, setIsMobile] = useState(!isWindowUndefined && window.innerWidth < 768);
   const updateWidth = () => setIsMobile(window.innerWidth < 768);
+  const hasMultipleCameras = deviceIds.length >= 2;
+
+  const cameraComponent = (isFrontCamera: boolean) => (
+    <>
+      <QrReader
+        constraints={{ facingMode: isFrontCamera ? "user" : "environment" }}
+        videoContainerStyle={{ paddingTop: isMobile ? "100%" : "50%" }}
+        videoStyle={{ width: "unset", borderRadius: "0.5rem", margin: "auto", left: 0, right: 0 }}
+        onResult={() => {}}
+      />
+      <img
+        alt="qr visual guide"
+        src="/images/qr-crosshair.svg"
+        className="h-5/6 absolute left-0 right-0 top-0 bottom-0 m-auto"
+      />
+    </>
+  );
 
   useEffect(() => {
     window.addEventListener("resize", updateWidth);
@@ -23,46 +45,11 @@ export const QrScanner: React.FC<QrScannerProps> = ({ currentMode, deviceIds }) 
   return (
     <div className="w-full px-8">
       <div className="relative">
-        {/* <QrReader
-          onResult={(result, error) => {
-            if (!!result) {
-              setData(result?.getText());
-              window.open(result?.getText());
-              //   checkIfVerifyUrl(result?.getText());
-            }
-
-            if (!!error) {
-            }
-          }}
-          constraints={{
-            // deviceId: { exact: "79502a85310f82077a11f49786f5520a8e9c4b3d7fea4ac136be26e062f7d77c" },
-            facingMode: 'environment'
-            aspectRatio: 1,
-          }}
-          videoContainerStyle={{ paddingTop: isMobile ? "100%" : "50%" }}
-          videoStyle={{ width: "unset", borderRadius: "0.5rem", margin: "auto", left: 0, right: 0 }}
-        /> */}
-        {(currentMode === 1 && deviceIds.length >= 2) && (
-          <QrReader
-            constraints={{ facingMode: "environment" }}
-            videoContainerStyle={{ paddingTop: isMobile ? "100%" : "50%" }}
-            videoStyle={{ width: "unset", borderRadius: "0.5rem", margin: "auto", left: 0, right: 0 }}
-          />
-        )}
-        {currentMode === 0 && (
-          <QrReader
-            constraints={{ facingMode: "user" }}
-            videoContainerStyle={{ paddingTop: isMobile ? "100%" : "50%" }}
-            videoStyle={{ width: "unset", borderRadius: "0.5rem", margin: "auto", left: 0, right: 0 }}
-          />
-        )}
-        <img
-          alt="qr visual guide"
-          src="/images/qr-crosshair.svg"
-          className="h-5/6 absolute left-0 right-0 top-0 bottom-0 m-auto"
-        />
-        {/* Add barcode scanner component here */}
-        { (currentMode === 1 && deviceIds.length < 2) || (currentMode === 2 && deviceIds.length >= 2)}
+        {currentMode === ScanMode.FRONT_CAMERA && cameraComponent(true)}
+        {currentMode === ScanMode.BACK_CAMERA && hasMultipleCameras && cameraComponent(false)}
+        {/* If no back camera then switch to scanner */}
+        {((currentMode === ScanMode.BACK_CAMERA && !hasMultipleCameras) ||
+          (currentMode === ScanMode.SCANNER && hasMultipleCameras)) && <div> Add scanner component here </div>}
       </div>
     </div>
   );

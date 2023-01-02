@@ -8,12 +8,16 @@ import Link from "next/link";
 import { NextSeo } from "next-seo";
 
 const SCAN_MODES = ["Camera 1", "Camera 2", "Camera", "barcode scanner"];
+const FIVE_MINUTES = 60 * 5 * 1000;
 
 const Qr: NextPage = () => {
   const [currentMode, setCurrentMode] = useState<number>(0);
   const [devicesFound, setDevicesFound] = useState<string[]>(["", ""]);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
+  const [isTimedOut, setIsTimedOut] = useState<boolean>(false);
+  const [timeoutId, setTimeoutId] = useState<any>(0);
+  const [refresh, setRefresh] = useState(0);
   const [isCameraMissing, setIsCameraMissing] = useState<boolean>(false);
 
   useEffect(() => {
@@ -56,6 +60,12 @@ const Qr: NextPage = () => {
       });
   }, []);
 
+  useEffect(() => {
+    if (!isTimedOut) {
+      handleRefresh();
+    }
+  }, [isTimedOut, refresh]);
+
   const remainingModes = () => {
     return (
       <div className="flex flex-row gap-2 pb-4">
@@ -95,6 +105,31 @@ const Qr: NextPage = () => {
     );
   };
 
+  const timedoutComponent = () => {
+    return (
+      <div className="flex flex-col items-center bg-gray-200 mx-8 py-32">
+        <Heading level="h2" className="text-2xl">
+          Scanner timed out
+        </Heading>
+        <button
+          className={`font-bold py-2 px-4 text-white bg-primary hover:bg-primary-dark rounded-xl focus:ring transition-colors`}
+          onClick={() => setIsTimedOut(false)}
+        >
+          Relaunch scanner
+        </button>
+      </div>
+    );
+  };
+
+  const handleRefresh = () => {
+    clearTimeout(timeoutId);
+    setTimeoutId(
+      setTimeout(() => {
+        setIsTimedOut(true);
+      }, FIVE_MINUTES)
+    );
+  };
+
   return (
     <Layout>
       <NextSeo title="QR page" />
@@ -103,16 +138,17 @@ const Qr: NextPage = () => {
         <p>Show the Verify QR in front of the camera or scanner</p>
 
         <div className="md:mx-40 my-10 py-10 border-4 border-dashed rounded-lg bg-white ring-primary shadow-xl">
-          {isLoaded && (
+          {isLoaded && !isTimedOut && (
             <div className="flex flex-col items-center">
               <div className="flex flex-row gap-2">
                 <div>Current scan mode: </div>
                 <div className="font-bold">{SCAN_MODES[currentMode]}</div>
               </div>
               {remainingModes()}
-              <QrScanner currentMode={currentMode} deviceIds={devicesFound}></QrScanner>
+              <QrScanner currentMode={currentMode} deviceIds={devicesFound} refreshCallback={setRefresh}></QrScanner>
             </div>
           )}
+          {isTimedOut && timedoutComponent()}
           {(isError || isCameraMissing) && errorComponent(isCameraMissing)}
           <div className="flex flex-col pt-10">
             <div>If you have problems scanning the QR, you may want to verify by</div>

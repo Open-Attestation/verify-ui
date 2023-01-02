@@ -6,6 +6,7 @@ import { QrReader } from "react-qr-reader";
 export interface QrScannerProps {
   currentMode: number;
   deviceIds: string[];
+  refreshCallback: any;
 }
 
 enum ScanMode {
@@ -14,7 +15,7 @@ enum ScanMode {
   SCANNER,
 }
 
-export const QrScanner: React.FC<QrScannerProps> = ({ currentMode, deviceIds }) => {
+export const QrScanner: React.FC<QrScannerProps> = ({ currentMode, deviceIds, refreshCallback }) => {
   const isWindowUndefined = typeof window === "undefined";
   const [isMobile, setIsMobile] = useState(!isWindowUndefined && window.innerWidth < 768);
   const updateWidth = () => setIsMobile(window.innerWidth < 768);
@@ -42,6 +43,7 @@ export const QrScanner: React.FC<QrScannerProps> = ({ currentMode, deviceIds }) 
     if (res === undefined) {
       return;
     }
+    refreshCallback(Date.now()); // Trigger useEffect in qr page
     const url = res.text;
     if (url.startsWith("https://www.verify.gov.sg/verify?q=")) {
       window.open(url);

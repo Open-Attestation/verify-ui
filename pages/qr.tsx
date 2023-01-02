@@ -25,8 +25,6 @@ const Qr: NextPage = () => {
         const tempList = devicesFound;
         let hasFrontCamera = false;
         let hasBackCamera = false;
-        console.log(videoDevices);
-        // videoDevices = [];
         if (videoDevices.length === 0) {
           setIsCameraMissing(true);
           return;
@@ -66,7 +64,6 @@ const Qr: NextPage = () => {
           return (
             <div
               onClick={() => {
-                console.log("PRESSED", i)
                 setCurrentMode(i);
               }}
               className="text-blue-600 underline hover:text-blue-700"
@@ -80,7 +77,7 @@ const Qr: NextPage = () => {
     );
   };
 
-  const errorComponent = (isError: boolean, isCameraMissing: boolean) => {
+  const errorComponent = (isCameraMissing: boolean) => {
     return (
       <div className="flex flex-col items-center bg-gray-200 mx-8 py-32">
         <Heading level="h2" className="text-2xl">
@@ -116,7 +113,7 @@ const Qr: NextPage = () => {
               <QrScanner currentMode={currentMode} deviceIds={devicesFound}></QrScanner>
             </div>
           )}
-          {(isError || isCameraMissing) && errorComponent(isError, isCameraMissing)}
+          {(isError || isCameraMissing) && errorComponent(isCameraMissing)}
           <div className="flex flex-col pt-10">
             <div>If you have problems scanning the QR, you may want to verify by</div>
             <Link href="/verify">

@@ -36,7 +36,7 @@ export const QrScanner: React.FC<QrScannerProps> = ({ currentMode, deviceIds, re
       <img
         alt="qr visual guide"
         src="/images/qr-crosshair.svg"
-        className="h-5/6 absolute left-0 right-0 top-0 bottom-0 m-auto"
+        className="h-5/6 absolute left-0 right-0 top-0 bottom-0 m-auto px-[20%]"
       />
     </>
   );

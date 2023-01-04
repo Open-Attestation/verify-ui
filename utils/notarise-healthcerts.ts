@@ -9,13 +9,20 @@ export const isHealthCert = (document: OpenAttestationDocument): boolean => {
   return isVac(document) || isPDT(document) || isREC(document);
 };
 
-export const isSpmTransientStorage = (url = "") => {
-  const spmTransientStorages = [
-    "https://api-spm-vac.storage.staging.notarise.io",
-    "https://api-spm-vac.storage.aws.notarise.gov.sg",
-    "https://api-spm-recov.storage.staging.notarise.io",
-    "https://api-spm-recov.storage.aws.notarise.gov.sg",
-  ];
+export const isNotariseTransientStorage = (url = "") => {
+  const notariseTransientStorageSuffixes = ["storage.staging.notarise.io", "storage.aws.notarise.gov.sg"];
 
-  return spmTransientStorages.some((prefix) => url.startsWith(prefix));
+  const { hostname } = new URL(url);
+
+  return notariseTransientStorageSuffixes.some((suffix) => hostname.endsWith(suffix));
+};
+
+export const isNotariseSpmTransientStorage = (url = "") => {
+  const notariseSpmTransientStoragePrefixes = ["api-spm-vac", "api-spm-recov"];
+
+  const { hostname } = new URL(url);
+
+  return (
+    isNotariseTransientStorage(url) && notariseSpmTransientStoragePrefixes.some((prefix) => hostname.startsWith(prefix))
+  );
 };

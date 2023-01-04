@@ -17,7 +17,10 @@ const config: Config.InitialOptions = {
   testEnvironment: "jest-environment-jsdom",
   setupFilesAfterEnv: ["@testing-library/jest-dom/extend-expect"],
   testPathIgnorePatterns: ["node_modules", "integration", "monitoring", ".next"],
-  moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, { prefix: "<rootDir>/" }),
+  moduleNameMapper: {
+    ...pathsToModuleNameMapper(compilerOptions.paths, { prefix: "<rootDir>/" }),
+    uuid: require.resolve("uuid"), // FIXME: Somehow required after jest is upgraded from v27.5.1 to v28.1.3
+  },
 };
 
 export default createJestConfig(config);

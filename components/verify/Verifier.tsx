@@ -105,7 +105,9 @@ const Verifier: React.FC<VerifierProps> = ({ wrappedDocument }) => {
       )}
 
       <VerificationChecks {...fragmentVerificationStatus} customMessage={customMessage} />
-      {verificationStatus === "VERIFIED" && <Renderer document={getDataV2OrV3(wrappedDocument)} rawDocument={wrappedDocument}/>}
+      {verificationStatus === "VERIFIED" && (
+        <Renderer document={getDataV2OrV3(wrappedDocument)} rawDocument={wrappedDocument} />
+      )}
     </section>
   );
 };

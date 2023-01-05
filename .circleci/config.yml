@@ -23,6 +23,8 @@ jobs:
     steps:
       - checkout
       - run:
+          command: export GH_TOKEN=$GItHUB_TOKEN
+      - run:
           name: create issue
           command: gh issue create -b foo -t bar
   monitoring:

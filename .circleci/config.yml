@@ -25,6 +25,8 @@ jobs:
       - run:
           command: export GH_TOKEN=$GItHUB_TOKEN
       - run:
+          command: env
+      - run:
           name: create issue
           command: gh issue create -b foo -t bar
   monitoring:

@@ -5,7 +5,7 @@ workflows:
   version: 2
   commit:
     jobs:
-      - build
+      - create_issue
   # monitoring_hourly:
   #   triggers:
   #     - schedule:

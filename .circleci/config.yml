@@ -23,7 +23,7 @@ jobs:
     steps:
       - checkout
       - run:
-          command: env
+          command: GH_TOKEN=$GItHUB_TOKEN env
       - run:
           name: create issue
           command: GH_TOKEN=$GItHUB_TOKEN gh issue create -b foo -t bar

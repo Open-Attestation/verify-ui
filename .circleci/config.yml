@@ -6,16 +6,16 @@ workflows:
   commit:
     jobs:
       - build
-  monitoring_hourly:
-    triggers:
-      - schedule:
-          cron: "0 * * * *"
-          filters:
-            branches:
-              only:
-                - master
-    jobs:
-      - monitoring
+  # monitoring_hourly:
+  #   triggers:
+  #     - schedule:
+  #         cron: "0 * * * *"
+  #         filters:
+  #           branches:
+  #             only:
+  #               - master
+  #   jobs:
+  #     - monitoring
 jobs:
   monitoring:
     docker:

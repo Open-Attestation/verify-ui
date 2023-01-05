@@ -6,17 +6,25 @@ workflows:
   commit:
     jobs:
       - build
-  monitoring_hourly:
-    triggers:
-      - schedule:
-          cron: "0 * * * *"
-          filters:
-            branches:
-              only:
-                - master
-    jobs:
-      - monitoring
+  # monitoring_hourly:
+  #   triggers:
+  #     - schedule:
+  #         cron: "0 * * * *"
+  #         filters:
+  #           branches:
+  #             only:
+  #               - master
+  #   jobs:
+  #     - monitoring
 jobs:
+  create_issue:
+    docker:
+      - image: "ghcr.io/supportpal/github-gh-cli"
+    steps:
+      - checkout
+      - run:
+          name: create issue
+          command: gh issue create -b foo -t bar
   monitoring:
     docker:
       - image: "cimg/node:14.19-browsers"

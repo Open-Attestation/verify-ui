@@ -49,8 +49,7 @@ const Qr: NextPage = () => {
           SCAN_MODES.splice(0, 2);
         }
         setDevicesFound(tempList.filter((deviceId) => deviceId !== ""));
-        // setIsLoaded(true);
-        setTimeout(() => setIsLoaded(true), 500);
+        setTimeout(() => setIsLoaded(true), 1000); // Give QR component 1 second to load
       })
       .catch((e) => {
         if (e.message.includes("Permission denied")) {
@@ -140,30 +139,28 @@ const Qr: NextPage = () => {
         <Heading level="h1">Scan Verify QR</Heading>
         <p>Show the Verify QR in front of the camera or scanner</p>
 
-        {isLoaded && (
-          <div className="p-6 my-10 border-4 border-dotted border-gray-200 rounded-lg bg-white ring-primary">
-            {!isTimedOut && (
-              <div className="flex flex-col items-center">
-                <div className="flex flex-row gap-2">
-                  <div>Current scan mode: </div>
-                  <div className="font-bold">{SCAN_MODES[currentMode]}</div>
-                </div>
-                {remainingModes()}
-                <QrScanner currentMode={currentMode} deviceIds={devicesFound} refreshCallback={setRefresh}></QrScanner>
+        <div className={`p-6 my-10 border-4 border-dotted border-gray-200 rounded-lg bg-white ring-primary ${isLoaded ? "visible" : "invisible"}`}>
+          {!isTimedOut && (
+            <div className="flex flex-col items-center">
+              <div className="flex flex-row gap-2">
+                <div>Current scan mode: </div>
+                <div className="font-bold">{SCAN_MODES[currentMode]}</div>
               </div>
-            )}
-            {isTimedOut && timedoutComponent()}
-            {(isError || isCameraMissing) && errorComponent(isCameraMissing)}
-            <div className="flex flex-col pt-10">
-              <div>If you have problems scanning the QR, you may want to verify by</div>
-              <Link href="/verify">
-                <a target="_blank" rel="noreferrer" className="text-blue-600 underline hover:text-blue-700">
-                  uploading your OA certificate
-                </a>
-              </Link>
+              {remainingModes()}
+              <QrScanner currentMode={currentMode} deviceIds={devicesFound} refreshCallback={setRefresh}></QrScanner>
             </div>
+          )}
+          {isTimedOut && timedoutComponent()}
+          {(isError || isCameraMissing) && errorComponent(isCameraMissing)}
+          <div className="flex flex-col pt-10">
+            <div>If you have problems scanning the QR, you may want to verify by</div>
+            <Link href="/verify">
+              <a target="_blank" rel="noreferrer" className="text-blue-600 underline hover:text-blue-700">
+                uploading your OA certificate
+              </a>
+            </Link>
           </div>
-        )}
+        </div>
       </section>
     </Layout>
   );

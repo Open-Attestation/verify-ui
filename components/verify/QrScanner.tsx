@@ -1,4 +1,3 @@
-import { NextSeo } from "next-seo";
 import React, { useState, useEffect } from "react";
 
 import { QrReader } from "react-qr-reader";
@@ -29,9 +28,7 @@ export const QrScanner: React.FC<QrScannerProps> = ({ currentMode, deviceIds, re
         constraints={{ facingMode: isFrontCamera ? "user" : "environment" }}
         videoContainerStyle={{ paddingTop: isMobile ? "140%" : "60%" }}
         videoStyle={{ width: "unset", borderRadius: "0.5rem", margin: "auto", left: 0, right: 0 }}
-        onResult={(res) => {
-          handleOnResult(res);
-        }}
+        onResult={handleOnResult}
       />
       <img
         alt="qr visual guide"

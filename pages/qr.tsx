@@ -68,22 +68,22 @@ const Qr: NextPage = () => {
 
   const remainingModes = () => {
     return (
-      <span>
+      <div className="flex flex-row gap-2 pb-4">
         {SCAN_MODES.map((mode, i) => {
           if (currentMode === i) return;
           return (
-            <span
+            <div
               onClick={() => {
                 setCurrentMode(i);
               }}
-              className="text-blue-600 underline hover:text-blue-700 mr-2"
+              className="text-blue-600 underline hover:text-blue-700"
               key={mode}
             >
               Switch to {mode}
-            </span>
+            </div>
           );
         })}
-      </span>
+      </div>
     );
   };
 

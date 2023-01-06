@@ -49,8 +49,8 @@ const Qr: NextPage = () => {
           SCAN_MODES.splice(0, 2);
         }
         setDevicesFound(tempList.filter((deviceId) => deviceId !== ""));
-        setIsLoaded(true);
-        // setTimeout(() => setIsLoaded(true), 500);
+        // setIsLoaded(true);
+        setTimeout(() => setIsLoaded(true), 500);
       })
       .catch((e) => {
         if (e.message.includes("Permission denied")) {
@@ -69,22 +69,22 @@ const Qr: NextPage = () => {
 
   const remainingModes = () => {
     return (
-      <div className="flex flex-row gap-2 pb-4">
+      <span>
         {SCAN_MODES.map((mode, i) => {
           if (currentMode === i) return;
           return (
-            <div
+            <span
               onClick={() => {
                 setCurrentMode(i);
               }}
-              className="text-blue-600 underline hover:text-blue-700"
+              className="text-blue-600 underline hover:text-blue-700 mr-2"
               key={mode}
             >
               Switch to {mode}
-            </div>
+            </span>
           );
         })}
-      </div>
+      </span>
     );
   };
 
@@ -141,7 +141,7 @@ const Qr: NextPage = () => {
         <p>Show the Verify QR in front of the camera or scanner</p>
 
         {isLoaded && (
-          <div className="md:mx-40 my-10 py-10 border-4 border-dashed rounded-lg bg-white ring-primary shadow-xl">
+          <div className="p-6 my-10 border-4 border-dotted border-gray-200 rounded-lg bg-white ring-primary">
             {!isTimedOut && (
               <div className="flex flex-col items-center">
                 <div className="flex flex-row gap-2">

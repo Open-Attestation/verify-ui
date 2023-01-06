@@ -49,7 +49,8 @@ const Qr: NextPage = () => {
           SCAN_MODES.splice(0, 2);
         }
         setDevicesFound(tempList.filter((deviceId) => deviceId !== ""));
-        setTimeout(() => setIsLoaded(true), 500);
+        setIsLoaded(true);
+        // setTimeout(() => setIsLoaded(true), 500);
       })
       .catch((e) => {
         if (e.message.includes("Permission denied")) {
@@ -139,8 +140,8 @@ const Qr: NextPage = () => {
         <Heading level="h1">Scan Verify QR</Heading>
         <p>Show the Verify QR in front of the camera or scanner</p>
 
-        <div className="p-6 my-10 border-4 border-dotted border-gray-200 rounded-lg bg-white ring-primary">
-          {!isTimedOut && (
+        <div className="md:mx-40 my-10 py-10 border-4 border-dashed rounded-lg bg-white ring-primary shadow-xl">
+          {isLoaded && !isTimedOut && (
             <div className="flex flex-col items-center">
               <div className="flex flex-row gap-2">
                 <div>Current scan mode: </div>

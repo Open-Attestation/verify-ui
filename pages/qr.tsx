@@ -140,28 +140,30 @@ const Qr: NextPage = () => {
         <Heading level="h1">Scan Verify QR</Heading>
         <p>Show the Verify QR in front of the camera or scanner</p>
 
-        <div className="md:mx-40 my-10 py-10 border-4 border-dashed rounded-lg bg-white ring-primary shadow-xl">
-          {isLoaded && !isTimedOut && (
-            <div className="flex flex-col items-center">
-              <div className="flex flex-row gap-2">
-                <div>Current scan mode: </div>
-                <div className="font-bold">{SCAN_MODES[currentMode]}</div>
+        {isLoaded && (
+          <div className="md:mx-40 my-10 py-10 border-4 border-dashed rounded-lg bg-white ring-primary shadow-xl">
+            {!isTimedOut && (
+              <div className="flex flex-col items-center">
+                <div className="flex flex-row gap-2">
+                  <div>Current scan mode: </div>
+                  <div className="font-bold">{SCAN_MODES[currentMode]}</div>
+                </div>
+                {remainingModes()}
+                <QrScanner currentMode={currentMode} deviceIds={devicesFound} refreshCallback={setRefresh}></QrScanner>
               </div>
-              {remainingModes()}
-              <QrScanner currentMode={currentMode} deviceIds={devicesFound} refreshCallback={setRefresh}></QrScanner>
+            )}
+            {isTimedOut && timedoutComponent()}
+            {(isError || isCameraMissing) && errorComponent(isCameraMissing)}
+            <div className="flex flex-col pt-10">
+              <div>If you have problems scanning the QR, you may want to verify by</div>
+              <Link href="/verify">
+                <a target="_blank" rel="noreferrer" className="text-blue-600 underline hover:text-blue-700">
+                  uploading your OA certificate
+                </a>
+              </Link>
             </div>
-          )}
-          {isTimedOut && timedoutComponent()}
-          {(isError || isCameraMissing) && errorComponent(isCameraMissing)}
-          <div className="flex flex-col pt-10">
-            <div>If you have problems scanning the QR, you may want to verify by</div>
-            <Link href="/verify">
-              <a target="_blank" rel="noreferrer" className="text-blue-600 underline hover:text-blue-700">
-                uploading your OA certificate
-              </a>
-            </Link>
           </div>
-        </div>
+        )}
       </section>
     </Layout>
   );

@@ -83,7 +83,7 @@ const Dropzone: React.FC<DropzoneProps> = ({ onDocumentDropped = () => {}, onDoc
       <p>Drop a government issued certificate</p>
       <div
         className={[
-          "my-10 py-20 border-4 border-dotted rounded-lg bg-white",
+          "p-6 my-10 border-4 border-dotted border-gray-200 rounded-lg bg-white ",
           isDragActive && "ring-4 ring-primary shadow-xl",
         ]
           .filter(Boolean)
@@ -92,7 +92,7 @@ const Dropzone: React.FC<DropzoneProps> = ({ onDocumentDropped = () => {}, onDoc
       >
         <input {...getInputProps()} />
         <div className="flex flex-col items-center gap-5">
-          <img className="max-w-[200px]" src="/images/upload-document.svg" alt="Upload document" />
+          <img className="max-w-[200px] mt-10" src="/images/upload-document.svg" alt="Upload document" />
           <Heading level="h2" className="text-xl">
             Drag and drop file here
           </Heading>
@@ -102,8 +102,8 @@ const Dropzone: React.FC<DropzoneProps> = ({ onDocumentDropped = () => {}, onDoc
           >
             Select File
           </button>
-          <div className="flex flex-row gap-1 pt-10">
-            <div>Alternatively, if you have a Verify QR, you could verify the document by </div>
+          <p className="pt-10">
+            Alternatively, if you have a Verify QR, you could verify the document by{"  "}
             <Link href="/qr" passHref>
               <a
                 target="_blank"
@@ -116,7 +116,7 @@ const Dropzone: React.FC<DropzoneProps> = ({ onDocumentDropped = () => {}, onDoc
                 scanning it
               </a>
             </Link>
-          </div>
+          </p>
         </div>
       </div>
     </section>

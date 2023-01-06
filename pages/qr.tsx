@@ -139,11 +139,7 @@ const Qr: NextPage = () => {
         <Heading level="h1">Scan Verify QR</Heading>
         <p>Show the Verify QR in front of the camera or scanner</p>
 
-        <div
-          className={
-            isLoaded ? "p-6 my-10 border-4 border-dotted border-gray-200 rounded-lg bg-white ring-primary" : "hidden"
-          }
-        >
+        <div className="p-6 my-10 border-4 border-dotted border-gray-200 rounded-lg bg-white ring-primary">
           {!isTimedOut && (
             <div className="flex flex-col items-center">
               <div className="flex flex-row gap-2">

@@ -7,7 +7,7 @@ import QrScanner from "@components/verify/QrScanner";
 import Link from "next/link";
 import { NextSeo } from "next-seo";
 
-const SCAN_MODES = ["Camera 1", "Camera 2", "Camera", "barcode scanner"];
+const SCAN_MODES = ["Camera 1", "Camera 2", "Camera"]; // TODO: Append "Barcode scanner" once implemented
 const FIVE_MINUTES = 60 * 5 * 1000;
 
 const Qr: NextPage = () => {
@@ -49,7 +49,7 @@ const Qr: NextPage = () => {
           SCAN_MODES.splice(0, 2);
         }
         setDevicesFound(tempList.filter((deviceId) => deviceId !== ""));
-        setIsLoaded(true);
+        setTimeout(() => setIsLoaded(true), 500);
       })
       .catch((e) => {
         if (e.message.includes("Permission denied")) {
@@ -68,22 +68,22 @@ const Qr: NextPage = () => {
 
   const remainingModes = () => {
     return (
-      <div className="flex flex-row gap-2 pb-4">
+      <span>
         {SCAN_MODES.map((mode, i) => {
           if (currentMode === i) return;
           return (
-            <div
+            <span
               onClick={() => {
                 setCurrentMode(i);
               }}
-              className="text-blue-600 underline hover:text-blue-700"
+              className="text-blue-600 underline hover:text-blue-700 mr-2"
               key={mode}
             >
               Switch to {mode}
-            </div>
+            </span>
           );
         })}
-      </div>
+      </span>
     );
   };
 
@@ -95,8 +95,10 @@ const Qr: NextPage = () => {
         </Heading>
         {isCameraMissing ? (
           <>
-            <div>Please ensure it is connected, installed properly, and not in use by other applications.</div>
-            <div>Refresh the page after connecting your camera.</div>
+            <p>
+              Please ensure it is connected, installed properly, and not in use by other applications.
+              <br /> Refresh the page after connecting your camera.
+            </p>
           </>
         ) : (
           <p>Please refresh the page and grant access to your camera from your browser settings.</p>
@@ -137,8 +139,12 @@ const Qr: NextPage = () => {
         <Heading level="h1">Scan Verify QR</Heading>
         <p>Show the Verify QR in front of the camera or scanner</p>
 
-        <div className="md:mx-40 my-10 py-10 border-4 border-dashed rounded-lg bg-white ring-primary shadow-xl">
-          {isLoaded && !isTimedOut && (
+        <div
+          className={
+            isLoaded ? "p-6 my-10 border-4 border-dotted border-gray-200 rounded-lg bg-white ring-primary" : "hidden"
+          }
+        >
+          {!isTimedOut && (
             <div className="flex flex-col items-center">
               <div className="flex flex-row gap-2">
                 <div>Current scan mode: </div>

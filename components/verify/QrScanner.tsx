@@ -26,7 +26,7 @@ export const QrScanner: React.FC<QrScannerProps> = ({ currentMode, deviceIds, re
     <>
       <QrReader
         constraints={{ facingMode: isFrontCamera ? "user" : "environment" }}
-        videoContainerStyle={{ paddingTop: "60%" }}
+        videoContainerStyle={{ paddingTop: isMobile ? "140%" : "60%" }}
         videoStyle={{ width: "unset", borderRadius: "0.5rem", margin: "auto", left: 0, right: 0 }}
         onResult={handleOnResult}
       />
@@ -56,6 +56,11 @@ export const QrScanner: React.FC<QrScannerProps> = ({ currentMode, deviceIds, re
     window.addEventListener("visibilitychange", updateVisibility);
     return () => window.removeEventListener("resize", updateWidth);
   }, []);
+
+  useEffect(() => {
+    console.log("Window is ", window)
+    updateWidth()
+  }, [window])
 
   return (
     <div className="w-full px-8">

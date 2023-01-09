@@ -55,27 +55,28 @@ export const QrScanner: React.FC<QrScannerProps> = ({ currentMode, deviceIds, re
   useEffect(() => {
     window.addEventListener("resize", updateWidth);
     window.addEventListener("visibilitychange", updateVisibility);
-    setTimeout(() => { setIsLoading(false) }, 1000)
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
     return () => window.removeEventListener("resize", updateWidth);
   }, []);
 
   useEffect(() => {
-    console.log("Window is ", window);
+    console.log(window);
+    console.log("Type of window ", typeof window);
     updateWidth();
   }, [window]);
 
   return (
     <div className="w-full px-8">
-      {isLoading && cameraComponent(true)}
-      {!isLoading && (
-        <div className="relative">
-          {isActive && currentMode === ScanMode.FRONT_CAMERA && cameraComponent(true)}
-          {isActive && currentMode === ScanMode.BACK_CAMERA && hasMultipleCameras && cameraComponent(false)}
-          {/* Switch to scanner if no back camera */}
-          {((currentMode === ScanMode.BACK_CAMERA && !hasMultipleCameras) ||
-            (currentMode === ScanMode.SCANNER && hasMultipleCameras)) && <div> Add scanner component here </div>}
-        </div>
-      )}
+      <div className="relative">
+        {isLoading && cameraComponent(true)}
+        {!isLoading && isActive && currentMode === ScanMode.FRONT_CAMERA && cameraComponent(true)}
+        {!isLoading && isActive && currentMode === ScanMode.BACK_CAMERA && hasMultipleCameras && cameraComponent(false)}
+        {/* Switch to scanner if no back camera */}
+        {((currentMode === ScanMode.BACK_CAMERA && !hasMultipleCameras) ||
+          (currentMode === ScanMode.SCANNER && hasMultipleCameras)) && <div> Add scanner component here </div>}
+      </div>
     </div>
   );
 };

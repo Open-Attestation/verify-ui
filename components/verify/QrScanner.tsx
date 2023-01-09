@@ -26,7 +26,7 @@ export const QrScanner: React.FC<QrScannerProps> = ({ currentMode, deviceIds, re
     <>
       <QrReader
         constraints={{ facingMode: isFrontCamera ? "user" : "environment" }}
-        videoContainerStyle={{ paddingTop: isMobile ? "140%" : "60%" }}
+        videoContainerStyle={{ paddingTop: isMobile ? "140%" : "10%", border: "1px solid red" }}
         videoStyle={{ width: "unset", borderRadius: "0.5rem", margin: "auto", left: 0, right: 0 }}
         onResult={handleOnResult}
       />

@@ -55,7 +55,7 @@ export const QrScanner: React.FC<QrScannerProps> = ({ currentMode, deviceIds, re
   useEffect(() => {
     window.addEventListener("resize", updateWidth);
     window.addEventListener("visibilitychange", updateVisibility);
-    setTimeout(() => { setIsLoading(false) }, 100)
+    setTimeout(() => { setIsLoading(false) }, 1000)
     return () => window.removeEventListener("resize", updateWidth);
   }, []);
 

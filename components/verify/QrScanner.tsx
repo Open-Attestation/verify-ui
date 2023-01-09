@@ -58,7 +58,7 @@ export const QrScanner: React.FC<QrScannerProps> = ({ currentMode, deviceIds, re
   }, []);
 
   return (
-    <div className="w-full md:px-10">
+    <div className="w-full px-8">
       <div className="relative">
         {isActive && currentMode === ScanMode.FRONT_CAMERA && cameraComponent(true)}
         {isActive && currentMode === ScanMode.BACK_CAMERA && hasMultipleCameras && cameraComponent(false)}

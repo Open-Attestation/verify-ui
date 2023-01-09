@@ -31,7 +31,7 @@ export const QrScanner: React.FC<QrScannerProps> = ({ currentMode, deviceIds, re
         // videoStyle={{ width: "unset", borderRadius: "0.5rem", margin: "auto", left: 0, right: 0 }}
         onResult={handleOnResult}
       />
-      <p>isFrontCamera: {isFrontCamera}</p>
+      <p>isFrontCamera: {isFrontCamera ? "true" : "false"}</p>
       <img
         alt="qr visual guide"
         src="/images/qr-crosshair.svg"

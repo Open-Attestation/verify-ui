@@ -18,7 +18,6 @@ export const QrScanner: React.FC<QrScannerProps> = ({ currentMode, deviceIds, re
   const isWindowUndefined = typeof window === "undefined";
   const [isMobile, setIsMobile] = useState(!isWindowUndefined && window.innerWidth < 768);
   const [isActive, setIsActive] = useState(true);
-  const [isLoading, setIsLoading] = useState(true);
   const updateWidth = () => setIsMobile(window.innerWidth < 768);
   const updateVisibility = () => setIsActive(!document.hidden);
   const hasMultipleCameras = deviceIds.length >= 2;
@@ -26,9 +25,10 @@ export const QrScanner: React.FC<QrScannerProps> = ({ currentMode, deviceIds, re
   const cameraComponent = (isFrontCamera: boolean) => (
     <>
       <QrReader
+        key={isFrontCamera ? "user" : "environment"}
         constraints={{ facingMode: isFrontCamera ? "user" : "environment" }}
         videoContainerStyle={{ paddingTop: isMobile ? "140%" : "60%", border: "1px solid" }}
-        // videoStyle={{ width: "unset", borderRadius: "0.5rem", margin: "auto", left: 0, right: 0 }}
+        videoStyle={{ width: "unset", borderRadius: "0.5rem", margin: "auto", left: 0, right: 0 }}
         onResult={handleOnResult}
       />
       <img
@@ -55,29 +55,16 @@ export const QrScanner: React.FC<QrScannerProps> = ({ currentMode, deviceIds, re
   useEffect(() => {
     window.addEventListener("resize", updateWidth);
     window.addEventListener("visibilitychange", updateVisibility);
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-    // return () => window.removeEventListener("resize", updateWidth);
+    return () => window.removeEventListener("resize", updateWidth);
   }, []);
-
-  useEffect(() => {
-    console.log(window);
-    console.log("Type of window ", typeof window);
-    updateWidth();
-  }, [window]);
-
-  useEffect(() => {
-    console.log("isMobile equal ", isMobile)
-  }, [isMobile])
 
   return (
     <div className="w-full px-8">
-      <button onClick={ () => {setIsLoading(!isLoading)} }> TOGGLE ISLOADING </button>
       <div className="relative">
-        {isLoading && cameraComponent(true)}
-        {!isLoading && isActive && currentMode === ScanMode.FRONT_CAMERA && cameraComponent(true)}
-        {!isLoading && isActive && currentMode === ScanMode.BACK_CAMERA && hasMultipleCameras && cameraComponent(false)}
+        {/* {isLoading && cameraComponent(true)} */}
+        {/* {!isLoading && isActive && currentMode === ScanMode.FRONT_CAMERA && cameraComponent(true)}
+        {!isLoading && isActive && currentMode === ScanMode.BACK_CAMERA && hasMultipleCameras && cameraComponent(false)} */}
+        {isActive && cameraComponent(!hasMultipleCameras || currentMode == ScanMode.FRONT_CAMERA)}
         {/* Switch to scanner if no back camera */}
         {((currentMode === ScanMode.BACK_CAMERA && !hasMultipleCameras) ||
           (currentMode === ScanMode.SCANNER && hasMultipleCameras)) && <div> Add scanner component here </div>}

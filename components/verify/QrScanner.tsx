@@ -58,7 +58,7 @@ export const QrScanner: React.FC<QrScannerProps> = ({ currentMode, deviceIds, re
     setTimeout(() => {
       setIsLoading(false);
     }, 1000);
-    return () => window.removeEventListener("resize", updateWidth);
+    // return () => window.removeEventListener("resize", updateWidth);
   }, []);
 
   useEffect(() => {
@@ -67,8 +67,13 @@ export const QrScanner: React.FC<QrScannerProps> = ({ currentMode, deviceIds, re
     updateWidth();
   }, [window]);
 
+  useEffect(() => {
+    console.log("isMobile equal ", isMobile)
+  }, [isMobile])
+
   return (
     <div className="w-full px-8">
+      <button onClick={ () => {setIsLoading(!isLoading)} }> TOGGLE ISLOADING </button>
       <div className="relative">
         {isLoading && cameraComponent(true)}
         {!isLoading && isActive && currentMode === ScanMode.FRONT_CAMERA && cameraComponent(true)}

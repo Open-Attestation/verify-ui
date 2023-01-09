@@ -60,7 +60,9 @@ export const QrScanner: React.FC<QrScannerProps> = ({ currentMode, deviceIds, re
   const getFacingMode = () => {
     console.log("getFacingMode - currentMode", currentMode);
     // single camera, use front camera
-    if (devices.length < 2 && currentMode != ScanMode.BACK_CAMERA) {
+    if (currentMode == ScanMode.FRONT_CAMERA) {
+      return "user";
+    } else if (devices.length < 2) {
       return "user";
     }
     return "environment";

@@ -21,13 +21,18 @@ export const QrScanner: React.FC<QrScannerProps> = ({ currentMode, deviceIds, re
   const [isLoading, setIsLoading] = useState(true);
   const updateWidth = () => setIsMobile(window.innerWidth < 768);
   const updateVisibility = () => setIsActive(!document.hidden);
-  const [devices] = useState<string[]>(deviceIds);
+  const [devices, setDevices] = useState<string[]>(deviceIds);
 
   // const cameraComponent = (isFrontCamera: boolean) => (
   //   <>
 
   //   </>
   // );
+
+  useEffect(() => {
+    console.log("Device Ids change", deviceIds);
+    setDevices(() => deviceIds);
+  }, [deviceIds]);
 
   const handleOnResult = (res: any) => {
     if (res === undefined) {
@@ -53,6 +58,7 @@ export const QrScanner: React.FC<QrScannerProps> = ({ currentMode, deviceIds, re
   }, [isMobile]);
 
   const getFacingMode = () => {
+    console.log("getFacingMode");
     // single camera, use front camera
     if (devices.length < 2) {
       return "user";

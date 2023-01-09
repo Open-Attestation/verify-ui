@@ -21,18 +21,12 @@ export const QrScanner: React.FC<QrScannerProps> = ({ currentMode, deviceIds, re
   const [isLoading, setIsLoading] = useState(true);
   const updateWidth = () => setIsMobile(window.innerWidth < 768);
   const updateVisibility = () => setIsActive(!document.hidden);
-  const [devices, setDevices] = useState<string[]>(deviceIds);
+  const [devices] = useState<string[]>(deviceIds);
 
-  // const cameraComponent = (isFrontCamera: boolean) => (
-  //   <>
-
-  //   </>
-  // );
-
-  useEffect(() => {
-    console.log("Device Ids change", deviceIds);
-    setDevices(() => deviceIds);
-  }, [deviceIds]);
+  // useEffect(() => {
+  //   console.log("Device Ids change", deviceIds);
+  //   setDevices(() => deviceIds);
+  // }, [deviceIds]);
 
   const handleOnResult = (res: any) => {
     if (res === undefined) {
@@ -58,13 +52,8 @@ export const QrScanner: React.FC<QrScannerProps> = ({ currentMode, deviceIds, re
   }, [isMobile]);
 
   const getFacingMode = () => {
-    console.log("getFacingMode - currentMode", currentMode);
-    // single camera, use front camera
-    if (currentMode == ScanMode.FRONT_CAMERA) {
-      console.log("front camera selected")
-      return "user";
-    } else if (devices.length < 2) {
-      console.log("front camera selected - cause only got 1 device")
+    // single camera only can use front camera
+    if (currentMode == ScanMode.FRONT_CAMERA || devices.length < 2) {
       return "user";
     }
     return "environment";

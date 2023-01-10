@@ -30,7 +30,7 @@ export const QrScanner: React.FC<QrScannerProps> = ({ currentMode, deviceIds, re
         key={isFrontCamera ? "user" : "environment"}
         constraints={{ facingMode: isFrontCamera ? "user" : "environment", aspectRatio: aspectRatio }}
         videoContainerStyle={{ paddingTop: isMobile ? "140%" : "60%", border: "1px solid" }}
-        videoStyle={{ width: "unset", borderRadius: "0.5rem", margin: "auto", left: 0, right: 0 }}
+        // videoStyle={{ width: "unset", borderRadius: "0.5rem", margin: "auto", left: 0, right: 0 }}
         onResult={handleOnResult}
       />
       <img
@@ -62,7 +62,11 @@ export const QrScanner: React.FC<QrScannerProps> = ({ currentMode, deviceIds, re
 
   return (
     <div className="w-full px-8">
-      {/* <button onClick={() => setIsLoading(!isLoading)}>TOGGLE isLoading</button> */}
+      <button onClick={() => {
+        const vid = document.getElementById("video") as HTMLVideoElement
+        console.log("Height is ", vid.videoHeight)
+        console.log("Width is ", vid.videoWidth)
+      }}>Check aspect ratio</button>
       Aspect ratio <input type="number" step="0.1" onChange={(e: React.ChangeEvent<HTMLInputElement>) => { 
         console.log("Aspect ratio is ", e.target.value)
         setAspectRatio(parseFloat(e.target.value))} } />

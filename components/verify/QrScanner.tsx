@@ -18,6 +18,7 @@ export const QrScanner: React.FC<QrScannerProps> = ({ currentMode, deviceIds, re
   const isWindowUndefined = typeof window === "undefined";
   const [isMobile, setIsMobile] = useState(!isWindowUndefined && window.innerWidth < 768);
   const [isActive, setIsActive] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const updateWidth = () => setIsMobile(window.innerWidth < 768);
   const updateVisibility = () => setIsActive(!document.hidden);
   const hasMultipleCameras = deviceIds.length >= 2;
@@ -60,11 +61,12 @@ export const QrScanner: React.FC<QrScannerProps> = ({ currentMode, deviceIds, re
 
   return (
     <div className="w-full px-8">
+      <button onClick={() => setIsLoading(!isLoading)}>TOGGLE isLoading</button>
       <div className="relative">
-        {/* {isLoading && cameraComponent(true)} */}
+        {isLoading && cameraComponent(true)}
         {/* {!isLoading && isActive && currentMode === ScanMode.FRONT_CAMERA && cameraComponent(true)}
         {!isLoading && isActive && currentMode === ScanMode.BACK_CAMERA && hasMultipleCameras && cameraComponent(false)} */}
-        {isActive && cameraComponent(!hasMultipleCameras || currentMode == ScanMode.FRONT_CAMERA)}
+        {!isLoading && isActive && cameraComponent(!hasMultipleCameras || currentMode == ScanMode.FRONT_CAMERA)}
         {/* Switch to scanner if no back camera */}
         {((currentMode === ScanMode.BACK_CAMERA && !hasMultipleCameras) ||
           (currentMode === ScanMode.SCANNER && hasMultipleCameras)) && <div> Add scanner component here </div>}

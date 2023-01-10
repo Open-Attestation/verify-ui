@@ -11,7 +11,7 @@ const SCAN_MODES = ["Camera 1", "Camera 2", "Camera"]; // TODO: Append "Barcode 
 const FIVE_MINUTES = 60 * 5 * 1000;
 
 const Qr: NextPage = () => {
-  const [currentMode, setCurrentMode] = useState<number>(1);
+  const [currentMode, setCurrentMode] = useState<number>(0);
   const [devicesFound, setDevicesFound] = useState<string[]>(["", ""]);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
@@ -45,10 +45,10 @@ const Qr: NextPage = () => {
         });
         if (hasFrontCamera && hasBackCamera) {
           SCAN_MODES.splice(2, 1);
-          setCurrentMode(1); // use back camera
+          // setCurrentMode(1); // use back camera
         } else {
           SCAN_MODES.splice(0, 2);
-          setCurrentMode(0);
+          // setCurrentMode(0);
         }
         setDevicesFound(tempList.filter((deviceId) => deviceId !== ""));
         setIsLoaded(true);

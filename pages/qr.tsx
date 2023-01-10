@@ -45,8 +45,10 @@ const Qr: NextPage = () => {
         });
         if (hasFrontCamera && hasBackCamera) {
           SCAN_MODES.splice(2, 1);
+          setCurrentMode(1); // use back camera
         } else {
           SCAN_MODES.splice(0, 2);
+          setCurrentMode(0);
         }
         setDevicesFound(tempList.filter((deviceId) => deviceId !== ""));
         setIsLoaded(true);
@@ -70,17 +72,18 @@ const Qr: NextPage = () => {
     return (
       <span>
         {SCAN_MODES.map((mode, i) => {
-          if (currentMode === i) return;
           return (
-            <span
-              onClick={() => {
-                setCurrentMode(i);
-              }}
-              className="text-blue-600 underline hover:text-blue-700 mr-2"
-              key={mode}
-            >
-              Switch to {mode}
-            </span>
+            currentMode !== i && (
+              <span
+                onClick={() => {
+                  setCurrentMode(i);
+                }}
+                className="text-blue-600 underline hover:text-blue-700 mr-2"
+                key={mode}
+              >
+                Switch to {mode}
+              </span>
+            )
           );
         })}
       </span>

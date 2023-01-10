@@ -77,6 +77,7 @@ export const QrScanner: React.FC<QrScannerProps> = ({ currentMode, deviceIds, re
       >
         Check aspect ratio
       </button>
+      <button className="bg-green-300 px-4" onClick={() => setIsLoading(!isLoading)}>TOGGLE isLoading</button>
       {yesHeight && <p>Video height is {yesHeight}</p>}
       {yesWidth && <p>Video width is {yesWidth}</p>}
       Aspect ratio{" "}
@@ -89,10 +90,10 @@ export const QrScanner: React.FC<QrScannerProps> = ({ currentMode, deviceIds, re
         }}
       />
       <div className="relative">
-        {/* {isLoading && cameraComponent(true)} */}
+        {isLoading && cameraComponent(true)}
         {/* {!isLoading && isActive && currentMode === ScanMode.FRONT_CAMERA && cameraComponent(true)}
         {!isLoading && isActive && currentMode === ScanMode.BACK_CAMERA && hasMultipleCameras && cameraComponent(false)} */}
-        {aspectRatio && isActive && cameraComponent(!hasMultipleCameras || currentMode == ScanMode.FRONT_CAMERA)}
+        {!isLoading && aspectRatio && isActive && cameraComponent(!hasMultipleCameras || currentMode == ScanMode.FRONT_CAMERA)}
         {/* Switch to scanner if no back camera */}
         {((currentMode === ScanMode.BACK_CAMERA && !hasMultipleCameras) ||
           (currentMode === ScanMode.SCANNER && hasMultipleCameras)) && <div> Add scanner component here </div>}

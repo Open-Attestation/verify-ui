@@ -20,6 +20,8 @@ export const QrScanner: React.FC<QrScannerProps> = ({ currentMode, deviceIds, re
   const [isActive, setIsActive] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [aspectRatio, setAspectRatio] = useState(1.7);
+  const [yesHeight, setYesHeight] = useState(0);
+  const [yesWidth, setYesWidth] = useState(0);
   const updateWidth = () => setIsMobile(window.innerWidth < 768);
   const updateVisibility = () => setIsActive(!document.hidden);
   const hasMultipleCameras = deviceIds.length >= 2;
@@ -62,14 +64,28 @@ export const QrScanner: React.FC<QrScannerProps> = ({ currentMode, deviceIds, re
 
   return (
     <div className="w-full px-8">
-      <button onClick={() => {
-        const vid = document.getElementById("video") as HTMLVideoElement
-        console.log("Height is ", vid.videoHeight)
-        console.log("Width is ", vid.videoWidth)
-      }}>Check aspect ratio</button>
-      Aspect ratio <input type="number" step="0.1" onChange={(e: React.ChangeEvent<HTMLInputElement>) => { 
-        console.log("Aspect ratio is ", e.target.value)
-        setAspectRatio(parseFloat(e.target.value))} } />
+      <button
+        onClick={() => {
+          const vid = document.getElementById("video") as HTMLVideoElement;
+          setYesHeight(vid.videoHeight);
+          setYesWidth(vid.videoWidth);
+          console.log("Height is ", vid.videoHeight);
+          console.log("Width is ", vid.videoWidth);
+        }}
+      >
+        Check aspect ratio
+      </button>
+      {yesHeight && <p>Video height is {yesHeight}</p>}
+      {yesWidth && <p>Video width is {yesWidth}</p>}
+      Aspect ratio{" "}
+      <input
+        type="number"
+        step="0.1"
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+          console.log("Aspect ratio is ", e.target.value);
+          setAspectRatio(parseFloat(e.target.value));
+        }}
+      />
       <div className="relative">
         {/* {isLoading && cameraComponent(true)} */}
         {/* {!isLoading && isActive && currentMode === ScanMode.FRONT_CAMERA && cameraComponent(true)}

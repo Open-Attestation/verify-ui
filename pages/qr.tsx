@@ -45,7 +45,13 @@ const Qr: NextPage = () => {
         });
         if (hasFrontCamera && hasBackCamera) {
           SCAN_MODES.splice(2, 1);
+          // check if useragent is ios
+          // set 1 if ios
           // setCurrentMode(1); // use back camera
+          console.log("navigator.userAgent",navigator.userAgent)
+          if (navigator.userAgent.includes("iPhone")) {
+            setCurrentMode(1);
+          }
         } else {
           SCAN_MODES.splice(0, 2);
           // setCurrentMode(0);

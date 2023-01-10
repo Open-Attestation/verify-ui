@@ -25,13 +25,12 @@ export const QrScanner: React.FC<QrScannerProps> = ({ currentMode, deviceIds, re
   const updateWidth = () => setIsMobile(window.innerWidth < 768);
   const updateVisibility = () => setIsActive(!document.hidden);
   const hasMultipleCameras = deviceIds.length >= 2;
-  const [mode, setMode] = useState(currentMode);
 
   const cameraComponent = (isFrontCamera: boolean) => (
     <>
       <QrReader
         key={isFrontCamera ? "user" : "environment"}
-        constraints={{ facingMode: isFrontCamera ? "user" : "environment", aspectRatio: 1 }}
+        constraints={{ facingMode: isFrontCamera ? "user" : "environment"}}
         videoContainerStyle={{ paddingTop: isMobile ? "140%" : "60%", border: "1px solid" }}
         videoStyle={{ width: "unset", borderRadius: "0.5rem", margin: "auto", left: 0, right: 0 }}
         // videoContainerStyle={{ paddingTop: "100%" }}
@@ -63,13 +62,6 @@ export const QrScanner: React.FC<QrScannerProps> = ({ currentMode, deviceIds, re
     console.log("mounting QrScanner");
     window.addEventListener("resize", updateWidth);
     window.addEventListener("visibilitychange", updateVisibility);
-    setTimeout(() => {
-      console.log("set timeout");
-      if (deviceIds.length >= 2) {
-        console.log("changing to back camera");
-        setMode(ScanMode.BACK_CAMERA);
-      }
-    }, 500);
     return () => {
       console.log("unmounting QrScanner");
       window.removeEventListener("resize", updateWidth);
@@ -105,7 +97,7 @@ export const QrScanner: React.FC<QrScannerProps> = ({ currentMode, deviceIds, re
         {isLoading && cameraComponent(true)}
         {/* {!isLoading && isActive && currentMode === ScanMode.FRONT_CAMERA && cameraComponent(true)}
         {!isLoading && isActive && currentMode === ScanMode.BACK_CAMERA && hasMultipleCameras && cameraComponent(false)} */}
-        {!isLoading && aspectRatio && isActive && cameraComponent(!hasMultipleCameras || mode == ScanMode.FRONT_CAMERA)}
+        {!isLoading && aspectRatio && isActive && cameraComponent(!hasMultipleCameras || currentMode == ScanMode.FRONT_CAMERA)}
         {/* Switch to scanner if no back camera */}
         {((currentMode === ScanMode.BACK_CAMERA && !hasMultipleCameras) ||
           (currentMode === ScanMode.SCANNER && hasMultipleCameras)) && <div> Add scanner component here </div>}

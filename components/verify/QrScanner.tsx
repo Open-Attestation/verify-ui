@@ -19,6 +19,7 @@ export const QrScanner: React.FC<QrScannerProps> = ({ currentMode, deviceIds, re
   const [isMobile, setIsMobile] = useState(!isWindowUndefined && window.innerWidth < 768);
   const [isActive, setIsActive] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  const [aspectRatio, setAspectRatio] = useState(1.7);
   const updateWidth = () => setIsMobile(window.innerWidth < 768);
   const updateVisibility = () => setIsActive(!document.hidden);
   const hasMultipleCameras = deviceIds.length >= 2;
@@ -27,7 +28,7 @@ export const QrScanner: React.FC<QrScannerProps> = ({ currentMode, deviceIds, re
     <>
       <QrReader
         key={isFrontCamera ? "user" : "environment"}
-        constraints={{ facingMode: isFrontCamera ? "user" : "environment", aspectRatio: 1.7 }}
+        constraints={{ facingMode: isFrontCamera ? "user" : "environment", aspectRatio: aspectRatio }}
         videoContainerStyle={{ paddingTop: isMobile ? "140%" : "60%", border: "1px solid" }}
         videoStyle={{ width: "unset", borderRadius: "0.5rem", margin: "auto", left: 0, right: 0 }}
         onResult={handleOnResult}
@@ -61,12 +62,15 @@ export const QrScanner: React.FC<QrScannerProps> = ({ currentMode, deviceIds, re
 
   return (
     <div className="w-full px-8">
-      <button onClick={() => setIsLoading(!isLoading)}>TOGGLE isLoading</button>
+      {/* <button onClick={() => setIsLoading(!isLoading)}>TOGGLE isLoading</button> */}
+      Aspect ratio <input type="number" step="0.1" onChange={(e: React.ChangeEvent<HTMLInputElement>) => { 
+        console.log("Aspect ratio is ", e.target.value)
+        setAspectRatio(parseFloat(e.target.value))} } />
       <div className="relative">
-        {isLoading && cameraComponent(true)}
+        {/* {isLoading && cameraComponent(true)} */}
         {/* {!isLoading && isActive && currentMode === ScanMode.FRONT_CAMERA && cameraComponent(true)}
         {!isLoading && isActive && currentMode === ScanMode.BACK_CAMERA && hasMultipleCameras && cameraComponent(false)} */}
-        {!isLoading && isActive && cameraComponent(!hasMultipleCameras || currentMode == ScanMode.FRONT_CAMERA)}
+        {aspectRatio && isActive && cameraComponent(!hasMultipleCameras || currentMode == ScanMode.FRONT_CAMERA)}
         {/* Switch to scanner if no back camera */}
         {((currentMode === ScanMode.BACK_CAMERA && !hasMultipleCameras) ||
           (currentMode === ScanMode.SCANNER && hasMultipleCameras)) && <div> Add scanner component here </div>}

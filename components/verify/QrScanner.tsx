@@ -63,10 +63,13 @@ export const QrScanner: React.FC<QrScannerProps> = ({ currentMode, deviceIds, re
     console.log("mounting QrScanner");
     window.addEventListener("resize", updateWidth);
     window.addEventListener("visibilitychange", updateVisibility);
-    if (deviceIds.length >= 2) {
-      console.log("changing to back camera");
-      setMode(ScanMode.BACK_CAMERA);
-    }
+    setTimeout(() => {
+      console.log("set timeout");
+      if (deviceIds.length >= 2) {
+        console.log("changing to back camera");
+        setMode(ScanMode.BACK_CAMERA);
+      }
+    }, 500);
     return () => {
       console.log("unmounting QrScanner");
       window.removeEventListener("resize", updateWidth);

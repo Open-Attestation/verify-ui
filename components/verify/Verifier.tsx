@@ -66,10 +66,19 @@ const Verifier: React.FC<VerifierProps> = ({ wrappedDocument }) => {
 
       setFragmentVerificationStatus({ DOCUMENT_STATUS, DOCUMENT_INTEGRITY, ISSUER_IDENTITY });
 
-      const isRevoked = verifyUtils
-        .getDocumentStatusFragments(fragments)
-        .filter((fragment) => verifyUtils.isInvalidFragment(fragment))
-        .some((invalidFragment: any) => invalidFragment.data.revokedOnAny); // FIXME: To update oa-verify library so that types are automatically inferred
+      const invalidFragments = fragments.filter((fragment) => verifyUtils.isInvalidFragment(fragment));
+
+      // [Mutually exclusive] A document is either:
+      const invalidDocStatusFragment =
+        // Issued onto Ethereum document store; or
+        verifyUtils.getOpenAttestationEthereumDocumentStoreStatusFragment(invalidFragments) ||
+        // Signed (issued) with a DID
+        verifyUtils.getOpenAttestationDidSignedDocumentStatusFragment(invalidFragments);
+
+      const isRevoked =
+        invalidDocStatusFragment?.data.revokedOnAny === true &&
+        (invalidDocStatusFragment?.reason?.message.includes("has been revoked under contract") || // Revoked via document store. Ideally should check via reason code. However, oa-verify always falls back to code 5 for all other errors (e.g. Contract is not found): https://github.com/Open-Attestation/oa-verify/blob/9638ba5285dc85fc294283c5e5e531debaaa5c4b/src/verifiers/documentStatus/utils.ts#L119-L123
+          invalidDocStatusFragment?.reason?.message.includes("has been revoked under OCSP Responder")); // Revoked via OCSP Responder v2. Ideally should check via reason code. However, oa-verify utilises this field for the 0-10 OCSP Revocation reason code (not to be confused with OA status code): https://github.com/Open-Attestation/oa-verify/blob/9638ba5285dc85fc294283c5e5e531debaaa5c4b/src/verifiers/documentStatus/revocation.types.ts#L27-L38
 
       let customMessage: CustomMessageProps["customMessage"] = {};
 

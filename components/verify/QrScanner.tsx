@@ -59,9 +59,13 @@ export const QrScanner: React.FC<QrScannerProps> = ({ currentMode, deviceIds, re
   };
 
   useEffect(() => {
+    console.log("mounting QrScanner");
     window.addEventListener("resize", updateWidth);
     window.addEventListener("visibilitychange", updateVisibility);
-    return () => window.removeEventListener("resize", updateWidth);
+    return () => {
+      console.log("unmounting QrScanner");
+      window.removeEventListener("resize", updateWidth);
+    };
   }, []);
 
   return (

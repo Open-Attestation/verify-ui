@@ -68,6 +68,13 @@ const Qr: NextPage = () => {
     }
   }, [isTimedOut, refresh]);
 
+  useEffect(() => {
+    console.log("mounting qr");
+    return () => {
+      console.log("unmounting qr");
+    };
+  }, []);
+
   const remainingModes = () => {
     return (
       <span>

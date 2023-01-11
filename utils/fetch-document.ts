@@ -18,7 +18,7 @@ const decodeAndParseUri = (encoded: string) => {
  * @param encodedHash ActionUrlAnchorRecord
  * @returns [ParsedQuery, ParsedAnchor]
  */
-export const getQueryAndHash = (encodedQuery: string, encodedHash: string | undefined) => {
+export const decodeQueryAndHash = (encodedQuery: string, encodedHash?: string) => {
   let decodedQ: Static<typeof ActionUrlQueryRecord>;
   let decodedHash: Static<typeof ActionUrlAnchorRecord>;
 

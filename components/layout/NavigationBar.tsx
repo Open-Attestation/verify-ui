@@ -10,7 +10,10 @@ const NavigationBar: React.FC = () => (
 
     <div className="flex flex-wrap items-center gap-2">
       <Link href="/faq">
-        <a className="font-bold py-2 px-4 rounded-xl">FAQ</a>
+        <a className="font-bold py-2 rounded-xl">FAQ</a>
+      </Link>
+      <Link href="/qr">
+        <a className="font-bold py-2 px-4 rounded-xl">Scan QR</a>
       </Link>
       <InternalButton href="/verify" isInverted>
         Verify

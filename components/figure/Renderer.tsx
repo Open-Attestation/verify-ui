@@ -39,7 +39,7 @@ const Renderer: React.FC<RendererProps> = ({ document, rawDocument }) => {
       toFrame(renderDocument({ document, rawDocument }));
       setToFrame(() => toFrame);
     },
-    [document]
+    [document, rawDocument]
   );
 
   const fromFrame = useCallback((action: FrameActions) => {

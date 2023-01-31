@@ -82,7 +82,7 @@ const Verify: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> =
         dispatch({ type: "STATUS_MESSAGE", status: verifyErrorHandler(e) });
       }
     })();
-  }, [router]);
+  }, [router, props.universalActionType]);
 
   const handleDocumentDropped = useCallback((wrappedDocument) => {
     dispatch({ type: "VERIFY_DOCUMENT", document: wrappedDocument });

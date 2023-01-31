@@ -12,7 +12,7 @@ import {
   Template,
 } from "@govtechsg/decentralized-renderer-react-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPrint } from "@fortawesome/free-solid-svg-icons";
+import { faPrint, faFileArrowDown } from "@fortawesome/free-solid-svg-icons";
 
 import { getTemplateUrl } from "@utils/oa-details";
 import { OpenAttestationDocument, WrappedDocument } from "@govtechsg/open-attestation";
@@ -50,6 +50,14 @@ const Renderer: React.FC<RendererProps> = ({ document, rawDocument }) => {
     }
   }, []);
 
+  const handleDownload = useCallback(() => {
+    const a = window.document.createElement("a");
+    a.href = `data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(rawDocument, null, 2))}`;
+    a.download = `document.oa`;
+    a.click();
+    a.remove();
+  }, [rawDocument]);
+
   const handlePrint = useCallback(() => {
     if (
       navigator.userAgent.includes("SamsungBrowser") ||
@@ -85,9 +93,18 @@ const Renderer: React.FC<RendererProps> = ({ document, rawDocument }) => {
             </li>
           ))}
         </ul>
-        <div className="ml-auto">
+        <div className="ml-auto flex gap-2">
           <button
-            className="my-2 p-4 rounded-lg shadow-lg bg-white print:ring-8 print:ring-orange-500 text-primary hover:bg-primary hover:text-white transition-colors"
+            className="w-14 h-14 my-2 p-4 rounded-lg shadow-lg bg-white print:ring-8 print:ring-orange-500 text-primary hover:bg-primary hover:text-white transition-colors"
+            title="Download document"
+            aria-label="document-utility-download-button"
+            onClick={handleDownload}
+          >
+            <FontAwesomeIcon icon={faFileArrowDown} className="text-xl" />
+          </button>
+          <button
+            className="w-14 h-14 my-2 p-4 rounded-lg shadow-lg bg-white print:ring-8 print:ring-orange-500 text-primary hover:bg-primary hover:text-white transition-colors"
+            title="Print document"
             aria-label="document-utility-print-button"
             onClick={handlePrint}
           >

@@ -1,63 +1,73 @@
-import { useEffect, useRef, useState, KeyboardEventHandler } from "react";
+import { useEffect, useState } from "react";
+import debounce from "lodash/debounce";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleNotch } from "@fortawesome/free-solid-svg-icons";
+
+import { useWindowFocus } from "@utils/window-focus-hook";
 
 const Verifier: React.FC = () => {
-  const inputRef = useRef<HTMLInputElement>(null);
   const [barcodeInput, setBarcodeInput] = useState("");
-  const [isFocused, setIsFocused] = useState(false);
+  const isWindowFocused = useWindowFocus();
 
-  /* Focus input field if it ever looses focus */
+  /* 1. Handle keyboard input */
   useEffect(() => {
-    if (!isFocused) {
-      inputRef.current?.focus();
-      setBarcodeInput("");
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const validUrlCharacter = new RegExp(/^([A-z0-9]|[-_.~!*'();:@&=+$,/?%#]){1}$/);
+
+      if (validUrlCharacter.test(e.key)) {
+        setBarcodeInput((prev) => prev + e.key);
+      } else if (e.key === "Enter") {
+        handleSubmit(barcodeInput);
+        setBarcodeInput("");
+      }
+    };
+
+    /* On first render: Attach handler to event listener */
+    window.addEventListener("keydown", handleKeyDown);
+
+    /* Cleanup: Remove event listener and cancel execution of any debounced functions */
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [barcodeInput]);
+
+  /* 2. Clear barcode input 300ms after the last input using a debounced function */
+  useEffect(() => {
+    const debouncedClearBarcodeInput = debounce(() => setBarcodeInput(""), 300);
+
+    if (barcodeInput) {
+      debouncedClearBarcodeInput();
     }
-  }, [isFocused, inputRef]);
 
-  const onSubmit = () => {
-    // TODO: [Validation] Check if valid URL and domain = verify.gov.sg then redirect
-    window.open(barcodeInput, "_blank", "resizable,width=720,height=960");
-    setBarcodeInput("");
-  };
-
-  const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = (event) => {
-    if (event.key === "Enter") return onSubmit();
-    /* Clear input field if there are no edits for 1 second */
-  };
+    return () => {
+      debouncedClearBarcodeInput.cancel();
+    };
+  }, [barcodeInput]);
 
   return (
     <div className="pt-6">
       <p className="mb-0">Status:</p>
-      {isFocused ? <StatusReady /> : <StatusNotReady />}
-
-      <input
-        className="h-0 w-full bg-blue-100 opacity-50"
-        value={barcodeInput}
-        onChange={(e) => setBarcodeInput(e.target.value)}
-        onKeyDown={handleKeyDown}
-        onFocus={() => setIsFocused(true)}
-        onBlur={() => setIsFocused(false)}
-        ref={inputRef}
-        autoFocus
-      />
+      {isWindowFocused ? <ReadyMessage /> : <NotReadyMessage />}
+      {barcodeInput ? <Spinner /> : <ScanIcon />}
     </div>
   );
 };
 
 export default Verifier;
 
-function StatusReady() {
-  return (
-    <>
-      <p className="text-xl font-extrabold">Ready, waiting for scan</p>
-      <img src="/images/scan-icon.svg" alt="Scan Icon" className="m-auto h-48" />
-    </>
-  );
-}
+const handleSubmit = (url: string) => {
+  try {
+    const parsedUrl = new URL(url);
+    if (parsedUrl.host !== "www.verify.gov.sg") throw new Error(`Invalid Verify QR, please try again: ${url}`);
+    window.open(parsedUrl, "_blank", "resizable,width=720,height=960");
+  } catch (e) {
+    alert("Invalid Verify QR, please try again");
+    console.error(e);
+  }
+};
 
-function StatusNotReady() {
-  return (
-    <>
-      <p className="text-xl text-red-500 font-extrabold">Please click here to begin</p>
-    </>
-  );
-}
+const ReadyMessage = () => <p className="text-xl font-extrabold">Ready, waiting for scan</p>;
+const NotReadyMessage = () => <p className="text-xl text-red-500 font-extrabold">Please click here to begin</p>;
+
+const Spinner = () => <FontAwesomeIcon icon={faCircleNotch} size={"3x"} className="animate-spin" />;
+const ScanIcon = () => <img src="/images/scan-icon.svg" alt="Scan Icon" className="m-auto h-48" />;

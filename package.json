@@ -24,6 +24,7 @@
     "@govtechsg/oa-verify": "^7.12.0",
     "@govtechsg/open-attestation": "^6.5.2",
     "axios": "^0.26.1",
+    "lodash": "^4.17.21",
     "next": "^12.1.6",
     "next-mdx-remote": "^4.2.0",
     "next-seo": "^5.15.0",

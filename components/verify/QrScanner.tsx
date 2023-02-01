@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-
 import { QrReader } from "react-qr-reader";
+
+import BarcodeScanner from "@components/verify/BarcodeScanner";
 
 export interface QrScannerProps {
   currentMode: number;
@@ -65,7 +66,7 @@ export const QrScanner: React.FC<QrScannerProps> = ({ currentMode, deviceIds, re
         {isActive && currentMode === ScanMode.BACK_CAMERA && hasMultipleCameras && cameraComponent(false)}
         {/* Switch to scanner if no back camera */}
         {((currentMode === ScanMode.BACK_CAMERA && !hasMultipleCameras) ||
-          (currentMode === ScanMode.SCANNER && hasMultipleCameras)) && <div> Add scanner component here </div>}
+          (currentMode === ScanMode.SCANNER && hasMultipleCameras)) && <BarcodeScanner />}
       </div>
     </div>
   );

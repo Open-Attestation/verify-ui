@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import debounce from "lodash/debounce";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleNotch } from "@fortawesome/free-solid-svg-icons";
 
@@ -15,32 +14,26 @@ const Verifier: React.FC = () => {
       const validUrlCharacter = new RegExp(/^([A-z0-9]|[-_.~!*'();:@&=+$,/?%#]){1}$/);
 
       if (validUrlCharacter.test(e.key)) {
-        setBarcodeInput((prev) => prev + e.key);
+        setBarcodeInput((curr) => curr + e.key);
       } else if (e.key === "Enter") {
         handleSubmit(barcodeInput);
         setBarcodeInput("");
       }
     };
 
-    /* On first render: Attach handler to event listener */
     window.addEventListener("keydown", handleKeyDown);
 
-    /* Cleanup: Remove event listener and cancel execution of any debounced functions */
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, [barcodeInput]);
 
-  /* 2. Clear barcode input 300ms after the last input using a debounced function */
+  /* 2. Clear barcode input 300ms after the last keydown */
   useEffect(() => {
-    const debouncedClearBarcodeInput = debounce(() => setBarcodeInput(""), 300);
-
-    if (barcodeInput) {
-      debouncedClearBarcodeInput();
-    }
+    const clearBarcodeInputTimer = setTimeout(() => setBarcodeInput(""), 300);
 
     return () => {
-      debouncedClearBarcodeInput.cancel();
+      clearTimeout(clearBarcodeInputTimer);
     };
   }, [barcodeInput]);
 
@@ -61,8 +54,8 @@ const handleSubmit = (url: string) => {
     if (parsedUrl.host !== "www.verify.gov.sg") throw new Error(`Invalid Verify QR, please try again: ${url}`);
     window.open(parsedUrl, "_blank", "resizable,width=720,height=960");
   } catch (e) {
-    alert("Invalid Verify QR, please try again");
     console.error(e);
+    alert("Invalid Verify QR, please try again");
   }
 };
 

@@ -7,7 +7,7 @@ import QrScanner from "@components/verify/QrScanner";
 import Link from "next/link";
 import { NextSeo } from "next-seo";
 
-const SCAN_MODES = ["Camera 1", "Camera 2", "Camera", "Barcode Scanner"]; // TODO: Append "Barcode scanner" once implemented
+const SCAN_MODES = ["Camera 1", "Camera 2", "Camera", "Barcode Scanner"];
 const FIVE_MINUTES = 60 * 5 * 1000;
 
 const Qr: NextPage = () => {

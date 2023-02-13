@@ -114,9 +114,7 @@ const Qr: NextPage = () => {
           <div className="pb-4">
             Current scan mode:{" "}
             <span className="font-bold">
-              {selectedDevice === "Barcode Scanner"
-                ? selectedDevice
-                : selectedDevice.label.replace(/\s[(].{4}:.{4}[)]/, "")}
+              {selectedDevice === "Barcode Scanner" ? selectedDevice : prettifyDeviceLabel(selectedDevice.label)}
             </span>
           </div>
           <ul className="flex flex-wrap justify-center gap-2">
@@ -170,8 +168,15 @@ const DeviceSelection: React.FC<DeviceSelectionProps> = ({ availableDevices, sel
         >
           {device === "Barcode Scanner"
             ? `Switch to Barcode Scanner`
-            : `Switch to ${device.label.replace(/\s[(].{4}:.{4}[)]/, "")}`}
+            : `Switch to ${prettifyDeviceLabel(device.label)}`}
         </li>
       ))}
   </>
 );
+
+const prettifyDeviceLabel = (label: string) => {
+  if (label.includes("front")) return "Front Camera";
+  else if (label.includes("back")) return "Back Camera";
+
+  return label.replace(/\s[(].{4}:.{4}[)]/, "");
+};

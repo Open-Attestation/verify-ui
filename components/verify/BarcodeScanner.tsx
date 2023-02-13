@@ -4,7 +4,11 @@ import { faCircleNotch } from "@fortawesome/free-solid-svg-icons";
 
 import { useWindowFocus } from "@utils/window-focus-hook";
 
-const Verifier: React.FC = () => {
+interface BarcodeScannerProps {
+  onResult: (url: string) => void;
+}
+
+const BarcodeScanner: React.FC<BarcodeScannerProps> = ({ onResult }) => {
   const [barcodeInput, setBarcodeInput] = useState("");
   const isWindowFocused = useWindowFocus();
 
@@ -16,7 +20,7 @@ const Verifier: React.FC = () => {
       if (validUrlCharacter.test(e.key)) {
         setBarcodeInput((curr) => curr + e.key);
       } else if (e.key === "Enter") {
-        handleSubmit(barcodeInput);
+        onResult(barcodeInput);
         setBarcodeInput("");
       }
     };
@@ -38,7 +42,7 @@ const Verifier: React.FC = () => {
   }, [barcodeInput]);
 
   return (
-    <div className="pt-6">
+    <div className="py-6">
       <p className="mb-0">Status:</p>
       {isWindowFocused ? <ReadyMessage /> : <NotReadyMessage />}
       {barcodeInput ? <Spinner /> : <ScanIcon />}
@@ -46,18 +50,7 @@ const Verifier: React.FC = () => {
   );
 };
 
-export default Verifier;
-
-const handleSubmit = (url: string) => {
-  try {
-    const parsedUrl = new URL(url);
-    if (parsedUrl.host !== "www.verify.gov.sg") throw new Error(`Invalid Verify QR, please try again: ${url}`);
-    window.open(parsedUrl, "_blank", "resizable,width=720,height=960");
-  } catch (e) {
-    console.error(e);
-    alert("Invalid Verify QR, please try again");
-  }
-};
+export default BarcodeScanner;
 
 const ReadyMessage = () => <p className="text-xl font-extrabold">Ready, waiting for scan</p>;
 const NotReadyMessage = () => <p className="text-xl text-red-500 font-extrabold">Please click here to begin</p>;

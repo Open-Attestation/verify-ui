@@ -3,7 +3,8 @@ import { useState, useEffect } from "react";
 const hasFocus = () => typeof document !== "undefined" && document.hasFocus();
 
 export const useWindowFocus = () => {
-  const [focused, setFocused] = useState(hasFocus); // Focus for first render
+  // const [focused, setFocused] = useState(hasFocus); // Focus for first render
+  const [focused, setFocused] = useState(true); // Focus for first render
 
   useEffect(() => {
     setFocused(hasFocus()); // Focus for additional renders

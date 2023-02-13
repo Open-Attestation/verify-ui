@@ -2,11 +2,12 @@ import { Selector } from "testcafe";
 import { validateIframeText, validateIssuer } from "./helper";
 
 fixture("Scan QR page on Barcode Scanner mode").page`http://localhost:3000/qr`.beforeEach(async (t) => {
-  const SwitchToBarcodeScannerLink = Selector("span").withText("Switch to Barcode Scanner");
+  const SwitchToBarcodeScannerLink = Selector("li").withText("Switch to Barcode Scanner");
   await t.click(SwitchToBarcodeScannerLink);
 });
 
 const StatusCheck = Selector("[data-testid='verification-checks']");
+const AlertContainer = Selector('[role="alert"]');
 
 test("Barcode scanner on QR page should be on standby for input", async (t) => {
   await t.expect(Selector("p").withText("Ready, waiting for scan").exists).ok();
@@ -53,8 +54,6 @@ test("Barcode scanner on QR page should be able to verify a valid QR", async (t)
 });
 
 test("Barcode scanner on QR page should throw error when verifying an invalid QR", async (t) => {
-  await t.setNativeDialogHandler(() => true);
-
   const invalidVerifyUrl = `https://www.fake-verify.com/verify?q=fake`;
 
   for (let char of invalidVerifyUrl) {
@@ -63,8 +62,5 @@ test("Barcode scanner on QR page should throw error when verifying an invalid QR
 
   await t.pressKey("enter");
 
-  const [dialogHistory] = await t.getNativeDialogHistory();
-
-  await t.expect(dialogHistory.type).eql("alert");
-  await t.expect(dialogHistory.text).eql("Invalid Verify QR, please try again");
+  await t.expect(AlertContainer.withText(`Invalid Verify QR, please try again`).exists).ok();
 });

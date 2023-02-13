@@ -16,6 +16,7 @@ export const CameraScanner: React.FC<CameraScannerProps> = ({ constraints, onRes
         onResult={(res) => {
           if (res) onResult(res.getText());
         }}
+        scanDelay={1000}
       />
       <div className="absolute inset-0 flex justify-center">
         <img className="m-4" src="/images/qr-crosshair.svg" alt="qr visual guide" />

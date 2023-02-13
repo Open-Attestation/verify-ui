@@ -3,6 +3,7 @@ enum ErrorType {
   FetchError,
   DecryptionError,
   InvalidDocumentError,
+  PermissionsError,
 }
 
 type ErrorStrings = keyof typeof ErrorType;

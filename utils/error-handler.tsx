@@ -72,11 +72,11 @@ export const qrErrorHandler = (e: unknown): StatusProps => {
       message: (
         <div>
           <b>Camera permissions denied</b>: <br />
-          Please refresh the page and grant camera permissions in your browser settings.
+          Please grant camera permissions in your browser settings and refresh the page.
         </div>
       ),
     };
-  } else {
+  } else if (e instanceof DOMException) {
     return {
       type: "ERROR",
       message: (
@@ -87,5 +87,23 @@ export const qrErrorHandler = (e: unknown): StatusProps => {
         </div>
       ),
     };
+  } else if (e instanceof TypeError && e.message.includes("Invalid URL")) {
+    return {
+      type: "ERROR",
+      message: <>Invalid Verify QR, please try again</>,
+    };
+  } else if (e instanceof CodedError) {
+    return {
+      type: "ERROR",
+      message: (
+        <div className="text-center">
+          <b>{e.message}</b>
+          {e.details && <br />}
+          {e.details && <span className="break-words">{e.details}</span>}
+        </div>
+      ),
+    };
+  } else {
+    return { type: "ERROR", message: <>Something went wrong.</> };
   }
 };

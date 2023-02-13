@@ -8,6 +8,7 @@ import Heading from "@components/text/Heading";
 import Status, { StatusProps } from "@components/figure/StatusMessage";
 import { CameraScanner, getCameraDevices } from "@components/verify/CameraScanner";
 import BarcodeScanner from "@components/verify/BarcodeScanner";
+import { CodedError } from "@utils/coded-error";
 import { qrErrorHandler } from "@utils/error-handler";
 
 type AvailableDevice = MediaDeviceInfo | "Barcode Scanner";
@@ -24,7 +25,7 @@ type Action =
   | { type: "SCAN_WITH_CAMERA"; selectedDevice: MediaDeviceInfo }
   | { type: "SCAN_WITH_BARCODE" }
   | { type: "STATUS_MESSAGE"; status: StatusProps }
-  | { type: "LAUNCH_VERIFY_URL"; url: URL };
+  | { type: "RESET_STATUS_MESSAGE" };
 
 const initialState: State = {
   isReady: false,
@@ -48,8 +49,7 @@ const reducer: Reducer<State, Action> = (state, action) => {
       return { ...state, selectedDevice: "Barcode Scanner", status: { type: "NIL" } };
     case "STATUS_MESSAGE":
       return { ...state, status: action.status };
-    case "LAUNCH_VERIFY_URL":
-      window.open(action.url, "_blank", "resizable,width=720,height=960");
+    case "RESET_STATUS_MESSAGE":
       return { ...state, status: { type: "NIL" } };
     default:
       return initialState;
@@ -80,19 +80,28 @@ const Qr: NextPage = () => {
       const parsedUrl = new URL(url);
 
       if (parsedUrl.origin !== "https://www.verify.gov.sg") {
-        throw new Error(`Invalid Verify QR, please try again: ${url}`);
+        throw new CodedError("InvalidDocumentError", "Invalid Verify QR, please try again");
       }
 
-      dispatch({ type: "LAUNCH_VERIFY_URL", url: parsedUrl });
+      const newWindow = window.open(parsedUrl, "_blank", "resizable,width=720,height=960");
+
+      if (!newWindow) {
+        throw new CodedError(
+          "PermissionsError",
+          "Pop-ups are being blocked",
+          "Please allow pop-ups in your browser settings and refresh the page"
+        );
+      }
+
+      /* Success: All validations have passed */
+      newWindow.focus();
+      dispatch({ type: "RESET_STATUS_MESSAGE" });
     } catch (e) {
       console.error(e);
 
       dispatch({
         type: "STATUS_MESSAGE",
-        status: {
-          type: "ERROR",
-          message: <>Invalid Verify QR, please try again</>,
-        },
+        status: qrErrorHandler(e),
       });
     }
   };

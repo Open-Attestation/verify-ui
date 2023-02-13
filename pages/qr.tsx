@@ -95,7 +95,6 @@ const Qr: NextPage = () => {
 
       /* Success: All validations have passed */
       newWindow.focus();
-      dispatch({ type: "RESET_STATUS_MESSAGE" });
     } catch (e) {
       console.error(e);
 
@@ -105,6 +104,15 @@ const Qr: NextPage = () => {
       });
     }
   };
+
+  /* Clear error status message after 5 seconds */
+  useEffect(() => {
+    if (status.type !== "ERROR") return;
+
+    const timer = setTimeout(() => dispatch({ type: "RESET_STATUS_MESSAGE" }), 5000);
+
+    return () => clearTimeout(timer);
+  }, [status]);
 
   return (
     <Layout>

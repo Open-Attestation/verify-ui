@@ -1,11 +1,14 @@
 import { QrReader } from "react-qr-reader";
+import debounce from "lodash/debounce";
 
 interface CameraScannerProps {
   constraints: MediaTrackConstraints;
-  onResult: (url: string) => void; // TODO: Implement debouncing
+  onResult: (url: string) => void;
 }
 
 export const CameraScanner: React.FC<CameraScannerProps> = ({ constraints, onResult }) => {
+  const onResultDebounced = debounce(onResult, 2000, { leading: true, trailing: false }); // Execute on trailing edge (first call)
+
   return (
     <div className="relative">
       <QrReader
@@ -14,9 +17,8 @@ export const CameraScanner: React.FC<CameraScannerProps> = ({ constraints, onRes
         className="m-auto my-6 max-w-lg"
         videoStyle={{ borderRadius: "0.5rem", objectFit: "cover" }}
         onResult={(res) => {
-          if (res) onResult(res.getText());
+          if (res) onResultDebounced(res.getText());
         }}
-        scanDelay={1000}
       />
       <div className="absolute inset-0 flex justify-center">
         <img className="m-4" src="/images/qr-crosshair.svg" alt="qr visual guide" />
@@ -35,3 +37,4 @@ export const getCameraDevices = async () => {
 
   return videoDevices;
 };
+

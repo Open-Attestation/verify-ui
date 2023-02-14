@@ -198,8 +198,8 @@ const DeviceSelection: React.FC<DeviceSelectionProps> = ({ availableDevices, sel
 
 const BlurWhenUnfocused: React.FC<{ isWindowFocused: boolean }> = ({ isWindowFocused }) =>
   isWindowFocused ? null : (
-    <div className="absolute inset-0 flex items-center justify-center rounded-lg backdrop-blur-md">
-      <p className="text-3xl font-bold text-primary">Click here to continue</p>
+    <div className="absolute inset-0 flex items-center justify-center rounded-lg backdrop-blur-sm">
+      <p className="text-xl sm:text-3xl font-semibold text-white bg-primary py-4 px-6 rounded-xl shadow-md cursor-pointer">Click here to resume</p>
     </div>
   );
 

@@ -80,7 +80,7 @@ export const CameraScanner: React.FC<CameraScannerProps> = ({ constraints, onRes
     );
   else
     return (
-      <div className="m-auto my-6 p-4 max-w-[60vh] rounded-2xl bg-gray-300">
+      <div className="m-auto my-6 p-4 max-w-[60vh] rounded-2xl bg-gray-200">
         <img className="w-full h-full" src="/images/qr-crosshair.svg" alt="qr visual guide" />
       </div>
     );

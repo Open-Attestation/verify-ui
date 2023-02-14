@@ -3,6 +3,7 @@ import { QrReader } from "react-qr-reader";
 import debounce from "lodash/debounce";
 
 import Heading from "@components/text/Heading";
+import { useWindowFocus } from "@utils/window-focus-hook";
 
 const FIVE_MINUTES = 5 * 60 * 1000;
 
@@ -12,6 +13,7 @@ interface CameraScannerProps {
 }
 
 export const CameraScanner: React.FC<CameraScannerProps> = ({ constraints, onResult }) => {
+  const isWindowFocused = useWindowFocus();
   const [isAwake, setIsAwake] = useState(true);
 
   const onResultDebounced = debounce(onResult, 2000, { leading: true, trailing: false }); // Execute on leading edge (first call)
@@ -32,13 +34,20 @@ export const CameraScanner: React.FC<CameraScannerProps> = ({ constraints, onRes
     return () => scheduleSleepDebounced.cancel();
   }, [constraints]);
 
-  if (isAwake)
+  /* When window is back in focus */
+  useEffect(() => {
+    if (isWindowFocused) wakeCameraAndScheduleSleep();
+
+    return () => scheduleSleepDebounced.cancel();
+  }, [isWindowFocused]);
+
+  if (isAwake && isWindowFocused)
     return (
       <div className="relative">
         <QrReader
           key={JSON.stringify(constraints)}
           constraints={constraints}
-          className="m-auto my-6 max-w-lg"
+          className="m-auto my-6 max-w-[60vh]" // QrReader is square, sized via width; Limit max width according to device height
           videoStyle={{ borderRadius: "0.5rem", objectFit: "cover" }}
           onResult={(res) => {
             if (res) {
@@ -52,7 +61,7 @@ export const CameraScanner: React.FC<CameraScannerProps> = ({ constraints, onRes
         </div>
       </div>
     );
-  else
+  else if (!isAwake && isWindowFocused)
     return (
       <div className="flex flex-col items-center my-32">
         <Heading level="h2" className="text-2xl mb-4">
@@ -67,6 +76,12 @@ export const CameraScanner: React.FC<CameraScannerProps> = ({ constraints, onRes
         >
           Relaunch camera
         </button>
+      </div>
+    );
+  else
+    return (
+      <div className="m-auto my-6 p-4 max-w-[60vh] rounded-2xl bg-gray-300">
+        <img className="w-full h-full" src="/images/qr-crosshair.svg" alt="qr visual guide" />
       </div>
     );
 };

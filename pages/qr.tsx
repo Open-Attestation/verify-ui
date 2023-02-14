@@ -10,6 +10,7 @@ import { CameraScanner, getCameraDevices } from "@components/verify/CameraScanne
 import BarcodeScanner from "@components/verify/BarcodeScanner";
 import { CodedError } from "@utils/coded-error";
 import { qrErrorHandler } from "@utils/error-handler";
+import { useWindowFocus } from "@utils/window-focus-hook";
 
 type AvailableDevice = MediaDeviceInfo | "Barcode Scanner";
 
@@ -57,6 +58,7 @@ const reducer: Reducer<State, Action> = (state, action) => {
 };
 
 const Qr: NextPage = () => {
+  const isWindowFocused = useWindowFocus();
   const [{ isReady, status, availableDevices, selectedDevice }, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
@@ -125,8 +127,11 @@ const Qr: NextPage = () => {
 
         <div
           hidden={!isReady}
-          className="p-6 my-10 border-4 border-dotted border-gray-200 rounded-lg bg-white ring-primary"
+          className="relative p-6 my-10 border-4 border-dotted border-gray-200 rounded-lg bg-white ring-primary"
         >
+          {/* Blur component */}
+          <BlurWhenUnfocused isWindowFocused={isWindowFocused} />
+
           {/* Mode selection */}
           <div className="pb-4">
             Current scan mode:{" "}
@@ -190,6 +195,13 @@ const DeviceSelection: React.FC<DeviceSelectionProps> = ({ availableDevices, sel
       ))}
   </>
 );
+
+const BlurWhenUnfocused: React.FC<{ isWindowFocused: boolean }> = ({ isWindowFocused }) =>
+  isWindowFocused ? null : (
+    <div className="absolute inset-0 flex items-center justify-center rounded-lg backdrop-blur-md">
+      <p className="text-3xl font-bold text-primary">Click here to continue</p>
+    </div>
+  );
 
 const prettifyDeviceLabel = (label: string) => {
   if (label.includes("front")) return "Front Camera";

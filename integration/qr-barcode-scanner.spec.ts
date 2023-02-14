@@ -13,7 +13,7 @@ test("Barcode scanner on QR page should be on standby for input", async (t) => {
   await t.expect(Selector("p").withText("Ready, waiting for scan").exists).ok();
 
   await t.dispatchEvent(Selector("body"), "blur");
-  await t.expect(Selector("p").withText("Please click here to begin").exists).ok();
+  await t.expect(Selector("p").withText("Not ready, current window to not active").exists).ok();
 
   await t.dispatchEvent(Selector("body"), "focus");
   await t.expect(Selector("p").withText("Ready, waiting for scan").exists).ok();

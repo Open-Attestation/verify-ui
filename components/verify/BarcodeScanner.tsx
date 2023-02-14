@@ -53,7 +53,7 @@ const BarcodeScanner: React.FC<BarcodeScannerProps> = ({ onResult }) => {
 export default BarcodeScanner;
 
 const ReadyMessage = () => <p className="text-xl font-extrabold">Ready, waiting for scan</p>;
-const NotReadyMessage = () => <p className="text-xl font-extrabold">Ready, waiting for scan</p>;
+const NotReadyMessage = () => <p className="text-xl font-extrabold">Not ready, current window to not active</p>;
 
 const Spinner = () => <FontAwesomeIcon icon={faCircleNotch} size={"3x"} className="animate-spin" />;
 const ScanIcon = () => <img src="/images/scan-icon.svg" alt="Scan Icon" className="m-auto h-48" />;

@@ -2,8 +2,8 @@ import { Selector } from "testcafe";
 import { validateIframeText, validateIssuer } from "./helper";
 
 fixture("Scan QR page on Barcode Scanner mode").page`http://localhost:3000/qr`.beforeEach(async (t) => {
-  const SwitchToBarcodeScannerLink = Selector("li").withText("Switch to Barcode Scanner");
-  await t.click(SwitchToBarcodeScannerLink);
+  // const SwitchToBarcodeScannerLink = Selector("li").withText("Switch to Barcode Scanner");
+  // await t.click(SwitchToBarcodeScannerLink);
 });
 
 const StatusCheck = Selector("[data-testid='verification-checks']");
@@ -14,6 +14,7 @@ test("Barcode scanner on QR page should be on standby for input", async (t) => {
 
   await t.dispatchEvent(Selector("body"), "blur");
   await t.expect(Selector("p").withText("Not ready, current window not active").exists).ok();
+  await t.expect(Selector("p").withText("Click here to resume").exists).ok();
 
   await t.dispatchEvent(Selector("body"), "focus");
   await t.expect(Selector("p").withText("Ready, waiting for scan").exists).ok();

@@ -86,7 +86,9 @@ export const CameraScanner: React.FC<CameraScannerProps> = ({ constraints, onRes
     );
 };
 
-export const getCameraDevices = async () => {
+export type CustomMediaDeviceInfo = { device: MediaDeviceInfo; prettyLabel: string };
+
+export const getFilteredCameraDevices = async () => {
   /* Request camera permissions from user */
   await navigator.mediaDevices.getUserMedia({ video: true });
 
@@ -94,5 +96,42 @@ export const getCameraDevices = async () => {
   const mediaDevices = await navigator.mediaDevices.enumerateDevices();
   const videoDevices = mediaDevices.filter((device) => device.kind === "videoinput");
 
-  return videoDevices;
+  /* Sort by device label */
+  const sortedVideoDevices = videoDevices.sort((a, b) => {
+    if (a.label < b.label) return -1;
+    else if (a.label > b.label) return 1;
+    else return 0;
+  });
+
+  const { userAgent } = navigator;
+
+  if (/iPad|iPhone|iPod/i.test(userAgent)) {
+    /* iOS device: Filter for first instance of "Back Camera" & "Front Camera" */
+    const iOsCameras: CustomMediaDeviceInfo[] = [];
+
+    const backIOsCamera = sortedVideoDevices.find((device) => /Back Camera/i.test(device.label));
+    if (backIOsCamera) iOsCameras.push({ device: backIOsCamera, prettyLabel: "Back Camera" });
+
+    const frontIOsCamera = sortedVideoDevices.find((device) => /Front Camera/i.test(device.label));
+    if (frontIOsCamera) iOsCameras.push({ device: frontIOsCamera, prettyLabel: "Front Camera" });
+
+    return iOsCameras;
+  } else if (/Android/i.test(userAgent)) {
+    /* Android device: Filter for first instance of "back" & "front" */
+    const androidCameras: CustomMediaDeviceInfo[] = [];
+
+    const backAndroidCamera = sortedVideoDevices.find((device) => /back/i.test(device.label));
+    if (backAndroidCamera) androidCameras.push({ device: backAndroidCamera, prettyLabel: "Back Camera" });
+
+    const frontAndroidCamera = sortedVideoDevices.find((device) => /front/i.test(device.label));
+    if (frontAndroidCamera) androidCameras.push({ device: frontAndroidCamera, prettyLabel: "Front Camera" });
+
+    return androidCameras;
+  } else {
+    /* All other user agents: Just return all sorted cameras */
+    return sortedVideoDevices.map<CustomMediaDeviceInfo>((device) => ({
+      device: device,
+      prettyLabel: device.label.replace(/\s[(].{4}:.{4}[)]/, ""),
+    }));
+  }
 };

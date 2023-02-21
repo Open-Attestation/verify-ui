@@ -60,3 +60,50 @@ export const verifyErrorHandler = (e: unknown): StatusProps => {
     return { type: "ERROR", message: <>Something went wrong.</> };
   }
 };
+
+/**
+ * Custom error message handler for the QR page (pages/qr.tsx)
+ * @param e
+ */
+export const qrErrorHandler = (e: unknown): StatusProps => {
+  if (e instanceof DOMException && e.message.includes("Permission")) {
+    return {
+      type: "ERROR",
+      message: (
+        <div>
+          <b>Camera permissions denied</b>: <br />
+          Please grant camera permissions in your browser settings and refresh the page.
+        </div>
+      ),
+    };
+  } else if (e instanceof DOMException) {
+    return {
+      type: "ERROR",
+      message: (
+        <div>
+          Please ensure your camera is connected, installed properly, and not in use by other applications.
+          <br />
+          Refresh the page after connecting your camera.
+        </div>
+      ),
+    };
+  } else if (e instanceof TypeError && e.message.includes("Invalid URL")) {
+    return {
+      type: "ERROR",
+      message: <>Invalid Verify QR, please try again</>,
+    };
+  } else if (e instanceof CodedError) {
+    return {
+      type: "ERROR",
+      message: (
+        <div className="text-center">
+          <b>{e.message}</b>
+          {e.details && <br />}
+          {e.details && <span className="break-words">{e.details}</span>}
+        </div>
+      ),
+    };
+  } else {
+    return { type: "ERROR", message: <>Something went wrong.</> };
+  }
+};

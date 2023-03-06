@@ -2,8 +2,8 @@ import { Selector } from "testcafe";
 import { validateIframeText, validateIssuer } from "./helper";
 
 fixture("Scan QR page on Barcode Scanner mode").page`http://localhost:3000/qr`.beforeEach(async (t) => {
-  // const SwitchToBarcodeScannerLink = Selector("li").withText("Switch to Barcode Scanner");
-  // await t.click(SwitchToBarcodeScannerLink);
+  const SwitchToBarcodeScannerLink = Selector("li").withText("Switch to Barcode Scanner");
+  await t.click(SwitchToBarcodeScannerLink);
 });
 
 const StatusCheck = Selector("[data-testid='verification-checks']");

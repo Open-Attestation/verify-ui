@@ -66,7 +66,7 @@ const Qr: NextPage = () => {
       try {
         const availableCameras = await getFilteredCameraDevices();
 
-        dispatch({ type: "READY", availableDevices: ["Barcode Scanner", ...availableCameras] }); // FIXME: Since camera does not launch on first render for some devices (e.g. iPhone), workaround is to set Barcode Scanner as the default mode
+        dispatch({ type: "READY", availableDevices: [...availableCameras, "Barcode Scanner"] });
       } catch (e) {
         console.error(e);
 
@@ -149,7 +149,7 @@ const Qr: NextPage = () => {
             {selectedDevice === "Barcode Scanner" ? (
               <BarcodeScanner onResult={onResult} />
             ) : (
-              <CameraScanner constraints={{ deviceId: selectedDevice.device.deviceId }} onResult={onResult} />
+              <CameraScanner cameraDevice={selectedDevice} onResult={onResult} />
             )}
 
             <p className="m-0">

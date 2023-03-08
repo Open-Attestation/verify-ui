@@ -1,10 +1,15 @@
 import { Selector } from "testcafe";
 import { validateIframeText, validateIssuer } from "./helper";
 
-fixture("Scan QR page on Barcode Scanner mode").page`http://localhost:3000/qr`.beforeEach(async (t) => {
-  // const SwitchToBarcodeScannerLink = Selector("li").withText("Switch to Barcode Scanner");
-  // await t.click(SwitchToBarcodeScannerLink);
-});
+fixture("Scan QR page on Barcode Scanner mode").page`http://localhost:3000/qr`
+  .skipJsErrors({
+    // FIXME: Temporarily ignore this JS error (as mentioned in components/verify/CameraScanner.tsx:L74)
+    message: /.*The play[(][)] request was interrupted because the media was removed from the document.*/gi,
+  })
+  .beforeEach(async (t) => {
+    const SwitchToBarcodeScannerLink = Selector("li").withText("Switch to Barcode Scanner");
+    await t.click(SwitchToBarcodeScannerLink);
+  });
 
 const StatusCheck = Selector("[data-testid='verification-checks']");
 const AlertContainer = Selector('[role="alert"]');

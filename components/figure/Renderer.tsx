@@ -54,13 +54,13 @@ const Renderer: React.FC<RendererProps> = ({ document, rawDocument }) => {
     var ua = window.navigator.userAgent;
     var iOS = !!ua.match(/iPad/i) || !!ua.match(/iPhone/i);
     // List of common browsers installable from app store
-    // https://www.whatismybrowser.com/guides/the-latest-user-agent/
     var isNotSafari =
-      ua.includes("CriOS") &&
-      ua.includes("FxiOS") &&
-      ua.includes("EdgiOS") &&
-      ua.includes("Brave") &&
-      ua.includes("YaBrowser") &&
+      ua.includes("CriOS") ||
+      ua.includes("FxiOS") ||
+      ua.includes("EdgiOS") ||
+      ua.includes("Brave") ||
+      ua.includes("YaBrowser") ||
+      ua.includes("OPT") ||
       ua.includes("OPR");
 
     if ((iOS && isNotSafari) || navigator.userAgent.includes("SamsungBrowser")) {

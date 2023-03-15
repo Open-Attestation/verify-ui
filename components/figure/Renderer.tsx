@@ -51,7 +51,7 @@ const Renderer: React.FC<RendererProps> = ({ document, rawDocument }) => {
   }, []);
 
   const handlePrint = useCallback(() => {
-    var ua = window.navigator.userAgent;
+    const ua = window.navigator.userAgent;
     const isIOS = /iPad|iPhone|iPod/.test(ua);
     // List of common browsers installable from app store
     const isNotSafari = /CriOS|FxiOS|EdgiOS|Brave|YaBrowser|OPT|OPR/.test(ua);

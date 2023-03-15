@@ -50,14 +50,20 @@ const Renderer: React.FC<RendererProps> = ({ document, rawDocument }) => {
     }
   }, []);
 
-  const handlePrint = useCallback(() => {
+  const handlePrint = useCallback(async () => {
     const ua = window.navigator.userAgent;
     const isIOS = /iPad|iPhone|iPod/.test(ua);
     // List of common browsers installable from app store
-    const isNotSafari = /CriOS|FxiOS|EdgiOS|Brave|YaBrowser|OPT|OPR/.test(ua);
+    const isNotSafari = /CriOS|FxiOS|EdgiOS|YaBrowser|OPT|OPR/.test(ua);
     const isSamsungBrowser = ua.includes("SamsungBrowser");
+    // https://stackoverflow.com/questions/36523448/how-do-i-tell-if-a-user-is-using-brave-as-their-browser/60954062#60954062
+    // no typings for browser-specific fields - https://github.com/microsoft/TypeScript/issues/41532
+    const isBraveBrowser =
+      ((window.navigator as any).brave && (await (window.navigator as any).brave.isBrave())) || false;
 
-    if ((isIOS && isNotSafari) || isSamsungBrowser) {
+    const isUnsupportedBrowser = (isIOS && (isNotSafari || isBraveBrowser)) || isSamsungBrowser;
+
+    if (isUnsupportedBrowser) {
       alert(
         "Printing this document is not optimised on your device.\nFor the best result, use: \n- Chrome on Android devices \n- Safari on IOS devices \n- Any major browsers on desktop"
       );

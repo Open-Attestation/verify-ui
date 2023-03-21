@@ -52,10 +52,10 @@ const Renderer: React.FC<RendererProps> = ({ document, rawDocument }) => {
 
   const handlePrint = useCallback(async () => {
     const ua = window.navigator.userAgent;
-    const isIOS = /iPad|iPhone|iPod/.test(ua);
+    const isIOS = /iPad|iPhone|iPod/i.test(ua);
     // List of common browsers installable from app store
-    const isNotSafari = /CriOS|FxiOS|EdgiOS|YaBrowser|OPT|OPR/.test(ua);
-    const isSamsungBrowser = ua.includes("SamsungBrowser");
+    const isNotSafari = /CriOS|FxiOS|EdgiOS|YaBrowser|OPT|OPR/i.test(ua);
+    const isSamsungBrowser = /SamsungBrowser/i.test(ua);
     // https://stackoverflow.com/questions/36523448/how-do-i-tell-if-a-user-is-using-brave-as-their-browser/60954062#60954062
     // no typings for browser-specific fields - https://github.com/microsoft/TypeScript/issues/41532
     const isBraveBrowser =

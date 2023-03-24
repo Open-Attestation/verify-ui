@@ -11,43 +11,34 @@ import BarcodeScanner from "@components/verify/BarcodeScanner";
 import { CodedError } from "@utils/coded-error";
 import { qrErrorHandler } from "@utils/error-handler";
 import { useWindowFocus } from "@utils/window-focus-hook";
+import { useRouterQuery } from "@utils/router-query-hook";
 
-type AvailableDevice = CustomMediaDeviceInfo | "Barcode Scanner";
+const barcodeScanner = { prettyLabel: "Barcode Scanner" } as const;
+
+type BarcodeScanner = typeof barcodeScanner;
+type AvailableDevices = (CustomMediaDeviceInfo | BarcodeScanner)[];
 
 interface State {
-  isReady: boolean;
   status: StatusProps;
-  availableDevices: AvailableDevice[];
-  selectedDevice: AvailableDevice;
+  availableDevices?: AvailableDevices;
 }
 
 type Action =
-  | { type: "READY"; availableDevices: AvailableDevice[] }
-  | { type: "SCAN_WITH_CAMERA"; selectedDevice: CustomMediaDeviceInfo }
-  | { type: "SCAN_WITH_BARCODE" }
+  | { type: "SET_AVAILABLE_DEVICES"; availableDevices: AvailableDevices }
   | { type: "STATUS_MESSAGE"; status: StatusProps }
   | { type: "RESET_STATUS_MESSAGE" };
 
 const initialState: State = {
-  isReady: false,
   status: { type: "LOADING", message: <>Looking for available cameras...</> },
-  availableDevices: ["Barcode Scanner"],
-  selectedDevice: "Barcode Scanner",
 };
 
 const reducer: Reducer<State, Action> = (state, action) => {
   switch (action.type) {
-    case "READY":
+    case "SET_AVAILABLE_DEVICES":
       return {
-        isReady: true,
         status: { type: "NIL" },
         availableDevices: action.availableDevices,
-        selectedDevice: action.availableDevices[0],
       };
-    case "SCAN_WITH_CAMERA":
-      return { ...state, selectedDevice: action.selectedDevice, status: { type: "NIL" } };
-    case "SCAN_WITH_BARCODE":
-      return { ...state, selectedDevice: "Barcode Scanner", status: { type: "NIL" } };
     case "STATUS_MESSAGE":
       return { ...state, status: action.status };
     case "RESET_STATUS_MESSAGE":
@@ -59,23 +50,38 @@ const reducer: Reducer<State, Action> = (state, action) => {
 
 const Qr: NextPage = () => {
   const isWindowFocused = useWindowFocus();
-  const [{ isReady, status, availableDevices, selectedDevice }, dispatch] = useReducer(reducer, initialState);
+  const [selectedDevicePrettyLabel, setSelectedDevicePrettyLabel, isRouterReady] = useRouterQuery("device");
+  const [{ status, availableDevices }, dispatch] = useReducer(reducer, initialState);
+  const isReady = !!availableDevices && !!selectedDevicePrettyLabel;
 
+  /* Initialisation on router ready: Search for available cameras */
   useEffect(() => {
+    if (!isRouterReady) return;
+
     (async () => {
       try {
         const availableCameras = await getFilteredCameraDevices();
+        const availableDevices = [...availableCameras, barcodeScanner];
 
-        dispatch({ type: "READY", availableDevices: [...availableCameras, "Barcode Scanner"] });
+        dispatch({ type: "SET_AVAILABLE_DEVICES", availableDevices });
+
+        /* If no device or an unknown device is selected, default to first device */
+        if (
+          !selectedDevicePrettyLabel ||
+          !availableDevices.some((device) => device.prettyLabel === selectedDevicePrettyLabel)
+        ) {
+          setSelectedDevicePrettyLabel(availableDevices[0].prettyLabel);
+        }
       } catch (e) {
         console.error(e);
 
         /* Unable to get cameras: Fallback to "Barcode Scanner" */
-        dispatch({ type: "READY", availableDevices: ["Barcode Scanner"] });
+        dispatch({ type: "SET_AVAILABLE_DEVICES", availableDevices: [barcodeScanner] });
         dispatch({ type: "STATUS_MESSAGE", status: qrErrorHandler(e) });
+        setSelectedDevicePrettyLabel(barcodeScanner.prettyLabel);
       }
     })();
-  }, [isReady]);
+  }, [isRouterReady]);
 
   const onResult = (url: string) => {
     try {
@@ -132,24 +138,28 @@ const Qr: NextPage = () => {
 
             {/* Mode selection */}
             <div className="pb-4">
-              Current scan mode:{" "}
-              <span className="font-bold">
-                {selectedDevice === "Barcode Scanner" ? selectedDevice : selectedDevice.prettyLabel}
-              </span>
+              Current scan mode: <span className="font-bold">{selectedDevicePrettyLabel}</span>
             </div>
             <ul className="flex flex-wrap justify-center gap-2">
               <DeviceSelection
                 availableDevices={availableDevices}
-                selectedDevice={selectedDevice}
-                dispatch={dispatch}
+                selectedDevice={availableDevices.find((device) => device.prettyLabel === selectedDevicePrettyLabel)}
+                onSelectedDevice={(prettyLabel) => {
+                  setSelectedDevicePrettyLabel(prettyLabel);
+                }}
               />
             </ul>
 
             {/* Camera or barcode scanner */}
-            {selectedDevice === "Barcode Scanner" ? (
+            {selectedDevicePrettyLabel === barcodeScanner.prettyLabel ? (
               <BarcodeScanner onResult={onResult} />
             ) : (
-              <CameraScanner cameraDevice={selectedDevice} onResult={onResult} />
+              <CameraScanner
+                cameraDevice={availableDevices
+                  .filter((device): device is CustomMediaDeviceInfo => device !== barcodeScanner)
+                  .find((camera) => camera.prettyLabel === selectedDevicePrettyLabel)}
+                onResult={onResult}
+              />
             )}
 
             <p className="m-0">
@@ -170,33 +180,28 @@ const Qr: NextPage = () => {
 export default Qr;
 
 interface DeviceSelectionProps {
-  availableDevices: AvailableDevice[];
-  selectedDevice: AvailableDevice;
-  dispatch: Dispatch<Action>;
+  availableDevices: (CustomMediaDeviceInfo | BarcodeScanner)[];
+  selectedDevice?: CustomMediaDeviceInfo | BarcodeScanner;
+  onSelectedDevice: (selectedDevicePrettyLabel: string) => void;
 }
 
-const DeviceSelection: React.FC<DeviceSelectionProps> = ({ availableDevices, selectedDevice, dispatch }) => (
+const DeviceSelection: React.FC<DeviceSelectionProps> = ({ availableDevices, selectedDevice, onSelectedDevice }) => (
   <>
     {availableDevices
-      .filter((device) => selectedDevice !== device)
+      .filter((device) => device !== selectedDevice)
       .map((device, i) => (
         <li
           key={i}
           className="text-blue-600 underline cursor-pointer"
-          onClick={
-            device === "Barcode Scanner"
-              ? () => {
-                  dispatch({ type: "SCAN_WITH_BARCODE" });
-                }
-              : () => dispatch({ type: "SCAN_WITH_CAMERA", selectedDevice: device })
-          }
+          onClick={() => {
+            onSelectedDevice(device.prettyLabel);
+          }}
         >
-          {device === "Barcode Scanner" ? `Switch to Barcode Scanner` : `Switch to ${device.prettyLabel}`}
+          Switch to {device.prettyLabel}
         </li>
       ))}
   </>
 );
-
 const BlurWhenUnfocused: React.FC<{ isWindowFocused: boolean }> = ({ isWindowFocused }) =>
   isWindowFocused ? null : (
     <div className="absolute inset-0 flex items-center justify-center rounded-lg backdrop-blur-sm">

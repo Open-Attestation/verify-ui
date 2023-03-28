@@ -50,38 +50,37 @@ const reducer: Reducer<State, Action> = (state, action) => {
 
 const Qr: NextPage = () => {
   const isWindowFocused = useWindowFocus();
-  const [selectedDevicePrettyLabel, setSelectedDevicePrettyLabel, isRouterReady] = useRouterQuery("device");
+  const [deviceQueryParam, setDeviceQueryParam, isRouterReady] = useRouterQuery("device");
   const [{ status, availableDevices }, dispatch] = useReducer(reducer, initialState);
-  const isReady = !!availableDevices && !!selectedDevicePrettyLabel;
+  const isReady = !!availableDevices && !!deviceQueryParam;
 
-  /* Initialisation on router ready: Search for available cameras */
+  /* Initialisation (on first render): Populate list of available cameras */
   useEffect(() => {
-    if (!isRouterReady) return;
-
     (async () => {
       try {
         const availableCameras = await getFilteredCameraDevices();
         const availableDevices = [...availableCameras, barcodeScanner];
 
         dispatch({ type: "SET_AVAILABLE_DEVICES", availableDevices });
-
-        /* If no device or an unknown device is selected, default to first device */
-        if (
-          !selectedDevicePrettyLabel ||
-          !availableDevices.some((device) => device.prettyLabel === selectedDevicePrettyLabel)
-        ) {
-          setSelectedDevicePrettyLabel(availableDevices[0].prettyLabel);
-        }
       } catch (e) {
         console.error(e);
 
         /* Unable to get cameras: Fallback to "Barcode Scanner" */
         dispatch({ type: "SET_AVAILABLE_DEVICES", availableDevices: [barcodeScanner] });
         dispatch({ type: "STATUS_MESSAGE", status: qrErrorHandler(e) });
-        setSelectedDevicePrettyLabel(barcodeScanner.prettyLabel);
       }
     })();
-  }, [isRouterReady]);
+  }, []);
+
+  /* On router ready and available devices populated: Select device based on query parameter */
+  useEffect(() => {
+    if (!isRouterReady || !availableDevices) return;
+
+    /* If no device or an unknown device is selected, default to first device */
+    if (!deviceQueryParam || !availableDevices.some((device) => device.prettyLabel === deviceQueryParam)) {
+      setDeviceQueryParam(availableDevices[0].prettyLabel);
+    }
+  }, [isRouterReady, availableDevices, deviceQueryParam]);
 
   const onResult = (url: string) => {
     try {
@@ -138,26 +137,26 @@ const Qr: NextPage = () => {
 
             {/* Mode selection */}
             <div className="pb-4">
-              Current scan mode: <span className="font-bold">{selectedDevicePrettyLabel}</span>
+              Current scan mode: <span className="font-bold">{deviceQueryParam}</span>
             </div>
             <ul className="flex flex-wrap justify-center gap-2">
               <DeviceSelection
                 availableDevices={availableDevices}
-                selectedDevice={availableDevices.find((device) => device.prettyLabel === selectedDevicePrettyLabel)}
+                selectedDevice={availableDevices.find((device) => device.prettyLabel === deviceQueryParam)}
                 onSelectedDevice={(prettyLabel) => {
-                  setSelectedDevicePrettyLabel(prettyLabel);
+                  setDeviceQueryParam(prettyLabel);
                 }}
               />
             </ul>
 
             {/* Camera or barcode scanner */}
-            {selectedDevicePrettyLabel === barcodeScanner.prettyLabel ? (
+            {deviceQueryParam === barcodeScanner.prettyLabel ? (
               <BarcodeScanner onResult={onResult} />
             ) : (
               <CameraScanner
                 cameraDevice={availableDevices
                   .filter((device): device is CustomMediaDeviceInfo => device !== barcodeScanner)
-                  .find((camera) => camera.prettyLabel === selectedDevicePrettyLabel)}
+                  .find((camera) => camera.prettyLabel === deviceQueryParam)}
                 onResult={onResult}
               />
             )}

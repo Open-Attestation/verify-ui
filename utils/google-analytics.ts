@@ -1,14 +1,16 @@
 import { VerificationFragment } from "@govtechsg/oa-verify";
-import { OpenAttestationDocument } from "@govtechsg/open-attestation";
+import { OpenAttestationDocument, utils } from "@govtechsg/open-attestation";
 import { useEffect } from "react";
 import ReactGA from "react-ga4";
 
-import { isHealthCert, isPDT, isVac, isREC } from "@utils/notarise-healthcerts";
+import { isPDT, isVac, isREC } from "@utils/notarise-healthcerts";
 
-export enum HEALTHCERT_TYPE {
+export enum DOCUMENT_TYPE {
   PDT = "PDT",
   VAC = "VAC",
   REC = "REC",
+  OA_V2 = "OA_V2",
+  OA_V3 = "OA_V3", // OA v3 currently not supported by verify.gov.sg
   UNKNOWN = "UNKNOWN",
 }
 
@@ -17,15 +19,19 @@ export enum EVENT_CATEGORY {
   ERROR = "certificate_error",
 }
 
-export const getHealthCertType = (data: OpenAttestationDocument): HEALTHCERT_TYPE => {
+export const getDocumentType = (data: OpenAttestationDocument): DOCUMENT_TYPE => {
   if (isVac(data)) {
-    return HEALTHCERT_TYPE.VAC;
+    return DOCUMENT_TYPE.VAC;
   } else if (isPDT(data)) {
-    return HEALTHCERT_TYPE.PDT;
+    return DOCUMENT_TYPE.PDT;
   } else if (isREC(data)) {
-    return HEALTHCERT_TYPE.REC;
+    return DOCUMENT_TYPE.REC;
+  } else if (utils.isRawV2Document(data)) {
+    return DOCUMENT_TYPE.OA_V2;
+  } else if (utils.isRawV3Document(data)) {
+    return DOCUMENT_TYPE.OA_V3;
   } else {
-    return HEALTHCERT_TYPE.UNKNOWN;
+    return DOCUMENT_TYPE.UNKNOWN;
   }
 };
 
@@ -50,32 +56,40 @@ export const useGoogleAnalytics = (): void => {
   }, []);
 };
 
-export const sendHealthCertVerifiedEvent = (data: OpenAttestationDocument): void => {
-  if (!isHealthCert(data)) {
-    return;
-  }
+export const sendSuccessfulVerificationEvent = (data: OpenAttestationDocument): void => {
+  if (utils.isRawV3Document(data)) return; // OA v3 currently not supported by verify.gov.sg
+
   try {
     ReactGA.event(EVENT_CATEGORY.VERIFIED, {
-      document_id: data.id ?? "",
-      document_type: getHealthCertType(data),
+      document_id: data.id || "",
+      document_type: getDocumentType(data),
+      issuer_identity_location: data.issuers[0].identityProof?.location || "",
+      template_name: typeof data.$template === "string" ? data.$template : data.$template?.name || "",
+      template_url: typeof data.$template === "string" ? data.$template : data.$template?.url || "",
     });
   } catch (e) {
     console.error(e);
   }
 };
 
-export const sendHealthCertErrorEvent = (data: OpenAttestationDocument, fragments: VerificationFragment[]): void => {
-  if (!isHealthCert(data)) {
-    return;
-  }
+export const sendUnsuccessfulVerificationEvent = (
+  data: OpenAttestationDocument,
+  fragments: VerificationFragment[]
+): void => {
+  if (utils.isRawV3Document(data)) return; // OA v3 currently not supported by verify.gov.sg
+
   const message = JSON.stringify(fragments.filter(({ status }) => status === "ERROR" || status === "INVALID")).replace(
     /[\[\]"]/g,
     ""
   );
+
   try {
     ReactGA.event(EVENT_CATEGORY.ERROR, {
-      document_id: data.id ?? "",
-      document_type: getHealthCertType(data),
+      document_id: data.id || "",
+      document_type: getDocumentType(data),
+      issuer_identity_location: data.issuers[0].identityProof?.location || "",
+      template_name: typeof data.$template === "string" ? data.$template : data.$template?.name || "",
+      template_url: typeof data.$template === "string" ? data.$template : data.$template?.url || "",
       errors: message,
     });
   } catch (e) {

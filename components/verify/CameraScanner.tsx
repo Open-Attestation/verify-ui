@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Html5Qrcode, Html5QrcodeSupportedFormats } from "html5-qrcode";
 import { CameraDevice } from "html5-qrcode/camera/core";
 import debounce from "lodash/debounce";
@@ -11,7 +11,7 @@ const FIVE_MINUTES = 5 * 60 * 1000;
 export type CustomMediaDeviceInfo = { device: CameraDevice; prettyLabel: string };
 
 interface CameraScannerProps {
-  cameraDevice: CustomMediaDeviceInfo;
+  cameraDevice?: CustomMediaDeviceInfo;
   onResult: (url: string) => void;
 }
 
@@ -49,7 +49,7 @@ export const CameraScanner: React.FC<CameraScannerProps> = ({ cameraDevice, onRe
 
     const isStarted = html5QrCode
       .start(
-        cameraDevice.device.id,
+        cameraDevice?.device.id || { facingMode: "environment" },
         {
           fps: 10, // Scans for presence of QR code 10 times every second
           aspectRatio: 1,

@@ -4,6 +4,7 @@ import Layout from "@components/layout/Layout";
 import Heading from "@components/text/Heading";
 import InternalButton from "@components/button/InternalButton";
 import StepperTimeline from "@components/figure/Timeline";
+import { InformationBanner } from "@components/figure/Banner";
 
 const Section: React.FC<{ isBlue?: boolean }> = ({ children, isBlue = false }) => (
   <section className={["py-12", isBlue && "bg-background-blue"].filter(Boolean).join(" ")}>
@@ -14,6 +15,7 @@ const Section: React.FC<{ isBlue?: boolean }> = ({ children, isBlue = false }) =
 const Home: NextPage = () => {
   return (
     <Layout>
+      <InformationBanner/>
       <Section>
         <div className="w-full md:w-2/5 md:pr-4">
           <Heading level="h1">An easy way to check and verify your certificates</Heading>

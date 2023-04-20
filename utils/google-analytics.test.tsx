@@ -5,11 +5,11 @@ import { ErrorVerificationFragment, InvalidVerificationFragment } from "@govtech
 
 import {
   EVENT_CATEGORY,
-  HEALTHCERT_TYPE,
-  getHealthCertType,
+  DOCUMENT_TYPE,
+  getDocumentType,
   useGoogleAnalytics,
-  sendHealthCertVerifiedEvent,
-  sendHealthCertErrorEvent,
+  sendSuccessfulVerificationEvent,
+  sendUnsuccessfulVerificationEvent,
 } from "@utils/google-analytics";
 import { isHealthCert } from "@utils/notarise-healthcerts";
 import pdt_v1 from "@utils/fixtures/pdt_v1_healthcert.json";
@@ -59,20 +59,20 @@ describe("test isHealthCert() util functions", () => {
 describe("test getHealthCertType() util function", () => {
   it("getHealthCertType() for v1 pdt should return pdt", () => {
     const data = getData(pdt_v1 as any);
-    expect(getHealthCertType(data)).toBe(HEALTHCERT_TYPE.PDT);
+    expect(getDocumentType(data)).toBe(DOCUMENT_TYPE.PDT);
   });
 
   it("getHealthCertType() for v2 pdt should return pdt", () => {
     const data = getData(pdt_v2 as any);
-    expect(getHealthCertType(data)).toBe(HEALTHCERT_TYPE.PDT);
+    expect(getDocumentType(data)).toBe(DOCUMENT_TYPE.PDT);
   });
   it("getHealthCertType() for vac cert should return pdt", () => {
     const data = getData(vac_v1 as any);
-    expect(getHealthCertType(data)).toBe(HEALTHCERT_TYPE.VAC);
+    expect(getDocumentType(data)).toBe(DOCUMENT_TYPE.VAC);
   });
-  it("getHealthCertType() for non health cert should return empty", () => {
+  it("getHealthCertType() for non health cert should return OA_V2", () => {
     const data = getData(tt_bill as any);
-    expect(getHealthCertType(data)).toBe("UNKNOWN");
+    expect(getDocumentType(data)).toBe("OA_V2");
   });
 });
 
@@ -80,10 +80,13 @@ describe("sendHealthCertVerifiedEvent and sendHealthCertErrorEvent", () => {
   it("sendHealthCertVerifiedEvent should send document id and type", () => {
     const data = getData(pdt_v2 as any);
     const spy = jest.spyOn(ReactGA, "event");
-    sendHealthCertVerifiedEvent(data);
+    sendSuccessfulVerificationEvent(data);
     expect(spy).toHaveBeenCalledWith(EVENT_CATEGORY.VERIFIED, {
-      document_id: data.id,
-      document_type: HEALTHCERT_TYPE.PDT,
+      document_id: "9867890e-6ad8-4735-b705-1ccd441984f8",
+      document_type: DOCUMENT_TYPE.PDT,
+      issuer_identity_location: "donotverify.testing.verify.gov.sg",
+      template_name: "HEALTH_CERT",
+      template_url: "https://healthcert.renderer.moh.gov.sg/",
     });
   });
 
@@ -114,13 +117,16 @@ describe("sendHealthCertVerifiedEvent and sendHealthCertErrorEvent", () => {
       },
     ];
     const spy = jest.spyOn(ReactGA, "event");
-    sendHealthCertErrorEvent(data, fragments);
+    sendUnsuccessfulVerificationEvent(data, fragments);
     const message = JSON.stringify(
       fragments.filter(({ status }) => status === "ERROR" || status === "INVALID")
     ).replace(/[\[\]"]/g, "");
     expect(spy).toHaveBeenCalledWith(EVENT_CATEGORY.ERROR, {
-      document_id: data.id,
-      document_type: HEALTHCERT_TYPE.PDT,
+      document_id: "9867890e-6ad8-4735-b705-1ccd441984f8",
+      document_type: DOCUMENT_TYPE.PDT,
+      issuer_identity_location: "donotverify.testing.verify.gov.sg",
+      template_name: "HEALTH_CERT",
+      template_url: "https://healthcert.renderer.moh.gov.sg/",
       errors: message,
     });
   });

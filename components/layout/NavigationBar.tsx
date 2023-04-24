@@ -3,7 +3,7 @@ import Link from "next/link";
 import InternalButton from "@components/button/InternalButton";
 
 const NavigationBar: React.FC = () => (
-  <nav className="bg-white">
+  <nav className="bg-white border-b border-gray-200">
     <div className="flex flex-wrap gap-4 items-center justify-between container py-4">
       <Link href="/">
         <a className="font-bold text-4xl">Verify</a>

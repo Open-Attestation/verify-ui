@@ -9,7 +9,7 @@ export const InformationBanner: React.FC = () => (
         </span>
         <Link href="/qr">
           <a
-            className="text-indigo-800 underline visited:text-violet-300 font-bold"
+            className="text-indigo-800 underline visited:text-violet-800 font-bold"
             target="_blank"
             rel="noreferrer noopener"
           >

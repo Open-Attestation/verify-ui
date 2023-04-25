@@ -13,7 +13,7 @@ export const InformationBanner: React.FC = () => (
             target="_blank"
             rel="noreferrer noopener"
           >
-            Learn more.
+            Try it now.
           </a>
         </Link>
       </p>

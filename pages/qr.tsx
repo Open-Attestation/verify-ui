@@ -127,8 +127,8 @@ const Qr: NextPage = () => {
     <Layout>
       <NextSeo title="QR Scanner" />
       <section className="container text-center my-10 pb-2 mx-auto">
-        <Heading level="h1">Scan Verify QR</Heading>
-        <p>Show the Verify QR in front of the camera or scanner</p>
+        <Heading level="h1">Scan Verify QR Code</Heading>
+        <p>Place the Verify QR code in front of the camera or scanner</p>
 
         <Status {...status} />
 
@@ -164,7 +164,7 @@ const Qr: NextPage = () => {
             )}
 
             <p className="m-0">
-              If you have problems scanning the QR, you may want to verify by <br />
+              If you have problems scanning the QR code, you may want to verify by <br />
               <Link href="/verify">
                 <a target="_blank" rel="noreferrer" className="text-blue-600 underline hover:text-blue-700">
                   uploading your OA certificate

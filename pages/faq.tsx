@@ -37,7 +37,7 @@ const faqs: FAQ[] = [
   },
   {
     question: "Can I verify educational or training certificates on verify.gov.sg?",
-    answer: "For educational and training certificates, please visit opencerts.io instead.",
+    answer: "For educational and training certificates, please visit https://www.opencerts.io instead.",
   },
   {
     question: "Why is verify.gov.sg backed by blockchain technology?",
@@ -48,6 +48,11 @@ const faqs: FAQ[] = [
     question: "Why can't I print the verified document or .oa file?",
     answer:
       "Printing the verified document discards all the advanced protections we have built to preserve the .oa file in a secure format. Printed documents cannot be verified.",
+  },
+  {
+    question: "How can I verify documents on verify.gov.sg?",
+    answer:
+      "You can verify your .oa file by either (i) uploading it or (ii) scanning the QR code with your mobile device camera or a barcode scanner.",
   },
   {
     question: "What happens if I modify the verified document or .oa file?",

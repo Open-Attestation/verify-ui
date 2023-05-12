@@ -3,7 +3,6 @@ import axios from "axios";
 import { apiVerifyWithFallback } from "@utils/oa-api-verify";
 import * as oaVerify from "@utils/oa-verify";
 
-jest.mock("axios");
 jest.mock("@utils/oa-verify", () => {
   const originalModule = jest.requireActual('@utils/oa-verify');
   return {
@@ -13,6 +12,7 @@ jest.mock("@utils/oa-verify", () => {
   };
 });
 
+jest.mock("axios");
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 mockedAxios.post.mockImplementationOnce(async () => {
   throw new Error("Axios mocked error");

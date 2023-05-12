@@ -10,11 +10,11 @@ import Layout from "@components/layout/Layout";
 const SITE_URL = process.env.SITE_URL; // See "next.config.js"
 
 const MDXPages = ({ mdxSource }: InferGetStaticPropsType<typeof getStaticProps>) => {
-  const title = mdxSource.frontmatter?.title;
+  const title = mdxSource.frontmatter?.title as string;
 
   return (
     <Layout className="container py-12">
-      <NextSeo title={title as string} />
+      <NextSeo title={title} />
       <MDXRemote {...mdxSource} scope={{ SITE_URL }} />
     </Layout>
   );

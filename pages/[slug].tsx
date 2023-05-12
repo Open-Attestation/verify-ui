@@ -14,7 +14,7 @@ const MDXPages = ({ mdxSource }: InferGetStaticPropsType<typeof getStaticProps>)
 
   return (
     <Layout className="container py-12">
-      <NextSeo title={title} />
+      <NextSeo title={title as string} />
       <MDXRemote {...mdxSource} scope={{ SITE_URL }} />
     </Layout>
   );

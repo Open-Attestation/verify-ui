@@ -19,7 +19,7 @@ workflows:
 jobs:
   monitoring:
     docker:
-      - image: "cimg/node:14.19-browsers"
+      - image: "cimg/node:18.15-browsers"
     steps:
       - checkout
       - browser-tools/install-chrome
@@ -37,7 +37,7 @@ jobs:
           command: npm run monitoring
   build:
     docker:
-      - image: "cimg/node:14.19-browsers"
+      - image: "cimg/node:18.15-browsers"
     steps:
       - checkout
       - browser-tools/install-chrome

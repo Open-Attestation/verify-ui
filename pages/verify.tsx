@@ -84,7 +84,7 @@ const Verify: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> =
     })();
   }, [router, props.universalActionType]);
 
-  const handleDocumentDropped = useCallback((wrappedDocument) => {
+  const handleDocumentDropped = useCallback((wrappedDocument: any) => {
     dispatch({ type: "VERIFY_DOCUMENT", document: wrappedDocument });
   }, []);
 

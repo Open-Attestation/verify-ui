@@ -22,7 +22,7 @@ export const verifyErrorHandler = (e: unknown): StatusProps => {
     };
   }
   // isNotariseSpmTransientStorage() has to be checked first because isNotariseTransientStorage() encompasses SPM URLs as well
-  else if (axios.isAxiosError(e) && isNotariseSpmTransientStorage(e.config.url)) {
+  else if (axios.isAxiosError(e) && isNotariseSpmTransientStorage(e.config?.url)) {
     return {
       type: "ERROR",
       message: (

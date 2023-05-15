@@ -5,8 +5,9 @@ import Heading from "@components/text/Heading";
 import InternalButton from "@components/button/InternalButton";
 import StepperTimeline from "@components/figure/Timeline";
 import { InformationBanner } from "@components/figure/Banner";
+import { ReactNode } from "react";
 
-const Section: React.FC<{ isBlue?: boolean }> = ({ children, isBlue = false }) => (
+const Section: React.FC<{ children?: React.ReactNode, isBlue?: boolean }> = ({ children, isBlue = false }) => (
   <section className={["py-12", isBlue && "bg-background-blue"].filter(Boolean).join(" ")}>
     <div className="container flex flex-col md:flex-row items-center gap-10">{children}</div>
   </section>

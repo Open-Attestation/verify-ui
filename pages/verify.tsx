@@ -84,6 +84,28 @@ const Verify: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> =
     })();
   }, [router, props.universalActionType]);
 
+  /**
+   * Modify back button behaviour if a document is present:
+   *
+   * 1. Stop Next.js from handling popstate when back button is pressed
+   * 2. Purposely push /verify page into history so user doesn't actually go back to previous page
+   *  */
+  useEffect(() => {
+    if (document) {
+      router.beforePopState(() => {
+        window.history.pushState(null, "", "/verify");
+        router.push("/verify");
+        return false;
+      });
+    } else {
+      router.beforePopState(() => true);
+    }
+
+    return () => {
+      router.beforePopState(() => true);
+    };
+  }, [document]);
+
   const handleDocumentDropped = useCallback((wrappedDocument: any) => {
     dispatch({ type: "VERIFY_DOCUMENT", document: wrappedDocument });
   }, []);

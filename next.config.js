@@ -2,6 +2,8 @@ const { generateHeaders } = require("./next.headers");
 
 let SITE_URL;
 
+const withTM = require("next-transpile-modules")(["@govtechsg/sgds-masthead-react"]);
+
 // Env variables by Netlify (https://docs.netlify.com/configure-builds/environment-variables/#build-metadata)
 if (process.env.CONTEXT !== "production" && process.env.DEPLOY_PRIME_URL) {
   SITE_URL = process.env.DEPLOY_PRIME_URL;
@@ -15,7 +17,7 @@ if (process.env.CONTEXT !== "production" && process.env.DEPLOY_PRIME_URL) {
 const COMMIT_REF = process.env.COMMIT_REF || "v1.0.0";
 
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+const nextConfig = withTM({
   reactStrictMode: true,
   env: {
     CONTEXT: process.env.CONTEXT,
@@ -24,6 +26,6 @@ const nextConfig = {
     BUILD_DATE: new Date().toISOString(),
   },
   headers: generateHeaders,
-};
+});
 
 module.exports = nextConfig;

@@ -101,6 +101,16 @@ const Verifier: React.FC<VerifierProps> = ({ wrappedDocument }) => {
         };
       }
 
+      if (document.$template.url.slice(-6) === "gov.sg") {
+        customMessage = {
+          ...customMessage,
+          ISSUER_IDENTITY: {
+            VERIFIED: "Issued by Singapore Government",
+            REJECTED: "Document’s issuer has not been identified",
+          },
+        };
+      }
+
       setCustomMessage(customMessage);
     })();
   }, [wrappedDocument]);

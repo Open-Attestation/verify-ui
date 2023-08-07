@@ -24,7 +24,7 @@ test("Load document from action should work when action is valid (key from ancho
   );
   await validateIssuer("example.openattestation.com");
   await t.expect(StatusCheck.withText("Document has not been tampered").exists).ok();
-  await t.expect(StatusCheck.withText("Document has been issued").exists).ok();
+  await t.expect(StatusCheck.withText("Document has not been revoked").exists).ok();
   await t.expect(StatusCheck.withText("Document’s issuer has been identified").exists).ok();
   await validateIframeText("John Doe");
 });
@@ -42,7 +42,7 @@ test("Load document from action should work when action is valid", async (t) => 
   await t.navigateTo(`http://localhost:3000/verify?q=${encodeURI(JSON.stringify(action))}`);
   await validateIssuer("example.openattestation.com");
   await t.expect(StatusCheck.withText("Document has not been tampered").exists).ok();
-  await t.expect(StatusCheck.withText("Document has been issued").exists).ok();
+  await t.expect(StatusCheck.withText("Document has not been revoked").exists).ok();
   await t.expect(StatusCheck.withText("Document’s issuer has been identified").exists).ok();
   await validateIframeText("John Doe");
 });

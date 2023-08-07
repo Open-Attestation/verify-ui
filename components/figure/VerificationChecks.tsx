@@ -42,7 +42,7 @@ const VerificationChecks: React.FC<VerificationChecksProps & CustomMessageProps>
       {genIcon(DOCUMENT_STATUS)}
       {genMessage(DOCUMENT_STATUS, {
         PENDING: customMessage?.DOCUMENT_STATUS?.PENDING || "Checking if document was issued",
-        VERIFIED: customMessage?.DOCUMENT_STATUS?.VERIFIED || "Document has been issued",
+        VERIFIED: customMessage?.DOCUMENT_STATUS?.VERIFIED || "Document has not been revoked",
         REJECTED: customMessage?.DOCUMENT_STATUS?.REJECTED || "Document has not been issued",
       })}
     </li>

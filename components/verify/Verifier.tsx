@@ -101,7 +101,7 @@ const Verifier: React.FC<VerifierProps> = ({ wrappedDocument }) => {
         };
       }
 
-      if (document.$template.url.slice(-6) === "gov.sg") {
+      if (issuerDomain.slice(-6) === "gov.sg") {
         customMessage = {
           ...customMessage,
           ISSUER_IDENTITY: {
@@ -113,7 +113,7 @@ const Verifier: React.FC<VerifierProps> = ({ wrappedDocument }) => {
 
       setCustomMessage(customMessage);
     })();
-  }, [wrappedDocument]);
+  }, [wrappedDocument, issuerDomain]);
 
   return (
     <section className="container my-10">

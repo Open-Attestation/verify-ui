@@ -54,7 +54,7 @@ test("Barcode scanner on QR page should be able to verify a valid QR", async (t)
 
   await validateIssuer("donotverify.testing.verify.gov.sg");
   await t.expect(StatusCheck.withText("Document has not been tampered").exists).ok();
-  await t.expect(StatusCheck.withText("Document has been issued").exists).ok();
+  await t.expect(StatusCheck.withText("Document has not been revoked").exists).ok();
   await t.expect(StatusCheck.withText("Issued by Singapore Government").exists).ok();
   await validateIframeText("Tan Chen Chen");
 });

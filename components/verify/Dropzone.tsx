@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { useDropzone, DropzoneOptions, DropzoneInputProps } from "react-dropzone";
+import React, { useCallback } from "react";
+import { useDropzone, DropzoneOptions } from "react-dropzone";
 import { validateSchema, v2, v3 } from "@govtechsg/open-attestation";
 
 import Heading from "@components/text/Heading";
@@ -75,15 +75,7 @@ const Dropzone: React.FC<DropzoneProps> = ({ onDocumentDropped = () => {}, onDoc
     [onDocumentDropped, onDocumentError]
   );
 
-  const [inputProps, setInputProps] = useState<DropzoneInputProps>();
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
-
-  useEffect(() => {
-    // Added this instead of calling getInputProps() directly in <input> tag
-    // Because <input> was breaking in the testcafe tests whenever we "navigateTo" with universal actions
-    const { ...inputProps } = getInputProps();
-    setInputProps(inputProps);
-  }, [onDrop, getInputProps]);
 
   return (
     <section className="container text-center my-10">
@@ -98,7 +90,7 @@ const Dropzone: React.FC<DropzoneProps> = ({ onDocumentDropped = () => {}, onDoc
           .join(" ")}
         {...getRootProps()}
       >
-        <input {...inputProps} />
+        <input {...getInputProps()} />
         <div className="flex flex-col items-center gap-5">
           <img className="max-w-[200px] mt-10" src="/images/upload-document.svg" alt="Upload document" />
           <Heading level="h2" className="text-xl">

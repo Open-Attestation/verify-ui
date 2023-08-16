@@ -50,9 +50,9 @@ const Verifier: React.FC<VerifierProps> = ({ wrappedDocument }) => {
       }
 
       if (utils.isRawV2Document(document)) {
-        setIssuerDomain(document.issuers.map((issuer) => issuer.identityProof?.location).join(","));
+        setIssuerDomain(document.issuers?.map((issuer) => issuer.identityProof?.location).join(",") || "");
       } else {
-        setIssuerDomain(typeof document.issuer === "object" ? document.issuer.name : document.issuer);
+        setIssuerDomain(typeof document.issuer === "object" ? document.issuer.name : document.issuer || "");
       }
 
       // 1. Document issue status (Was it issued?)
@@ -101,9 +101,19 @@ const Verifier: React.FC<VerifierProps> = ({ wrappedDocument }) => {
         };
       }
 
+      if (issuerDomain.endsWith("gov.sg")) {
+        customMessage = {
+          ...customMessage,
+          ISSUER_IDENTITY: {
+            VERIFIED: "Issued by Singapore Government",
+            REJECTED: "Document’s issuer has not been identified",
+          },
+        };
+      }
+
       setCustomMessage(customMessage);
     })();
-  }, [wrappedDocument]);
+  }, [wrappedDocument, issuerDomain]);
 
   return (
     <section className="container my-10">

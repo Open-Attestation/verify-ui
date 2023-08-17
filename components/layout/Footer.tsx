@@ -36,7 +36,7 @@ const Footer: React.FC = () => {
             <a className="text-primary hover:text-blue-600">Contact Us</a>
           </Link>
           <Link href="/faq">
-            <a className="text-primary hover:text-blue-600">FAQs</a>
+            <a className="text-primary hover:text-blue-600">FAQ</a>
           </Link>
         </div>
         <div className="pt-4">

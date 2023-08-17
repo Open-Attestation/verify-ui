@@ -9,8 +9,8 @@ const tabPdf = Selector("[data-testid='renderer-tab']").withText("dummy.pdf");
 test("Multi tabs should be rendered correctly", async () => {
   await uploadDocument("./certificate-attachments-goerli.json");
   await validateIssuer("example.openattestation.com");
-  await t.expect(tabMain.exists).ok();
   await validateIframeText("John Doe");
   await t.expect(tabPdf.exists).ok();
+  await t.expect(tabMain.exists).ok();
   await t.click(tabPdf);
 });

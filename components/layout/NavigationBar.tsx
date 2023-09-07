@@ -17,7 +17,7 @@ const NavigationBar: React.FC = () => (
           <a className="font-bold py-2 px-4 rounded-xl">Scan QR</a>
         </Link>
         <InternalButton href="/verify" isInverted>
-          Verify
+          Verify via OA file
         </InternalButton>
       </div>
     </div>

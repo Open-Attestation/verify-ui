@@ -11,83 +11,56 @@ const Footer: React.FC = () => {
   return (
     <footer className="bg-white">
       <div className="h-px w-full bg-gray-200" />
-      <section className="container pt-12 pb-8">
-        <p className="text-3xl text-gray-600 font-roboto-bold">Verify</p>
+      <section className="container py-12">
+        <p className="text-2xl text-gray-600 font-roboto-bold">Verify</p>
         <p className="text-gray-600/80 max-w-xl mt-1">
           Verify provides an easy way to check the validity of digital documents with an .oa extension, that have been
           issued by Singapore government entities.
         </p>
-        <div className="flex flex-col xs:flex-row gap-y-4 gap-x-8 text-base mt-8 font-bold">
+        <div className="flex flex-col sm:flex-row gap-y-2 gap-x-8 text-base mt-4 mb-12 font-medium">
           <Link href="/">
-            <a className="text-gray-500 hover:text-gray-600 font-bold">Verify</a>
+            <a className="text-primary hover:text-blue-600">Verify</a>
           </Link>
-          <Link href="/faq">
-            <a className="text-gray-500 hover:text-gray-600">FAQs</a>
+          <Link href="/qr">
+            <a className="text-primary hover:text-blue-600">Scan QR</a>
           </Link>
-          <Link href="/contact">
-            <a className="text-gray-500 hover:text-gray-600">Contact Us</a>
+          <Link href="/verify">
+            <a className="text-primary hover:text-blue-600">Verify via OA file</a>
           </Link>
           {/* <a className="text-gray-500 hover:text-gray-600" href="mailto:OpenAttestation_Support@tech.gov.sg">
             Contact Us
           </a> */}
         </div>
-        <div className="w-full block mt-12">
-          <p className="text-gray-600 text-xs w-full">A collaboration between</p>
-          <div className="">
-            <a href="https://www.tech.gov.sg" target="_blank" rel="noopener noreferrer">
-              <img
-                src="/images/govtechlogo.png"
-                width="136"
-                height="49"
-                className="mt-4 mr-12 inline-block"
-                alt="Brought to you by Government Technology Agency"
-              />
-            </a>
-            <a href="https://www.smartnation.gov.sg" target="_blank" rel="noopener noreferrer">
-              <img
-                src="/images/sndgo.png"
-                width="136"
-                height="34"
-                className="sm:mt-4 mt-8 inline-block"
-                alt="Brought to you by Smart Nation and Digital Government Office"
-              />
-            </a>
-          </div>
-        </div>
-      </section>
-      <div className="h-px w-full bg-gray-100" />
-      <section className="container py-6">
-        <div className="flex sm:flex-row flex-col gap-y-4 gap-x-8 text-sm font-bold">
-          <a
-            href="https://www.tech.gov.sg/report_vulnerability"
-            target="_blank"
-            rel="noreferrer noopener"
-            className="text-gray-500 hover:text-gray-600"
-          >
-            Report Vulnerability
-          </a>
-          <Link href="/privacy-policy">
-            <a className="text-gray-500 hover:text-gray-600">Privacy Statement</a>
+        <div className="flex flex-col justify-end sm:flex-row gap-y-2 gap-x-8 text-base mt-8 font-medium">
+          <Link href="/contact">
+            <a className="text-primary hover:text-blue-600">Contact Us</a>
           </Link>
-          <Link href="/terms">
-            <a className="text-gray-500 hover:text-gray-600">Terms of Use</a>
+          <Link href="/faq">
+            <a className="text-primary hover:text-blue-600">FAQ</a>
           </Link>
         </div>
-        <div className="mt-8 flex justify-between items-end flex-wrap">
-          <div className="flex gap-4">
-            <a href="https://hive.tech.gov.sg" target="_blank" rel="noopener noreferrer" className="flex-none">
-              <img src="/images/hive.png" width="96" height="40" alt="Government Digital Services" />
+        <div className="pt-4">
+          <div className="flex sm:flex-row flex-col gap-y-2 gap-x-8 text-sm font-medium">
+            <a
+              href="https://www.tech.gov.sg/report_vulnerability"
+              target="_blank"
+              rel="noreferrer noopener"
+              className="text-base text-primary hover:text-blue-600"
+            >
+              Report Vulnerability
             </a>
-            <p className="text-xs text-gray-600/80">
-              Developed by Government Digital Services
-              <br />A Division of Government Technology Agency Singapore
-            </p>
+            <Link href="/privacy-policy">
+              <a className="text-base text-primary hover:text-blue-600">Privacy Statement</a>
+            </Link>
+            <Link href="/terms">
+              <a className="text-base text-primary hover:text-blue-600">Terms of Use</a>
+            </Link>
           </div>
-          <div className="flex text-gray-600 flex-wrap mt-4 justify-items-end">
-            <p className="mr-8 text-xs">
-              Version: {COMMIT_REF} | {buildDate}
-            </p>
-            <p className="text-xs">© {year} Government Technology Agency</p>
+
+          <div className="flex text-gray-600 flex-col flex-wrap mt-4 mb-0 items-end text-right">
+            <p className="text-sm my-0">© {year} Government Technology Agency</p>
+            <p className="text-sm my-0">Last Updated {buildDate}</p>
+            <p className="text-xs mt-4 mb-0">Version: {COMMIT_REF}</p>
           </div>
         </div>
       </section>

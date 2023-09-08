@@ -24,7 +24,11 @@ export const decodeUriFragment = (encodedHash: string) => {
   }
 
   if (!validateSchema(decoded)) {
-    throw new CodedError("InvalidDocumentError", "The URI fragment contains an invalid OpenAttestation document");
+    throw new CodedError(
+      "InvalidDocumentError",
+      "Invalid File Detected",
+      "The URI fragment contains an invalid OpenAttestation document"
+    );
   }
 
   return decoded;
@@ -35,13 +39,13 @@ export const decodeUriFragment = (encodedHash: string) => {
  *
  * See more: https://github.com/Open-Attestation/adr/blob/master/universal_actions.md
  */
-export const decodeQueryAndHash = (encodedQuery: string, encodedHash?: string) => {
+export const decodeQueryAndHash = (encodedQuery: string, encodedHash: string) => {
   let decodedQ: Static<typeof ActionUrlQueryRecord>;
   let decodedHash: Static<typeof ActionUrlAnchorRecord>;
 
   try {
     decodedQ = decodeAndParseUri(encodedQuery);
-    decodedHash = String.guard(encodedHash) ? decodeAndParseUri(encodedHash) : undefined;
+    decodedHash = String.guard(encodedHash) && encodedHash.length ? decodeAndParseUri(encodedHash) : undefined;
   } catch (e) {
     console.error(e);
     throw new CodedError("QueryParamsError", "The URL is malformed so the document cannot be loaded");
@@ -102,7 +106,11 @@ const decryptDoc = (doc: any, key?: string) => {
 
   // If invalid OpenAttestation document, throw error
   if (!validateSchema(doc)) {
-    throw new CodedError("InvalidDocumentError", "An invalid OpenAttestation document has been fetched.");
+    throw new CodedError(
+      "InvalidDocumentError",
+      "Invalid File Detected",
+      "An invalid OpenAttestation document has been fetched."
+    );
   }
 
   // Return valid OpenAttestation document, no decryption needed

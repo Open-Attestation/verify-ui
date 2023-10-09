@@ -10,7 +10,7 @@ import Dropzone from "@components/verify/Dropzone";
 import { fetchAndDecryptDocument, decodeQueryAndHash, decodeUriFragment } from "@utils/fetch-document";
 import { verifyErrorHandler } from "@utils/error-handler";
 import { getUniversalActionType } from "@utils/get-universal-action-type";
-import { useFragmentThenScrubUrl } from "@utils/use-frag-then-scrub-url";
+import { useUrlParamsThenScrubUrl } from "@utils/use-frag-then-scrub-url";
 import Script from "next/script";
 
 const WOGAA_SCRIPT_SRC =
@@ -64,18 +64,17 @@ const Verify: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> =
   const router = useRouter();
   const [{ status, document, showDropzone }, dispatch] = useReducer(reducer, initialState);
 
-  const fragment = useFragmentThenScrubUrl({ enabled: props.universalActionType !== "NONE" });
+  const urlParams = useUrlParamsThenScrubUrl({ enabled: props.universalActionType !== "NONE" });
 
   useEffect(() => {
     (async () => {
       try {
         if (props.universalActionType === "HOSTED_URL") {
-          if (fragment?.value === undefined) {
+          if (urlParams?.uriFragment === undefined) {
             return;
           }
           const encodedQ = router.query.q?.toString() || "";
-          const encodedHash = fragment.value;
-          console.log("encodedHash", encodedHash);
+          const encodedHash = urlParams?.uriFragment;
           const { decodedQ, decodedHash } = decodeQueryAndHash(encodedQ, encodedHash);
           const document = await fetchAndDecryptDocument(
             decodedQ.payload.uri,
@@ -83,10 +82,10 @@ const Verify: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> =
           );
           return dispatch({ type: "VERIFY_DOCUMENT", document });
         } else if (props.universalActionType === "EMBEDDED_URI_FRAGMENT") {
-          if (fragment?.value === undefined) {
+          if (urlParams?.uriFragment === undefined) {
             return;
           }
-          const encodedHash = fragment.value;
+          const encodedHash = urlParams?.uriFragment;
           console.log("encodedHash", encodedHash);
           const document = decodeUriFragment(encodedHash);
           return dispatch({ type: "VERIFY_DOCUMENT", document });
@@ -99,7 +98,7 @@ const Verify: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> =
         dispatch({ type: "STATUS_MESSAGE", status: verifyErrorHandler(e) });
       }
     })();
-  }, [router, props.universalActionType, fragment?.value]);
+  }, [router, props.universalActionType, urlParams?.uriFragment]);
 
   const handleDocumentDropped = useCallback((wrappedDocument: any) => {
     dispatch({ type: "VERIFY_DOCUMENT", document: wrappedDocument });
@@ -111,7 +110,7 @@ const Verify: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> =
 
   return (
     <Layout>
-      {fragment !== undefined && (
+      {urlParams !== undefined && (
         <>
           <Script src={WOGAA_SCRIPT_SRC} async />
           <Status {...status} />

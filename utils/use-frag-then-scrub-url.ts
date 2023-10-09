@@ -1,38 +1,44 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { ParsedUrlQuery } from "querystring";
 
 type UseFragmentThenScrubUrlParam = {
   /** extraction and scrubbing will only happen if this is true */
   enabled: boolean;
 };
-type Fragment = {
-  value: string;
+type UrlParams = {
+  uriFragment: string;
+  query: ParsedUrlQuery;
 };
-export const useFragmentThenScrubUrl = ({ enabled }: UseFragmentThenScrubUrlParam): Fragment | undefined => {
-  // fragment will only be undefined before the second render
-  // being undefined means the fragment has not been extracted and the url has not been scrubbed yet
-  const [fragment, setFragment] = useState<string | undefined>(!enabled ? "" : undefined);
+export const useUrlParamsThenScrubUrl = ({ enabled }: UseFragmentThenScrubUrlParam): UrlParams | undefined => {
+  // urlParams will only be undefined before the second render
+  // being undefined means the urlParams has not been extracted and the url has not been scrubbed yet
+  const [urlParams, setUrlParams] = useState<UrlParams | undefined>(
+    !enabled
+      ? {
+          uriFragment: "",
+          query: {},
+        }
+      : undefined
+  );
   const router = useRouter();
 
   useEffect(() => {
     if (enabled)
-      setFragment((currFragment) => {
+      setUrlParams((currUrlParams) => {
         // once the fragment is set, we never update it again
-        if (currFragment !== undefined) return currFragment;
+        if (currUrlParams !== undefined) return currUrlParams;
 
-        // extract and save fragment
         const savedFragment = window.location.hash.substring(1);
+        const savedQueryParam = { ...router.query };
 
         // scrubbbb itttttt
         window.location.hash = "";
+        router.replace({}, undefined, { shallow: true });
 
-        return savedFragment;
+        return { uriFragment: savedFragment, query: savedQueryParam };
       });
-  }, [fragment, router, enabled]);
+  }, [urlParams, router, enabled]);
 
-  if (fragment === undefined) {
-    return undefined;
-  }
-
-  return { value: fragment };
+  return urlParams;
 };

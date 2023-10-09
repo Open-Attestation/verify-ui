@@ -60,14 +60,12 @@ test("Wogaa should not capture key data in HOSTED_URL", async (t) => {
     .addRequestHooks(logger)
     .wait(2000);
 
+  // ensure wogaa (1) loads, (2) and a url is being captured
   await t.expect(logger.requests.length).eql(2);
-
-  for (const r of logger.requests) {
-    const capturedUrlString = new URL(r.request.url).searchParams.get("url");
-    if (capturedUrlString) {
-      await t.expect(capturedUrlString).eql(`http://localhost:3000/verify?q=${encodeURI(JSON.stringify(action))}#`);
-    }
-  }
+  const wogaaUrl = logger.requests.filter((req) => req.request.url.includes("?url="))[0].request.url;
+  // ensure wogaa only capture scrubbed url
+  const capturedUrlString = new URL(wogaaUrl).searchParams.get("url");
+  await t.expect(capturedUrlString).eql(`http://localhost:3000/verify`);
 });
 
 test("Wogaa should not capture information in URI_FRAGMENT", async (t) => {
@@ -76,37 +74,32 @@ test("Wogaa should not capture information in URI_FRAGMENT", async (t) => {
     .addRequestHooks(logger)
     .wait(2000);
 
+  // ensure wogaa (1) loads, (2) and a url is being captured
   await t.expect(logger.requests.length).eql(2);
-
-  for (const r of logger.requests) {
-    const capturedUrlString = new URL(r.request.url).searchParams.get("url");
-    if (capturedUrlString) {
-      await t.expect(capturedUrlString).eql(`http://localhost:3000/verify?m=uri-fragment#`);
-    }
-  }
+  const wogaaUrl = logger.requests.filter((req) => req.request.url.includes("?url="))[0].request.url;
+  // ensure wogaa only capture scrubbed url
+  const capturedUrlString = new URL(wogaaUrl).searchParams.get("url");
+  await t.expect(capturedUrlString).eql(`http://localhost:3000/verify`);
 });
 
 test("Wogaa should capture correct URL when there is no universal actions", async (t) => {
   await t.navigateTo(`http://localhost:3000/verify`).addRequestHooks(logger).wait(2000);
 
+  // ensure wogaa (1) loads, (2) and a url is being captured
   await t.expect(logger.requests.length).eql(2);
-
-  for (const r of logger.requests) {
-    const capturedUrlString = new URL(r.request.url).searchParams.get("url");
-    if (capturedUrlString) {
-      await t.expect(capturedUrlString).eql(`http://localhost:3000/verify`);
-    }
-  }
+  const wogaaUrl = logger.requests.filter((req) => req.request.url.includes("?url="))[0].request.url;
+  // ensure wogaa only capture scrubbed url
+  const capturedUrlString = new URL(wogaaUrl).searchParams.get("url");
+  await t.expect(capturedUrlString).eql(`http://localhost:3000/verify`);
 });
 
 test("Wogaa should load on homepage", async (t) => {
   await t.addRequestHooks(logger).wait(2000);
-  await t.expect(logger.requests.length).eql(2);
 
-  for (const r of logger.requests) {
-    const capturedUrlString = new URL(r.request.url).searchParams.get("url");
-    if (capturedUrlString) {
-      await t.expect(capturedUrlString).eql(`http://localhost:3000/`);
-    }
-  }
+  // ensure wogaa (1) loads, (2) and a url is being captured
+  await t.expect(logger.requests.length).eql(2);
+  const wogaaUrl = logger.requests.filter((req) => req.request.url.includes("?url="))[0].request.url;
+  // ensure wogaa only capture scrubbed url
+  const capturedUrlString = new URL(wogaaUrl).searchParams.get("url");
+  await t.expect(capturedUrlString).eql(`http://localhost:3000/`);
 });

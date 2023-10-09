@@ -73,7 +73,7 @@ const Verify: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> =
           if (urlParams?.uriFragment === undefined) {
             return;
           }
-          const encodedQ = router.query.q?.toString() || "";
+          const encodedQ = typeof urlParams?.query.q === "string" ? urlParams.query.q : "";
           const encodedHash = urlParams?.uriFragment;
           const { decodedQ, decodedHash } = decodeQueryAndHash(encodedQ, encodedHash);
           const document = await fetchAndDecryptDocument(
@@ -98,7 +98,7 @@ const Verify: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> =
         dispatch({ type: "STATUS_MESSAGE", status: verifyErrorHandler(e) });
       }
     })();
-  }, [router, props.universalActionType, urlParams?.uriFragment]);
+  }, [router, props.universalActionType, urlParams?.uriFragment, urlParams?.query.q]);
 
   const handleDocumentDropped = useCallback((wrappedDocument: any) => {
     dispatch({ type: "VERIFY_DOCUMENT", document: wrappedDocument });

@@ -7,7 +7,7 @@
 
 const prodCspValue = [
   "frame-ancestors 'none'",
-  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.wogaa.sg https://*.dcube.cloud/ https://assets.adobedtm.com/ https://www.googletagmanager.com https://www.google-analytics.com https://ssl.google-analytics.com blob: https://*.wogaa.sg",
+  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.wogaa.sg https://*.dcube.cloud/ https://assets.adobedtm.com/ https://www.googletagmanager.com https://www.google-analytics.com https://ssl.google-analytics.com",
   "object-src 'self'",
   "style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com/ajax/libs/font-awesome/ https://unpkg.com/sgds-govtech@1.3.14/css/sgds.css https://fonts.googleapis.com/ https://assets.dcube.cloud/fonts/ https://assets.wogaa.sg/",
   "default-src 'self' https://*.dcube.cloud/ https://*.demdex.net/ https://cm.everesttech.net/ https://wogadobeanalytics.sc.omtrdc.net/ https://*.wogaa.sg",
@@ -22,24 +22,24 @@ const prodCspValue = [
 
 const prodVerifyCspValue = [
   "frame-ancestors 'none'",
-  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://assets.adobedtm.com/ https://www.googletagmanager.com https://www.google-analytics.com https://ssl.google-analytics.com blob: https://*.wogaa.sg",
+  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://assets.adobedtm.com/ https://www.googletagmanager.com https://www.google-analytics.com https://ssl.google-analytics.com",
   "object-src 'self'",
   "style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com/ajax/libs/font-awesome/ https://unpkg.com/sgds-govtech@1.3.14/css/sgds.css https://fonts.googleapis.com/ https://assets.dcube.cloud/fonts/ https://assets.wogaa.sg/",
-  "default-src 'self' https://*.demdex.net/ https://cm.everesttech.net/ https://wogadobeanalytics.sc.omtrdc.net/ https://*.wogaa.sg",
+  "default-src 'self' https://*.demdex.net/ https://cm.everesttech.net/ https://wogadobeanalytics.sc.omtrdc.net/",
   "base-uri 'self'",
   "form-action 'self'",
   "img-src 'self' https://wogadobeanalytics.sc.omtrdc.net/ https://cm.everesttech.net/ https://dpm.demdex.net/ www.googletagmanager.com https://www.google-analytics.com",
   "font-src 'self' https://fonts.gstatic.com/s/ https://cdnjs.cloudflare.com/ajax/libs/font-awesome/ https://unpkg.com/sgds-govtech@1.3.14/ data: https://assets.dcube.cloud/fonts/ data: https://assets.wogaa.sg/fonts/",
   "manifest-src 'self'",
-  "connect-src https://*.gov.sg/ https://dns.google/ https://mainnet.infura.io/v3/ https://goerli.infura.io/v3/ https://dpm.demdex.net/ https://cm.everesttech.net/ https://wogadobeanalytics.sc.omtrdc.net/ https://*.notarise.io https://*.openattestation.com https://www.google-analytics.com https://*.wogaa.sg",
+  "connect-src https://*.gov.sg/ https://dns.google/ https://mainnet.infura.io/v3/ https://goerli.infura.io/v3/ https://dpm.demdex.net/ https://cm.everesttech.net/ https://wogadobeanalytics.sc.omtrdc.net/ https://*.notarise.io https://*.openattestation.com https://www.google-analytics.com",
   "frame-src https://*.openattestation.com https://*.gov.sg",
 ];
 
 const nonProdCspValue = [
   "frame-ancestors 'none'",
-  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.wogaa.sg https://*.dcube.cloud/ https://assets.adobedtm.com/ https://www.googletagmanager.com https://www.google-analytics.com https://ssl.google-analytics.com blob: https://*.dcube.cloud",
+  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.wogaa.sg https://*.dcube.cloud/ https://assets.adobedtm.com/ https://www.googletagmanager.com https://www.google-analytics.com https://ssl.google-analytics.com",
   "object-src 'self'",
-  "style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com/ajax/libs/font-awesome/ https://unpkg.com/sgds-govtech@1.3.14/css/sgds.css https://fonts.googleapis.com/ https://assets.dcube.cloud/fonts/ https://assets.wogaa.sg/ https://assets.dcube.cloud/",
+  "style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com/ajax/libs/font-awesome/ https://unpkg.com/sgds-govtech@1.3.14/css/sgds.css https://fonts.googleapis.com/ https://assets.dcube.cloud/fonts/ https://assets.wogaa.sg/",
   "default-src 'self' https://*.dcube.cloud/ https://*.demdex.net/ https://cm.everesttech.net/ https://wogadobeanalytics.sc.omtrdc.net/ https://*.wogaa.sg",
   "base-uri 'self'",
   "form-action 'self'",
@@ -52,16 +52,16 @@ const nonProdCspValue = [
 
 const nonProdVerifyCspValue = [
   "frame-ancestors 'none'",
-  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://assets.adobedtm.com/ https://www.googletagmanager.com https://www.google-analytics.com https://ssl.google-analytics.com blob: https://*.dcube.cloud",
+  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://assets.adobedtm.com/ https://www.googletagmanager.com https://www.google-analytics.com https://ssl.google-analytics.com",
   "object-src 'self'",
-  "style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com/ajax/libs/font-awesome/ https://unpkg.com/sgds-govtech@1.3.14/css/sgds.css https://fonts.googleapis.com/ https://assets.dcube.cloud/fonts/ https://assets.wogaa.sg/ https://assets.dcube.cloud/",
-  "default-src 'self' https://*.demdex.net/ https://cm.everesttech.net/ https://wogadobeanalytics.sc.omtrdc.net/ https://*.dcube.cloud/",
+  "style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com/ajax/libs/font-awesome/ https://unpkg.com/sgds-govtech@1.3.14/css/sgds.css https://fonts.googleapis.com/ https://assets.dcube.cloud/fonts/ https://assets.wogaa.sg/",
+  "default-src 'self' https://*.demdex.net/ https://cm.everesttech.net/ https://wogadobeanalytics.sc.omtrdc.net/",
   "base-uri 'self'",
   "form-action 'self'",
   "img-src 'self' https://wogadobeanalytics.sc.omtrdc.net/ https://cm.everesttech.net/ https://dpm.demdex.net/ www.googletagmanager.com https://www.google-analytics.com",
   "font-src 'self' https://fonts.gstatic.com/s/ https://cdnjs.cloudflare.com/ajax/libs/font-awesome/ https://unpkg.com/sgds-govtech@1.3.14/ data: https://assets.dcube.cloud/fonts/ data: https://assets.wogaa.sg/fonts/",
   "manifest-src 'self'",
-  "connect-src https://gist.githubusercontent.com https://*.gov.sg/ https://dns.google/ https://mainnet.infura.io/v3/ https://goerli.infura.io/v3/ https://dpm.demdex.net/ https://cm.everesttech.net/ https://wogadobeanalytics.sc.omtrdc.net/ https://*.openattestation.com https://*.notarise.io https://www.google-analytics.com https://*.dcube.cloud",
+  "connect-src https://gist.githubusercontent.com https://*.gov.sg/ https://dns.google/ https://mainnet.infura.io/v3/ https://goerli.infura.io/v3/ https://dpm.demdex.net/ https://cm.everesttech.net/ https://wogadobeanalytics.sc.omtrdc.net/ https://*.openattestation.com https://*.notarise.io https://www.google-analytics.com",
   "frame-src https://*.openattestation.com https://*.gov.sg",
 ];
 

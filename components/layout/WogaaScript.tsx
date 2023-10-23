@@ -1,10 +1,8 @@
-import { useGoogleAnalytics } from "@utils/google-analytics";
 import Script from "next/script";
 
 const WOGAA_ENV = process.env.NEXT_PUBLIC_WOGAA_ENV === "production";
 
 function WogaaScript() {
-  useGoogleAnalytics();
   return (
     <>
       {WOGAA_ENV ? (

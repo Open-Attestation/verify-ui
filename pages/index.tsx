@@ -5,7 +5,6 @@ import Heading from "@components/text/Heading";
 import InternalButton from "@components/button/InternalButton";
 import StepperTimeline from "@components/figure/Timeline";
 import { InformationBanner } from "@components/figure/Banner";
-import WogaaScript from "@components/layout/WogaaScript";
 
 const Section: React.FC<{ children?: React.ReactNode; isBlue?: boolean }> = ({ children, isBlue = false }) => (
   <section className={["py-12", isBlue && "bg-background-blue"].filter(Boolean).join(" ")}>
@@ -16,7 +15,6 @@ const Section: React.FC<{ children?: React.ReactNode; isBlue?: boolean }> = ({ c
 const Home: NextPage = () => {
   return (
     <Layout>
-      <WogaaScript />
       <InformationBanner />
       <Section>
         <div className="w-full md:w-2/5 md:pr-4">

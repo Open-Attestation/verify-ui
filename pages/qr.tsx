@@ -12,7 +12,6 @@ import { CodedError } from "@utils/coded-error";
 import { qrErrorHandler } from "@utils/error-handler";
 import { useWindowFocus } from "@utils/window-focus-hook";
 import { useRouterQuery } from "@utils/router-query-hook";
-import WogaaScript from "@components/layout/WogaaScript";
 
 const barcodeScanner = { prettyLabel: "Barcode Scanner" } as const;
 
@@ -126,7 +125,6 @@ const Qr: NextPage = () => {
 
   return (
     <Layout>
-      <WogaaScript />
       <NextSeo title="QR Scanner" />
       <section className="container text-center my-10 pb-2 mx-auto">
         <Heading level="h1">Scan Verify QR Code</Heading>

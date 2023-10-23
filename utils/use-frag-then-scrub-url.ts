@@ -32,7 +32,7 @@ export const useUrlParamsThenScrubUrl = ({ enabled }: UseFragmentThenScrubUrlPar
         const savedFragment = window.location.hash.substring(1);
         const savedQueryParam = { ...router.query };
 
-        // scrubbbb itttttt
+        // scrubbbb fragment
         window.location.hash = "";
         router.replace({}, undefined, { shallow: true });
 

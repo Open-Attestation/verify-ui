@@ -2,10 +2,12 @@ import { NextPage } from "next";
 import { NextSeo } from "next-seo";
 
 import Layout from "@components/layout/Layout";
+import WogaaScript from "@components/layout/WogaaScript";
 
 const Contactus: NextPage = () => {
   return (
     <Layout className="container py-12 min-h-[75vh] bg-[length:450px] bg-right-top bg-no-repeat md:bg-[url('/images/contact-us.svg')]">
+      <WogaaScript />
       <NextSeo title="Contact us" />
       <h2>Contact us</h2>
 

@@ -3,6 +3,7 @@ import { NextSeo } from "next-seo";
 
 import Layout from "@components/layout/Layout";
 import Accordion from "@components/figure/Accordion";
+import WogaaScript from "@components/layout/WogaaScript";
 
 interface FAQ {
   question: string;
@@ -12,6 +13,7 @@ interface FAQ {
 const FAQ: NextPage = () => {
   return (
     <Layout className="container py-12 min-h-[75vh] bg-[length:450px] bg-right-top bg-no-repeat md:bg-[url('/images/main-faq.svg')]">
+      <WogaaScript />
       <NextSeo title="FAQ" />
       <h2>Questions? Look here.</h2>
       <div className="grid gap-2 my-5 md:max-w-4xl">

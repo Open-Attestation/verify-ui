@@ -45,7 +45,7 @@ export const decodeQueryAndHash = (encodedQuery: string, encodedHash: string) =>
 
   try {
     decodedQ = decodeAndParseUri(encodedQuery);
-    decodedHash = String.guard(encodedHash) && encodedHash.length ? decodeAndParseUri(encodedHash) : undefined;
+    decodedHash = String.guard(encodedHash) ? decodeAndParseUri(encodedHash) : undefined;
   } catch (e) {
     console.error(e);
     throw new CodedError("QueryParamsError", "The URL is malformed so the document cannot be loaded");

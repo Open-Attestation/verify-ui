@@ -11,12 +11,7 @@ import { fetchAndDecryptDocument, decodeQueryAndHash, decodeUriFragment } from "
 import { verifyErrorHandler } from "@utils/error-handler";
 import { getUniversalActionType } from "@utils/get-universal-action-type";
 import { useUrlParamsThenScrubUrl } from "@utils/use-frag-then-scrub-url";
-import Script from "next/script";
-
-const WOGAA_SCRIPT_SRC =
-  process.env.NEXT_PUBLIC_WOGAA_ENV === "production"
-    ? "https://assets.wogaa.sg/scripts/wogaa.js"
-    : "https://assets.dcube.cloud/scripts/wogaa.js";
+import WogaaScript from "@components/layout/WogaaScript";
 
 const Verifier = dynamic(() => import("@components/verify/Verifier"), { ssr: false });
 
@@ -112,7 +107,7 @@ const Verify: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> =
     <Layout>
       {urlParams !== undefined && (
         <>
-          <Script src={WOGAA_SCRIPT_SRC} async />
+          <WogaaScript />
           <Status {...status} />
           {showDropzone && <Dropzone onDocumentDropped={handleDocumentDropped} onDocumentError={handleDocumentError} />}
           {document !== null && <Verifier wrappedDocument={document} />}

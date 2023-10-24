@@ -81,7 +81,6 @@ const Verify: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> =
             return;
           }
           const encodedHash = urlParams?.uriFragment;
-          console.log("encodedHash", encodedHash);
           const document = decodeUriFragment(encodedHash);
           return dispatch({ type: "VERIFY_DOCUMENT", document });
         } else {

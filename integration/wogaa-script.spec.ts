@@ -103,3 +103,19 @@ test("Wogaa should load on homepage", async (t) => {
   const capturedUrlString = new URL(wogaaUrl).searchParams.get("url");
   await t.expect(capturedUrlString).eql(`http://localhost:3000/`);
 });
+
+test("Wogaa should capture information normally in non-verify urls", async (t) => {
+  await t
+    .navigateTo(`http://localhost:3000/faq?q=%7B%22foo%22%3A%22bar%22%7D%23%7B%20%22key%22%3A%20%22foobar%22%20%7D`)
+    .addRequestHooks(logger)
+    .wait(2000);
+
+  // ensure wogaa (1) loads, (2) and a url is being captured
+  await t.expect(logger.requests.length).eql(2);
+  const wogaaUrl = logger.requests.filter((req) => req.request.url.includes("?url="))[0].request.url;
+  // ensure wogaa captures the entire url in non-verify url
+  const capturedUrlString = new URL(wogaaUrl).searchParams.get("url");
+  await t
+    .expect(capturedUrlString)
+    .eql(`http://localhost:3000/faq?q=%7B%22foo%22%3A%22bar%22%7D%23%7B%20%22key%22%3A%20%22foobar%22%20%7D`);
+});

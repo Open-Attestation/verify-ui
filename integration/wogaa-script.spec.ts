@@ -104,7 +104,7 @@ test("Wogaa should load on homepage", async (t) => {
   await t.expect(capturedUrlString).eql(`http://localhost:3000/`);
 });
 
-test("Wogaa should capture information normally in non-verify urls", async (t) => {
+test("Wogaa should capture all information for non-verify url", async (t) => {
   await t
     .navigateTo(`http://localhost:3000/faq?q=%7B%22foo%22%3A%22bar%22%7D%23%7B%20%22key%22%3A%20%22foobar%22%20%7D`)
     .addRequestHooks(logger)

@@ -110,9 +110,10 @@ test("Wogaa should capture correct URL for non-verify pages", async (t) => {
     .addRequestHooks(logger)
     .wait(2000);
 
+  // TODO: remove this
+  logger.requests.forEach((req) => console.log(req.request.url));
   // ensure wogaa (1) loads, (2) and a url is being captured
   await t.expect(logger.requests.length).eql(2);
-  logger.requests.forEach((req) => console.log(req.request.url));
   const wogaaUrl = logger.requests.filter((req) => req.request.url.includes("?url="))[0].request.url;
   // ensure wogaa only capture scrubbed url
   const capturedUrlString = new URL(wogaaUrl).searchParams.get("url");

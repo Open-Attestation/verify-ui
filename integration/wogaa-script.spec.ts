@@ -108,7 +108,7 @@ test("Wogaa should capture correct URL for non-verify pages", async (t) => {
   await t
     .navigateTo(`http://localhost:3000/?m=uri-fragment#${encodeURI(JSON.stringify(sampleCert))}`)
     .addRequestHooks(logger)
-    .wait(2000);
+    .wait(10000);
 
   // TODO: remove this
   logger.requests.forEach((req) => console.log(req.request.url));

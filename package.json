@@ -40,6 +40,7 @@
     "react-dropzone": "^14.2.3",
     "react-ga4": "^2.1.0",
     "runtypes": "^6.6.0",
+    "serverless-vpc-discovery": "^4.1.0",
     "typesafe-actions": "^5.1.0"
   },
   "devDependencies": {

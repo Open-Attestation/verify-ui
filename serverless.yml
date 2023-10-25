@@ -98,7 +98,7 @@ custom:
           - "${env:VPC_SUBNETS}"
     securityGroups:
       - names:
-          - "${env:VPC_SECURITY_GORUPS}"
+          - "${env:VPC_SECURITY_GROUPS}"
 
 resources:
   Resources:

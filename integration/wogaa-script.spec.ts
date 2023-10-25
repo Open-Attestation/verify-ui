@@ -1,6 +1,5 @@
 import { RequestLogger } from "testcafe";
 import "isomorphic-fetch";
-import { URL } from "url";
 
 fixture("Load action from encrypted certificate").page`http://localhost:3000`;
 

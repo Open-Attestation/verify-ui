@@ -66,20 +66,18 @@ functions:
     name: ${self:provider.stackName}-next
     iamRoleStatementsName: "${self:provider.stackName}-next"
     # Provisioned concurrency is the number of pre-initialized execution environments you want to allocate to your function, around USD40 each
-    provisionedConcurrency: "${env:PROVISIONED_CONCURRENCY}"
+    provisionedConcurrency: "${env:PROVISIONED_CONCURRENCY,0}"
 
     layers:
-      - arn:aws:lambda:ap-southeast-1:753240598075:layer:LambdaAdapterLayerX86:16
+      - arn:aws:lambda:ap-southeast-1:753240598075:layer:LambdaAdapterLayerX86:17
     handler: run.sh
     events:
       - http:
           path: "{proxy+}"
           method: any
-          authorizer: ${self:custom.authorizer}
       - http:
           path: ""
           method: any
-          authorizer: ${self:custom.authorizer}
 custom:
   customDomains:
     - rest:
@@ -100,7 +98,7 @@ custom:
           - "${env:VPC_SUBNETS}"
     securityGroups:
       - names:
-          - "${env:VPC_SECURITY_GROUPS}"
+          - "${env:VPC_SECURITY_GORUPS}"
 
 resources:
   Resources:

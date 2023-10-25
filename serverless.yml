@@ -31,7 +31,6 @@ provider:
       # ALWAYS PUT TO FALSE, NEVER LOG RESPONSE DATA BECAUSE IT CAN BE SENSITIVE
       fullExecutionData: false
       roleManagedExternally: true
-      role: ${ssm:/trustdocs/${self:provider.stage}/cloudwatch-log-role-arn}
   apiGateway:
     resourcePolicy:
       - Effect: Deny
@@ -67,7 +66,7 @@ functions:
     name: ${self:provider.stackName}-next
     iamRoleStatementsName: "${self:provider.stackName}-next"
     # Provisioned concurrency is the number of pre-initialized execution environments you want to allocate to your function, around USD40 each
-    provisionedConcurrency: ${self:custom.concurrency.${self:provider.stage}, self:custom.concurrency.stg}
+    provisionedConcurrency: "${env:PROVISIONED_CONCURRENCY}"
 
     layers:
       - arn:aws:lambda:ap-southeast-1:753240598075:layer:LambdaAdapterLayerX86:16
@@ -81,17 +80,7 @@ functions:
           path: ""
           method: any
           authorizer: ${self:custom.authorizer}
-    vpc:
-      securityGroupIds:
-        - ${self:custom.infra.securityGroupIds}
-      subnetIds:
-        Fn::Split:
-          - ","
-          - ${self:custom.infra.subnetIds}
 custom:
-  concurrency:
-    prod: 1
-    nonprod: 0
   customDomains:
     - rest:
         domainName: ${env:DOMAIN_NAME}
@@ -100,12 +89,18 @@ custom:
         securityPolicy: tls_1_2
         autoDomain: true
         createRoute53Record: false
-  infra:
-    securityGroupIds: ${ssm:/trustdocs/${self:provider.stage}/security-group-ids}
-    subnetIds: ${ssm:/trustdocs/${self:provider.stage}/subnet-ids}
   associateWaf:
     name: ${env:WAF_NAME}
     version: "V2"
+  vpcDiscovery:
+    vpcName: "${env:VPC_NAME}"
+    subnets:
+      - tagKey: Name
+        tagValues:
+          - "${env:VPC_SUBNETS}"
+    securityGroups:
+      - names:
+          - "${env:VPC_SECURITY_GROUPS}"
 
 resources:
   Resources:

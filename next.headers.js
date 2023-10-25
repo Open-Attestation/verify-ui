@@ -52,7 +52,7 @@ const nonProdCspValue = [
 
 const nonProdVerifyCspValue = [
   "frame-ancestors 'none'",
-  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://assets.adobedtm.com/ https://www.googletagmanager.com https://www.google-analytics.com https://ssl.google-analytics.com blob: https://*.dcube.cloud blob: https://*.wogaa.sg",
+  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://assets.adobedtm.com/ https://www.googletagmanager.com https://www.google-analytics.com https://ssl.google-analytics.com blob: https://*.dcube.cloud",
   "object-src 'self'",
   "style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com/ajax/libs/font-awesome/ https://unpkg.com/sgds-govtech@1.3.14/css/sgds.css https://fonts.googleapis.com/ https://assets.dcube.cloud/fonts/ https://assets.wogaa.sg/",
   "default-src 'self' https://*.demdex.net/ https://cm.everesttech.net/ https://wogadobeanalytics.sc.omtrdc.net/ https://*.dcube.cloud/",

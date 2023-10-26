@@ -33,18 +33,18 @@ provider:
       roleManagedExternally: true
   apiGateway:
     resourcePolicy:
-      - Effect: Deny
-        Principal: "*"
-        Action: execute-api:Invoke
-        Resource:
-          - execute-api:/*/*/*
-        Condition:
-          NotIpAddress:
-            aws:SourceIp:
-              - "8.29.230.18/32"
-              - "8.29.230.19/32"
-              - "103.224.116.237/32"
-              - "2a09:bac0:1001:20::23:0/112"
+      # - Effect: Deny
+      #   Principal: "*"
+      #   Action: execute-api:Invoke
+      #   Resource:
+      #     - execute-api:/*/*/*
+      #   Condition:
+      #     NotIpAddress:
+      #       aws:SourceIp:
+      #         - "8.29.230.18/32"
+      #         - "8.29.230.19/32"
+      #         - "103.224.116.237/32"
+      #         - "2a09:bac0:1001:20::23:0/112"
       - Effect: Allow
         Principal: "*"
         Action: execute-api:Invoke

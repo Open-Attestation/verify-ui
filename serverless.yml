@@ -1,0 +1,111 @@
+service: notarise-verify-ui
+useDotenv: true
+
+provider:
+  deploymentBucket:
+    name: ${env:DEPLOYMENT_BUCKET}
+  stackName: notarise-${self:provider.stage}-verify-ui
+  apiName: ${self:provider.stackName}
+  environment:
+    NODE_ENV: "development"
+    DEBUG: "*,-follow-redirects"
+    AWS_LAMBDA_EXEC_WRAPPER: /opt/bootstrap
+    HOSTNAME: 0.0.0.0
+    PORT: 8000
+  name: aws
+  runtime: nodejs18.x
+  region: ap-southeast-1
+  deploymentMethod: direct
+  stage: ${opt:stage, "dev"}
+  memorySize: 256
+  timeout: 900
+  tracing:
+    lambda: true
+    apiGateway: true
+  logs:
+    restApi:
+      accessLogging: true
+      executionLogging: true
+      format: '{"id":"$context.requestId","extendedId":"$context.extendedRequestId","path":"$context.path","method":"$context.httpMethod","time":"$context.requestTime","source":"$context.identity.sourceIp","resourcePath":"$context.resourcePath","error":{"message":"$context.error.message","type":"$context.error.responseType","validation":"$context.error.validationErrorString"},"waf":{"response":"$context.wafResponseCode","error":"$context.waf.error","status":"$context.waf.status"},"response":{"latency":"$context.responseLatency","length":"$context.responseLength","status":"$context.status"},"apikey":"$context.identity.apiKeyId","xray":"$context.xrayTraceId"}'
+      level: INFO
+      # ALWAYS PUT TO FALSE, NEVER LOG RESPONSE DATA BECAUSE IT CAN BE SENSITIVE
+      fullExecutionData: false
+      roleManagedExternally: true
+  apiGateway:
+    resourcePolicy:
+      - Effect: Allow
+        Principal: "*"
+        Action: execute-api:Invoke
+        Resource:
+          - execute-api:/*/*/*
+    metrics: true
+    shouldStartNameWithService: true
+    binaryMediaTypes:
+      - "*/*"
+  endpointType: "REGIONAL"
+  versionFunctions: false
+
+package:
+  artifact: .next/standalone/artifact.zip
+
+# Reference: https://github.com/awslabs/aws-lambda-web-adapter
+functions:
+  nextApplication:
+    name: ${self:provider.stackName}-next
+    iamRoleStatementsName: "${self:provider.stackName}-next"
+    # Provisioned concurrency is the number of pre-initialized execution environments you want to allocate to your function, around USD40 each
+    provisionedConcurrency: "${env:PROVISIONED_CONCURRENCY,0}"
+
+    layers:
+      - arn:aws:lambda:ap-southeast-1:753240598075:layer:LambdaAdapterLayerX86:17
+    handler: run.sh
+    events:
+      - http:
+          path: "{proxy+}"
+          method: any
+      - http:
+          path: ""
+          method: any
+custom:
+  customDomains:
+    - rest:
+        domainName: ${env:DOMAIN_NAME}
+        basePath: ""
+        endpointType: REGIONAL
+        securityPolicy: tls_1_2
+        autoDomain: true
+        createRoute53Record: false
+  associateWaf:
+    name: ${env:WAF_NAME}
+    version: "V2"
+  vpcDiscovery:
+    vpcName: "${env:VPC_NAME}"
+    subnets:
+      - tagKey: Name
+        tagValues:
+          - "${env:VPC_SUBNETS}"
+    securityGroups:
+      - names:
+          - "${env:VPC_SECURITY_GROUPS}"
+
+resources:
+  Resources:
+    IamRoleLambdaExecution:
+      Type: "AWS::IAM::Role"
+      Properties:
+        AssumeRolePolicyDocument:
+          Version: "2012-10-17"
+          Statement:
+            - Effect: Allow
+              Principal:
+                Service: lambda.amazonaws.com
+              Action: sts:AssumeRole
+              Condition:
+                ArnLike:
+                  "aws:SourceArn": "arn:aws:lambda:${aws:region}:${aws:accountId}:*:*"
+
+plugins:
+  - serverless-domain-manager
+  - serverless-associate-waf
+  - serverless-iamroles
+  - serverless-vpc-discovery

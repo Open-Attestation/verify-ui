@@ -19,6 +19,8 @@ const COMMIT_REF = process.env.COMMIT_REF || "v1.0.0";
 /** @type {import('next').NextConfig} */
 const nextConfig = withTM({
   reactStrictMode: true,
+  swcMinify: true,
+  output: "standalone",
   env: {
     CONTEXT: process.env.CONTEXT,
     SITE_URL,

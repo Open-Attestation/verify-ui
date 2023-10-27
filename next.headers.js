@@ -96,7 +96,7 @@ const generateHeaders = async () => {
         ],
       },
     ];
-  } else if (["deploy-preview", "branch-deploy"].includes(process.env.CONTEXT)) {
+  } else if (["deploy-preview", "branch-deploy","staging"].includes(process.env.CONTEXT)) {
     return [
       {
         source: "/:path*",

@@ -75,3 +75,6 @@ jobs:
       - run:
           name: integration (chromium multi-browser window)
           command: npm run integration:chromium:headless
+      - run:
+          name: integration (chrome multi-browser window)
+          command: npm run integration:chrome:headless

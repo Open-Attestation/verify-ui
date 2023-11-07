@@ -14,7 +14,7 @@
     "lint": "next lint",
     "test": "jest",
     "integration": "testcafe 'chrome --use-fake-ui-for-media-stream --use-fake-device-for-media-stream' integration/**/*.spec.ts --hostname localhost --compilerOptions noEmit=true",
-    "integration:headless": "testcafe 'chrome:headless --use-fake-ui-for-media-stream --use-fake-device-for-media-stream' integration/**/*.spec.ts --hostname localhost --compilerOptions noEmit=true --app 'npm start' --app-init-delay 5000",
+    "integration:headless": "testcafe 'chromium:headless --use-fake-ui-for-media-stream --use-fake-device-for-media-stream' integration/**/*.spec.ts --hostname localhost --compilerOptions noEmit=true --app 'npm start' --app-init-delay 5000",
     "monitoring": "testcafe chrome:headless monitoring/**/*.spec.ts --skip-js-errors --compiler-options typescript.options.esModuleInterop=true"
   },
   "dependencies": {

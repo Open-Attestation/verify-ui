@@ -24,6 +24,7 @@ jobs:
       - image: testcafe/testcafe:latest
     steps:
       - checkout
+      - node/install-packages
       - browser-tools/install-chrome
       - browser-tools/install-chromedriver
       - browser-tools/install-firefox
@@ -42,8 +43,10 @@ jobs:
   build:
     docker:
       - image: "cimg/node:18.15-browsers"
+      - image: testcafe/testcafe:latest
     steps:
       - checkout
+      - node/install-packages
       - browser-tools/install-chrome
       - browser-tools/install-chromedriver
       - browser-tools/install-firefox

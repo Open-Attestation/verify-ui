@@ -42,8 +42,7 @@ test("Barcode scanner on QR page should be able to verify a valid QR", async (t)
     },
   };
 
-  const validVerifyUrl = `https://www.verify.gov.sg/verify?q=${encodeURI(JSON.stringify(action))}`;
-
+  const validVerifyUrl = `https://www.verify.gov.sg/verify?q=${encodeURIComponent(JSON.stringify(action))}`;
   for (let char of validVerifyUrl) {
     await t.dispatchEvent(Selector("body"), "keydown", { key: char });
   }

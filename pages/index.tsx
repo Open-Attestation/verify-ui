@@ -5,9 +5,9 @@ import Heading from "@components/text/Heading";
 import InternalButton from "@components/button/InternalButton";
 import StepperTimeline from "@components/figure/Timeline";
 import { InformationBanner } from "@components/figure/Banner";
-import { ReactNode } from "react";
+import WogaaScript from "@components/layout/WogaaScript";
 
-const Section: React.FC<{ children?: React.ReactNode, isBlue?: boolean }> = ({ children, isBlue = false }) => (
+const Section: React.FC<{ children?: React.ReactNode; isBlue?: boolean }> = ({ children, isBlue = false }) => (
   <section className={["py-12", isBlue && "bg-background-blue"].filter(Boolean).join(" ")}>
     <div className="container flex flex-col md:flex-row items-center gap-10">{children}</div>
   </section>
@@ -16,7 +16,8 @@ const Section: React.FC<{ children?: React.ReactNode, isBlue?: boolean }> = ({ c
 const Home: NextPage = () => {
   return (
     <Layout>
-      <InformationBanner/>
+      <WogaaScript />
+      <InformationBanner />
       <Section>
         <div className="w-full md:w-2/5 md:pr-4">
           <Heading level="h1">An easy way to check and verify your certificates</Heading>

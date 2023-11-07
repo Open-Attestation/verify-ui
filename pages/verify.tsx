@@ -10,6 +10,8 @@ import Dropzone from "@components/verify/Dropzone";
 import { fetchAndDecryptDocument, decodeQueryAndHash, decodeUriFragment } from "@utils/fetch-document";
 import { verifyErrorHandler } from "@utils/error-handler";
 import { getUniversalActionType } from "@utils/get-universal-action-type";
+import { useUrlParamsThenScrubUrl } from "@utils/use-frag-then-scrub-url";
+import WogaaScript from "@components/layout/WogaaScript";
 
 const Verifier = dynamic(() => import("@components/verify/Verifier"), { ssr: false });
 
@@ -57,12 +59,17 @@ const Verify: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> =
   const router = useRouter();
   const [{ status, document, showDropzone }, dispatch] = useReducer(reducer, initialState);
 
+  const urlParams = useUrlParamsThenScrubUrl({ enabled: props.universalActionType !== "NONE" });
+
   useEffect(() => {
     (async () => {
       try {
         if (props.universalActionType === "HOSTED_URL") {
-          const encodedQ = router.query.q?.toString() || "";
-          const encodedHash = window.location.hash.substring(1) || undefined;
+          if (urlParams?.uriFragment === undefined) {
+            return;
+          }
+          const encodedQ = typeof urlParams?.query.q === "string" ? urlParams.query.q : "";
+          const encodedHash = urlParams?.uriFragment;
           const { decodedQ, decodedHash } = decodeQueryAndHash(encodedQ, encodedHash);
           const document = await fetchAndDecryptDocument(
             decodedQ.payload.uri,
@@ -70,7 +77,10 @@ const Verify: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> =
           );
           return dispatch({ type: "VERIFY_DOCUMENT", document });
         } else if (props.universalActionType === "EMBEDDED_URI_FRAGMENT") {
-          const encodedHash = window.location.hash.substring(1);
+          if (urlParams?.uriFragment === undefined) {
+            return;
+          }
+          const encodedHash = urlParams?.uriFragment;
           const document = decodeUriFragment(encodedHash);
           return dispatch({ type: "VERIFY_DOCUMENT", document });
         } else {
@@ -82,7 +92,7 @@ const Verify: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> =
         dispatch({ type: "STATUS_MESSAGE", status: verifyErrorHandler(e) });
       }
     })();
-  }, [router, props.universalActionType]);
+  }, [router, props.universalActionType, urlParams?.uriFragment, urlParams?.query.q]);
 
   const handleDocumentDropped = useCallback((wrappedDocument: any) => {
     dispatch({ type: "VERIFY_DOCUMENT", document: wrappedDocument });
@@ -94,9 +104,14 @@ const Verify: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> =
 
   return (
     <Layout>
-      {<Status {...status} />}
-      {showDropzone && <Dropzone onDocumentDropped={handleDocumentDropped} onDocumentError={handleDocumentError} />}
-      {document !== null && <Verifier wrappedDocument={document} />}
+      {urlParams !== undefined && (
+        <>
+          <WogaaScript />
+          <Status {...status} />
+          {showDropzone && <Dropzone onDocumentDropped={handleDocumentDropped} onDocumentError={handleDocumentError} />}
+          {document !== null && <Verifier wrappedDocument={document} />}
+        </>
+      )}
     </Layout>
   );
 };

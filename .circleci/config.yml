@@ -24,10 +24,12 @@ jobs:
       - checkout
       - browser-tools/install-chrome
       - browser-tools/install-chromedriver
+      - browser-tools/install-firefox
       - run:
           command: |
             google-chrome --version
             chromedriver --version
+            firefox --version
           name: Check install
       - run:
           name: install
@@ -66,6 +68,7 @@ jobs:
           command: npm run build
       - run:
           name: integration
-          command: |
-            npm run integration:headless
-            npm run integration:firefox:headless
+          command: npm run integration:headless
+      - run:
+          name: integration (multi-browser window)
+          command: npm run integration:firefox:headless

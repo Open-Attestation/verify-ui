@@ -66,9 +66,9 @@ jobs:
       - run:
           name: build
           command: npm run build
-      - run:
-          name: integration
-          command: npm run integration:headless
+      # - run:
+      #     name: integration
+      #     command: npm run integration:headless
       - run:
           name: integration (multi-browser window)
           command: npm run integration:firefox:headless

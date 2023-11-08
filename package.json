@@ -15,7 +15,7 @@
     "test": "jest",
     "integration": "testcafe 'chrome --use-fake-ui-for-media-stream --use-fake-device-for-media-stream' integration/**/*.spec.ts --hostname localhost --compilerOptions noEmit=true",
     "integration:headless": "testcafe 'chrome:headless --use-fake-ui-for-media-stream --use-fake-device-for-media-stream' integration/**/*.spec.ts --hostname localhost --compilerOptions noEmit=true --app 'npm start' --app-init-delay 5000",
-    "integration:scanner:headless": "testcafe 'chrome:headless --disable-native-automation --use-fake-ui-for-media-stream --use-fake-device-for-media-stream' integration/multi-browser-test/qr-barcode-scanner.spec.ts --hostname localhost --compilerOptions noEmit=true --app 'npm start' --app-init-delay 5000",
+    "integration:scanner:headless": "testcafe 'chrome:headless --use-fake-ui-for-media-stream --use-fake-device-for-media-stream' integration/multi-browser-test/qr-barcode-scanner.spec.ts --hostname localhost --compilerOptions noEmit=true --app 'npm start' --app-init-delay 5000  --disable-native-automation",
     "monitoring": "testcafe chrome:headless monitoring/**/*.spec.ts --skip-js-errors --compiler-options typescript.options.esModuleInterop=true"
   },
   "dependencies": {

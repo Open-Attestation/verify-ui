@@ -40,7 +40,6 @@ jobs:
   build:
     docker:
       - image: "cimg/node:18.15-browsers"
-      - image: "testcafe/testcafe:latest"
     steps:
       - checkout
       - browser-tools/install-chrome
@@ -67,18 +66,9 @@ jobs:
       - run:
           name: build
           command: npm run build
-      # - run:
-      #     name: integration
-      #     command: npm run integration:headless
+      - run:
+          name: integration
+          command: npm run integration:headless
       # - run:
       #     name: integration (firefox multi-browser window)
       #     command: npm run integration:firefox:headless
-      - run:
-          name: integration (chromium multi-browser window)
-          command: testcafe 'chromium:headless --use-fake-ui-for-media-stream --use-fake-device-for-media-stream' integration/multi-browser-test/qr-barcode-scanner.spec.ts --hostname localhost --compilerOptions noEmit=true --app 'npm run dev' --app-init-delay 5000
-      - run:
-          name: integration (chromium multi-browser window)
-          command: npm run integration:chromium:headless
-      - run:
-          name: integration (chrome multi-browser window)
-          command: npm run integration:chrome:headless

@@ -66,9 +66,9 @@ jobs:
       - run:
           name: build
           command: npm run build
-      - run:
-          name: integration
-          command: npm run integration:headless
       # - run:
-      #     name: integration (firefox multi-browser window)
-      #     command: npm run integration:firefox:headless
+      #     name: integration
+      #     command: npm run integration:headless
+      - run:
+          name: integration (disable native automation for scanner pop up)
+          command: npm run integration:scanner:headless

@@ -64,9 +64,6 @@ jobs:
           command: npm run build
       - run:
           name: integration
-          command: npm run integration:headless
-      # separate script with --disable-native-automation because QR scanner requires multiple browser windows
-      # https://testcafe.io/documentation/402841/guides/intermediate-guides/multiple-browser-windows
-      - run:
-          name: integration (disable native automation for scanner pop up)
-          command: npm run integration:scanner:headless
+          command: |
+            npm run integration:headless
+            npm run integration:multi-window-test:headless

@@ -1,5 +1,5 @@
 import { Selector } from "testcafe";
-import { validateIframeText, validateIssuer } from "./helper";
+import { validateIframeText, validateIssuer } from "../helper";
 
 fixture("Scan QR page on Barcode Scanner mode").page`http://localhost:3000/qr`
   .skipJsErrors({
@@ -42,8 +42,7 @@ test("Barcode scanner on QR page should be able to verify a valid QR", async (t)
     },
   };
 
-  const validVerifyUrl = `https://www.verify.gov.sg/verify?q=${encodeURI(JSON.stringify(action))}`;
-
+  const validVerifyUrl = `https://www.verify.gov.sg/verify?q=${encodeURIComponent(JSON.stringify(action))}`;
   for (let char of validVerifyUrl) {
     await t.dispatchEvent(Selector("body"), "keydown", { key: char });
   }

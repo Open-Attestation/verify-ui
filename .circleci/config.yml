@@ -64,4 +64,6 @@ jobs:
           command: npm run build
       - run:
           name: integration
-          command: npm run integration:headless
+          command: |
+            npm run integration:headless
+            npm run integration:multi-window-test:headless

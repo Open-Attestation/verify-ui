@@ -6,6 +6,11 @@
   "engines": {
     "node": ">=18"
   },
+  "overrides": {
+    "@govtechsg/oa-verify": {
+      "axios": "^1.6.2"
+    }
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",

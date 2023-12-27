@@ -7,16 +7,16 @@ fixture("Load action from encrypted certificate").page`http://localhost:3000`;
 const AlertContainer = Selector('[role="alert"]');
 const StatusCheck = Selector("[data-testid='verification-checks']");
 
-const key = "7b9fbe27e47485e71729ce9faf3e361e8e84b9a72092196826457fda0136d38a";
+const key = "96127947a132c2b1c9696dfc89179aa510df040cc8d2094ef8958e8225bf3fb1";
 
 test("Load document from action should work when action is valid (key from anchor)", async (t) => {
   const anchor = { key };
   const action = {
     type: "DOCUMENT",
     payload: {
-      uri: `https://gist.githubusercontent.com/john-dot-oa/501c38d7f65d71000e520be77422d03c/raw/c9c86e0aee61b0365077454acc3b366aedd7975a/certificate-issued-goerli-encrypted.json`,
+      uri: `https://gist.githubusercontent.com/john-dot-oa/5791c0d1e28ba841210f33f8d9c458e6/raw/6d5f839a7152f8d561e6d994f60e00052f33ec8f/certificate-issued-sepolia-encrypted.json`,
       permittedAction: ["STORE"],
-      redirect: "https://verify.gov.sg/verify",
+      redirect: "http://localhost:3000",
     },
   };
   await t.navigateTo(
@@ -33,10 +33,10 @@ test("Load document from action should work when action is valid", async (t) => 
   const action = {
     type: "DOCUMENT",
     payload: {
-      uri: `https://gist.githubusercontent.com/john-dot-oa/501c38d7f65d71000e520be77422d03c/raw/c9c86e0aee61b0365077454acc3b366aedd7975a/certificate-issued-goerli-encrypted.json`,
+      uri: `https://gist.githubusercontent.com/john-dot-oa/5791c0d1e28ba841210f33f8d9c458e6/raw/6d5f839a7152f8d561e6d994f60e00052f33ec8f/certificate-issued-sepolia-encrypted.json`,
       key,
       permittedAction: ["STORE"],
-      redirect: "https://verify.gov.sg/verify",
+      redirect: "http://localhost:3000",
     },
   };
   await t.navigateTo(`http://localhost:3000/verify?q=${encodeURI(JSON.stringify(action))}`);
@@ -54,9 +54,9 @@ test("Load document from action should fail when key is invalid (key from anchor
   const action = {
     type: "DOCUMENT",
     payload: {
-      uri: `https://gist.githubusercontent.com/john-dot-oa/501c38d7f65d71000e520be77422d03c/raw/c9c86e0aee61b0365077454acc3b366aedd7975a/certificate-issued-goerli-encrypted.json`,
+      uri: `https://gist.githubusercontent.com/john-dot-oa/5791c0d1e28ba841210f33f8d9c458e6/raw/6d5f839a7152f8d561e6d994f60e00052f33ec8f/certificate-issued-sepolia-encrypted.json`,
       permittedAction: ["STORE"],
-      redirect: "https://verify.gov.sg/verify",
+      redirect: "http://localhost:3000",
     },
   };
 
@@ -70,9 +70,9 @@ test("Load document from action should fail when key is invalid", async (t) => {
   const action = {
     type: "DOCUMENT",
     payload: {
-      uri: `https://gist.githubusercontent.com/john-dot-oa/501c38d7f65d71000e520be77422d03c/raw/c9c86e0aee61b0365077454acc3b366aedd7975a/certificate-issued-goerli-encrypted.json`,
+      uri: `https://gist.githubusercontent.com/john-dot-oa/5791c0d1e28ba841210f33f8d9c458e6/raw/6d5f839a7152f8d561e6d994f60e00052f33ec8f/certificate-issued-sepolia-encrypted.json`,
       permittedAction: ["STORE"],
-      redirect: "https://verify.gov.sg/verify",
+      redirect: "http://localhost:3000",
       key: "2a237b35cb50544a2c9a4b4a629e7c547bd1ff4a0137489700891532001e83f6", // random key, must have correct length
     },
   };
@@ -85,9 +85,9 @@ test("Load document from action should fail when the required key is not provide
   const action = {
     type: "DOCUMENT",
     payload: {
-      uri: `https://gist.githubusercontent.com/john-dot-oa/501c38d7f65d71000e520be77422d03c/raw/c9c86e0aee61b0365077454acc3b366aedd7975a/certificate-issued-goerli-encrypted.json`,
+      uri: `https://gist.githubusercontent.com/john-dot-oa/5791c0d1e28ba841210f33f8d9c458e6/raw/6d5f839a7152f8d561e6d994f60e00052f33ec8f/certificate-issued-sepolia-encrypted.json`,
       permittedAction: ["STORE"],
-      redirect: "https://verify.gov.sg/verify",
+      redirect: "http://localhost:3000",
     },
   };
 

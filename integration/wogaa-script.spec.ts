@@ -47,7 +47,7 @@ test("Wogaa should not capture key data in HOSTED_URL", async (t) => {
   const action = {
     type: "DOCUMENT",
     payload: {
-      uri: `https://gist.githubusercontent.com/john-dot-oa/501c38d7f65d71000e520be77422d03c/raw/c9c86e0aee61b0365077454acc3b366aedd7975a/certificate-issued-goerli-encrypted.json`,
+      uri: `https://gist.githubusercontent.com/john-dot-oa/501c38d7f65d71000e520be77422d03c/raw/c9c86e0aee61b0365077454acc3b366aedd7975a/certificate-issued-sepolia-encrypted.json`,
       permittedAction: ["STORE"],
       redirect: "https://verify.gov.sg/verify",
     },

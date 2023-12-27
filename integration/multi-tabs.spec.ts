@@ -7,7 +7,7 @@ const tabMain = Selector("[data-testid='renderer-tab']", { timeout: 40000 }).wit
 const tabPdf = Selector("[data-testid='renderer-tab']").withText("dummy.pdf");
 
 test("Multi tabs should be rendered correctly", async () => {
-  await uploadDocument("./certificate-attachments-goerli.json");
+  await uploadDocument("./certificate-attachments-sepolia.json");
   await validateIssuer("example.openattestation.com");
   await validateIframeText("John Doe");
   await t.expect(tabPdf.exists).ok();

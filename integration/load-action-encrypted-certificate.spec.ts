@@ -16,7 +16,6 @@ test("Load document from action should work when action is valid (key from ancho
     payload: {
       uri: `https://gist.githubusercontent.com/john-dot-oa/5791c0d1e28ba841210f33f8d9c458e6/raw/6d5f839a7152f8d561e6d994f60e00052f33ec8f/certificate-issued-sepolia-encrypted.json`,
       permittedAction: ["STORE"],
-      redirect: "http://localhost:3000",
     },
   };
   await t.navigateTo(
@@ -36,7 +35,6 @@ test("Load document from action should work when action is valid", async (t) => 
       uri: `https://gist.githubusercontent.com/john-dot-oa/5791c0d1e28ba841210f33f8d9c458e6/raw/6d5f839a7152f8d561e6d994f60e00052f33ec8f/certificate-issued-sepolia-encrypted.json`,
       key,
       permittedAction: ["STORE"],
-      redirect: "http://localhost:3000",
     },
   };
   await t.navigateTo(`http://localhost:3000/verify?q=${encodeURI(JSON.stringify(action))}`);
@@ -56,7 +54,6 @@ test("Load document from action should fail when key is invalid (key from anchor
     payload: {
       uri: `https://gist.githubusercontent.com/john-dot-oa/5791c0d1e28ba841210f33f8d9c458e6/raw/6d5f839a7152f8d561e6d994f60e00052f33ec8f/certificate-issued-sepolia-encrypted.json`,
       permittedAction: ["STORE"],
-      redirect: "http://localhost:3000",
     },
   };
 
@@ -72,7 +69,6 @@ test("Load document from action should fail when key is invalid", async (t) => {
     payload: {
       uri: `https://gist.githubusercontent.com/john-dot-oa/5791c0d1e28ba841210f33f8d9c458e6/raw/6d5f839a7152f8d561e6d994f60e00052f33ec8f/certificate-issued-sepolia-encrypted.json`,
       permittedAction: ["STORE"],
-      redirect: "http://localhost:3000",
       key: "2a237b35cb50544a2c9a4b4a629e7c547bd1ff4a0137489700891532001e83f6", // random key, must have correct length
     },
   };
@@ -87,7 +83,6 @@ test("Load document from action should fail when the required key is not provide
     payload: {
       uri: `https://gist.githubusercontent.com/john-dot-oa/5791c0d1e28ba841210f33f8d9c458e6/raw/6d5f839a7152f8d561e6d994f60e00052f33ec8f/certificate-issued-sepolia-encrypted.json`,
       permittedAction: ["STORE"],
-      redirect: "http://localhost:3000",
     },
   };
 

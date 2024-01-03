@@ -12,7 +12,6 @@ test("Load document from action should work when url is valid", async (t) => {
     type: "DOCUMENT",
     payload: {
       uri: `https://gist.githubusercontent.com/john-dot-oa/5791c0d1e28ba841210f33f8d9c458e6/raw/6d5f839a7152f8d561e6d994f60e00052f33ec8f/certificate-issued-sepolia.json`,
-      redirect: "http://localhost:3000",
     },
   };
 
@@ -29,7 +28,6 @@ test("Load document from action should fail when url can't be parsed", async (t)
     type: "DOCUMENT",
     payload: {
       uri: `https://gist.githubusercontent.com/john-dot-oa/5791c0d1e28ba841210f33f8d9c458e6/raw/6d5f839a7152f8d561e6d994f60e00052f33ec8f/certificate-issued-sepolia.json`,
-      redirect: "http://localhost:3000",
     },
   };
 
@@ -43,7 +41,6 @@ test("Load document from action should fail when document does not exist", async
     type: "DOCUMENT",
     payload: {
       uri: `https://gist.githubusercontent.com/john-dot-oa/fake-path/raw/fake-path/non-existent-certificate.json`,
-      redirect: "http://localhost:3000",
     },
   };
 
@@ -57,7 +54,6 @@ test("Load document from action should fail when action type is invalid", async 
     payload: {
       uri: `https://gist.githubusercontent.com/john-dot-oa/5791c0d1e28ba841210f33f8d9c458e6/raw/6d5f839a7152f8d561e6d994f60e00052f33ec8f/certificate-issued-sepolia.json`,
       permittedAction: ["STORE"],
-      redirect: "http://localhost:3000",
     },
   };
 

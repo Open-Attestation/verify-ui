@@ -11,8 +11,7 @@ test("Load document from action should work when url is valid", async (t) => {
   const action = {
     type: "DOCUMENT",
     payload: {
-      uri: `https://gist.githubusercontent.com/john-dot-oa/501c38d7f65d71000e520be77422d03c/raw/c9c86e0aee61b0365077454acc3b366aedd7975a/certificate-issued-goerli.json`,
-      redirect: "https://verify.gov.sg/verify",
+      uri: `https://gist.githubusercontent.com/john-dot-oa/5791c0d1e28ba841210f33f8d9c458e6/raw/6d5f839a7152f8d561e6d994f60e00052f33ec8f/certificate-issued-sepolia.json`,
     },
   };
 
@@ -28,8 +27,7 @@ test("Load document from action should fail when url can't be parsed", async (t)
   const action = {
     type: "DOCUMENT",
     payload: {
-      uri: `https://gist.githubusercontent.com/john-dot-oa/501c38d7f65d71000e520be77422d03c/raw/c9c86e0aee61b0365077454acc3b366aedd7975a/certificate-issued-goerli.json`,
-      redirect: "https://verify.gov.sg/verify",
+      uri: `https://gist.githubusercontent.com/john-dot-oa/5791c0d1e28ba841210f33f8d9c458e6/raw/6d5f839a7152f8d561e6d994f60e00052f33ec8f/certificate-issued-sepolia.json`,
     },
   };
 
@@ -43,7 +41,6 @@ test("Load document from action should fail when document does not exist", async
     type: "DOCUMENT",
     payload: {
       uri: `https://gist.githubusercontent.com/john-dot-oa/fake-path/raw/fake-path/non-existent-certificate.json`,
-      redirect: "https://verify.gov.sg/verify",
     },
   };
 
@@ -55,9 +52,8 @@ test("Load document from action should fail when action type is invalid", async 
   const action = {
     type: "DOCUM",
     payload: {
-      uri: `https://gist.githubusercontent.com/john-dot-oa/501c38d7f65d71000e520be77422d03c/raw/c9c86e0aee61b0365077454acc3b366aedd7975a/certificate-issued-goerli.json`,
+      uri: `https://gist.githubusercontent.com/john-dot-oa/5791c0d1e28ba841210f33f8d9c458e6/raw/6d5f839a7152f8d561e6d994f60e00052f33ec8f/certificate-issued-sepolia.json`,
       permittedAction: ["STORE"],
-      redirect: "https://verify.gov.sg/verify",
     },
   };
 

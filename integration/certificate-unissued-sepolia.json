@@ -1,0 +1,29 @@
+{
+    "version": "https://schema.openattestation.com/2.0/schema.json",
+    "data": {
+      "$template": {
+        "name": "9c314923-9cf9-4702-99b2-57a06913c79b:string:main",
+        "type": "7d84e797-c498-425f-9f3d-d00361795c73:string:EMBEDDED_RENDERER",
+        "url": "fb7b384b-cd0c-4003-aadf-2eff32fa76d2:string:https://tutorial-renderer.openattestation.com"
+      },
+      "recipient": {
+        "name": "38f26ad0-8834-40cb-b038-382ab504beaa:string:John Doe"
+      },
+      "issuers": [
+        {
+          "name": "73aad721-56f2-4786-8a34-726ddd111f09:string:Demo Issuer",
+          "documentStore": "31f0e36e-9e43-4bba-b32c-da9e2ba70960:string:0xe943C95f456DA8e17c6d1a915eCF1a6ef0a182a8",
+          "identityProof": {
+            "type": "8335681a-27f1-4976-aaa6-90c4e09f049f:string:DNS-TXT",
+            "location": "1508b4f1-7f96-4efc-bf06-aaa9f300d158:string:example.openattestation.com"
+          }
+        }
+      ]
+    },
+    "signature": {
+      "type": "SHA3MerkleProof",
+      "targetHash": "2b21aab934c05c9f536658242f69f14da8dd3d8f885fa536a7aca16e119eab68",
+      "proof": [],
+      "merkleRoot": "2b21aab934c05c9f536658242f69f14da8dd3d8f885fa536a7aca16e119eab68"
+    }
+  }

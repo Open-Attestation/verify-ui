@@ -2,7 +2,7 @@ import { isValid, verificationBuilder } from "@govtechsg/oa-verify";
 import { SchemaId, v2 } from "@govtechsg/open-attestation";
 import { isWhitelisted, verifyAllowedIssuers } from "./oa-verify";
 
-const NETWORK_NAME = process.env.NEXT_PUBLIC_NETWORK_NAME || "goerli";
+const NETWORK_NAME = process.env.NEXT_PUBLIC_NETWORK_NAME || "sepolia";
 const verify = verificationBuilder([verifyAllowedIssuers], { network: NETWORK_NAME });
 
 const v2DocumentShared = {

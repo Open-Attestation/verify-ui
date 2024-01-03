@@ -16,7 +16,7 @@ const prodCspValue = [
   "img-src 'self' https://wogadobeanalytics.sc.omtrdc.net/ https://cm.everesttech.net/ https://dpm.demdex.net/ www.googletagmanager.com https://www.google-analytics.com",
   "font-src 'self' https://fonts.gstatic.com/s/ https://cdnjs.cloudflare.com/ajax/libs/font-awesome/ https://unpkg.com/sgds-govtech@1.3.14/ data: https://assets.dcube.cloud/fonts/ data: https://assets.wogaa.sg/fonts/",
   "manifest-src 'self'",
-  "connect-src https://*.gov.sg/ https://dns.google/ https://mainnet.infura.io/v3/ https://goerli.infura.io/v3/ https://dpm.demdex.net/ https://*.dcube.cloud/ https://*.wogaa.sg https://cm.everesttech.net/ https://wogadobeanalytics.sc.omtrdc.net/ https://*.notarise.io https://*.openattestation.com https://www.google-analytics.com",
+  "connect-src https://*.gov.sg/ https://dns.google/ https://mainnet.infura.io/v3/ https://sepolia.infura.io/v3/ https://dpm.demdex.net/ https://*.dcube.cloud/ https://*.wogaa.sg https://cm.everesttech.net/ https://wogadobeanalytics.sc.omtrdc.net/ https://*.notarise.io https://*.openattestation.com https://www.google-analytics.com",
   "frame-src https://*.openattestation.com https://*.gov.sg",
 ];
 
@@ -31,7 +31,7 @@ const prodVerifyCspValue = [
   "img-src 'self' https://wogadobeanalytics.sc.omtrdc.net/ https://cm.everesttech.net/ https://dpm.demdex.net/ www.googletagmanager.com https://www.google-analytics.com",
   "font-src 'self' https://fonts.gstatic.com/s/ https://cdnjs.cloudflare.com/ajax/libs/font-awesome/ https://unpkg.com/sgds-govtech@1.3.14/ data: https://assets.dcube.cloud/fonts/ data: https://assets.wogaa.sg/fonts/",
   "manifest-src 'self'",
-  "connect-src https://*.gov.sg/ https://dns.google/ https://mainnet.infura.io/v3/ https://goerli.infura.io/v3/ https://dpm.demdex.net/ https://cm.everesttech.net/ https://wogadobeanalytics.sc.omtrdc.net/ https://*.notarise.io https://*.openattestation.com https://www.google-analytics.com https://*.wogaa.sg",
+  "connect-src https://*.gov.sg/ https://dns.google/ https://mainnet.infura.io/v3/ https://sepolia.infura.io/v3/ https://dpm.demdex.net/ https://cm.everesttech.net/ https://wogadobeanalytics.sc.omtrdc.net/ https://*.notarise.io https://*.openattestation.com https://www.google-analytics.com https://*.wogaa.sg",
   "frame-src https://*.openattestation.com https://*.gov.sg",
 ];
 
@@ -46,7 +46,7 @@ const nonProdCspValue = [
   "img-src 'self' https://wogadobeanalytics.sc.omtrdc.net/ https://cm.everesttech.net/ https://dpm.demdex.net/ www.googletagmanager.com https://www.google-analytics.com",
   "font-src 'self' https://fonts.gstatic.com/s/ https://cdnjs.cloudflare.com/ajax/libs/font-awesome/ https://unpkg.com/sgds-govtech@1.3.14/ data: https://assets.dcube.cloud/fonts/ data: https://assets.wogaa.sg/fonts/",
   "manifest-src 'self'",
-  "connect-src https://gist.githubusercontent.com https://*.gov.sg/ https://dns.google/ https://mainnet.infura.io/v3/ https://goerli.infura.io/v3/ https://dpm.demdex.net/ https://*.dcube.cloud/ https://*.wogaa.sg https://cm.everesttech.net/ https://wogadobeanalytics.sc.omtrdc.net/ https://*.openattestation.com https://www.google-analytics.com",
+  "connect-src https://gist.githubusercontent.com https://*.gov.sg/ https://dns.google/ https://mainnet.infura.io/v3/ https://sepolia.infura.io/v3/ https://dpm.demdex.net/ https://*.dcube.cloud/ https://*.wogaa.sg https://cm.everesttech.net/ https://wogadobeanalytics.sc.omtrdc.net/ https://*.openattestation.com https://www.google-analytics.com",
   "frame-src https://*.openattestation.com https://*.gov.sg",
 ];
 
@@ -61,7 +61,7 @@ const nonProdVerifyCspValue = [
   "img-src 'self' https://wogadobeanalytics.sc.omtrdc.net/ https://cm.everesttech.net/ https://dpm.demdex.net/ www.googletagmanager.com https://www.google-analytics.com",
   "font-src 'self' https://fonts.gstatic.com/s/ https://cdnjs.cloudflare.com/ajax/libs/font-awesome/ https://unpkg.com/sgds-govtech@1.3.14/ data: https://assets.dcube.cloud/fonts/ data: https://assets.wogaa.sg/fonts/",
   "manifest-src 'self'",
-  "connect-src https://gist.githubusercontent.com https://*.gov.sg/ https://dns.google/ https://mainnet.infura.io/v3/ https://goerli.infura.io/v3/ https://dpm.demdex.net/ https://cm.everesttech.net/ https://wogadobeanalytics.sc.omtrdc.net/ https://*.openattestation.com https://*.notarise.io https://www.google-analytics.com https://*.dcube.cloud",
+  "connect-src https://gist.githubusercontent.com https://*.gov.sg/ https://dns.google/ https://mainnet.infura.io/v3/ https://sepolia.infura.io/v3/ https://dpm.demdex.net/ https://cm.everesttech.net/ https://wogadobeanalytics.sc.omtrdc.net/ https://*.openattestation.com https://*.notarise.io https://www.google-analytics.com https://*.dcube.cloud",
   "frame-src https://*.openattestation.com https://*.gov.sg",
 ];
 
@@ -96,7 +96,7 @@ const generateHeaders = async () => {
         ],
       },
     ];
-  } else if (["deploy-preview", "branch-deploy","staging"].includes(process.env.CONTEXT)) {
+  } else if (["deploy-preview", "branch-deploy", "staging"].includes(process.env.CONTEXT)) {
     return [
       {
         source: "/:path*",

@@ -12,6 +12,7 @@ provider:
     AWS_LAMBDA_EXEC_WRAPPER: /opt/bootstrap
     HOSTNAME: 0.0.0.0
     PORT: 8000
+    STAGE: ${self:provider.stage}
   name: aws
   runtime: nodejs18.x
   region: ap-southeast-1
@@ -75,10 +76,6 @@ functions:
           - ${self:custom.infra.subnetIds}
 custom:
   project: ${env:PROJECT_NAME}
-  infra:
-    deploymentBucket: "${ssm:/${self:custom.project}/${self:provider.stage}/deployment-bucket}"
-    securityGroupIds: "${ssm:/${self:custom.project}/${self:provider.stage}/security-group-ids}"
-    subnetIds: "${ssm:/${self:custom.project}/${self:provider.stage}/subnet-ids}"
   customDomains:
     - rest:
         domainName: ${ssm:/${self:custom.project}/${self:provider.stage}/verify-ui-domain-name, ""}
@@ -87,18 +84,13 @@ custom:
         securityPolicy: tls_1_2
         autoDomain: true
         createRoute53Record: false
+  infra:
+    deploymentBucket: "${ssm:/${self:custom.project}/${self:provider.stage}/deployment-bucket}"
+    securityGroupIds: "${ssm:/${self:custom.project}/${self:provider.stage}/security-group-ids}"
+    subnetIds: "${ssm:/${self:custom.project}/${self:provider.stage}/subnet-ids}"
   associateWaf:
     name: ${ssm:/${self:custom.project}/${self:provider.stage}/wafv2-name}
     version: "V2"
-  vpcDiscovery:
-    vpcName: "${env:VPC_NAME}"
-    subnets:
-      - tagKey: Name
-        tagValues:
-          - "${env:VPC_SUBNETS}"
-    securityGroups:
-      - names:
-          - "${env:VPC_SECURITY_GROUPS}"
 
 resources:
   Resources:
@@ -120,4 +112,3 @@ plugins:
   - serverless-domain-manager
   - serverless-associate-waf
   - serverless-iamroles
-  - serverless-vpc-discovery

@@ -76,14 +76,13 @@ functions:
           - ${self:custom.infra.subnetIds}
 custom:
   project: ${env:PROJECT_NAME}
-  customDomains:
-    - rest:
-        domainName: ${ssm:/${self:custom.project}/${self:provider.stage}/verify-ui-domain-name, ""}
-        basePath: ""
-        endpointType: ${self:provider.endpointType}
-        securityPolicy: tls_1_2
-        autoDomain: true
-        createRoute53Record: false
+  customDomain:
+    domainName: ${ssm:/${self:custom.project}/${self:provider.stage}/verify-ui-domain-name, ""}
+    basePath: ""
+    endpointType: ${self:provider.endpointType}
+    securityPolicy: tls_1_2
+    autoDomain: true
+    createRoute53Record: false
   infra:
     deploymentBucket: "${ssm:/${self:custom.project}/${self:provider.stage}/deployment-bucket}"
     securityGroupIds: "${ssm:/${self:custom.project}/${self:provider.stage}/security-group-ids}"

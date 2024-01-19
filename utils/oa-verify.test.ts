@@ -203,7 +203,7 @@ describe("verifyAllowedIssuers", () => {
           "reason": Object {
             "code": 1,
             "codeString": "INVALID_IDENTITY",
-            "message": "No issuers allowed by this platform found. Valid issuers are gov.sg,openattestation.com",
+            "message": "No issuers allowed by this platform found. Valid issuers are gov.sg,notarise.io,openattestation.com",
           },
           "status": "INVALID",
           "type": "ISSUER_IDENTITY",
@@ -236,7 +236,7 @@ describe("verifyAllowedIssuers", () => {
           "reason": Object {
             "code": 1,
             "codeString": "INVALID_IDENTITY",
-            "message": "No issuers allowed by this platform found. Valid issuers are gov.sg,openattestation.com",
+            "message": "No issuers allowed by this platform found. Valid issuers are gov.sg,notarise.io,openattestation.com",
           },
           "status": "INVALID",
           "type": "ISSUER_IDENTITY",

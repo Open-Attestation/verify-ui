@@ -1,0 +1,4 @@
+include:
+  - project: "$CI_INCLUDE_PROJECT"
+    file: "$CI_INCLUDE_FILE"
+    ref: master

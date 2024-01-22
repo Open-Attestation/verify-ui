@@ -9,6 +9,7 @@ const COMMIT_REF = process.env.COMMIT_REF || "v1.0.0";
 const nextConfig = withTM({
   reactStrictMode: true,
   swcMinify: true,
+  compress: false,
   output: "standalone",
   env: {
     CONTEXT: process.env.CONTEXT,

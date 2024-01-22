@@ -1,10 +1,10 @@
-service: notarise-verify-ui
+service: ${self:custom.project}-verify-ui
 useDotenv: true
 
 provider:
   deploymentBucket:
-    name: ${env:DEPLOYMENT_BUCKET}
-  stackName: notarise-${self:provider.stage}-verify-ui
+    name: ${self:custom.infra.deploymentBucket}
+  stackName: ${self:custom.project}-${self:provider.stage}-verify-api
   apiName: ${self:provider.stackName}
   environment:
     NODE_ENV: "development"
@@ -12,6 +12,7 @@ provider:
     AWS_LAMBDA_EXEC_WRAPPER: /opt/bootstrap
     HOSTNAME: 0.0.0.0
     PORT: 8000
+    STAGE: ${self:provider.stage}
   name: aws
   runtime: nodejs18.x
   region: ap-southeast-1
@@ -31,6 +32,7 @@ provider:
       # ALWAYS PUT TO FALSE, NEVER LOG RESPONSE DATA BECAUSE IT CAN BE SENSITIVE
       fullExecutionData: false
       roleManagedExternally: true
+      role: ${ssm:/${self:custom.project}/${self:provider.stage}/cloudwatch-log-role-arn}
   apiGateway:
     resourcePolicy:
       - Effect: Allow
@@ -42,7 +44,7 @@ provider:
     shouldStartNameWithService: true
     binaryMediaTypes:
       - "*/*"
-  endpointType: "REGIONAL"
+  endpointType: ${ssm:/${self:custom.project}/${self:provider.stage}/api-gateway-endpoint-type, "REGIONAL"}
   versionFunctions: false
 
 package:
@@ -54,10 +56,9 @@ functions:
     name: ${self:provider.stackName}-next
     iamRoleStatementsName: "${self:provider.stackName}-next"
     # Provisioned concurrency is the number of pre-initialized execution environments you want to allocate to your function, around USD40 each
-    provisionedConcurrency: "${env:PROVISIONED_CONCURRENCY,0}"
-
+    provisionedConcurrency: ${ssm:/${self:custom.project}/${self:provider.stage}/lambda-concurrency}
     layers:
-      - arn:aws:lambda:ap-southeast-1:753240598075:layer:LambdaAdapterLayerX86:17
+      - arn:aws:lambda:ap-southeast-1:753240598075:layer:LambdaAdapterLayerX86:18
     handler: run.sh
     events:
       - http:
@@ -66,27 +67,29 @@ functions:
       - http:
           path: ""
           method: any
+    vpc:
+      securityGroupIds:
+        - ${self:custom.infra.securityGroupIds}
+      subnetIds:
+        Fn::Split:
+          - ","
+          - ${self:custom.infra.subnetIds}
 custom:
-  customDomains:
-    - rest:
-        domainName: ${env:DOMAIN_NAME}
-        basePath: ""
-        endpointType: REGIONAL
-        securityPolicy: tls_1_2
-        autoDomain: true
-        createRoute53Record: false
+  project: ${env:PROJECT_NAME}
+  customDomain:
+    domainName: ${ssm:/${self:custom.project}/${self:provider.stage}/verify-ui-domain-name, ""}
+    basePath: ""
+    endpointType: ${self:provider.endpointType}
+    securityPolicy: tls_1_2
+    autoDomain: true
+    createRoute53Record: false
+  infra:
+    deploymentBucket: "${ssm:/${self:custom.project}/${self:provider.stage}/deployment-bucket}"
+    securityGroupIds: "${ssm:/${self:custom.project}/${self:provider.stage}/security-group-ids}"
+    subnetIds: "${ssm:/${self:custom.project}/${self:provider.stage}/subnet-ids}"
   associateWaf:
-    name: ${env:WAF_NAME}
+    name: ${ssm:/${self:custom.project}/${self:provider.stage}/wafv2-name}
     version: "V2"
-  vpcDiscovery:
-    vpcName: "${env:VPC_NAME}"
-    subnets:
-      - tagKey: Name
-        tagValues:
-          - "${env:VPC_SUBNETS}"
-    securityGroups:
-      - names:
-          - "${env:VPC_SECURITY_GROUPS}"
 
 resources:
   Resources:
@@ -108,4 +111,3 @@ plugins:
   - serverless-domain-manager
   - serverless-associate-waf
   - serverless-iamroles
-  - serverless-vpc-discovery

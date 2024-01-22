@@ -47,10 +47,10 @@
     "react-dropzone": "^14.2.3",
     "react-ga4": "^2.1.0",
     "runtypes": "^6.6.0",
+    "serverless": "^3.38.0",
     "serverless-associate-waf": "^1.2.1",
     "serverless-domain-manager": "^7.1.2",
     "serverless-iamroles": "^3.2.7",
-    "serverless-vpc-discovery": "^4.1.0",
     "typesafe-actions": "^5.1.0"
   },
   "devDependencies": {

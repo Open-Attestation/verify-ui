@@ -86,13 +86,6 @@ custom:
         autoDomain: true
     "false": []
   customDomains: "${self:custom.setCustomDomain.${ssm:/${self:custom.project}/${self:provider.stage}/verify-auto-create-domain, 'true'}}"
-  customDomain:
-    domainName: ${ssm:/${self:custom.project}/${self:provider.stage}/verify-ui-domain-name, ""}
-    basePath: ""
-    endpointType: ${self:provider.endpointType}
-    securityPolicy: tls_1_2
-    autoDomain: ${ssm:/${self:custom.project}/${self:provider.stage}/verify-auto-create-domain, "true"}
-    createRoute53Record: false
   infra:
     deploymentBucket: "${ssm:/${self:custom.project}/${self:provider.stage}/deployment-bucket}"
     securityGroupIds: "${ssm:/${self:custom.project}/${self:provider.stage}/security-group-ids}"

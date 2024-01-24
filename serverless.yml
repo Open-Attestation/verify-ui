@@ -4,7 +4,7 @@ useDotenv: true
 provider:
   deploymentBucket:
     name: ${self:custom.infra.deploymentBucket}
-  stackName: ${self:custom.project}-${self:provider.stage}-verify-api
+  stackName: ${self:custom.project}-${self:provider.stage}-verify-ui
   apiName: ${self:provider.stackName}
   environment:
     NODE_ENV: "development"

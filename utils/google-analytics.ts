@@ -63,6 +63,7 @@ export const sendSuccessfulVerificationEvent = (data: OpenAttestationDocument): 
     ReactGA.event(EVENT_CATEGORY.VERIFIED, {
       document_id: data.id || "",
       document_type: getDocumentType(data),
+      issuer_name: data.issuers[0].name || "",
       issuer_identity_location: data.issuers[0].identityProof?.location || "",
       template_name: typeof data.$template === "string" ? data.$template : data.$template?.name || "",
       template_url: typeof data.$template === "string" ? data.$template : data.$template?.url || "",
@@ -87,6 +88,7 @@ export const sendUnsuccessfulVerificationEvent = (
     ReactGA.event(EVENT_CATEGORY.ERROR, {
       document_id: data.id || "",
       document_type: getDocumentType(data),
+      issuer_name: data.issuers[0].name || "",
       issuer_identity_location: data.issuers[0].identityProof?.location || "",
       template_name: typeof data.$template === "string" ? data.$template : data.$template?.name || "",
       template_url: typeof data.$template === "string" ? data.$template : data.$template?.url || "",

@@ -84,6 +84,7 @@ describe("sendHealthCertVerifiedEvent and sendHealthCertErrorEvent", () => {
     expect(spy).toHaveBeenCalledWith(EVENT_CATEGORY.VERIFIED, {
       document_id: "9867890e-6ad8-4735-b705-1ccd441984f8",
       document_type: DOCUMENT_TYPE.PDT,
+      issuer_name: "SAMPLE CLINIC",
       issuer_identity_location: "donotverify.testing.verify.gov.sg",
       template_name: "HEALTH_CERT",
       template_url: "https://healthcert.renderer.moh.gov.sg/",
@@ -124,6 +125,7 @@ describe("sendHealthCertVerifiedEvent and sendHealthCertErrorEvent", () => {
     expect(spy).toHaveBeenCalledWith(EVENT_CATEGORY.ERROR, {
       document_id: "9867890e-6ad8-4735-b705-1ccd441984f8",
       document_type: DOCUMENT_TYPE.PDT,
+      issuer_name: "SAMPLE CLINIC",
       issuer_identity_location: "donotverify.testing.verify.gov.sg",
       template_name: "HEALTH_CERT",
       template_url: "https://healthcert.renderer.moh.gov.sg/",

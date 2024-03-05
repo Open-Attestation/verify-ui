@@ -6,7 +6,7 @@ const Masthead: React.FC = () => {
     <header className="bg-[#EFEFEF]">
       <div className="container">
         <div className="flex flex-wrap py-0.5">
-          <SgdsMasthead />
+          <SgdsMasthead placeholder={"Singapore Government Design System Masthead"} />
         </div>
       </div>
     </header>

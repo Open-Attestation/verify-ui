@@ -16,8 +16,8 @@ interface InternalButtonProps extends React.PropsWithChildren<LinkProps> {
 }
 
 const InternalButton: React.FC<InternalButtonProps> = ({ children, isInverted = false, ...rest }) => (
-  <Link {...rest}>
-    <a className={isInverted ? invertedButtonClass : buttonClass}>{children}</a>
+  <Link {...rest} className={isInverted ? invertedButtonClass : buttonClass}>
+    {children}
   </Link>
 );
 

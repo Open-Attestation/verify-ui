@@ -1,8 +1,5 @@
 const { generateHeaders } = require("./next.headers");
 
-// Env variables by Netlify (https://docs.netlify.com/configure-builds/environment-variables/#git-metadata)
-const COMMIT_REF = process.env.COMMIT_REF || "v1.0.0";
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -10,10 +7,10 @@ const nextConfig = {
   compress: false,
   output: "standalone",
   env: {
-    CONTEXT: process.env.CONTEXT,
-    SITE_URL: process.env.SITE_URL,
-    COMMIT_REF,
+    // Computed env variables that are exposed to browser goes here:
+    // https://nextjs.org/docs/app/api-reference/next-config-js/env
     BUILD_DATE: new Date().toISOString(),
+    // Other env variables can be set in .env or .env.production (https://nextjs.org/docs/pages/building-your-application/configuring/environment-variables#default-environment-variables)
   },
   headers: generateHeaders,
   transpilePackages: ["@govtechsg/sgds-masthead-react"],

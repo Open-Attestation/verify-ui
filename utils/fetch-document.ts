@@ -3,7 +3,7 @@ import { v2, v3, validateSchema } from "@govtechsg/open-attestation";
 import { decryptString } from "@govtechsg/oa-encryption";
 import { CodedError } from "@utils/coded-error";
 import { Static, String, ValidationError } from "runtypes";
-import { EncryptionDocumentRecord, ActionUrlQueryRecord, ActionUrlAnchorRecord } from "@types";
+import { EncryptionDocumentRecord, ActionUrlQueryRecord, ActionUrlAnchorRecord } from "@root/types";
 
 const decodeAndParseUri = (encoded: string) => {
   const decoded = decodeURIComponent(encoded);

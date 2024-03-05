@@ -11,7 +11,7 @@ import {
   Verifier,
 } from "@govtechsg/oa-verify";
 import { getData, utils } from "@govtechsg/open-attestation";
-import { isVerifyCodedError } from "@types";
+import { isVerifyCodedError } from "@root/types";
 import { providers } from "ethers";
 
 type AllowedIssuersValidFragment = ValidVerificationFragment<Array<string | undefined>>;

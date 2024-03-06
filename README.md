@@ -4,7 +4,7 @@ Verify certificates from any government agencies.
 
 ## Prerequisites
 
-NodeJS `lts/fermium (v.14.15.0)`. If you're using [nvm](https://github.com/nvm-sh/nvm), run `nvm use` to ensure you're using the same Node version in local and in Netlify's runtime.
+NodeJS `v.18.17.0`. If you're using [nvm](https://github.com/nvm-sh/nvm), run `nvm use` to ensure you're using the same Node version.
 
 ## Getting Started
 

@@ -14,7 +14,6 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "postbuild": "cp ./_headers.${CONTEXT:-production} ./.next/_headers",
     "start": "next start",
     "lint": "next lint",
     "test": "jest",
@@ -57,7 +56,6 @@
     "@commitlint/config-conventional": "^16.2.4",
     "@commitlint/prompt": "^16.3.0",
     "@ls-age/commitlint-circle": "^1.0.0",
-    "@netlify/plugin-nextjs": "^4.36.1",
     "@testing-library/jest-dom": "^6.4.2",
     "@testing-library/react": "^14.2.1",
     "@types/jest": "^29.5.12",

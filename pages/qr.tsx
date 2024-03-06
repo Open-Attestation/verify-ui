@@ -167,10 +167,13 @@ const Qr: NextPage = () => {
 
             <p className="m-0">
               If you have problems scanning the QR code, you may want to verify by <br />
-              <Link href="/verify">
-                <a target="_blank" rel="noreferrer" className="text-blue-600 underline hover:text-blue-700">
-                  uploading your OA certificate
-                </a>
+              <Link
+                href="/verify"
+                target="_blank"
+                rel="noreferrer"
+                className="text-blue-600 underline hover:text-blue-700"
+              >
+                uploading your OA certificate
               </Link>
             </p>
           </div>

@@ -15,10 +15,11 @@ const createJestConfig = nextJest({
 const config: Config.InitialOptions = {
   preset: "ts-jest",
   testEnvironment: "jest-environment-jsdom",
-  setupFilesAfterEnv: ["@testing-library/jest-dom/extend-expect"],
   testPathIgnorePatterns: ["node_modules", "integration", "monitoring", ".next"],
+  roots: ["<rootDir>"],
+  modulePaths: [compilerOptions.baseUrl],
   moduleNameMapper: {
-    ...pathsToModuleNameMapper(compilerOptions.paths, { prefix: "<rootDir>/" }),
+    ...pathsToModuleNameMapper(compilerOptions.paths),
     uuid: require.resolve("uuid"), // FIXME: Somehow required after jest is upgraded from v27.5.1 to v28.1.3
   },
 };

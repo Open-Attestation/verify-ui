@@ -7,14 +7,13 @@ export const InformationBanner: React.FC = () => (
         <span className="font-normal">
           You can now scan the QR code on your .oa document via camera or barcode scanner 🎉
         </span>
-        <Link href="/qr">
-          <a
-            className="text-blue-700 underline visited:text-violet-800 font-bold"
-            target="_blank"
-            rel="noreferrer noopener"
-          >
-            Try it now.
-          </a>
+        <Link
+          href="/qr"
+          className="text-blue-700 underline visited:text-violet-800 font-bold"
+          target="_blank"
+          rel="noreferrer noopener"
+        >
+          Try it now.
         </Link>
       </p>
     </div>

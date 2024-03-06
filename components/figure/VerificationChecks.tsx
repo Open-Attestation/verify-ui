@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleNotch, faCircleCheck, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 
-import { VerificationStatus } from "@types";
+import { VerificationStatus } from "@root/types";
 
 type Checks = "DOCUMENT_STATUS" | "DOCUMENT_INTEGRITY" | "ISSUER_IDENTITY";
 

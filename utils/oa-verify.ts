@@ -11,7 +11,7 @@ import {
   Verifier,
 } from "@govtechsg/oa-verify";
 import { getData, utils } from "@govtechsg/open-attestation";
-import { isVerifyCodedError } from "@types";
+import { isVerifyCodedError } from "@root/types";
 import { providers } from "ethers";
 
 type AllowedIssuersValidFragment = ValidVerificationFragment<Array<string | undefined>>;
@@ -112,7 +112,8 @@ const NETWORK_NAME = process.env.NEXT_PUBLIC_NETWORK_NAME || "sepolia";
 const INFURA_API_KEY = process.env.NEXT_PUBLIC_INFURA_API_KEY;
 
 export const verify = verificationBuilder([...openAttestationVerifiers, verifyAllowedIssuers], {
-  provider: new providers.InfuraProvider(NETWORK_NAME, INFURA_API_KEY),
+  network: NETWORK_NAME,
+  provider: INFURA_API_KEY ? new providers.InfuraProvider(NETWORK_NAME, INFURA_API_KEY) : undefined,
   resolver: INFURA_API_KEY
     ? createResolver({
         ethrResolverConfig: {

@@ -1,6 +1,6 @@
 version: 2.1
 orbs:
-  browser-tools: circleci/browser-tools@1.4.6
+  browser-tools: circleci/browser-tools@1.4.8
 workflows:
   version: 2
   commit:
@@ -19,7 +19,7 @@ workflows:
 jobs:
   monitoring:
     docker:
-      - image: "cimg/node:18.15-browsers"
+      - image: "cimg/node:18.17-browsers"
     steps:
       - checkout
       - browser-tools/install-chrome
@@ -37,7 +37,7 @@ jobs:
           command: npm run monitoring
   build:
     docker:
-      - image: "cimg/node:18.15-browsers"
+      - image: "cimg/node:18.17-browsers"
     steps:
       - checkout
       - browser-tools/install-chrome

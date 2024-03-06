@@ -1,8 +1,7 @@
 /**
- * Since `/verify` endpoint is handled as a function (SSR),
- * all custom headers must be supplied by Next.js in `next.config.js`.
+ * Note: Headers specified here will only work in (npm run dev) or (npm start)
  *
- * Source: https://answers.netlify.com/t/custom-headers-in-netlify-toml-not-working/48619/8
+ * Since verify.gov.sg is deployed onto AWS CloudFront, production headers are overwritten/specified separately
  */
 
 const prodCspValue = [

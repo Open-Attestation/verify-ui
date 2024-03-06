@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { utils, v2, v3 } from "@govtechsg/open-attestation";
 import { isValid, utils as verifyUtils } from "@govtechsg/oa-verify";
 
-import { VerificationStatus } from "@types";
+import { VerificationStatus } from "@root/types";
 import { getDataV2OrV3 } from "@utils/oa-details";
 import Heading from "@components/text/Heading";
 import Renderer from "@components/figure/Renderer";

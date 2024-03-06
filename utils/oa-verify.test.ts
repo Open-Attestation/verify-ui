@@ -82,9 +82,9 @@ describe("verifyAllowedIssuers", () => {
     });
 
     expect(fragments).toMatchInlineSnapshot(`
-      Array [
-        Object {
-          "data": Array [
+      [
+        {
+          "data": [
             "test.gov.sg",
           ],
           "name": "VerifyAllowedIssuers",
@@ -110,9 +110,9 @@ describe("verifyAllowedIssuers", () => {
     });
 
     expect(fragments).toMatchInlineSnapshot(`
-      Array [
-        Object {
-          "data": Array [
+      [
+        {
+          "data": [
             "test.openattestation.com",
           ],
           "name": "VerifyAllowedIssuers",
@@ -138,9 +138,9 @@ describe("verifyAllowedIssuers", () => {
     });
 
     expect(fragments).toMatchInlineSnapshot(`
-      Array [
-        Object {
-          "data": Array [
+      [
+        {
+          "data": [
             "openattestation.com",
           ],
           "name": "VerifyAllowedIssuers",
@@ -166,9 +166,9 @@ describe("verifyAllowedIssuers", () => {
     });
 
     expect(fragments).toMatchInlineSnapshot(`
-      Array [
-        Object {
-          "data": Array [
+      [
+        {
+          "data": [
             "gov.sg",
           ],
           "name": "VerifyAllowedIssuers",
@@ -194,16 +194,16 @@ describe("verifyAllowedIssuers", () => {
     });
 
     expect(fragments).toMatchInlineSnapshot(`
-      Array [
-        Object {
-          "data": Array [
+      [
+        {
+          "data": [
             "openattestation.com.fr",
           ],
           "name": "VerifyAllowedIssuers",
-          "reason": Object {
+          "reason": {
             "code": 1,
             "codeString": "INVALID_IDENTITY",
-            "message": "No issuers allowed by this platform found. Valid issuers are gov.sg,notarise.io,openattestation.com",
+            "message": "No issuers allowed by this platform found. Valid issuers are gov.sg,openattestation.com",
           },
           "status": "INVALID",
           "type": "ISSUER_IDENTITY",
@@ -227,16 +227,16 @@ describe("verifyAllowedIssuers", () => {
     });
 
     expect(fragments).toMatchInlineSnapshot(`
-      Array [
-        Object {
-          "data": Array [
+      [
+        {
+          "data": [
             "gov.sg.com",
           ],
           "name": "VerifyAllowedIssuers",
-          "reason": Object {
+          "reason": {
             "code": 1,
             "codeString": "INVALID_IDENTITY",
-            "message": "No issuers allowed by this platform found. Valid issuers are gov.sg,notarise.io,openattestation.com",
+            "message": "No issuers allowed by this platform found. Valid issuers are gov.sg,openattestation.com",
           },
           "status": "INVALID",
           "type": "ISSUER_IDENTITY",
@@ -256,11 +256,11 @@ describe("verifyAllowedIssuers", () => {
     });
 
     expect(fragments).toMatchInlineSnapshot(`
-      Array [
-        Object {
+      [
+        {
           "data": [Error: Verify does not support v3 document],
           "name": "VerifyAllowedIssuers",
-          "reason": Object {
+          "reason": {
             "code": 3,
             "codeString": "UNSUPPORTED_V3_DOCUMENT",
             "message": "Verify does not support v3 document",

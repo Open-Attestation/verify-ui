@@ -1,6 +1,6 @@
 import { DefaultSeoProps } from "next-seo";
 
-const SITE_URL = process.env.SITE_URL; // See "next.config.js"
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL; // See ".env.*"
 
 const defaultSeo: DefaultSeoProps = {
   defaultTitle: `Verify.gov.sg`,

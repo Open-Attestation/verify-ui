@@ -18,25 +18,25 @@ const Footer: React.FC = () => {
           issued by Singapore government entities.
         </p>
         <div className="flex flex-col sm:flex-row gap-y-2 gap-x-8 text-base mt-4 mb-12 font-medium">
-          <Link href="/">
-            <a className="text-primary hover:text-blue-600">Verify</a>
+          <Link href="/" className="text-primary hover:text-blue-600">
+            Verify
           </Link>
-          <Link href="/qr">
-            <a className="text-primary hover:text-blue-600">Scan QR</a>
+          <Link href="/qr" className="text-primary hover:text-blue-600">
+            Scan QR
           </Link>
-          <Link href="/verify">
-            <a className="text-primary hover:text-blue-600">Verify via OA file</a>
+          <Link href="/verify" className="text-primary hover:text-blue-600">
+            Verify via OA file
           </Link>
           {/* <a className="text-gray-500 hover:text-gray-600" href="mailto:OpenAttestation_Support@tech.gov.sg">
             Contact Us
           </a> */}
         </div>
         <div className="flex flex-col justify-end sm:flex-row gap-y-2 gap-x-8 text-base mt-8 font-medium">
-          <Link href="/contact">
-            <a className="text-primary hover:text-blue-600">Contact Us</a>
+          <Link href="/contact" className="text-primary hover:text-blue-600">
+            Contact Us
           </Link>
-          <Link href="/faq">
-            <a className="text-primary hover:text-blue-600">FAQ</a>
+          <Link href="/faq" className="text-primary hover:text-blue-600">
+            FAQ
           </Link>
         </div>
         <div className="pt-4">
@@ -49,11 +49,11 @@ const Footer: React.FC = () => {
             >
               Report Vulnerability
             </a>
-            <Link href="/privacy-policy">
-              <a className="text-base text-primary hover:text-blue-600">Privacy Statement</a>
+            <Link href="/privacy-policy" className="text-base text-primary hover:text-blue-600">
+              Privacy Statement
             </Link>
-            <Link href="/terms">
-              <a className="text-base text-primary hover:text-blue-600">Terms of Use</a>
+            <Link href="/terms" className="text-base text-primary hover:text-blue-600">
+              Terms of Use
             </Link>
           </div>
 

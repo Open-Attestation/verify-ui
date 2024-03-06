@@ -104,17 +104,17 @@ const Dropzone: React.FC<DropzoneProps> = ({ onDocumentDropped = () => {}, onDoc
           </button>
           <p className="pt-10">
             Alternatively, if you have a Verify QR, you could verify the document by{"  "}
-            <Link href="/qr" passHref>
-              <a
-                target="_blank"
-                rel="noreferrer"
-                onClick={(event) => {
-                  event.stopPropagation();
-                }}
-                className="text-blue-600 underline hover:text-blue-700"
-              >
-                scanning it
-              </a>
+            <Link
+              href="/qr"
+              passHref
+              target="_blank"
+              rel="noreferrer"
+              onClick={(event) => {
+                event.stopPropagation();
+              }}
+              className="text-blue-600 underline hover:text-blue-700"
+            >
+              scanning it
             </Link>
           </p>
         </div>

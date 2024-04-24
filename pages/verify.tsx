@@ -12,6 +12,8 @@ import { verifyErrorHandler } from "@utils/error-handler";
 import { getUniversalActionType } from "@utils/get-universal-action-type";
 import { useUrlParamsThenScrubUrl } from "@utils/use-frag-then-scrub-url";
 import WogaaScript from "@components/layout/WogaaScript";
+import { isNotariseSpmTransientStorage, isNotariseTransientStorage } from "@utils/notarise-healthcerts";
+import { CodedError } from "@utils/coded-error";
 
 const Verifier = dynamic(() => import("@components/verify/Verifier"), { ssr: false });
 
@@ -47,6 +49,12 @@ const reducer: Reducer<State, Action> = (state, action) => {
   }
 };
 
+const isDecommTime = () => {
+  const currentDate = new Date();
+  const launchDate = new Date("05-01-2024 00:00:00 GMT+0800");
+  return currentDate >= launchDate;
+};
+
 const Verify: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = (props) => {
   const initialState: State = {
     ...defaultState,
@@ -71,6 +79,15 @@ const Verify: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> =
           const encodedQ = typeof urlParams?.query.q === "string" ? urlParams.query.q : "";
           const encodedHash = urlParams?.uriFragment;
           const { decodedQ, decodedHash } = decodeQueryAndHash(encodedQ, encodedHash);
+
+          if (
+            isDecommTime() &&
+            (isNotariseSpmTransientStorage(decodedQ.payload.uri) || isNotariseTransientStorage(decodedQ.payload.uri))
+          ) {
+            // Error component is customized in error-handler.tsx, hence message is empty
+            throw new CodedError("HealthCertsTransientBucketDecommError", "");
+          }
+
           const document = await fetchAndDecryptDocument(
             decodedQ.payload.uri,
             decodedHash?.key || decodedQ.payload.key

@@ -10,6 +10,24 @@ import { StatusProps } from "@components/figure/StatusMessage";
  */
 export const verifyErrorHandler = (e: unknown): StatusProps => {
   if (e instanceof CodedError) {
+    if (e.type === "HealthCertsTransientBucketDecommError") {
+      return {
+        type: "ERROR",
+        message: (
+          <div className="flex flex-col lg:px-52">
+            <span className="font-semibold">Unable to fetch certificate</span>
+            <br />
+            <div>
+              As part of the Singapore government&apos;s efforts to streamline COVID operations, Notαrise will stop
+              issuing and hosting digital HealthCerts as of 1 May 2024.&nbsp;
+              <a href="https://notarise.gov.sg/faq" className="underline">
+                Learn more on your existing HealthCerts and other means of getting travel certificates.
+              </a>
+            </div>
+          </div>
+        ),
+      };
+    }
     return {
       type: "ERROR",
       message: (

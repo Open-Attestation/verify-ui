@@ -20,7 +20,7 @@ export const verifyErrorHandler = (e: unknown): StatusProps => {
             <div>
               As part of the Singapore government&apos;s efforts to streamline COVID operations, Notαrise will stop
               issuing and hosting digital HealthCerts as of 1 May 2024.&nbsp;
-              <a href="https://www.notarise.gov.sg/faq" className="underline">
+              <a href="https://www.notarise.gov.sg/faq" target="_blank" className="underline">
                 Learn more on your existing HealthCerts and other means of getting travel certificates.
               </a>
             </div>

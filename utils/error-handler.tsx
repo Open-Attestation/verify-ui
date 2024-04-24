@@ -10,7 +10,7 @@ import { StatusProps } from "@components/figure/StatusMessage";
  */
 export const verifyErrorHandler = (e: unknown): StatusProps => {
   if (e instanceof CodedError) {
-    if (e.type === "HealthCertsTransientBucketDecommError") {
+    if (e.type === "HealthCertsTransientStorageDecommError") {
       return {
         type: "ERROR",
         message: (

@@ -79,7 +79,7 @@ const Verify: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> =
             (isNotariseSpmTransientStorage(decodedQ.payload.uri) || isNotariseTransientStorage(decodedQ.payload.uri))
           ) {
             // Error component is customized in error-handler.tsx, hence message is empty
-            throw new CodedError("HealthCertsTransientBucketDecommError", "");
+            throw new CodedError("HealthCertsTransientStorageDecommError", "");
           }
 
           const document = await fetchAndDecryptDocument(

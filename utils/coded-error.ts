@@ -4,7 +4,7 @@ enum ErrorType {
   DecryptionError,
   InvalidDocumentError,
   PermissionsError,
-  HealthCertsTransientBucketDecommError
+  HealthCertsTransientStorageDecommError,
 }
 
 type ErrorStrings = keyof typeof ErrorType;

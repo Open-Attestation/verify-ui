@@ -12,6 +12,8 @@ import { verifyErrorHandler } from "@utils/error-handler";
 import { getUniversalActionType } from "@utils/get-universal-action-type";
 import { useUrlParamsThenScrubUrl } from "@utils/use-frag-then-scrub-url";
 import WogaaScript from "@components/layout/WogaaScript";
+import { isDecommTime, isNotariseSpmTransientStorage, isNotariseTransientStorage } from "@utils/notarise-healthcerts";
+import { CodedError } from "@utils/coded-error";
 
 const Verifier = dynamic(() => import("@components/verify/Verifier"), { ssr: false });
 
@@ -71,6 +73,15 @@ const Verify: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> =
           const encodedQ = typeof urlParams?.query.q === "string" ? urlParams.query.q : "";
           const encodedHash = urlParams?.uriFragment;
           const { decodedQ, decodedHash } = decodeQueryAndHash(encodedQ, encodedHash);
+
+          if (
+            isDecommTime() &&
+            (isNotariseSpmTransientStorage(decodedQ.payload.uri) || isNotariseTransientStorage(decodedQ.payload.uri))
+          ) {
+            // Error component is customized in error-handler.tsx, hence message is empty
+            throw new CodedError("HealthCertsTransientStorageDecommError", "");
+          }
+
           const document = await fetchAndDecryptDocument(
             decodedQ.payload.uri,
             decodedHash?.key || decodedQ.payload.key

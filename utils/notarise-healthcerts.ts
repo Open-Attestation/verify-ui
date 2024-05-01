@@ -26,9 +26,3 @@ export const isNotariseSpmTransientStorage = (url = "") => {
     isNotariseTransientStorage(url) && notariseSpmTransientStoragePrefixes.some((prefix) => hostname.startsWith(prefix))
   );
 };
-
-export const isDecommTime = () => {
-  const currentDate = new Date();
-  const decommDate = new Date("05-01-2024 00:00:00 GMT+0800");
-  return currentDate >= decommDate;
-};

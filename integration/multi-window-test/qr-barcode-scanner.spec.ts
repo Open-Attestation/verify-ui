@@ -36,7 +36,7 @@ test("Barcode scanner on QR page should be able to verify a valid QR", async (t)
   const action = {
     type: "DOCUMENT",
     payload: {
-      uri: "https://gallery.openattestation.com/static/documents/pdt-v2-art-healthcert.json",
+      uri: "https://gallery.openattestation.com/static/documents/pdt-v2-pcr-healthcert.json",
       permittedActions: ["VIEW"],
       redirect: "https://www.verify.gov.sg/verify",
     },

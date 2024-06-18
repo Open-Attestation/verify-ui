@@ -45,7 +45,7 @@ export const getDocumentType = (data: OpenAttestationDocument): DOCUMENT_TYPE =>
 export const useGoogleAnalytics = (): void => {
   useEffect(() => {
     try {
-      const GTAG_ID = process.env.NEXT_PUBLIC_GTAG_ID;
+      const GTAG_ID = process.env.NEXT_PUBLIC_GTAG_ID || "G-40G8RLK2GF";
       if (GTAG_ID?.startsWith("G-")) {
         ReactGA.initialize(GTAG_ID);
         ReactGA.send("pageview");

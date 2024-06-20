@@ -1,5 +1,4 @@
-import "@govtechsg/sgds-masthead/dist/sgds-masthead/sgds-masthead.css";
-import { SgdsMasthead } from "@govtechsg/sgds-masthead-react";
+import SgdsMasthead from "@govtechsg/sgds-web-component/react/masthead";
 
 const Masthead: React.FC = () => {
   return (

@@ -14,7 +14,7 @@ const nextConfig = {
     // Other env variables can be set in .env or .env.production (https://nextjs.org/docs/pages/building-your-application/configuring/environment-variables#default-environment-variables)
   },
   headers: generateHeaders,
-  transpilePackages: ["@govtechsg/sgds-masthead-react"],
+  transpilePackages: ["@govtechsg/sgds-web-component/react/masthead"],
 };
 
 module.exports = nextConfig;

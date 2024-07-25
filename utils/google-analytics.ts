@@ -2,6 +2,7 @@ import { VerificationFragment } from "@govtechsg/oa-verify";
 import { OpenAttestationDocument, utils } from "@govtechsg/open-attestation";
 import { useEffect } from "react";
 import ReactGA from "react-ga4";
+import type { GA4 } from "react-ga4/types/ga4";
 
 import { isPDT, isVac, isREC } from "@utils/notarise-healthcerts";
 
@@ -46,7 +47,7 @@ export const getDocumentType = (data: OpenAttestationDocument): DOCUMENT_TYPE =>
 export const useGoogleAnalytics = (): void => {
   useEffect(() => {
     try {
-      const GTAG_ID = process.env.NEXT_PUBLIC_GTAG_ID || "G-40G8RLK2GF"
+      const GTAG_ID = process.env.NEXT_PUBLIC_GTAG_ID || "G-40G8RLK2GF";
       if (GTAG_ID?.startsWith("G-")) {
         ReactGA.initialize(GTAG_ID);
         ReactGA.send("pageview");
@@ -57,60 +58,45 @@ export const useGoogleAnalytics = (): void => {
   }, []);
 };
 
-export const sendCertificatePrintEvent = (data: OpenAttestationDocument): void => {
-  if (utils.isRawV3Document(data)) return; // OA v3 currently not supported by verify.gov.sg
-
-  try {
-    ReactGA.event(EVENT_CATEGORY.PRINT, {
-      document_id: data.id || "",
-      document_type: getDocumentType(data),
-      issuer_name: data.issuers[0].name || "",
-      issuer_identity_location: data.issuers[0].identityProof?.location || "",
-      template_name: typeof data.$template === "string" ? data.$template : data.$template?.name || "",
-      template_url: typeof data.$template === "string" ? data.$template : data.$template?.url || "",
-    });
-  } catch (e) {
-    console.error(e);
-  }
-}
+export const sendCertificatePrintEvent = (
+  data: OpenAttestationDocument,
+  params?: { isSupportedBrowser: boolean }
+): void => {
+  sendGaEvent(EVENT_CATEGORY.PRINT, data, { supported_browser: params?.isSupportedBrowser });
+};
 
 export const sendSuccessfulVerificationEvent = (data: OpenAttestationDocument): void => {
-  if (utils.isRawV3Document(data)) return; // OA v3 currently not supported by verify.gov.sg
-
-  try {
-    ReactGA.event(EVENT_CATEGORY.VERIFIED, {
-      document_id: data.id || "",
-      document_type: getDocumentType(data),
-      issuer_name: data.issuers[0].name || "",
-      issuer_identity_location: data.issuers[0].identityProof?.location || "",
-      template_name: typeof data.$template === "string" ? data.$template : data.$template?.name || "",
-      template_url: typeof data.$template === "string" ? data.$template : data.$template?.url || "",
-    });
-  } catch (e) {
-    console.error(e);
-  }
+  sendGaEvent(EVENT_CATEGORY.VERIFIED, data);
 };
 
 export const sendUnsuccessfulVerificationEvent = (
   data: OpenAttestationDocument,
   fragments: VerificationFragment[]
 ): void => {
-  if (utils.isRawV3Document(data)) return; // OA v3 currently not supported by verify.gov.sg
-
   const message = JSON.stringify(fragments.filter(({ status }) => status === "ERROR" || status === "INVALID")).replace(
     /[\[\]"]/g,
     ""
   );
 
+  sendGaEvent(EVENT_CATEGORY.ERROR, data, { errors: message });
+};
+
+const sendGaEvent = (
+  category: EVENT_CATEGORY,
+  data: OpenAttestationDocument,
+  params: Parameters<GA4["event"]>[1] = {}
+) => {
+  if (utils.isRawV3Document(data)) return; // OA v3 currently not supported by verify.gov.sg
+
   try {
-    ReactGA.event(EVENT_CATEGORY.ERROR, {
+    ReactGA.event(category, {
       document_id: data.id || "",
       document_type: getDocumentType(data),
       issuer_name: data.issuers[0].name || "",
       issuer_identity_location: data.issuers[0].identityProof?.location || "",
       template_name: typeof data.$template === "string" ? data.$template : data.$template?.name || "",
       template_url: typeof data.$template === "string" ? data.$template : data.$template?.url || "",
-      errors: message,
+      ...params,
     });
   } catch (e) {
     console.error(e);

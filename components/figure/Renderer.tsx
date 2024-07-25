@@ -69,7 +69,7 @@ const Renderer: React.FC<RendererProps> = ({ document, rawDocument }) => {
         "Printing this document is not optimised on your device.\nFor the best result, use: \n- Chrome on Android devices \n- Safari on IOS devices \n- Any major browsers on desktop"
       );
     }
-    sendCertificatePrintEvent(document);
+    sendCertificatePrintEvent(document, { isSupportedBrowser: !isUnsupportedBrowser });
     toFrame && toFrame(print());
   }, [document, toFrame]);
 

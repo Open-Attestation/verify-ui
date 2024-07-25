@@ -17,6 +17,7 @@ export enum DOCUMENT_TYPE {
 export enum EVENT_CATEGORY {
   VERIFIED = "certificate_verified",
   ERROR = "certificate_error",
+  PRINT = "certificate_print",
 }
 
 export const getDocumentType = (data: OpenAttestationDocument): DOCUMENT_TYPE => {
@@ -55,6 +56,23 @@ export const useGoogleAnalytics = (): void => {
     }
   }, []);
 };
+
+export const sendCertificatePrintEvent = (data: OpenAttestationDocument): void => {
+  if (utils.isRawV3Document(data)) return; // OA v3 currently not supported by verify.gov.sg
+
+  try {
+    ReactGA.event(EVENT_CATEGORY.PRINT, {
+      document_id: data.id || "",
+      document_type: getDocumentType(data),
+      issuer_name: data.issuers[0].name || "",
+      issuer_identity_location: data.issuers[0].identityProof?.location || "",
+      template_name: typeof data.$template === "string" ? data.$template : data.$template?.name || "",
+      template_url: typeof data.$template === "string" ? data.$template : data.$template?.url || "",
+    });
+  } catch (e) {
+    console.error(e);
+  }
+}
 
 export const sendSuccessfulVerificationEvent = (data: OpenAttestationDocument): void => {
   if (utils.isRawV3Document(data)) return; // OA v3 currently not supported by verify.gov.sg

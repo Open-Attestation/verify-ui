@@ -16,6 +16,7 @@ import { faPrint } from "@fortawesome/free-solid-svg-icons";
 
 import { getTemplateUrl } from "@utils/oa-details";
 import { OpenAttestationDocument, WrappedDocument } from "@govtechsg/open-attestation";
+import { sendCertificatePrintEvent } from "@utils/google-analytics";
 
 /* Workaround for undefined window object: Dynamic import so FrameConnector will not load on server-side */
 // FIXME: Weird type error occurs without dynamic<any> (i.e. type error occurs when you do not specify props type for FrameConnector)
@@ -68,8 +69,9 @@ const Renderer: React.FC<RendererProps> = ({ document, rawDocument }) => {
         "Printing this document is not optimised on your device.\nFor the best result, use: \n- Chrome on Android devices \n- Safari on IOS devices \n- Any major browsers on desktop"
       );
     }
+    sendCertificatePrintEvent(document);
     toFrame && toFrame(print());
-  }, [toFrame]);
+  }, [document, toFrame]);
 
   const handleTemplateSelection = useCallback(
     (template: Template) => () => {

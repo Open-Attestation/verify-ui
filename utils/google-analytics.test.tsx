@@ -10,6 +10,7 @@ import {
   useGoogleAnalytics,
   sendSuccessfulVerificationEvent,
   sendUnsuccessfulVerificationEvent,
+  sendCertificatePrintEvent,
 } from "@utils/google-analytics";
 import { isHealthCert } from "@utils/notarise-healthcerts";
 import pdt_v1 from "@utils/fixtures/pdt_v1_healthcert.json";
@@ -77,6 +78,35 @@ describe("test getHealthCertType() util function", () => {
 });
 
 describe("sendHealthCertVerifiedEvent and sendHealthCertErrorEvent", () => {
+  it("sendCertificatePrintEvent should send document id, type and browser support", () => {
+    const data = getData(pdt_v2 as any);
+    const spy = jest.spyOn(ReactGA, "event");
+    sendCertificatePrintEvent(data, { isSupportedBrowser: true });
+    expect(spy).toHaveBeenCalledWith(EVENT_CATEGORY.PRINT, {
+      document_id: "9867890e-6ad8-4735-b705-1ccd441984f8",
+      document_type: DOCUMENT_TYPE.PDT,
+      issuer_name: "SAMPLE CLINIC",
+      issuer_identity_location: "donotverify.testing.verify.gov.sg",
+      template_name: "HEALTH_CERT",
+      template_url: "https://healthcert.renderer.moh.gov.sg/",
+      supported_browser: true,
+    });
+  });
+
+  it("sendCertificatePrintEvent should send document id and type without browser support when not specified", () => {
+    const data = getData(pdt_v2 as any);
+    const spy = jest.spyOn(ReactGA, "event");
+    sendCertificatePrintEvent(data);
+    expect(spy).toHaveBeenCalledWith(EVENT_CATEGORY.PRINT, {
+      document_id: "9867890e-6ad8-4735-b705-1ccd441984f8",
+      document_type: DOCUMENT_TYPE.PDT,
+      issuer_name: "SAMPLE CLINIC",
+      issuer_identity_location: "donotverify.testing.verify.gov.sg",
+      template_name: "HEALTH_CERT",
+      template_url: "https://healthcert.renderer.moh.gov.sg/",
+    });
+  });
+
   it("sendHealthCertVerifiedEvent should send document id and type", () => {
     const data = getData(pdt_v2 as any);
     const spy = jest.spyOn(ReactGA, "event");

@@ -33,7 +33,7 @@
     "@govtechsg/open-attestation": "^6.5.2",
     "@govtechsg/sgds-web-component": "^1.2.3",
     "@types/lodash": "^4.14.194",
-    "axios": "^1.6.2",
+    "axios": "^1.7.7",
     "ethers": "^5.7.2",
     "html5-qrcode": "^2.3.8",
     "isomorphic-fetch": "^3.0.0",

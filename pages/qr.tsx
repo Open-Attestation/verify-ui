@@ -90,7 +90,9 @@ const Qr: NextPage = () => {
       const allowedOrigins = [
         SITE_URL,
         "https://action.openattestation.com",
+        "https://verify.gov.sg",
         "https://www.verify.gov.sg",
+        "https://trustdocs.gov.sg",
         "https://www.trustdocs.gov.sg",
       ];
 

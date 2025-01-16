@@ -87,7 +87,12 @@ const Qr: NextPage = () => {
     try {
       const parsedUrl = new URL(url);
       const SITE_URL = process.env.SITE_URL; // See "next.config.js"
-      const allowedOrigins = [SITE_URL, "https://www.verify.gov.sg"];
+      const allowedOrigins = [
+        SITE_URL,
+        "https://action.openattestation.com",
+        "https://www.verify.gov.sg",
+        "https://www.trustdocs.gov.sg",
+      ];
 
       if (!allowedOrigins.some((origin) => origin === parsedUrl.origin)) {
         throw new CodedError("InvalidDocumentError", "Invalid Verify QR, please try again");

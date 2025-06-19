@@ -8,7 +8,7 @@
   },
   "overrides": {
     "@govtechsg/oa-verify": {
-      "axios": "^1.6.2"
+      "axios": "^1.8.2"
     }
   },
   "scripts": {
